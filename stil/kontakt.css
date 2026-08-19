@@ -1,0 +1,214 @@
+/* ============================================================
+   kazuvate | Kontaktseite
+   Zwei Spalten: links Ansprache, Telefon, Mail und der Ablauf
+   nach der Anfrage, rechts das Formular als Karte. Vorbild ist
+   portdigitalco.com/contact.
+
+   Eigene Datei, damit Startseite und Rechtsseiten kein CSS laden,
+   das sie nie brauchen. Farben ausschliesslich aus tokens.css.
+   ============================================================ */
+
+/* --- Raster -------------------------------------------------
+   Eine Spalte bis 940px. Erst darueber ist Platz fuer Text und
+   Formular nebeneinander.
+   ------------------------------------------------------------ */
+/* padding-block, nicht die Kurzform padding: die wuerde den
+   seitlichen Rand von .wrap ueberschreiben und die Seite klebte
+   auf dem Handy am Bildschirmrand. */
+.kontakt-raster{
+  padding-block: var(--s8) var(--s9);
+  display: grid;
+  gap: var(--s8);
+}
+@media (min-width: 940px){
+  .kontakt-raster{
+    grid-template-columns: 1fr minmax(380px, 440px);
+    gap: var(--s7);
+    align-items: start;
+    padding-top: var(--s9);
+  }
+}
+@media (min-width: 1120px){
+  .kontakt-raster{
+    grid-template-columns: 1fr 500px;
+    gap: var(--s9);
+  }
+}
+
+/* --- Linke Spalte ------------------------------------------- */
+.gross{
+  font-size: clamp(3.2rem, 9vw, 5.4rem);
+  line-height: .95;
+  letter-spacing: -.035em;
+}
+
+.kontakt-vor{
+  margin-top: var(--s5);
+  font-size: clamp(1.06rem, 2vw, 1.2rem);
+  color: var(--tinte-2);
+  max-width: 42ch;
+}
+
+/* .draht und .draht-ort kommen aus basis.css. Auf dieser Seite
+   stehen Telefon und Mail eine Stufe kleiner, sonst nehmen sie
+   der H1 den Rang weg. */
+.kontakt-links .draht a{
+  font-size: clamp(1.2rem, 2.6vw, 1.6rem);
+}
+
+/* --- Wie es weitergeht --------------------------------------
+   Drei nummerierte Zeilen, getrennt durch Haarlinien. Kein
+   Kasten: die Karte rechts ist der einzige Kasten auf der Seite,
+   sonst kaempfen zwei Kaesten um dieselbe Aufmerksamkeit.
+   ------------------------------------------------------------ */
+.schritte{
+  margin-top: var(--s8);
+  padding-top: var(--s6);
+  border-top: 1px solid var(--linie);
+}
+.schritte ol{
+  list-style: none;
+  margin: var(--s5) 0 0;
+  padding: 0;
+  display: grid;
+  gap: var(--s5);
+}
+.schritte li{
+  display: grid;
+  grid-template-columns: 2.4rem 1fr;
+  gap: var(--s3);
+  align-items: baseline;
+}
+.schritte p{
+  color: var(--tinte-2);
+  font-size: .96rem;
+  max-width: 46ch;
+}
+
+/* --- Lieber telefonieren ------------------------------------ */
+.lieber-reden{
+  margin-top: var(--s8);
+  padding-top: var(--s6);
+  border-top: 1px solid var(--linie);
+}
+.lieber-zeile{
+  color: var(--tinte-2);
+  max-width: 44ch;
+}
+.lieber-reden .knopf{ margin-top: var(--s5); }
+
+/* --- Anfragekarte -------------------------------------------
+   Der einzige Kasten auf der Seite. Bewusst nicht klebend: die
+   Karte ist mit fuenf Feldern hoeher als die meisten Schirme,
+   ein sticky-Element wuerde unten samt Knopf abgeschnitten.
+   ------------------------------------------------------------ */
+.anfrage-karte{
+  background: var(--karte);
+  border: 1px solid var(--linie);
+  border-radius: var(--radius);
+  padding: var(--s6) var(--s5);
+}
+@media (min-width: 940px){
+  .anfrage-karte{ padding: var(--s7) var(--s6); }
+}
+
+.anfrage-titel{
+  font-size: 1.24rem;
+  margin-bottom: var(--s5);
+}
+
+/* --- Formular -----------------------------------------------
+   Stand bis zum 19.08.2026 in basis.css, weil die Startseite
+   dasselbe Formular trug. Seit die Kontaktsektion dort raus ist,
+   gibt es das Formular nur noch hier, also gehoert das CSS auch
+   hierher: alle anderen Seiten laden es nicht mehr mit.
+
+   Vorname, Name, E-Mail und Nachricht sind Pflicht, Organisation
+   ist freiwillig. Der Empfaenger unter /api/kontakt existiert
+   weiterhin nicht.
+   ------------------------------------------------------------ */
+.formular{
+  display: grid;
+  gap: var(--s4);
+}
+/* Vorname und Name nebeneinander nur, wenn die Karte auch breit
+   genug dafuer ist. Zwischen 940 und 1120px ist sie die schmale
+   Spalte im Zweispalter, dort bleiben die Felder untereinander,
+   sonst werden sie zu Schlitzen. */
+@media (min-width: 640px) and (max-width: 939px){
+  .formular{ grid-template-columns: 1fr 1fr; column-gap: var(--s4); }
+}
+@media (min-width: 1120px){
+  .formular{ grid-template-columns: 1fr 1fr; column-gap: var(--s4); }
+}
+
+.formular-hinweis{
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--still);
+  font-size: .88rem;
+}
+
+.feld{
+  display: grid;
+  gap: var(--s2);
+}
+.feld--breit{ grid-column: 1 / -1; }
+.feld label{
+  font-size: .88rem;
+  font-weight: 650;
+  color: var(--tinte);
+}
+.pflicht{ color: var(--olive); }
+.freiwillig{
+  margin-left: var(--s1);
+  font-weight: 400;
+  font-size: .82rem;
+  color: var(--still);
+}
+.feld input,
+.feld textarea{
+  font: inherit;
+  font-size: 1rem;
+  padding: 11px 14px;
+  border: 1px solid var(--linie-kraeftig);
+  border-radius: var(--radius-knopf);
+  background: var(--karte);
+  color: var(--tinte);
+}
+.feld textarea{
+  resize: vertical;
+  min-height: 8rem;
+}
+.feld-hilfe{
+  margin: 0;
+  color: var(--still);
+  font-size: .84rem;
+}
+
+.formular button{
+  grid-column: 1 / -1;
+  justify-self: stretch;
+  margin-top: var(--s3);
+  border: 0;
+  cursor: pointer;
+  text-align: center;
+}
+
+.formular-fuss{
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--still);
+  font-size: .84rem;
+}
+.formular-fuss a{ color: var(--olive); }
+
+/* --- Pfeil in Knoepfen -------------------------------------- */
+.knopf .pfeil{
+  display: inline-block;
+  margin-left: var(--s2);
+  transition: transform var(--kurz) var(--kurve);
+}
+@media (hover: hover) and (pointer: fine){
+  .knopf:hover .pfeil{ transform: translateX(4px); }
+}

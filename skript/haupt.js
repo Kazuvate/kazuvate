@@ -3,13 +3,54 @@
    Eigenes Skript, keine Bibliothek, kein fremder Server. Die
    Aussage "keine fremden Skripte" bleibt damit unberuehrt.
 
-   Aufgabe: den Umfang des Kachelrahmens messen. Mehr nicht.
-   Gezeichnet wird per CSS-Transition.
+   Zwei Aufgaben, jede in einem eigenen Block, damit die eine
+   nicht die andere mitreisst:
+   1. Kopf: Klasse setzen, sobald gescrollt wird.
+   2. Kacheln: den Umfang des Rahmens messen.
 
    Alles hier ist Zugabe. Faellt das Skript aus, bleibt die Seite
-   vollstaendig lesbar: der Rahmen ist dann einfach nicht da, die
-   Karten funktionieren unveraendert.
+   vollstaendig lesbar: der Kopf laeuft weiter mit und behaelt
+   seinen Schriftzug, der Kachelrahmen ist einfach nicht da.
    ============================================================ */
+
+/* --- Kopf ---------------------------------------------------
+   Der Kopf klebt per CSS oben fest. Sobald die Seite ein Stueck
+   gescrollt ist, bekommt er die Klasse .gescrollt: der Schriftzug
+   "kazuvate" faehrt weg, das Zeichen bleibt an Ort und Stelle,
+   der Balken wird flacher. Den Uebergang zeichnet CSS, hier faellt
+   nur die Entscheidung wann.
+   ------------------------------------------------------------ */
+(function () {
+  'use strict';
+
+  var kopf = document.querySelector('.kopf');
+  if (!kopf) return;
+
+  // Erst ab einem klaren Stueck Weg, sonst flackert die Klasse
+  // bei jedem Wackeln am Seitenanfang hin und her.
+  var schwelle = 40;
+
+  function pruefen() {
+    // toggle mit zweitem Argument setzt nur um, wenn sich der
+    // Zustand wirklich aendert. Bei jedem anderen Scrollschritt
+    // passiert damit gar nichts.
+    kopf.classList.toggle('gescrollt', window.scrollY > schwelle);
+  }
+
+  // passive sagt dem Browser, dass hier nichts abgefangen wird,
+  // damit muss er auf den Handler nicht warten und scrollt fluessig
+  // weiter. Bewusst ohne requestAnimationFrame, wie beim
+  // Kachelrahmen weiter unten: rAF feuert in einem Tab, der gerade
+  // nicht gezeichnet wird, gar nicht, und der Kopf bliebe dann im
+  // falschen Zustand stehen.
+  window.addEventListener('scroll', pruefen, { passive: true });
+
+  // Beim Laden mitten auf der Seite, etwa nach einem Sprung auf
+  // einen Anker oder beim Zurueckblaettern, ist schon gescrollt.
+  pruefen();
+})();
+
+/* --- Kacheln ------------------------------------------------ */
 (function () {
   'use strict';
 

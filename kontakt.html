@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Kontakt | kazuvate</title>
+<meta name="description" content="Erzählen Sie uns von Ihrem Betrieb. Antwort innert 24 Stunden. Telefon, E-Mail und Anfrageformular für Webdesign in der Schweiz.">
+<meta name="theme-color" content="#2C3616">
+
+<link rel="icon" href="markenlogo/favicon.ico" sizes="32x32">
+<link rel="icon" href="markenlogo/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="markenlogo/apple-touch-icon.png">
+<link rel="manifest" href="markenlogo/site.webmanifest">
+
+<link rel="stylesheet" href="stil/tokens.css">
+<link rel="stylesheet" href="stil/basis.css">
+<link rel="stylesheet" href="stil/kontakt.css">
+</head>
+<body>
+
+<!-- Marke einmal definiert, unten zweimal verwendet. Spart eine zweite Kopie
+     des Pfads und einen HTTP-Aufruf. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="marke" viewBox="0 0 585.51 442.90">
+    <path fill="currentColor" fill-rule="evenodd" d="M0.00 0.19L79.97 0.39L80.19 169.50L153.51 170.08L283.43 0.19L380.99 0.15L222.91 208.75L314.29 442.90L226.95 442.73L153.34 250.65L79.93 250.95L79.93 442.90L0.03 442.90ZM256.87 212.24L328.91 117.34L382.37 254.94L487.38 0.26L585.51 0.00L417.18 442.90L346.61 442.90Z"/>
+  </symbol>
+</svg>
+
+<a class="sprung" href="#inhalt">Zum Inhalt springen</a>
+
+<!-- ====================== Kopf ====================== -->
+<header class="kopf">
+  <div class="wrap kopf-innen">
+
+    <a class="marke" href="index.html">
+      <svg viewBox="0 0 585.51 442.90" role="img" aria-label="kazuvate"><use href="#marke"></use></svg>
+      <span>kazuvate</span>
+    </a>
+
+    <nav class="navigation" aria-label="Hauptnavigation">
+      <a href="index.html#leistungen">Leistungen</a>
+      <a href="referenzen/index.html">Referenzen</a>
+      <a href="index.html#ablauf">Ablauf</a>
+      <a href="kontakt.html" aria-current="page">Kontakt</a>
+    </nav>
+
+    <a class="kopf-knopf" href="#anfrage">Unverbindlich anfragen</a>
+
+  </div>
+</header>
+
+<!-- ====================== Inhalt ======================
+     Zwei Spalten wie auf portdigitalco.com/contact: links die
+     Ansprache mit Telefon, Mail und dem, was nach der Anfrage
+     passiert, rechts das Formular. Unter 940px wird daraus eine
+     Spalte und das Formular rutscht unter den Text.
+     ==================================================== -->
+<main id="inhalt">
+  <div class="wrap kontakt-raster">
+
+    <!-- ---------- Linke Spalte ---------- -->
+    <div class="kontakt-links">
+
+      <p class="augenbraue">Kontakt</p>
+
+      <h1 class="gross">Reden<br>wir.</h1>
+
+      <p class="kontakt-vor">Erzählen Sie uns von Ihrem Betrieb und was die Website leisten soll. Wir melden uns innert 24 Stunden. Das erste Gespräch ist unverbindlich und kostet nichts.</p>
+
+      <div class="draht">
+        <a href="tel:+41786707973">+41 78 670 79 73</a>
+        <a href="mailto:kasumbajrami7@gmail.com">kasumbajrami7@gmail.com</a>
+      </div>
+
+      <p class="draht-ort">Basel, Schweiz. Wir arbeiten für Kunden in der ganzen Schweiz.</p>
+
+      <section class="schritte" aria-labelledby="danach">
+        <h2 class="augenbraue" id="danach">Wie es weitergeht</h2>
+        <ol>
+          <li>
+            <span class="nr">01</span>
+            <p>Wir lesen Ihre Anfrage und schauen uns an, was heute online über Ihren Betrieb zu finden ist.</p>
+          </li>
+          <li>
+            <span class="nr">02</span>
+            <p>Innert 24 Stunden bekommen Sie eine Antwort mit einer ersten Einschätzung: was wir bauen würden und worauf es bei Ihnen ankommt.</p>
+          </li>
+          <li>
+            <span class="nr">03</span>
+            <p>Passt es für beide Seiten, folgt eine Offerte mit Fixpreis und klarem Umfang. Erst dann entscheiden Sie.</p>
+          </li>
+        </ol>
+      </section>
+
+      <aside class="lieber-reden">
+        <p class="augenbraue">Lieber zuerst telefonieren?</p>
+        <p class="lieber-zeile">Zehn Minuten am Telefon sagen oft mehr als ein langes Formular. Rufen Sie einfach an, Sie landen direkt bei uns.</p>
+        <a class="knopf" href="tel:+41786707973">Jetzt anrufen<span class="pfeil" aria-hidden="true">→</span></a>
+      </aside>
+
+    </div>
+
+    <!-- ---------- Rechte Spalte ----------
+         Das einzige Formular der Seite, seit die Kontaktsektion
+         auf der Startseite entfernt wurde. Vorname, Name, E-Mail
+         und Nachricht sind Pflicht, Organisation ist freiwillig.
+         Der Empfaenger unter /api/kontakt existiert noch nicht:
+         bis zum Deploy der Vercel Function kommen nur Telefon und
+         Mail wirklich an. -->
+    <div class="kontakt-rechts">
+      <div class="anfrage-karte" id="anfrage">
+
+        <h2 class="anfrage-titel">Anfrage senden</h2>
+
+        <form class="formular" action="/api/kontakt" method="post">
+
+          <p class="formular-hinweis">Felder mit <span aria-hidden="true">*</span> sind Pflichtfelder.</p>
+
+          <div class="feld">
+            <label for="vorname">Vorname <span class="pflicht" aria-hidden="true">*</span></label>
+            <input type="text" id="vorname" name="vorname" autocomplete="given-name" required>
+          </div>
+
+          <div class="feld">
+            <label for="name">Name <span class="pflicht" aria-hidden="true">*</span></label>
+            <input type="text" id="name" name="name" autocomplete="family-name" required>
+          </div>
+
+          <div class="feld feld--breit">
+            <label for="organisation">Organisation <span class="freiwillig">freiwillig</span></label>
+            <input type="text" id="organisation" name="organisation" autocomplete="organization">
+          </div>
+
+          <div class="feld feld--breit">
+            <label for="email">E-Mail <span class="pflicht" aria-hidden="true">*</span></label>
+            <input type="email" id="email" name="email" autocomplete="email" required>
+          </div>
+
+          <div class="feld feld--breit">
+            <label for="nachricht">Erzählen Sie uns von Ihrem Betrieb <span class="pflicht" aria-hidden="true">*</span></label>
+            <textarea id="nachricht" name="nachricht" rows="6" aria-describedby="nachricht-hilfe" required></textarea>
+            <p class="feld-hilfe" id="nachricht-hilfe">Was machen Sie, und was soll die Website leisten? Ein paar Sätze genügen.</p>
+          </div>
+
+          <button class="knopf" type="submit">Anfrage senden<span class="pfeil" aria-hidden="true">→</span></button>
+
+          <p class="formular-fuss">Antwort innert 24 Stunden. Ihre Angaben verwenden wir nur, um diese Anfrage zu beantworten, siehe <a href="datenschutz.html">Datenschutz</a>.</p>
+
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- ====================== Fuss ====================== -->
+<footer class="fuss">
+  <div class="wrap">
+
+    <div class="fuss-raster">
+
+      <div>
+        <svg viewBox="0 0 585.51 442.90" role="img" aria-label="kazuvate"><use href="#marke"></use></svg>
+        <p>Handgebaute Frontend-Websites für KMU in der Schweiz.</p>
+      </div>
+
+      <nav class="fuss-spalte" aria-labelledby="fuss-seiten">
+        <h2 id="fuss-seiten">Seiten</h2>
+        <a href="index.html#leistungen">Leistungen</a>
+        <a href="referenzen/index.html">Referenzen</a>
+        <a href="index.html#ablauf">Ablauf</a>
+        <a href="kontakt.html" aria-current="page">Kontakt</a>
+      </nav>
+
+      <div class="fuss-spalte">
+        <h2>Kontakt</h2>
+        <a href="tel:+41786707973">+41 78 670 79 73</a>
+        <a href="mailto:kasumbajrami7@gmail.com">kasumbajrami7@gmail.com</a>
+        <span class="fuss-ort">Basel, Schweiz</span>
+      </div>
+
+    </div>
+
+    <div class="fuss-unten">
+      <span>Kazuvate Bajrami</span>
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+      <span>Keine Cookies, kein Tracking</span>
+    </div>
+
+  </div>
+</footer>
+
+<!-- Eigenes Skript, kein fremder Server. Am Ende des Body und mit
+     defer, damit die Seite nicht darauf warten muss. -->
+<script src="skript/haupt.js" defer></script>
+
+</body>
+</html>

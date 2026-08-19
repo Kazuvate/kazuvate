@@ -8,8 +8,15 @@ daran.
 
 ## Stand
 
-Die Startseite ist gebaut: Kopf, Leistungen, Referenzen, Ablauf, Kontakt.
-Dazu Impressum, Datenschutz und die Referenzen-Galerie.
+Die Startseite ist gebaut: Kopf, Leistungen, Warum kazuvate, Referenzen,
+Ablauf. Dazu die Kontaktseite, Impressum, Datenschutz und die
+Referenzen-Galerie.
+
+Die Kontaktsektion stand bis zum 19.08.2026 unten auf der Startseite. Sie ist
+dort entfernt worden, als `kontakt.html` dazukam: dasselbe Formular zweimal auf
+derselben Website ist einmal zu viel. An ihrer Stelle steht jetzt ein
+Abschlussblock mit einer Zeile und einem Knopf, sonst hört die Seite nach dem
+Ablauf im Nichts auf. Alle Knöpfe und Menüpunkte führen auf die Kontaktseite.
 
 Drei ursprünglich geplante Sektionen fehlen bewusst, weil ihnen Material fehlt:
 Einzigartigkeit (zwei Screenshots derselben Vorlage), Ladezeit (eine echte
@@ -20,12 +27,15 @@ acht halbe.
 
 ```
 index.html            Startseite
+kontakt.html          Kontaktseite mit Formular
 impressum.html        Impressum
 datenschutz.html      Datenschutzerklärung
 referenzen/index.html Referenzen als Bildergalerie, ein Bild pro Projekt
 stil/tokens.css       Farben, Abstände, Rundungen. Die einzige Stelle dafür
-stil/basis.css        Grundlagen, Kopf, Titelband, Fuss, Referenz-Kachel, Platzhalter
+stil/basis.css        Grundlagen, Kopf, Titelband, Fuss, Referenz-Kachel, Sektionen
 stil/seiten.css       nur impressum.html und datenschutz.html: Fliesstext, Tabellen
+stil/kontakt.css      nur kontakt.html: Zweispalter, Anfragekarte, Formular
+skript/haupt.js       mitlaufender Kopf und der gezeichnete Rahmen der Kacheln
 markenlogo/           Logo, Favicons, App Icons, Vorschaubild fürs Teilen
 medien/referenzen/    Bildschirmfotos der Kundenprojekte
 kazuvate_Logo.jpg     die ursprüngliche Bilddatei, liegt nur noch als Beleg hier
@@ -33,6 +43,46 @@ kazuvate_Logo.jpg     die ursprüngliche Bilddatei, liegt nur noch als Beleg hie
 
 Das Logo steht einmal als `symbol` im HTML und wird oben und unten per `use`
 eingesetzt. So gibt es den Pfad nur einmal und keine zusätzliche Datei zu laden.
+
+## Ansprache
+
+Alle Kundentexte stehen in der **Wir-Form**, auch wenn hier vorerst nur einer
+sitzt. Ein KMU soll nicht das Gefühl haben, sein Auftritt hänge an einer
+einzelnen Person. Umgestellt am 19.08.2026, betrifft Startseite, Kontaktseite,
+Referenzen und Datenschutzerklärung.
+
+Zwei Ausnahmen: das Impressum, wo die rechtlich haftende Person steht, und
+dieser README, der meine eigene Notiz ist.
+
+## Kontakt
+
+`kontakt.html` ist zweispaltig aufgebaut, nach dem Vorbild von
+portdigitalco.com/contact: links `Reden wir.` gross, Telefon, Mail und drei
+Zeilen dazu, was nach der Anfrage passiert, rechts das Formular in einer Karte.
+Unter 940 Pixel wird daraus eine Spalte.
+
+Fünf Felder. Vorname, Name, E-Mail und Nachricht sind Pflicht, Organisation ist
+freiwillig und mit einem Wort markiert statt mit einem Sternchen. Das
+Nachrichtenfeld fragt nach dem Betrieb, nicht nach einer Nachricht: was jemand
+macht und was die Website leisten soll, ist die Angabe, mit der sich eine
+Antwort schreiben lässt.
+
+**Das Formular sendet noch nirgendwohin.** `action="/api/kontakt"` zeigt auf
+eine Vercel Function, die es noch nicht gibt. Bis dahin sind Telefon und Mail
+der einzige Weg, der wirklich ankommt. Die HTML5-Prüfung (`required`,
+`type=email`) greift schon jetzt.
+
+## Kopf
+
+Der Kopf läuft beim Scrollen mit (`position: sticky`). Sobald die Seite 40
+Pixel weit gescrollt ist, setzt `skript/haupt.js` die Klasse `.gescrollt`: der
+Schriftzug `kazuvate` fährt auf Breite null zusammen und wird durchsichtig,
+das Zeichen bleibt an genau derselben Stelle stehen, der Balken wird von 74 auf
+60 Pixel flacher und bekommt einen Schatten. Den Übergang zeichnet CSS, das
+Skript entscheidet nur wann.
+
+Ohne JavaScript läuft der Kopf trotzdem mit und behält seinen Schriftzug. Das
+ist der Zustand, mit dem die Seite ohnehin lädt, es geht also nichts kaputt.
 
 ## Farben
 
