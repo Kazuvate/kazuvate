@@ -305,7 +305,7 @@ a{ color: var(--olive); }
   max-width: 58ch;
 }
 
-/* --- Kopfbereich ------------------------------------------ */
+/* --- Kopfbereich ------------------------------------------- */
 .hero{ padding: var(--s9) 0 var(--s10); }
 .hero h1{
   font-size: clamp(2.3rem, 6.5vw, 3.9rem);
@@ -453,6 +453,62 @@ a{ color: var(--olive); }
   margin-top: var(--s5);
   color: var(--still);
   font-size: .96rem;
+}
+
+/* --- Kontaktformular ----------------------------------------
+   Fuenf Felder: Vorname, Name, E-Mail und Nachricht sind Pflicht,
+   Organisation ist es nicht. Sendet noch nirgendwohin, siehe
+   Vermerk im Vault: die Vercel Function unter api/kontakt.js
+   existiert noch nicht.
+   ------------------------------------------------------------ */
+.formular{
+  margin-top: var(--s7);
+  padding-top: var(--s6);
+  border-top: 1px solid var(--linie);
+  display: grid;
+  gap: var(--s5);
+  max-width: 640px;
+}
+@media (min-width: 640px){
+  .formular{ grid-template-columns: 1fr 1fr; column-gap: var(--s6); }
+}
+.formular-hinweis{
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--still);
+  font-size: .88rem;
+}
+.feld{
+  display: grid;
+  gap: var(--s2);
+}
+.feld--breit{ grid-column: 1 / -1; }
+.feld label{
+  font-size: .88rem;
+  font-weight: 650;
+  color: var(--tinte);
+}
+.pflicht{ color: var(--olive); }
+.feld input,
+.feld textarea{
+  font: inherit;
+  font-size: 1rem;
+  padding: 11px 14px;
+  border: 1px solid var(--linie-kraeftig);
+  border-radius: var(--radius-knopf);
+  background: var(--karte);
+  color: var(--tinte);
+}
+.feld textarea{
+  resize: vertical;
+  min-height: 8rem;
+}
+.formular button{
+  grid-column: 1 / -1;
+  justify-self: start;
+  margin-top: var(--s2);
+  border: 0;
+  cursor: pointer;
 }
 
 /* --- Referenz-Kachel ---------------------------------------

@@ -16,7 +16,7 @@
   --grund:      #F5F4EF;     /* Seitenhintergrund, Papierton */
   --karte:      #FFFFFF;     /* Karten, Formularfelder */
   --karte-2:    #EBEAE1;     /* abgesetzte Baender */
-  --tinte:      #1B2110;     /* Ueberschriften, Fliesstext */
+  --tinte:      #000000;     /* Ueberschriften, betonter Text */
   --tinte-2:    #454C36;     /* zweite Textebene */
   --still:      #5E6650;     /* Labels, Legenden */
   --linie:      #DCDBD0;
