@@ -377,6 +377,101 @@ a{ color: var(--olive); }
   max-width: 62ch;
 }
 
+/* --- Warum kazuvate: Bento ---------------------------------
+   Drei Textkarten, angelehnt an portdigitalco.com: gedaempfte
+   Augenbraue ueber der Sektion, farbige Augenbraue in der Karte,
+   fetter Zweizeiler, Fliesstext. Keine Grafiken, der Text traegt.
+
+   Zwei Dinge beim Hover: der Rahmen wird von oben links einmal
+   herumgezeichnet, und die Karte hebt sich leicht. Die
+   Umfangslaenge fuer den Rahmen liefert skript/haupt.js als
+   --umfang, weil CSS die Pixelmasse eines Elements nicht kennt.
+   ------------------------------------------------------------ */
+.anders-kopf{ text-align: center; }
+.anders-kopf .augenbraue{
+  color: var(--still);
+  /* Ohne das bleibt der Absatz durch p{max-width:66ch} schmaler als
+     der Container, sitzt links und der Text zentriert nur in dieser
+     schmalen Box statt auf der Seite. */
+  max-width: none;
+}
+.anders-kopf h2{
+  max-width: 24ch;
+  margin-inline: auto;
+}
+
+.bento{
+  display: grid;
+  gap: var(--s4);
+  margin-top: var(--s7);
+}
+@media (min-width: 860px){
+  .bento{ grid-template-columns: repeat(3, 1fr); }
+}
+
+.kachel{
+  position: relative;
+  background: var(--karte);
+  border: 1px solid var(--linie);
+  border-radius: var(--radius);
+}
+.kachel-innen{
+  position: relative;
+  z-index: 1;
+  padding: var(--s6) var(--s5);
+}
+
+/* Der gezeichnete Rahmen */
+.rahmen{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.rahmen rect{
+  fill: none;
+  stroke: var(--olive);
+  stroke-width: 1.5;
+  stroke-dasharray: var(--umfang);
+  stroke-dashoffset: var(--umfang);
+}
+/* Die Transition kommt erst, wenn das Skript den Umfang gesetzt
+   hat. Sonst ist --umfang beim ersten Aufbau noch leer, der
+   Versatz faellt auf 0 zurueck und der fertige Rahmen zeichnet
+   sich beim Laden sichtbar rueckwaerts weg. */
+.kachel.bereit .rahmen rect{
+  transition: stroke-dashoffset 700ms var(--kurve);
+}
+
+/* Anheben beim Hover. Der Schatten ist in den Tintenton getoent
+   statt neutral grau, sonst wirkt er wie aufgeklebt. */
+.kachel{
+  transition: transform var(--kurz) var(--kurve),
+              box-shadow var(--kurz) var(--kurve);
+}
+@media (hover: hover) and (pointer: fine){
+  .kachel:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 14px 28px -14px rgb(27 33 16 / .22);
+  }
+  .kachel:hover .rahmen rect{ stroke-dashoffset: 0; }
+}
+
+.kachel .augenbraue{
+  margin-bottom: var(--s4);
+}
+.kachel h3{
+  font-size: 1.14rem;
+  line-height: 1.35;
+}
+.kachel p{
+  margin-top: var(--s4);
+  color: var(--tinte-2);
+  font-size: .92rem;
+}
+
 /* --- Referenz auf der Startseite --------------------------- */
 .referenz-zeile{
   display: grid;
@@ -519,7 +614,24 @@ a{ color: var(--olive); }
    deshalb hier statt in seiten.css: die Startseite laedt
    seiten.css nicht.
    ---------------------------------------------------------- */
-.referenz-bereich{ padding: var(--s8) 0 var(--s9); }
+.referenz-bereich{ padding: var(--s8) 0; }
+
+/* Schlussblock der Referenzen-Seite. Die Haarlinie sitzt auf der
+   Sektion, nicht im wrap, damit sie wie auf der Startseite ueber
+   die volle Breite laeuft. */
+.abschluss{
+  border-top: 1px solid var(--linie);
+  padding: var(--s8) 0 var(--s9);
+}
+.abschluss-zeile{
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  line-height: 1.2;
+  color: var(--tinte);
+  max-width: 20ch;
+}
+.abschluss .knopf{ margin-top: var(--s6); }
 
 .referenz-galerie{
   display: grid;
