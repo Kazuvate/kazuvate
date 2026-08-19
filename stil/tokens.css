@@ -1,0 +1,47 @@
+/* ============================================================
+   kazuvate — Tokens
+   Einzige Farbquelle des Projekts. Kein Hex-Wert sonst irgendwo.
+   Farben aus markenlogo/logo.svg gemessen.
+   ============================================================ */
+
+:root{
+  /* --- Marke ---------------------------------------------- */
+  --olive:        #3F5019;   /* Logo, Links, Labels, kleine Akzente */
+  --flaeche:      #2C3616;   /* grosse Flaechen: Kopf, Fuss, Buttons */
+  --flaeche-tief: #222A10;   /* Hover auf Flaechen */
+  --auf-flaeche:  #F7F7F1;   /* Schrift auf oliven Flaechen */
+  --auf-flaeche-still: #C3CFA8;
+
+  /* --- Neutrale ------------------------------------------- */
+  --grund:      #F5F4EF;     /* Seitenhintergrund, Papierton */
+  --karte:      #FFFFFF;     /* Karten, Formularfelder */
+  --karte-2:    #EBEAE1;     /* abgesetzte Baender */
+  --tinte:      #1B2110;     /* Ueberschriften, Fliesstext */
+  --tinte-2:    #454C36;     /* zweite Textebene */
+  --still:      #5E6650;     /* Labels, Legenden */
+  --linie:      #DCDBD0;
+  --linie-kraeftig: #BFBFAF;
+
+  /* --- Abstaende ------------------------------------------ */
+  --s1: 4px;  --s2: 8px;  --s3: 12px; --s4: 16px;
+  --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px;
+  --s9: 96px; --s10: 128px;
+
+  /* --- Form ----------------------------------------------- */
+  --breite:   1140px;
+  --rand:     22px;
+  --rand-gross: 40px;
+  --radius:   12px;
+  --radius-knopf: 10px;
+
+  /* --- Bewegung ------------------------------------------- */
+  --kurve:    cubic-bezier(.22, 1, .36, 1);
+  --kurz:     300ms;
+  --lang:     650ms;
+}
+
+/* Bewusst kein Dunkelmodus.
+   Das Portfolio wurde am 08.08.2026 auf reines Hell umgestellt, hier gilt
+   dasselbe. Die dunklen Werte stehen in der Markenrichtung bereit, falls es
+   spaeter doch einer werden soll — dann kommen sie als Block hierher, nicht
+   verstreut in die Komponenten. */

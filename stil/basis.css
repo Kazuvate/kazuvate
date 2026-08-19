@@ -1,0 +1,239 @@
+/* ============================================================
+   kazuvate — Basis
+   Grundlagen, Kopf und Fuss. Alles dazwischen ist noch Platzhalter.
+   Farben ausschliesslich ueber die Tokens aus tokens.css.
+   ============================================================ */
+
+/* --- Grundlagen ------------------------------------------- */
+*, *::before, *::after{ box-sizing: border-box; }
+
+html{ scroll-behavior: smooth; }
+
+body{
+  margin: 0;
+  background: var(--grund);
+  color: var(--tinte);
+  font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3{ line-height: 1.2; letter-spacing: -.02em; font-weight: 700; margin: 0; }
+p{ margin: 0; max-width: 66ch; }
+img, svg{ max-width: 100%; }
+
+a{ color: var(--olive); }
+
+:focus-visible{
+  outline: 2px solid var(--olive);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.wrap{
+  max-width: var(--breite);
+  margin-inline: auto;
+  padding-inline: var(--rand);
+}
+@media (min-width: 900px){
+  .wrap{ padding-inline: var(--rand-gross); }
+}
+
+/* Sprungmarke fuer Tastatur und Screenreader */
+.sprung{
+  position: absolute;
+  left: -9999px;
+  top: var(--s2);
+  background: var(--karte);
+  color: var(--tinte);
+  padding: var(--s3) var(--s5);
+  border-radius: var(--radius-knopf);
+  z-index: 10;
+}
+.sprung:focus{ left: var(--s5); }
+
+.nur-fuer-screenreader{
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* --- Kopf -------------------------------------------------- */
+.kopf{
+  background: var(--flaeche);
+  color: var(--auf-flaeche);
+}
+.kopf-innen{
+  display: flex;
+  align-items: center;
+  gap: var(--s5);
+  min-height: 74px;
+}
+
+.marke{
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  text-decoration: none;
+  color: inherit;
+}
+.marke svg{
+  height: 30px;
+  width: auto;
+  display: block;
+}
+.marke span{
+  font-size: 1.06rem;
+  font-weight: 650;
+  letter-spacing: -.01em;
+}
+
+.navigation{
+  margin-left: auto;
+  display: none;
+  gap: var(--s6);
+}
+@media (min-width: 860px){
+  .navigation{ display: flex; }
+}
+.navigation a{
+  position: relative;
+  padding: var(--s1) 0;
+  font-size: .94rem;
+  color: inherit;
+  text-decoration: none;
+  opacity: .88;
+  transition: opacity var(--kurz) var(--kurve);
+}
+.navigation a::after{
+  content: "";
+  position: absolute;
+  left: 0; right: 100%; bottom: 0;
+  height: 1.5px;
+  background: currentColor;
+  transition: right var(--kurz) var(--kurve);
+}
+.navigation a:hover{ opacity: 1; }
+.navigation a:hover::after{ right: 0; }
+
+.kopf-knopf{
+  margin-left: auto;
+  background: var(--auf-flaeche);
+  color: var(--flaeche);
+  font-size: .88rem;
+  font-weight: 650;
+  padding: 10px 18px;
+  border-radius: var(--radius-knopf);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform var(--kurz) var(--kurve);
+}
+@media (min-width: 860px){
+  .kopf-knopf{ margin-left: var(--s2); }
+}
+.kopf-knopf:hover{ transform: translateY(-1px); }
+
+/* --- Fuss -------------------------------------------------- */
+.fuss{
+  background: var(--flaeche);
+  color: var(--auf-flaeche);
+  padding: var(--s8) 0 var(--s6);
+}
+.fuss-raster{
+  display: grid;
+  gap: var(--s6);
+}
+@media (min-width: 820px){
+  .fuss-raster{
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: var(--s7);
+  }
+}
+.fuss svg{
+  height: 34px;
+  width: auto;
+  display: block;
+  margin-bottom: var(--s4);
+}
+.fuss p{
+  color: var(--auf-flaeche-still);
+  font-size: .92rem;
+  max-width: 34ch;
+}
+.fuss-spalte h2{
+  font-size: .72rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--auf-flaeche-still);
+  margin-bottom: var(--s3);
+}
+.fuss-spalte a{
+  display: block;
+  color: inherit;
+  font-size: .94rem;
+  text-decoration: none;
+  margin-bottom: 9px;
+  opacity: .9;
+  transition: opacity var(--kurz) var(--kurve);
+}
+.fuss-spalte a:hover{ opacity: 1; text-decoration: underline; }
+
+.fuss-unten{
+  margin-top: var(--s7);
+  padding-top: var(--s5);
+  border-top: 1px solid rgb(247 247 241 / .18);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s2) var(--s5);
+  font-size: .84rem;
+  color: var(--auf-flaeche-still);
+}
+
+/* --- Platzhalter ------------------------------------------
+   Alles hier fliegt raus, sobald die echten Sektionen stehen.
+   ---------------------------------------------------------- */
+.platzhalter-bereich{
+  padding: var(--s7) 0;
+  display: grid;
+  gap: var(--s4);
+}
+.platzhalter{
+  border: 1px dashed var(--linie-kraeftig);
+  border-radius: var(--radius);
+  padding: var(--s6) var(--s5);
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--s2);
+}
+.platzhalter b{
+  font-size: .72rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--olive);
+  font-weight: 600;
+}
+.platzhalter span{
+  font-size: 1.15rem;
+  font-weight: 650;
+  letter-spacing: -.01em;
+}
+.platzhalter small{
+  color: var(--still);
+  font-size: .92rem;
+  max-width: 60ch;
+}
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior: auto; }
+  *, *::before, *::after{
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+  }
+}
