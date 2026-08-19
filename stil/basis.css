@@ -1,5 +1,5 @@
 /* ============================================================
-   kazuvate — Basis
+   kazuvate | Basis
    Grundlagen, Kopf und Fuss. Alles dazwischen ist noch Platzhalter.
    Farben ausschliesslich ueber die Tokens aus tokens.css.
    ============================================================ */
@@ -93,12 +93,32 @@ a{ color: var(--olive); }
 }
 
 .navigation{
-  margin-left: auto;
-  display: none;
+  display: flex;
   gap: var(--s6);
 }
 @media (min-width: 860px){
-  .navigation{ display: flex; }
+  .navigation{ margin-left: auto; }
+}
+/* Unter 860px war die Navigation frueher ersatzlos ausgeblendet, damit
+   kam man auf dem Handy aus dem Kopf nirgendwo hin. Jetzt rutscht sie
+   in eine eigene Zeile darunter. Kein Klappmenue, weil vier kurze
+   Punkte kein Menue brauchen, das man erst oeffnen muss. */
+@media (max-width: 859px){
+  .kopf-innen{
+    flex-wrap: wrap;
+    min-height: 0;
+    padding-block: var(--s3);
+    row-gap: var(--s3);
+  }
+  .navigation{
+    order: 3;
+    flex-basis: 100%;
+    gap: var(--s5);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .navigation::-webkit-scrollbar{ display: none; }
+  .navigation a{ white-space: nowrap; }
 }
 .navigation a{
   position: relative;
@@ -109,16 +129,25 @@ a{ color: var(--olive); }
   opacity: .88;
   transition: opacity var(--kurz) var(--kurve);
 }
+/* scaleX statt right, weil right jedes Bild neu berechnen laesst
+   (Layout und Paint). transform laeuft auf der Grafikkarte. */
 .navigation a::after{
   content: "";
   position: absolute;
-  left: 0; right: 100%; bottom: 0;
+  left: 0; right: 0; bottom: 0;
   height: 1.5px;
   background: currentColor;
-  transition: right var(--kurz) var(--kurve);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--kurz) var(--kurve);
 }
-.navigation a:hover{ opacity: 1; }
-.navigation a:hover::after{ right: 0; }
+/* Auf Touchgeraeten loest eine Beruehrung Hover aus und der Zustand
+   bleibt danach haengen. Deshalb nur fuer echte Zeiger. */
+@media (hover: hover) and (pointer: fine){
+  .navigation a:hover{ opacity: 1; }
+  .navigation a:hover::after{ transform: scaleX(1); }
+}
+.navigation a:focus-visible::after{ transform: scaleX(1); }
 
 .kopf-knopf{
   margin-left: auto;
@@ -130,12 +159,55 @@ a{ color: var(--olive); }
   border-radius: var(--radius-knopf);
   text-decoration: none;
   white-space: nowrap;
-  transition: transform var(--kurz) var(--kurve);
+  transition: transform var(--sofort) var(--kurve);
 }
 @media (min-width: 860px){
   .kopf-knopf{ margin-left: var(--s2); }
 }
-.kopf-knopf:hover{ transform: translateY(-1px); }
+@media (hover: hover) and (pointer: fine){
+  .kopf-knopf:hover{ transform: translateY(-1px); }
+}
+/* Gedrueckt geht der Knopf leicht zusammen. Ohne das fuehlt sich
+   ein Klick an, als haette die Seite ihn nicht gehoert. */
+.kopf-knopf:active{ transform: scale(.97); }
+
+/* --- Titelband -------------------------------------------
+   Kopfbereich der Unterseiten. Sitzt direkt unter dem Kopf und
+   traegt dieselbe Flaeche, damit oben ein durchgehender Block
+   entsteht statt zwei Streifen.
+   ---------------------------------------------------------- */
+.titel{
+  background: var(--flaeche);
+  color: var(--auf-flaeche);
+  padding: var(--s6) 0 var(--s8);
+}
+.titel .oben{
+  font-size: .72rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--auf-flaeche-still);
+  margin: 0 0 var(--s4);
+}
+.titel h1{
+  font-size: clamp(2.1rem, 6vw, 3rem);
+  max-width: 18ch;
+}
+.titel .unter{
+  margin-top: var(--s4);
+  font-size: 1.12rem;
+  color: var(--auf-flaeche);
+  opacity: .92;
+  max-width: 52ch;
+}
+.titel .stand{
+  margin-top: var(--s5);
+  color: var(--auf-flaeche-still);
+  font-size: .74rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
 
 /* --- Fuss -------------------------------------------------- */
 .fuss{
@@ -206,40 +278,234 @@ a{ color: var(--olive); }
 .fuss-unten a:hover{ opacity: .75; }
 .fuss-unten a[aria-current]{ text-decoration: none; opacity: .6; }
 
-/* --- Platzhalter ------------------------------------------
-   Alles hier fliegt raus, sobald die echten Sektionen stehen.
+/* --- Sektionen der Startseite -----------------------------
+   Getrennt durch Haarlinien statt durch Kaesten. Ein Kasten um
+   jede Sektion macht aus einer Seite eine Liste von Kaesten.
    ---------------------------------------------------------- */
-.platzhalter-bereich{
-  padding: var(--s7) 0;
-  display: grid;
-  gap: var(--s4);
-}
-.platzhalter{
-  border: 1px dashed var(--linie-kraeftig);
-  border-radius: var(--radius);
-  padding: var(--s6) var(--s5);
-  min-height: 150px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: var(--s2);
-}
-.platzhalter b{
+.sektion{ padding: var(--s9) 0; }
+.sektion + .sektion{ border-top: 1px solid var(--linie); }
+
+.augenbraue{
   font-size: .72rem;
   letter-spacing: .18em;
   text-transform: uppercase;
-  color: var(--olive);
   font-weight: 600;
+  color: var(--olive);
+  margin: 0 0 var(--s4);
 }
-.platzhalter span{
-  font-size: 1.15rem;
+
+.sektion h2{
+  font-size: clamp(1.55rem, 3.2vw, 2.1rem);
+  max-width: 22ch;
+}
+/* Erklaerender Satz direkt unter der H2 */
+.sektion-vor{
+  margin-top: var(--s4);
+  color: var(--tinte-2);
+  max-width: 58ch;
+}
+
+/* --- Kopfbereich ------------------------------------------ */
+.hero{ padding: var(--s9) 0 var(--s10); }
+.hero h1{
+  font-size: clamp(2.3rem, 6.5vw, 3.9rem);
+  max-width: 16ch;
+}
+.hero-zeile{
+  margin-top: var(--s5);
+  font-size: clamp(1.06rem, 2vw, 1.25rem);
+  color: var(--tinte-2);
+  max-width: 48ch;
+}
+.hero .knopf{ margin-top: var(--s7); }
+
+/* --- Knopf ------------------------------------------------- */
+.knopf{
+  display: inline-block;
+  background: var(--flaeche);
+  color: var(--auf-flaeche);
+  padding: 14px 26px;
+  border-radius: var(--radius-knopf);
+  font-size: .96rem;
   font-weight: 650;
-  letter-spacing: -.01em;
+  text-decoration: none;
+  transition: transform var(--sofort) var(--kurve),
+              background-color var(--kurz) var(--kurve);
 }
-.platzhalter small{
+@media (hover: hover) and (pointer: fine){
+  .knopf:hover{ background: var(--flaeche-tief); }
+}
+.knopf:active{ transform: scale(.97); }
+
+/* --- Leistungen -------------------------------------------
+   Dreispaltige Zeilen statt drei Karten nebeneinander. Karten
+   erzwingen gleich lange Texte, Zeilen nicht.
+   ---------------------------------------------------------- */
+.leistungen{
+  list-style: none;
+  margin: var(--s6) 0 0;
+  padding: 0;
+}
+.leistungen li{
+  padding: var(--s5) 0;
+  border-top: 1px solid var(--linie);
+  display: grid;
+  gap: var(--s2);
+}
+@media (min-width: 800px){
+  .leistungen li{
+    grid-template-columns: 3rem 15rem 1fr;
+    gap: var(--s5);
+    align-items: baseline;
+  }
+}
+.leistungen{ border-bottom: 1px solid var(--linie); }
+.leistungen h3{ font-size: 1.06rem; }
+.leistungen p{ color: var(--tinte-2); }
+
+.nr{
+  font-size: .74rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  color: var(--olive);
+}
+
+.nachsatz{
+  margin-top: var(--s5);
   color: var(--still);
-  font-size: .92rem;
-  max-width: 60ch;
+  font-size: .96rem;
+  max-width: 62ch;
+}
+
+/* --- Referenz auf der Startseite --------------------------- */
+.referenz-zeile{
+  display: grid;
+  gap: var(--s6);
+  margin-top: var(--s6);
+}
+@media (min-width: 860px){
+  .referenz-zeile{
+    grid-template-columns: 380px 1fr;
+    gap: var(--s7);
+    align-items: center;
+  }
+}
+.referenz-zeile .referenz-kachel{ max-width: 380px; }
+.referenz-name{ font-size: 1.15rem; }
+.referenz-zeile .weiter{
+  display: inline-block;
+  margin-top: var(--s3);
+  font-weight: 650;
+  font-size: .96rem;
+  text-decoration: none;
+}
+.referenz-zeile .weiter .pfeil{
+  display: inline-block;
+  margin-left: var(--s2);
+  transition: transform var(--kurz) var(--kurve);
+}
+@media (hover: hover) and (pointer: fine){
+  .referenz-zeile .weiter:hover .pfeil{ transform: translateX(4px); }
+}
+
+/* --- Ablauf ------------------------------------------------ */
+.ablauf{
+  list-style: none;
+  margin: var(--s6) 0 0;
+  padding: 0;
+  display: grid;
+  gap: var(--s5);
+}
+@media (min-width: 760px){
+  .ablauf{ grid-template-columns: repeat(4, 1fr); }
+}
+.ablauf li{
+  border-top: 1px solid var(--linie);
+  padding-top: var(--s4);
+}
+.ablauf .nr{ display: block; margin-bottom: var(--s2); }
+.ablauf h3{ font-size: 1.02rem; }
+.ablauf p{
+  margin-top: var(--s2);
+  color: var(--tinte-2);
+  font-size: .96rem;
+}
+
+/* --- Kontakt ----------------------------------------------- */
+.draht{
+  display: grid;
+  gap: var(--s4);
+  margin-top: var(--s6);
+}
+.draht a{
+  justify-self: start;
+  font-size: clamp(1.3rem, 3.4vw, 1.9rem);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  color: var(--tinte);
+  text-decoration: none;
+  transition: color var(--kurz) var(--kurve);
+}
+@media (hover: hover) and (pointer: fine){
+  .draht a:hover{ color: var(--olive); }
+}
+.draht-ort{
+  margin-top: var(--s5);
+  color: var(--still);
+  font-size: .96rem;
+}
+
+/* --- Referenz-Kachel ---------------------------------------
+   Screenshot plus Name, der erst beim Hover oder Fokus erscheint.
+   Ein Bild, ein Link, mehr nicht. Die ganze Kachel fuehrt direkt
+   auf die echte Kundenseite, keine Zwischenseite mit Text.
+   Gebraucht auf der Startseite und auf referenzen/index.html,
+   deshalb hier statt in seiten.css: die Startseite laedt
+   seiten.css nicht.
+   ---------------------------------------------------------- */
+.referenz-bereich{ padding: var(--s8) 0 var(--s9); }
+
+.referenz-galerie{
+  display: grid;
+  gap: var(--s5);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 640px){
+  .referenz-galerie{ grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+}
+
+.referenz-kachel{
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border: 1px solid var(--linie);
+  border-radius: var(--radius);
+  background: var(--karte-2);
+}
+.referenz-kachel img{
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.referenz-kachel .name{
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: var(--s5) var(--s4) var(--s3);
+  background: linear-gradient(to top, rgb(27 33 16 / .85), rgb(27 33 16 / 0) 85%);
+  color: var(--auf-flaeche);
+  font-weight: 650;
+  font-size: 1rem;
+  opacity: 0;
+  transition: opacity var(--kurz) var(--kurve);
+}
+@media (hover: hover) and (pointer: fine){
+  .referenz-kachel:hover .name{ opacity: 1; }
+}
+.referenz-kachel:focus-visible .name{ opacity: 1; }
+/* Ohne echten Zeiger gibt es kein Hover, sonst bliebe der Name
+   auf dem Handy fuer immer unsichtbar. */
+@media (hover: none){
+  .referenz-kachel .name{ opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce){

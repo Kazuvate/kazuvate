@@ -8,21 +8,27 @@ daran.
 
 ## Stand
 
-Kopf und Fuss sind fertig, Impressum und Datenschutz stehen. Dazwischen ist
-auf der Startseite noch Platzhalter. Die acht Kästchen zeigen, welche Sektion
-an welchen Platz kommt und was sie leisten soll.
+Die Startseite ist gebaut: Kopf, Leistungen, Referenzen, Ablauf, Kontakt.
+Dazu Impressum, Datenschutz und die Referenzen-Galerie.
+
+Drei ursprünglich geplante Sektionen fehlen bewusst, weil ihnen Material fehlt:
+Einzigartigkeit (zwei Screenshots derselben Vorlage), Ladezeit (eine echte
+Vergleichsmessung) und Über mich (ein Foto). Lieber fünf fertige Sektionen als
+acht halbe.
 
 ## Aufbau
 
 ```
-index.html          Startseite
-impressum.html      Impressum
-datenschutz.html    Datenschutzerklärung
-stil/tokens.css     Farben, Abstände, Rundungen. Die einzige Stelle dafür
-stil/basis.css      Grundlagen, Kopf, Fuss, Platzhalter
-stil/rechtliches.css  nur für die zwei Rechtsseiten
-markenlogo/         Logo, Favicons, App Icons, Vorschaubild fürs Teilen
-kazuvate_Logo.jpg   die ursprüngliche Bilddatei, liegt nur noch als Beleg hier
+index.html            Startseite
+impressum.html        Impressum
+datenschutz.html      Datenschutzerklärung
+referenzen/index.html Referenzen als Bildergalerie, ein Bild pro Projekt
+stil/tokens.css       Farben, Abstände, Rundungen. Die einzige Stelle dafür
+stil/basis.css        Grundlagen, Kopf, Titelband, Fuss, Referenz-Kachel, Platzhalter
+stil/seiten.css       nur impressum.html und datenschutz.html: Fliesstext, Tabellen
+markenlogo/           Logo, Favicons, App Icons, Vorschaubild fürs Teilen
+medien/referenzen/    Bildschirmfotos der Kundenprojekte
+kazuvate_Logo.jpg     die ursprüngliche Bilddatei, liegt nur noch als Beleg hier
 ```
 
 Das Logo steht einmal als `symbol` im HTML und wird oben und unten per `use`
@@ -51,8 +57,8 @@ Wenn eine Farbe geändert wird, dann in `stil/tokens.css`. Sonst nirgends.
 ## Rechtsseiten
 
 `impressum.html` und `datenschutz.html` teilen sich Kopf und Fuss mit der
-Startseite und laden zusätzlich `stil/rechtliches.css`. Eigene Datei, damit
-die Startseite kein CSS lädt, das nur zwei Unterseiten brauchen.
+Startseite und laden zusätzlich `stil/seiten.css`. Eigene Datei, damit die
+Startseite kein CSS lädt, das sie nie braucht.
 
 Die Texte beschreiben den Zustand, den die Seite beim Livegang haben soll,
 nicht den heutigen. Vercel und Resend stehen als Auftragsbearbeiter drin und
@@ -60,11 +66,28 @@ das Kontaktformular ist beschrieben, obwohl es beides noch nicht gibt. Vor dem
 Livegang gegenlesen. Die vollständige Liste der offenen Punkte steht im Second
 Brain unter `02 Projekte/Kazuvate/Kazuvate Website.md`.
 
+## Referenzen
+
+`referenzen/index.html` ist eine Bildergalerie, keine Fallstudien-Unterseite.
+Pro Projekt eine Kachel: Bildschirmfoto, beim Hover oder Fokus erscheint der
+Name, ein Klick auf die Kachel führt direkt auf die echte Live-Website,
+in einem neuen Tab, damit kazuvate.ch offen bleibt. Keine Texte, die ohnehin
+niemand liest, kein Zwischenschritt über eine eigene Fallstudien-Seite.
+
+Dieselbe Kachel erscheint auch als Sektion 04 auf der Startseite (`#referenz`),
+deshalb steht ihr CSS in `stil/basis.css` und nicht in `stil/seiten.css`,
+denn die Startseite lädt `seiten.css` nicht.
+
+Bisher eine Referenz: ProMeti Facility Services Zekiri in Basel. Das
+Bildschirmfoto liegt als WebP in `medien/referenzen/` in zwei Breiten (1280 und
+760) und wird über `srcset` ausgeliefert. Auf dem Handy lädt die
+42-kB-Fassung statt der 77-kB-Fassung.
+
 ## Was noch kommt
 
-1. Texte für die acht Sektionen schreiben
-2. Die Sektionen bauen
-3. Kontaktformular
+1. Foto, Vergleichs-Screenshots und Ladezeitmessung besorgen
+2. Die drei fehlenden Sektionen bauen
+3. Kontaktformular, sobald das Backend steht
 4. Domain kazuvate.ch, dann live
 
 Mehr zum Hintergrund steht im Second Brain unter `02 Projekte/Kazuvate`.

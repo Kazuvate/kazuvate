@@ -1,5 +1,5 @@
 /* ============================================================
-   kazuvate — Tokens
+   kazuvate | Tokens
    Einzige Farbquelle des Projekts. Kein Hex-Wert sonst irgendwo.
    Farben aus markenlogo/logo.svg gemessen.
    ============================================================ */
@@ -34,14 +34,19 @@
   --radius:   12px;
   --radius-knopf: 10px;
 
-  /* --- Bewegung ------------------------------------------- */
+  /* --- Bewegung -------------------------------------------
+     Ein starkes ease-out, nie das eingebaute ease. Eingebaute
+     Kurven sind zu schwach, dadurch wirkt Bewegung unentschlossen.
+     Gedrueckt wird schneller quittiert als gehovert, weil der
+     Finger schon unterwegs ist und auf Antwort wartet. */
   --kurve:    cubic-bezier(.22, 1, .36, 1);
-  --kurz:     300ms;
-  --lang:     650ms;
+  --sofort:   160ms;   /* Knopfdruck, direkte Rueckmeldung */
+  --kurz:     200ms;   /* Hover und kleine Zustandswechsel */
+  --lang:     650ms;   /* Einblenden beim Scrollen */
 }
 
 /* Bewusst kein Dunkelmodus.
    Das Portfolio wurde am 08.08.2026 auf reines Hell umgestellt, hier gilt
    dasselbe. Die dunklen Werte stehen in der Markenrichtung bereit, falls es
-   spaeter doch einer werden soll — dann kommen sie als Block hierher, nicht
+   spaeter doch einer werden soll, dann kommen sie als Block hierher, nicht
    verstreut in die Komponenten. */

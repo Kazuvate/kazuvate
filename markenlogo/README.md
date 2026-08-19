@@ -1,7 +1,7 @@
 # Markenlogo kazuvate
 
 Vektorisiert aus `../kazuvate_Logo.jpg` am 19.08.2026. Ab jetzt ist **`logo.svg` das
-Master-Asset** — die JPG wird nicht mehr ausgeliefert und nur noch als Herkunftsnachweis
+Master-Asset**. Die JPG wird nicht mehr ausgeliefert und nur noch als Herkunftsnachweis
 aufbewahrt.
 
 ## Markenton
@@ -64,4 +64,4 @@ dem Original. Der Pfad nutzt `fill-rule="evenodd"`, weil die innere Flaeche zwis
 K und V eine echte Aussparung ist.
 
 Wenn du das Zeichen spaeter in Figma nachbaust, ist `logo.svg` die richtige
-Importvorlage — nicht die JPG.
+Importvorlage, nicht die JPG.

@@ -1,31 +1,11 @@
 /* ============================================================
-   kazuvate — Rechtliches
-   Nur fuer impressum.html und datenschutz.html.
-   Bewusst eine eigene Datei: die Startseite soll kein CSS laden,
-   das sie nie braucht. Farben ausschliesslich aus tokens.css.
+   kazuvate | Rechtsseiten
+   Fliesstext und Tabellen fuer impressum.html und datenschutz.html.
+   Bewusst eine eigene Datei, damit andere Seiten kein CSS laden,
+   das sie nie brauchen.
+   Das Titelband steht in basis.css, weil es der Kopf jeder
+   Unterseite ist. Farben ausschliesslich aus tokens.css.
    ============================================================ */
-
-/* --- Titelband ---------------------------------------------
-   Sitzt direkt unter dem Kopf und traegt dieselbe Flaeche. Oben
-   entsteht dadurch ein durchgehender Block statt zwei Streifen.
-   ----------------------------------------------------------- */
-.titel{
-  background: var(--flaeche);
-  color: var(--auf-flaeche);
-  padding: var(--s6) 0 var(--s8);
-}
-.titel h1{
-  font-size: clamp(2.1rem, 6vw, 3rem);
-  max-width: 18ch;
-}
-.titel .stand{
-  margin-top: var(--s5);
-  color: var(--auf-flaeche-still);
-  font-size: .74rem;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  font-weight: 600;
-}
 
 /* --- Fliesstext -------------------------------------------- */
 .rechtstext{ padding: var(--s8) 0 var(--s9); }
