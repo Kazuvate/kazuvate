@@ -294,6 +294,63 @@ a{ color: var(--olive); }
   font-size: .92rem;
   max-width: 34ch;
 }
+/* --- Draehte im Fuss ---------------------------------------
+   Zwei runde Knoepfe unter der Zeile im Fuss: das Monogramm KB
+   fuehrt auf kasumbajrami.dev, das zweite auf LinkedIn. Bauart
+   wie die Kreise im Fuss von prometizekiri.com.
+
+   Der Rand ist die Schriftfarbe mit wenig Deckkraft statt eines
+   eigenen Grautons. So passt er sich der Flaeche an und es kommt
+   kein Wert dazu, der in tokens.css fehlt.
+   ------------------------------------------------------------ */
+.fuss-draehte{
+  display: flex;
+  gap: var(--s3);
+  margin-top: var(--s5);
+}
+.draht-knopf{
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid rgb(247 247 241 / .3);
+  border-radius: 50%;
+  color: var(--auf-flaeche-still);
+  text-decoration: none;
+  /* Ohne das sitzt der Inhalt sieben statt vierzehn Pixel unter der
+     Oberkante: die geerbte Zeilenhoehe von 1.7 macht die Box im
+     Kreis hoeher als das Zeichen selbst und schiebt sie nach oben. */
+  line-height: 1;
+  transition: color var(--kurz) var(--kurve),
+              border-color var(--kurz) var(--kurve),
+              transform var(--sofort) var(--kurve);
+}
+/* margin: 0 muss sein, sonst schlaegt .fuss svg durch, das dem
+   Markenzeichen im Fuss 16px Abstand nach unten gibt. Das Zeichen
+   saesse im Kreis sonst sichtbar zu hoch. */
+.draht-knopf svg{
+  width: 17px;
+  height: 17px;
+  display: block;
+  margin: 0;
+}
+/* Das Monogramm sitzt optisch etwas hoch, weil Grossbuchstaben
+   keine Unterlaenge haben. Ein Pixel nach unten gleicht das aus. */
+.monogramm{
+  font-size: .82rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  transform: translateY(1px);
+}
+@media (hover: hover) and (pointer: fine){
+  .draht-knopf:hover{
+    color: var(--auf-flaeche);
+    border-color: rgb(247 247 241 / .7);
+    transform: translateY(-2px);
+  }
+}
+.draht-knopf:active{ transform: scale(.95); }
+
 .fuss-spalte h2{
   font-size: .72rem;
   letter-spacing: .18em;

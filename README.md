@@ -44,6 +44,27 @@ kazuvate_Logo.jpg     die ursprüngliche Bilddatei, liegt nur noch als Beleg hie
 Das Logo steht einmal als `symbol` im HTML und wird oben und unten per `use`
 eingesetzt. So gibt es den Pfad nur einmal und keine zusätzliche Datei zu laden.
 
+## Fuss
+
+Unter der Zeile „Handgebaute Frontend-Websites für KMU in der Schweiz." stehen
+zwei runde Knöpfe, Bauart wie die Kreise im Fuss von prometizekiri.com:
+
+- **KB** führt auf `kasumbajrami.dev`, meine persönliche Seite
+- das **LinkedIn**-Zeichen führt auf mein Profil
+
+Beide öffnen in einem neuen Tab, damit kazuvate.ch offen bleibt. Es sind reine
+Links, keine eingebetteten Widgets — LinkedIn bekommt also erst dann etwas mit,
+wenn jemand wirklich klickt, und die Aussage „keine fremden Skripte" bleibt
+stehen.
+
+Das Monogramm ist dasselbe Zeichen wie auf `kasumbajrami.dev`, hier aber als
+Schrift statt als Bild: spart eine Datei und bleibt in jeder Grösse scharf.
+
+Zwei Stolpersteine, die im CSS als Kommentar stehen: `.fuss svg` gibt jedem SVG
+im Fuss 16 Pixel Abstand nach unten, deshalb braucht das LinkedIn-Zeichen
+ausdrücklich `margin: 0`. Und die geerbte Zeilenhöhe von 1.7 schiebt den Inhalt
+im Kreis nach oben, deshalb `line-height: 1` auf dem Knopf.
+
 ## Ansprache
 
 Alle Kundentexte stehen in der **Wir-Form**, auch wenn hier vorerst nur einer
