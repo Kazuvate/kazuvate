@@ -8,16 +8,19 @@ daran.
 
 ## Stand
 
-Kopf und Fuss sind fertig. Alles dazwischen ist noch Platzhalter. Die acht
-Kästchen auf der Startseite zeigen, welche Sektion an welchen Platz kommt und
-was sie leisten soll.
+Kopf und Fuss sind fertig, Impressum und Datenschutz stehen. Dazwischen ist
+auf der Startseite noch Platzhalter. Die acht Kästchen zeigen, welche Sektion
+an welchen Platz kommt und was sie leisten soll.
 
 ## Aufbau
 
 ```
 index.html          Startseite
+impressum.html      Impressum
+datenschutz.html    Datenschutzerklärung
 stil/tokens.css     Farben, Abstände, Rundungen. Die einzige Stelle dafür
 stil/basis.css      Grundlagen, Kopf, Fuss, Platzhalter
+stil/rechtliches.css  nur für die zwei Rechtsseiten
 markenlogo/         Logo, Favicons, App Icons, Vorschaubild fürs Teilen
 kazuvate_Logo.jpg   die ursprüngliche Bilddatei, liegt nur noch als Beleg hier
 ```
@@ -45,11 +48,23 @@ Wenn eine Farbe geändert wird, dann in `stil/tokens.css`. Sonst nirgends.
 
 `index.html` im Browser öffnen. Es braucht keinen Server und keinen Build.
 
+## Rechtsseiten
+
+`impressum.html` und `datenschutz.html` teilen sich Kopf und Fuss mit der
+Startseite und laden zusätzlich `stil/rechtliches.css`. Eigene Datei, damit
+die Startseite kein CSS lädt, das nur zwei Unterseiten brauchen.
+
+Die Texte beschreiben den Zustand, den die Seite beim Livegang haben soll,
+nicht den heutigen. Vercel und Resend stehen als Auftragsbearbeiter drin und
+das Kontaktformular ist beschrieben, obwohl es beides noch nicht gibt. Vor dem
+Livegang gegenlesen. Die vollständige Liste der offenen Punkte steht im Second
+Brain unter `02 Projekte/Kazuvate/Kazuvate Website.md`.
+
 ## Was noch kommt
 
 1. Texte für die acht Sektionen schreiben
 2. Die Sektionen bauen
-3. Impressum und Datenschutz
+3. Kontaktformular
 4. Domain kazuvate.ch, dann live
 
 Mehr zum Hintergrund steht im Second Brain unter `02 Projekte/Kazuvate`.

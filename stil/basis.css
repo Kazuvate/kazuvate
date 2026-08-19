@@ -183,6 +183,12 @@ a{ color: var(--olive); }
 }
 .fuss-spalte a:hover{ opacity: 1; text-decoration: underline; }
 
+.fuss-ort{
+  display: block;
+  font-size: .94rem;
+  opacity: .9;
+}
+
 .fuss-unten{
   margin-top: var(--s7);
   padding-top: var(--s5);
@@ -193,6 +199,12 @@ a{ color: var(--olive); }
   font-size: .84rem;
   color: var(--auf-flaeche-still);
 }
+.fuss-unten a{
+  color: inherit;
+  transition: opacity var(--kurz) var(--kurve);
+}
+.fuss-unten a:hover{ opacity: .75; }
+.fuss-unten a[aria-current]{ text-decoration: none; opacity: .6; }
 
 /* --- Platzhalter ------------------------------------------
    Alles hier fliegt raus, sobald die echten Sektionen stehen.

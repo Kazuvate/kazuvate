@@ -1,0 +1,187 @@
+/* ============================================================
+   kazuvate — Rechtliches
+   Nur fuer impressum.html und datenschutz.html.
+   Bewusst eine eigene Datei: die Startseite soll kein CSS laden,
+   das sie nie braucht. Farben ausschliesslich aus tokens.css.
+   ============================================================ */
+
+/* --- Titelband ---------------------------------------------
+   Sitzt direkt unter dem Kopf und traegt dieselbe Flaeche. Oben
+   entsteht dadurch ein durchgehender Block statt zwei Streifen.
+   ----------------------------------------------------------- */
+.titel{
+  background: var(--flaeche);
+  color: var(--auf-flaeche);
+  padding: var(--s6) 0 var(--s8);
+}
+.titel h1{
+  font-size: clamp(2.1rem, 6vw, 3rem);
+  max-width: 18ch;
+}
+.titel .stand{
+  margin-top: var(--s5);
+  color: var(--auf-flaeche-still);
+  font-size: .74rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* --- Fliesstext -------------------------------------------- */
+.rechtstext{ padding: var(--s8) 0 var(--s9); }
+
+/* 760px statt 66ch, damit Tabellen Luft haben. Die Zeilenlaenge
+   im Fliesstext begrenzt p{max-width:66ch} aus basis.css. */
+.lauf{
+  max-width: 760px;
+  counter-reset: abschnitt;
+}
+
+.lauf h2{
+  font-size: 1.34rem;
+  margin: var(--s8) 0 var(--s4);
+  padding-top: var(--s5);
+  border-top: 1px solid var(--linie);
+}
+.lauf h2::before{
+  counter-increment: abschnitt;
+  content: counter(abschnitt, decimal-leading-zero);
+  display: block;
+  margin-bottom: var(--s2);
+  font-size: .72rem;
+  letter-spacing: .18em;
+  font-weight: 600;
+  color: var(--olive);
+}
+.lauf h2:first-child{
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+.lauf h3{
+  font-size: 1.02rem;
+  margin: var(--s6) 0 var(--s2);
+}
+
+.lauf p{ margin: 0 0 var(--s4); color: var(--tinte-2); }
+.lauf ul{
+  margin: 0 0 var(--s4);
+  padding-left: 1.15em;
+  max-width: 64ch;
+  color: var(--tinte-2);
+}
+.lauf li{ margin-bottom: var(--s2); }
+.lauf li:last-child{ margin-bottom: 0; }
+.lauf strong{ color: var(--tinte); font-weight: 650; }
+
+/* --- Vorspann ----------------------------------------------
+   Die Kurzfassung ganz oben. Wer nur das liest, weiss das
+   Wesentliche.
+   ----------------------------------------------------------- */
+.vorab{
+  border-left: 3px solid var(--olive);
+  padding-left: var(--s5);
+  margin-bottom: var(--s8);
+}
+.vorab p{
+  font-size: 1.1rem;
+  color: var(--tinte);
+  margin: 0;
+}
+
+/* --- Adressblock -------------------------------------------- */
+.adresse{
+  background: var(--karte);
+  border: 1px solid var(--linie);
+  border-radius: var(--radius);
+  padding: var(--s5);
+  margin: 0 0 var(--s5);
+  font-style: normal;
+  line-height: 1.75;
+}
+.adresse .name{ font-weight: 650; color: var(--tinte); }
+.adresse .zeile{ color: var(--tinte-2); }
+.adresse .draht{
+  margin-top: var(--s3);
+  padding-top: var(--s3);
+  border-top: 1px solid var(--linie);
+  display: grid;
+  gap: 2px;
+}
+
+/* --- Inhaltsuebersicht -------------------------------------- */
+.uebersicht{
+  background: var(--karte-2);
+  border-radius: var(--radius);
+  padding: var(--s5);
+  margin-bottom: var(--s8);
+}
+.uebersicht h2{
+  font-size: .72rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--still);
+  margin: 0 0 var(--s3);
+  padding: 0;
+  border: 0;
+}
+.uebersicht h2::before{ content: none; }
+.uebersicht ol{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: punkt;
+  display: grid;
+  gap: 2px;
+}
+@media (min-width: 700px){
+  .uebersicht ol{ grid-template-columns: 1fr 1fr; gap: 2px var(--s5); }
+}
+.uebersicht li{ margin: 0; }
+.uebersicht a{
+  display: block;
+  padding: 3px 0;
+  font-size: .94rem;
+  text-decoration: none;
+  color: var(--tinte-2);
+  transition: color var(--kurz) var(--kurve);
+}
+.uebersicht a::before{
+  counter-increment: punkt;
+  content: counter(punkt, decimal-leading-zero) " ";
+  color: var(--olive);
+  font-size: .8rem;
+  font-weight: 600;
+  margin-right: var(--s2);
+}
+.uebersicht a:hover{ color: var(--olive); text-decoration: underline; }
+
+/* --- Tabelle ------------------------------------------------ */
+.tab{
+  overflow-x: auto;
+  margin: 0 0 var(--s4);
+}
+.tab table{
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 420px;
+  font-size: .94rem;
+}
+.tab th,
+.tab td{
+  text-align: left;
+  padding: var(--s3) var(--s4) var(--s3) 0;
+  border-bottom: 1px solid var(--linie);
+  vertical-align: top;
+  color: var(--tinte-2);
+}
+.tab thead th{
+  font-size: .72rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--still);
+  border-bottom: 1px solid var(--linie-kraeftig);
+}
+.tab tbody td:first-child{ color: var(--tinte); font-weight: 650; }
+.tab tr:last-child td{ border-bottom: 0; }
