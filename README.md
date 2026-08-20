@@ -8,8 +8,8 @@ daran.
 
 ## Stand
 
-Die Startseite ist gebaut: Kopf, Leistungen, Warum kazuvate, Referenzen,
-Ablauf. Dazu die Kontaktseite, Impressum, Datenschutz und die
+Die Startseite ist gebaut: Kopf mit Über uns, Leistungen, Warum kazuvate,
+Referenzen, Ablauf. Dazu die Kontaktseite, Impressum, Datenschutz und die
 Referenzen-Galerie.
 
 Die Kontaktsektion stand bis zum 19.08.2026 unten auf der Startseite. Sie ist
@@ -18,10 +18,13 @@ derselben Website ist einmal zu viel. An ihrer Stelle steht jetzt ein
 Abschlussblock mit einer Zeile und einem Knopf, sonst hört die Seite nach dem
 Ablauf im Nichts auf. Alle Knöpfe und Menüpunkte führen auf die Kontaktseite.
 
-Drei ursprünglich geplante Sektionen fehlen bewusst, weil ihnen Material fehlt:
-Einzigartigkeit (zwei Screenshots derselben Vorlage), Ladezeit (eine echte
-Vergleichsmessung) und Über mich (ein Foto). Lieber fünf fertige Sektionen als
-acht halbe.
+Zwei ursprünglich geplante Sektionen fehlen weiterhin, weil ihnen Material
+fehlt: Einzigartigkeit (zwei Screenshots derselben Vorlage) und Ladezeit (eine
+echte Vergleichsmessung). Lieber fertige Sektionen als halbe.
+
+Die dritte, „Über mich", steht als drei kurze Abschnitte direkt im Kopfbereich
+der Startseite. Ohne Foto, weil das Foto immer noch fehlt, der Text aber auch
+ohne trägt.
 
 ## Aufbau
 
@@ -64,6 +67,43 @@ Zwei Stolpersteine, die im CSS als Kommentar stehen: `.fuss svg` gibt jedem SVG
 im Fuss 16 Pixel Abstand nach unten, deshalb braucht das LinkedIn-Zeichen
 ausdrücklich `margin: 0`. Und die geerbte Zeilenhöhe von 1.7 schiebt den Inhalt
 im Kreis nach oben, deshalb `line-height: 1` auf dem Knopf.
+
+## Leistungen
+
+Drei Spalten nebeneinander, getrennt durch senkrechte Haarlinien im Markenton,
+Aufbau wie bei portdigitalco.com: Nummer, Zeichen, Titel, Text.
+
+Die drei Zeichen sind aus Rechtecken, Linien und Kreisen zusammengesetzt und
+stehen direkt im HTML — Fenster für den One-Pager, zwei versetzte Fenster für
+die mehrseitige Website, eine Uhr für Wartung und Textpflege. Keine
+Icon-Bibliothek: das wäre eine Fremddatei für drei Symbole, und Fremddateien
+sind hier das, was wir gerade nicht wollen.
+
+Bis zum 20.08.2026 standen die Leistungen als dreispaltige Zeilen untereinander,
+mit der Begründung, dass Karten gleich lange Texte erzwingen. Das gilt weiter:
+die drei Texte sind bewusst ähnlich lang. Kommt eine vierte Leistung dazu,
+bricht das Raster auf zwei Zeilen um und die Texte müssen nochmal angeglichen
+werden.
+
+## Über uns
+
+Über uns ist **keine eigene Seite**, sondern steht im Kopfbereich der
+Startseite, direkt unter der H1: drei Abschnitte — Wer wir sind, Was uns
+antreibt, Mit wem wir arbeiten. Der Menüpunkt springt auf den Anker
+`#ueber-uns`. Eine eigene Seite dafür gab es am 20.08.2026 für ein paar
+Stunden, sie ist wieder aufgelöst worden: eine Seite statt zwei.
+
+Aufbau wie auf portdigitalco.com/about: alles linksbündig untereinander,
+getrennt nur durch Haarlinien. Bei kazuvate laufen die Linien im Markenton
+(`--linie-marke`, Oliv mit 28 % Deckkraft) statt in Grau.
+
+Der Text bricht bei 56 Zeichen um, die Linien laufen über die volle Breite.
+Die rechte Hälfte bleibt absichtlich leer — dort kommt später etwas hin, ohne
+dass das Raster nochmal angefasst werden muss.
+
+Die Texte sind nicht übersetzt, sondern auf kazuvate umgeschrieben: Schweizer
+KMU statt US-Trades, und ohne Behauptungen über Dutzende gebaute Seiten, die
+heute noch nicht stimmen würden.
 
 ## Ansprache
 

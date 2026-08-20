@@ -41,6 +41,7 @@
       <a href="#leistungen">Leistungen</a>
       <a href="referenzen/index.html">Referenzen</a>
       <a href="#ablauf">Ablauf</a>
+      <a href="#ueber-uns">Über uns</a>
       <a href="kontakt.html">Kontakt</a>
     </nav>
 
@@ -55,7 +56,40 @@
   <section class="hero">
     <div class="wrap">
       <h1>Webdesign für KMU in der Schweiz</h1>
-      <p class="hero-zeile">Wir bauen Ihre Website von Hand. Kein WordPress, kein Baukasten, keine monatlichen Lizenzkosten.</p>
+
+      <!-- Drei kurze Abschnitte direkt unter dem Titel, Aufbau wie auf
+           portdigitalco.com/about: alles linksbuendig untereinander,
+           getrennt nur durch Haarlinien. Es gibt keine eigene Seite mehr
+           dafuer, Startseite und Ueber uns sind seit 20.08.2026 dieselbe
+           Seite. Der Anker traegt deshalb dieser Block. -->
+      <div class="hero-abschnitte" id="ueber-uns">
+
+        <div class="hero-abschnitt">
+          <p class="augenbraue">Wer wir sind</p>
+          <div class="hero-text">
+            <p>kazuvate baut Websites für kleine und mittlere Unternehmen in der Schweiz. Keine Generalisten, keine fremden Vorlagen: Jede Seite entsteht von Hand, für einen Betrieb, der von Kundschaft aus der Region lebt.</p>
+            <p>Diese Beschränkung ist Absicht. Wer nur eine Sorte Kunden bedient, wird darin schnell gut.</p>
+          </div>
+        </div>
+
+        <div class="hero-abschnitt">
+          <p class="augenbraue">Was uns antreibt</p>
+          <div class="hero-text">
+            <p>Betriebe, die ihr Handwerk beherrschen und online trotzdem kaum vorkommen: Diese Lücke ist uns immer wieder aufgefallen. Die grossen Agenturen zu teuer, die Baukästen zu beliebig, dazwischen nichts.</p>
+            <p>Genau das ändern wir. Wer früh aufsteht und saubere Arbeit abliefert, hat verlässliche Anfragen verdient.</p>
+          </div>
+        </div>
+
+        <div class="hero-abschnitt">
+          <p class="augenbraue">Mit wem wir arbeiten</p>
+          <div class="hero-text">
+            <p>Sanitär, Elektro und Heizung, Reinigung, Gartenbau, Maler und Gipser, Transport, Treuhand und Praxen: Betriebe, die von der Umgebung leben. Wenn Sie Ihr Fach beherrschen und wollen, dass mehr Leute Sie finden, sind wir die Richtigen.</p>
+            <p>Die Zahl der Kunden halten wir bewusst klein. Ihr Auftrag geht nicht an ein Juniorteam, Sie reden direkt mit denen, die bauen.</p>
+          </div>
+        </div>
+
+      </div>
+
       <a class="knopf" href="kontakt.html">Unverbindlich anfragen</a>
     </div>
   </section>
@@ -67,22 +101,46 @@
       <p class="augenbraue">Leistungen</p>
       <h2>Was wir für Sie bauen</h2>
 
+      <!-- Drei Spalten, getrennt durch senkrechte Haarlinien, Aufbau wie
+           bei portdigitalco.com: Nummer, Zeichen, Titel, Text. Die Zeichen
+           sind aus Rechtecken, Linien und Kreisen gezeichnet, keine
+           Icon-Bibliothek: das waere eine Fremddatei fuer drei Symbole. -->
       <ol class="leistungen">
+
         <li>
           <span class="nr">01</span>
+          <svg class="leistung-zeichen" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <rect x="2.5" y="4.5" width="19" height="15" rx="2"/>
+            <line x1="2.5" y1="9.5" x2="21.5" y2="9.5"/>
+            <circle class="punkt" cx="6" cy="7" r=".9"/>
+            <line x1="6" y1="13.5" x2="15" y2="13.5"/>
+            <line x1="6" y1="16.5" x2="12" y2="16.5"/>
+          </svg>
           <h3>One-Pager</h3>
           <p>Eine einzelne Seite mit allem, was zählt: Leistungen, Kontakt und Anfahrt. Für Betriebe, die gefunden werden wollen, ohne eine grosse Website zu pflegen.</p>
         </li>
+
         <li>
           <span class="nr">02</span>
+          <svg class="leistung-zeichen" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <rect x="2.5" y="7.5" width="14" height="13" rx="2"/>
+            <line x1="2.5" y1="11.5" x2="16.5" y2="11.5"/>
+            <path d="M7.5 7.5v-2a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-2"/>
+          </svg>
           <h3>Mehrseitige Website</h3>
           <p>Fünf bis acht Unterseiten mit eigener Struktur für Leistungen, Team und Referenzen. Die übliche Wahl, wenn mehrere Angebote je ihren eigenen Platz brauchen.</p>
         </li>
+
         <li>
           <span class="nr">03</span>
+          <svg class="leistung-zeichen" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="12" r="9"/>
+            <polyline points="12 6.5 12 12 15.5 14"/>
+          </svg>
           <h3>Wartung und Textpflege</h3>
           <p>Sie schicken uns eine Mail, wir haben die Änderung innert 24 Stunden drin. Dazu Hosting, Sicherungen und ein Auge auf die Ladezeit.</p>
         </li>
+
       </ol>
 
       <p class="nachsatz">Mehrsprachig in Deutsch, Französisch und Englisch ist überall möglich. Preis und Dauer hängen vom Umfang ab, deshalb stehen sie nicht auf dieser Seite. Beides klären wir im ersten Gespräch, bevor Sie irgendetwas unterschreiben.</p>
@@ -253,6 +311,7 @@
         <a href="#leistungen">Leistungen</a>
         <a href="referenzen/index.html">Referenzen</a>
         <a href="#ablauf">Ablauf</a>
+        <a href="#ueber-uns">Über uns</a>
         <a href="kontakt.html">Kontakt</a>
       </nav>
 

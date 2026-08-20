@@ -21,6 +21,10 @@
   --still:      #5E6650;     /* Labels, Legenden */
   --linie:      #DCDBD0;
   --linie-kraeftig: #BFBFAF;
+  /* Haarlinie im Markenton, fuer Trenner innerhalb einer Sektion.
+     Der volle Oliv-Ton waere als Linie zu laut, deshalb mit
+     Deckkraft statt als eigener Hexwert. */
+  --linie-marke: rgb(63 80 25 / .28);
 
   /* --- Abstaende ------------------------------------------ */
   --s1: 4px;  --s2: 8px;  --s3: 12px; --s4: 16px;

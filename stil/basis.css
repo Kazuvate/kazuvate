@@ -159,13 +159,20 @@ a{ color: var(--olive); }
     padding-block: var(--s3);
     row-gap: var(--s3);
   }
+  /* Seit Über uns dazugekommen ist, sind es fuenf Punkte. Mit den
+     alten 24px Abstand lief Kontakt aus dem sichtbaren Bereich und
+     war nur noch durch Wischen erreichbar. Mit 12px und einer Spur
+     kleinerer Schrift passen alle fuenf auf ein uebliches Handy.
+     Auf sehr schmalen Geraeten wischt man weiter, deshalb bleibt
+     overflow-x stehen. */
   .navigation{
     order: 3;
     flex-basis: 100%;
-    gap: var(--s5);
+    gap: var(--s3);
     overflow-x: auto;
     scrollbar-width: none;
   }
+  .navigation a{ font-size: .88rem; }
   .navigation::-webkit-scrollbar{ display: none; }
   .navigation a{ white-space: nowrap; }
 
@@ -426,13 +433,43 @@ a{ color: var(--olive); }
   font-size: clamp(2.3rem, 6.5vw, 3.9rem);
   max-width: 16ch;
 }
-.hero-zeile{
-  margin-top: var(--s5);
-  font-size: clamp(1.06rem, 2vw, 1.25rem);
-  color: var(--tinte-2);
-  max-width: 48ch;
-}
 .hero .knopf{ margin-top: var(--s7); }
+
+/* Drei kurze Abschnitte unter dem Titel, Aufbau wie auf
+   portdigitalco.com/about: alles linksbuendig untereinander,
+   getrennt nur durch Haarlinien. Bei kazuvate laufen die Linien im
+   Markenton statt in Grau.
+
+   Bis zum 20.08.2026 stand die Ueberschrift in einer eigenen Spalte
+   links neben dem Text. Jetzt steht sie darueber und der Text bleibt
+   in der linken Haelfte, waehrend die Linien ueber die volle Breite
+   laufen: rechts ist damit Platz fuer das, was spaeter dazukommt,
+   ohne dass das Raster nochmal angefasst werden muss. */
+.hero-abschnitte{
+  margin-top: var(--s8);
+  border-top: 1px solid var(--linie-marke);
+}
+
+.hero-abschnitt{
+  padding: var(--s6) 0;
+  border-bottom: 1px solid var(--linie-marke);
+}
+
+/* Die Augenbraue traegt hier die Ueberschrift des Abschnitts. */
+.hero-abschnitt .augenbraue{ margin-bottom: var(--s4); }
+
+/* 56ch statt 62: die Zeile soll sichtbar vor der Mitte enden,
+   damit die rechte Haelfte als freie Flaeche lesbar bleibt und
+   nicht wie ein Umbruchunfall wirkt. */
+.hero-text p{
+  color: var(--tinte-2);
+  max-width: 56ch;
+}
+.hero-text p + p{ margin-top: var(--s4); }
+
+/* Der erste Satz traegt die Aussage, der zweite begruendet sie.
+   Deshalb steht er eine Spur dunkler da, ohne eigene Ueberschrift. */
+.hero-text p:first-child{ color: var(--tinte); }
 
 /* --- Knopf ------------------------------------------------- */
 .knopf{
@@ -453,30 +490,77 @@ a{ color: var(--olive); }
 .knopf:active{ transform: scale(.97); }
 
 /* --- Leistungen -------------------------------------------
-   Dreispaltige Zeilen statt drei Karten nebeneinander. Karten
-   erzwingen gleich lange Texte, Zeilen nicht.
+   Drei Spalten nebeneinander, getrennt durch senkrechte
+   Haarlinien im Markenton, Aufbau wie bei portdigitalco.com:
+   Nummer, Zeichen, Titel, Text.
+
+   Bis zum 20.08.2026 waren das dreispaltige Zeilen untereinander,
+   mit der Begruendung, dass Karten gleich lange Texte erzwingen.
+   Das gilt weiterhin: die drei Texte hier sind bewusst aehnlich
+   lang gehalten. Kommt eine vierte Leistung dazu, bricht das
+   Raster auf zwei Zeilen um, dann muessen die Texte nochmal
+   angeglichen werden.
    ---------------------------------------------------------- */
 .leistungen{
   list-style: none;
-  margin: var(--s6) 0 0;
+  margin: var(--s7) 0 0;
   padding: 0;
-}
-.leistungen li{
-  padding: var(--s5) 0;
-  border-top: 1px solid var(--linie);
   display: grid;
-  gap: var(--s2);
+  border-top: 1px solid var(--linie-marke);
+  border-bottom: 1px solid var(--linie-marke);
 }
-@media (min-width: 800px){
-  .leistungen li{
-    grid-template-columns: 3rem 15rem 1fr;
-    gap: var(--s5);
-    align-items: baseline;
+@media (min-width: 860px){
+  .leistungen{ grid-template-columns: repeat(3, 1fr); }
+  /* Die Trennlinie sitzt links am zweiten und dritten Feld, nicht
+     rechts am ersten und zweiten: sonst haengt aussen eine Linie,
+     wenn eine Leistung dazukommt oder wegfaellt. */
+  .leistungen li + li{
+    border-left: 1px solid var(--linie-marke);
+    padding-left: var(--s6);
   }
 }
-.leistungen{ border-bottom: 1px solid var(--linie); }
-.leistungen h3{ font-size: 1.06rem; }
-.leistungen p{ color: var(--tinte-2); }
+@media (max-width: 859px){
+  .leistungen li + li{ border-top: 1px solid var(--linie-marke); }
+}
+.leistungen li{
+  padding: var(--s7) var(--s6) var(--s7) 0;
+}
+/* Die letzte Spalte bekommt rechts keinen Innenabstand, damit der
+   Block genauso breit endet wie die Ueberschrift darueber. */
+.leistungen li:last-child{ padding-right: 0; }
+
+.leistungen .nr{
+  display: block;
+  color: var(--still);
+  margin-bottom: var(--s6);
+}
+
+/* Zeichen aus Rechtecken, Linien und Kreisen, keine Bibliothek.
+   Nur Kontur, kein Fuellton: gefuellte Symbole wirken neben der
+   duennen Haarlinie wie Fremdkoerper. */
+.leistung-zeichen{
+  display: block;
+  width: 28px;
+  height: 28px;
+  margin-bottom: var(--s5);
+  fill: none;
+  stroke: var(--tinte);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+/* Der Punkt im Fensterbalken ist gefuellt statt umrandet, bei
+   knapp zwei Pixel Durchmesser wuerde eine Kontur nur schmieren. */
+.leistung-zeichen .punkt{ fill: currentColor; stroke: none; }
+
+.leistungen h3{
+  font-size: 1.14rem;
+  margin-bottom: var(--s4);
+}
+.leistungen p{
+  color: var(--tinte-2);
+  font-size: .96rem;
+}
 
 .nr{
   font-size: .74rem;
