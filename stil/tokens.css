@@ -47,8 +47,7 @@
   --sofort:   160ms;   /* Knopfdruck, direkte Rueckmeldung */
   --kurz:     200ms;   /* Hover und kleine Zustandswechsel */
   --lang:     650ms;   /* Einblenden beim Scrollen */
-  --auftritt-dauer: 700ms;   /* Bloecke, die ins Bild kommen */
-  --zeichen-dauer:  900ms;   /* Strichzeichnung der Symbole */
+  --zeichen-dauer:  900ms;   /* Strichzeichnung der Symbole beim Laden */
 }
 
 /* Bewusst kein Dunkelmodus.

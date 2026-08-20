@@ -4,17 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Referenzen | kazuvate</title>
-<meta name="description" content="Websites, die kazuvate gebaut hat. Handgebautes Frontend für Schweizer KMU.">
+<title>Leistungen | kazuvate</title>
+<meta name="description" content="Drei Dinge, die kazuvate für Ihre Website anders macht: Schnelligkeit, Sichtbarkeit und alles aus einer Hand.">
 <meta name="theme-color" content="#2C3616">
 
-<link rel="icon" href="../markenlogo/favicon.ico" sizes="32x32">
-<link rel="icon" href="../markenlogo/favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="../markenlogo/apple-touch-icon.png">
-<link rel="manifest" href="../markenlogo/site.webmanifest">
+<link rel="icon" href="markenlogo/favicon.ico" sizes="32x32">
+<link rel="icon" href="markenlogo/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="markenlogo/apple-touch-icon.png">
+<link rel="manifest" href="markenlogo/site.webmanifest">
 
-<link rel="stylesheet" href="../stil/tokens.css">
-<link rel="stylesheet" href="../stil/basis.css">
+<link rel="stylesheet" href="stil/tokens.css">
+<link rel="stylesheet" href="stil/basis.css">
+<link rel="stylesheet" href="stil/leistungen.css">
 
 <!-- Sagt dem CSS, dass JavaScript laeuft. Muss hier oben stehen und darf
      nicht in haupt.js: das laedt mit defer und kaeme zu spaet. Traegt heute
@@ -38,7 +39,7 @@
 <header class="kopf">
   <div class="wrap kopf-innen">
 
-    <a class="marke" href="../index.html">
+    <a class="marke" href="index.html">
       <svg viewBox="0 0 585.51 442.90" role="img" aria-label="kazuvate"><use href="#marke"></use></svg>
       <span>kazuvate</span>
     </a>
@@ -54,15 +55,15 @@
 
     <nav class="navigation" id="hauptmenue" aria-label="Hauptnavigation">
       <div class="navigation-innen">
-        <a href="../index.html#ueber-uns">Über uns</a>
-        <a href="../leistungen.html">Leistungen</a>
-        <a href="index.html" aria-current="page">Referenzen</a>
-        <a href="../index.html#ablauf">Ablauf</a>
-        <a href="../kontakt.html">Kontakt</a>
+        <a href="index.html#ueber-uns">Über uns</a>
+        <a href="leistungen.html" aria-current="page">Leistungen</a>
+        <a href="referenzen/index.html">Referenzen</a>
+        <a href="index.html#ablauf">Ablauf</a>
+        <a href="kontakt.html">Kontakt</a>
       </div>
     </nav>
 
-    <a class="kopf-knopf" href="../kontakt.html">Unverbindlich anfragen</a>
+    <a class="kopf-knopf" href="kontakt.html">Unverbindlich anfragen</a>
 
   </div>
 </header>
@@ -70,36 +71,63 @@
 <!-- ====================== Titelband ====================== -->
 <div class="titel">
   <div class="wrap">
-    <h1>Referenzen</h1>
-    <p class="unter">Websites, die wir gebaut haben. Ein Bild, ein Link. Am besten spricht die Seite selbst.</p>
+    <h1>Leistungen</h1>
+    <p class="unter">Drei Dinge, auf die es bei einer Website ankommt. Und wie wir sie angehen.</p>
   </div>
 </div>
 
-<!-- ====================== Inhalt ====================== -->
+<!-- ====================== Inhalt ======================
+     Dieselben drei Punkte wie in der Sektion "Warum kazuvate" auf
+     der Startseite (Schnelligkeit, Sichtbarkeit, Rundum), hier
+     grosser und einzeln durchgezogen statt als Kachel-Trio.
+     Grosse Nummer links, Inhalt rechts, getrennt durch Haarlinien
+     im Markenton wie beim Ueber-uns-Block. Keine Scroll-Animation:
+     die Bloecke stehen von Anfang an da. Die einzige Bewegung ist
+     eine kleine Reaktion beim Zeigen oder Fokussieren, siehe
+     stil/leistungen.css.
+     ==================================================== -->
 <main id="inhalt">
-  <div class="wrap referenz-bereich">
+  <div class="wrap">
 
-    <div class="referenz-galerie">
+    <ol class="leistungen-gross">
 
-      <a class="referenz-kachel" href="https://www.prometizekiri.com/" target="_blank" rel="noopener">
-        <img src="../medien/referenzen/prometi-startseite.webp"
-             srcset="../medien/referenzen/prometi-startseite-760.webp 760w,
-                     ../medien/referenzen/prometi-startseite.webp 1280w"
-             sizes="(min-width: 640px) 500px, 100vw"
-             width="1280" height="860" loading="lazy" decoding="async" alt="">
-        <span class="name">ProMeti Facility Services<span class="nur-fuer-screenreader">, öffnet prometizekiri.com in einem neuen Tab</span></span>
-      </a>
+      <li class="leistung-gross">
+        <span class="leistung-nr">01</span>
+        <div class="leistung-inhalt">
+          <p class="augenbraue">Schnelligkeit</p>
+          <h2>Wochen statt Monate.<br>Ohne Abstriche.</h2>
+          <p>Andere Agenturen rechnen in Monaten, weil Ihr Projekt durch mehrere Abteilungen läuft. Bei uns reden Sie direkt mit denen, die bauen. Handgebaut statt Vorlage, ohne Ballast, der die Seite langsam macht.</p>
+        </div>
+      </li>
 
-    </div>
+      <li class="leistung-gross">
+        <span class="leistung-nr">02</span>
+        <div class="leistung-inhalt">
+          <p class="augenbraue">Sichtbarkeit</p>
+          <h2>Gefunden werden.<br>Dort, wo gesucht wird.</h2>
+          <p>Google-Unternehmensprofil, strukturierte Firmendaten und überall dieselben Angaben. Das ist die Grundlage dafür, dass Sie in der Google-Suche, auf Google Maps und zunehmend auch in KI-Assistenten auftauchen.</p>
+        </div>
+      </li>
+
+      <li class="leistung-gross">
+        <span class="leistung-nr">03</span>
+        <div class="leistung-inhalt">
+          <p class="augenbraue">Rundum</p>
+          <h2>Alles aus einer Hand.<br>Von der Domain bis zur Wartung.</h2>
+          <p>Domain, Hosting, Kontaktformular, Textänderungen und ein System für echte Kundenbewertungen, dazu ein monatlicher Bericht zur Sichtbarkeit. Sie haben einen Ansprechpartner statt fünf Rechnungen.</p>
+        </div>
+      </li>
+
+    </ol>
 
   </div>
 
-  <!-- Abschluss. Ohne ihn endet die Seite nach der letzten Kachel
+  <!-- Abschluss. Ohne ihn endet die Seite nach der letzten Zeile
        im Nichts und der Besucher hat keinen naechsten Schritt. -->
   <section class="abschluss">
     <div class="wrap">
-      <p class="abschluss-zeile">Bauen wir etwas, das funktioniert.</p>
-      <a class="knopf" href="../kontakt.html">Unverbindlich anfragen</a>
+      <p class="abschluss-zeile">Reden wir über Ihr Projekt.</p>
+      <a class="knopf" href="kontakt.html">Unverbindlich anfragen</a>
     </div>
   </section>
 
@@ -143,11 +171,11 @@
 
       <nav class="fuss-spalte" aria-labelledby="fuss-seiten">
         <h2 id="fuss-seiten">Seiten</h2>
-        <a href="../index.html#ueber-uns">Über uns</a>
-        <a href="../leistungen.html">Leistungen</a>
-        <a href="index.html">Referenzen</a>
-        <a href="../index.html#ablauf">Ablauf</a>
-        <a href="../kontakt.html">Kontakt</a>
+        <a href="index.html#ueber-uns">Über uns</a>
+        <a href="leistungen.html" aria-current="page">Leistungen</a>
+        <a href="referenzen/index.html">Referenzen</a>
+        <a href="index.html#ablauf">Ablauf</a>
+        <a href="kontakt.html">Kontakt</a>
       </nav>
 
       <div class="fuss-spalte">
@@ -161,8 +189,8 @@
 
     <div class="fuss-unten">
       <span>Kazuvate Bajrami</span>
-      <a href="../impressum.html">Impressum</a>
-      <a href="../datenschutz.html">Datenschutz</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
       <span>Keine Cookies, kein Tracking</span>
     </div>
 
@@ -171,7 +199,7 @@
 
 <!-- Eigenes Skript, kein fremder Server. Am Ende des Body und mit
      defer, damit die Seite nicht darauf warten muss. -->
-<script src="../skript/haupt.js" defer></script>
+<script src="skript/haupt.js" defer></script>
 
 </body>
 </html>

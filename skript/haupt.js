@@ -7,15 +7,29 @@
    nicht die andere mitreisst:
    1. Kopf: Klasse setzen, sobald gescrollt wird.
    2. Menue: die Schublade auf dem Handy oeffnen und schliessen.
-   3. Auftritt: Klasse setzen, sobald ein Block ins Bild kommt.
+   3. Faden: der Strich neben "Wer wir sind" folgt dem Scrollen.
    4. Zeichen: die Strichlaengen der Leistungs-Symbole messen.
    5. Kacheln: den Umfang des Rahmens messen.
+
+   Bis zum 20.08.2026 gab es an dieser Stelle einen anderen Block:
+   Bloecke, die beim Scrollen ins Bild kommen, blendeten sich
+   einmalig nacheinander ein. Kasum wollte das nicht mehr — genau
+   dieses "man scrollt runter und Dinge tauchen auf" ist fuer ihn
+   das Erkennungszeichen von Vibe-Coding-Seiten. Der Block ist
+   ersatzlos raus, keine IntersectionObserver mehr in dieser Datei.
+
+   Der Faden weiter unten ist etwas anderes: keine einmalige
+   Reaktion auf "im Bild angekommen", sondern eine durchgehende
+   Kopplung an die Scrollposition selbst, die sich staendig
+   veraendert, waehrend man liest. Kasum hat das am 20.08.2026
+   ausdruecklich so angefragt, als Ersatz fuer eine urspruenglich
+   mit Framer Motion/React gebaute Vorlage.
 
    Alles hier ist Zugabe. Faellt das Skript aus, bleibt die Seite
    vollstaendig lesbar und bedienbar: die Klasse `js` am
    Wurzelelement fehlt dann, und ohne sie greift keine der Regeln,
    die etwas versteckt. Die Navigation steht wieder als Zeile im
-   Kopf, alle Bloecke stehen sichtbar da.
+   Kopf.
 
    Die Klasse `js` setzt eine einzige Zeile im Kopf jeder Seite,
    nicht diese Datei: die laedt mit defer und kaeme zu spaet. Die
@@ -58,6 +72,50 @@
   // Beim Laden mitten auf der Seite, etwa nach einem Sprung auf
   // einen Anker oder beim Zurueckblaettern, ist schon gescrollt.
   pruefen();
+})();
+
+/* --- Faden ----------------------------------------------------
+   Der Faden neben den drei Ueber-uns-Bloecken zeichnet sich weiter,
+   waehrend man durch den Bereich scrollt: halb gezeichnet, sobald
+   "Wer wir sind" von unten ins Bild kommt, ganz gezeichnet, sobald
+   "Mit wem wir arbeiten" oben aus dem Bild laeuft.
+
+   `pathLength="1"` steht direkt auf dem <path> im HTML und normiert
+   dessen geometrische Laenge auf 1. Dadurch reicht hier ein
+   Anteilswert zwischen 0 und 1, kein gemessener Pixelwert wie beim
+   Kachelrahmen weiter unten.
+   ------------------------------------------------------------ */
+(function () {
+  'use strict';
+
+  var pfad = document.querySelector('.hero-faden path');
+  var bereich = document.querySelector('.hero-abschnitte');
+  if (!pfad || !bereich) return;
+
+  function fortschritt() {
+    var rechteck = bereich.getBoundingClientRect();
+    var vh = window.innerHeight;
+    // 0, sobald die Oberkante des Bereichs von unten ins Bild
+    // kommt; 1, sobald die Unterkante oben aus dem Bild laeuft.
+    // Dieselbe Spanne wie ein Scroll-Ziel ohne eigene Grenzen in
+    // Framer Motion (Standard dort: "start end" bis "end start").
+    var wert = (vh - rechteck.top) / (vh + rechteck.height);
+    return Math.min(1, Math.max(0, wert));
+  }
+
+  function zeichnen() {
+    // Startet halb gezeichnet statt bei null: ein Faden, der schon
+    // da ist und sich fortsetzt, nicht einer, der aus dem Nichts
+    // entsteht.
+    var gezeichneterAnteil = 0.5 + fortschritt() * 0.5;
+    pfad.style.strokeDashoffset = String(1 - gezeichneterAnteil);
+  }
+
+  window.addEventListener('scroll', zeichnen, { passive: true });
+  window.addEventListener('resize', zeichnen);
+
+  // Beim Laden mitten auf der Seite ist schon ein Teil "gescrollt".
+  zeichnen();
 })();
 
 /* --- Menue --------------------------------------------------
@@ -111,58 +169,12 @@
   });
 })();
 
-/* --- Auftritt -----------------------------------------------
-   Bloecke mit der Klasse .auftritt stehen leicht versetzt und
-   durchsichtig da, bis sie ins Bild kommen. Dann setzt der
-   Beobachter .sichtbar und CSS blendet sie ein.
-
-   Bewusst nur einmal: einmal gesehen, bleibt sichtbar. Ein Block,
-   der beim Zurueckscrollen wieder verschwindet, wirkt wie ein
-   Fehler, nicht wie eine Absicht.
-   ------------------------------------------------------------ */
-(function () {
-  'use strict';
-
-  var bloecke = document.querySelectorAll('.auftritt');
-  if (!bloecke.length) return;
-
-  function zeigen(element) {
-    element.classList.add('sichtbar');
-  }
-
-  // Aeltere Browser ohne IntersectionObserver bekommen alles
-  // sofort zu sehen. Lieber ohne Effekt als ohne Inhalt.
-  if (!('IntersectionObserver' in window)) {
-    Array.prototype.forEach.call(bloecke, zeigen);
-    return;
-  }
-
-  var beobachter = new IntersectionObserver(function (eintraege, selbst) {
-    eintraege.forEach(function (eintrag) {
-      if (!eintrag.isIntersecting) return;
-      zeigen(eintrag.target);
-      selbst.unobserve(eintrag.target);
-    });
-  }, {
-    // Erst ausloesen, wenn der Block ein Stueck weit im Bild ist,
-    // sonst ist die Bewegung am unteren Rand schon vorbei, bevor
-    // man hinschaut.
-    rootMargin: '0px 0px -12% 0px'
-  });
-
-  Array.prototype.forEach.call(bloecke, function (block) {
-    beobachter.observe(block);
-  });
-})();
-
 /* --- Zeichen ------------------------------------------------
-   Die drei Symbole bei den Leistungen zeichnen sich selbst, wenn
-   ihre Spalte ins Bild kommt: dieselbe Technik wie beim
-   Kachelrahmen weiter unten. Jede Form wird zur gestrichelten
-   Linie, deren Luecke so lang ist wie die Form selbst, und der
-   Versatz wandert per CSS auf null.
-
-   Die Laengen muss JavaScript liefern, CSS kennt sie nicht.
+   Die Leistungs-Symbole zeichnen sich einmal selbst, kurz nachdem
+   die Seite geladen ist: nicht beim Scrollen, nur beim Laden.
+   Jede Form wird zur gestrichelten Linie, deren Luecke so lang
+   ist wie die Form selbst, und der Versatz wandert per CSS auf
+   null. Die Laengen muss JavaScript liefern, CSS kennt sie nicht.
    ------------------------------------------------------------ */
 (function () {
   'use strict';
@@ -186,10 +198,22 @@
       form.style.strokeDashoffset = laenge + 'px';
     });
 
-    // Erst jetzt die Transition zulassen, sonst zeichnet sich das
-    // Symbol beim Laden einmal sichtbar rueckwaerts weg.
-    void svg.getBoundingClientRect().width;
     svg.classList.add('bereit');
+  });
+
+  // Layout einmal erzwingen: damit ist der Ausgangswert (Luecke so
+  // lang wie die Form) festgeschrieben, bevor die Transition auf
+  // .bereit dazukommt. Ohne das wuerde das Zeichnen selbst zur
+  // ersten, sichtbar rueckwaerts laufenden Transition.
+  void document.documentElement.offsetHeight;
+
+  // Einen Wimpernschlag spaeter tatsaechlich zeichnen. Bewusst kein
+  // Scroll-Bezug: das Symbol erscheint dort, wo es auf der Seite
+  // steht, egal ob das beim Laden im Bild ist oder nicht.
+  window.requestAnimationFrame(function () {
+    Array.prototype.forEach.call(zeichen, function (svg) {
+      svg.classList.add('gezeichnet');
+    });
   });
 })();
 

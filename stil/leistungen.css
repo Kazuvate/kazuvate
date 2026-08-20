@@ -1,0 +1,80 @@
+/* ============================================================
+   kazuvate | Leistungen
+   Dieselben drei Punkte wie die Bento-Kacheln auf der Startseite
+   ("Warum kazuvate"), hier grosser und einzeln durchgezogen: eine
+   Liste statt drei Kacheln, damit jeder Punkt Platz zum Atmen hat.
+
+   Bewusst ohne Scroll-Animation. Bis zum 20.08.2026 blendeten
+   Bloecke beim Vorbeiscrollen ein, Kasum hat das an diesem Tag
+   abgelehnt: genau dieses Muster liest er als Vibe-Coding-Zeichen.
+   Die einzige Bewegung hier ist eine kleine Reaktion auf Zeiger
+   oder Tastaturfokus, keine auf Scrollposition.
+
+   Eigene Datei, damit andere Seiten dieses CSS nicht mitladen.
+   Farben ausschliesslich aus tokens.css.
+   ============================================================ */
+
+.leistungen-gross{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--linie-marke);
+}
+
+.leistung-gross{
+  padding: var(--s8) 0;
+  border-bottom: 1px solid var(--linie-marke);
+  display: grid;
+  gap: var(--s4);
+}
+@media (min-width: 760px){
+  .leistung-gross{
+    grid-template-columns: 8rem 1fr;
+    gap: var(--s7);
+    align-items: start;
+  }
+}
+@media (min-width: 1100px){
+  .leistung-gross{ grid-template-columns: 10rem minmax(0, 62ch); }
+}
+
+/* Grosse, ruhige Nummer statt eines Symbols: die Zeichen sind auf
+   der Startseite schon vergeben (Leistungen-Sektion), hier soll
+   die Zahl selbst der Blickfang sein. */
+.leistung-nr{
+  font-size: clamp(2.6rem, 6vw, 4.2rem);
+  font-weight: 700;
+  letter-spacing: -.03em;
+  line-height: 1;
+  display: inline-block;
+  color: var(--linie-kraeftig);
+  transition: color var(--kurz) var(--kurve),
+              transform var(--kurz) var(--kurve);
+}
+
+.leistung-inhalt .augenbraue{ margin-bottom: var(--s3); }
+.leistung-inhalt h2{
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  max-width: 18ch;
+}
+.leistung-inhalt p:not(.augenbraue){
+  margin-top: var(--s4);
+  color: var(--tinte-2);
+  max-width: 58ch;
+}
+
+/* Die einzige Bewegung auf der Seite: beim Zeigen wird die Nummer
+   zur Markenfarbe und ruckt eine Spur nach rechts, dieselbe
+   Distanz wie der Pfeil bei "Alle Referenzen". Kein Scroll-Bezug.
+
+   Nur fuer echte Zeiger: der Block enthaelt keinen Link und kein
+   Formularfeld, es gibt also nichts, das per Tastatur fokussiert
+   werden koennte. Ein tabindex nur fuer diesen Zierrat wuerde
+   Tastaturnutzern einen leeren Stopp bescheren, der nichts
+   Zusaetzliches sagt — schlechter als die Bewegung wegzulassen. */
+@media (hover: hover) and (pointer: fine){
+  .leistung-gross:hover .leistung-nr{
+    color: var(--olive);
+    transform: translateX(6px);
+  }
+}

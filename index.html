@@ -17,8 +17,9 @@
 <link rel="stylesheet" href="stil/basis.css">
 
 <!-- Sagt dem CSS, dass JavaScript laeuft. Muss hier oben stehen und darf
-     nicht in haupt.js: das laedt mit defer und kaeme zu spaet, die Bloecke
-     waeren kurz sichtbar, bevor sie sich fuer ihren Auftritt verstecken. -->
+     nicht in haupt.js: das laedt mit defer und kaeme zu spaet. Traegt heute
+     nur noch das Menue auf dem Handy und die Symbolzeichnung, beide brauchen
+     die Klasse um ueberhaupt etwas zu tun. -->
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -53,10 +54,10 @@
 
     <nav class="navigation" id="hauptmenue" aria-label="Hauptnavigation">
       <div class="navigation-innen">
-        <a href="#leistungen">Leistungen</a>
+        <a href="#ueber-uns">Über uns</a>
+        <a href="leistungen.html">Leistungen</a>
         <a href="referenzen/index.html">Referenzen</a>
         <a href="#ablauf">Ablauf</a>
-        <a href="#ueber-uns">Über uns</a>
         <a href="kontakt.html">Kontakt</a>
       </div>
     </nav>
@@ -104,6 +105,16 @@
           </div>
         </div>
 
+        <!-- Faden, der dem Scrollfortschritt durch die drei Bloecke
+             folgt: startet halb gezeichnet, ist fertig gezeichnet, wenn
+             "Mit wem wir arbeiten" den oberen Bildrand erreicht. Nur ab
+             1150px sichtbar, siehe stil/basis.css -- darunter kollidiert
+             er mit dem Text. pathLength="1" normiert die Pfadlaenge auf
+             1, damit skript/haupt.js keine echte Pixellaenge messen muss. -->
+        <svg class="hero-faden" viewBox="0 0 260 820" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <path pathLength="1" d="M160.4 0.0C166.1 6.5 186.5 26.0 194.4 39.0C202.3 52.0 207.6 65.1 208.0 78.1C208.4 91.1 204.1 104.1 196.9 117.1C189.7 130.1 177.2 143.2 164.6 156.2C152.0 169.2 135.3 182.2 121.3 195.2C107.3 208.2 91.7 221.3 80.8 234.3C69.9 247.3 60.3 260.3 55.9 273.3C51.5 286.3 51.0 299.4 54.5 312.4C58.0 325.4 66.6 338.4 76.9 351.4C87.2 364.4 102.4 377.5 116.2 390.5C130.0 403.5 146.9 416.5 159.9 429.5C172.9 442.5 186.1 455.6 194.1 468.6C202.1 481.6 207.4 494.6 207.9 507.6C208.4 520.6 204.2 533.7 197.1 546.7C190.0 559.7 177.6 572.7 165.1 585.7C152.6 598.7 135.9 611.8 121.9 624.8C107.9 637.8 92.3 650.8 81.3 663.8C70.3 676.8 60.6 689.9 56.1 702.9C51.6 715.9 50.9 728.9 54.3 741.9C57.7 754.9 66.3 768.0 76.5 781.0C86.7 794.0 109.2 813.5 115.7 820.0"/>
+        </svg>
+
       </div>
 
       <a class="knopf" href="kontakt.html">Unverbindlich anfragen</a>
@@ -123,7 +134,7 @@
            Icon-Bibliothek: das waere eine Fremddatei fuer drei Symbole. -->
       <ol class="leistungen">
 
-        <li class="auftritt">
+        <li>
           <span class="nr">01</span>
           <svg class="leistung-zeichen" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <rect x="2.5" y="4.5" width="19" height="15" rx="2"/>
@@ -136,7 +147,7 @@
           <p>Eine einzelne Seite mit allem, was zählt: Leistungen, Kontakt und Anfahrt. Für Betriebe, die gefunden werden wollen, ohne eine grosse Website zu pflegen.</p>
         </li>
 
-        <li class="auftritt auftritt-2">
+        <li>
           <span class="nr">02</span>
           <svg class="leistung-zeichen" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <rect x="2.5" y="7.5" width="14" height="13" rx="2"/>
@@ -147,7 +158,7 @@
           <p>Fünf bis acht Unterseiten mit eigener Struktur für Leistungen, Team und Referenzen. Die übliche Wahl, wenn mehrere Angebote je ihren eigenen Platz brauchen.</p>
         </li>
 
-        <li class="auftritt auftritt-3">
+        <li>
           <span class="nr">03</span>
           <svg class="leistung-zeichen" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <circle cx="12" cy="12" r="9"/>
@@ -177,7 +188,7 @@
 
       <div class="bento">
 
-        <article class="kachel auftritt">
+        <article class="kachel">
           <svg class="rahmen" aria-hidden="true" focusable="false"><rect rx="12"></rect></svg>
           <div class="kachel-innen">
             <p class="augenbraue">Schnelligkeit</p>
@@ -186,7 +197,7 @@
           </div>
         </article>
 
-        <article class="kachel auftritt auftritt-2">
+        <article class="kachel">
           <svg class="rahmen" aria-hidden="true" focusable="false"><rect rx="12"></rect></svg>
           <div class="kachel-innen">
             <p class="augenbraue">Sichtbarkeit</p>
@@ -195,7 +206,7 @@
           </div>
         </article>
 
-        <article class="kachel auftritt auftritt-3">
+        <article class="kachel">
           <svg class="rahmen" aria-hidden="true" focusable="false"><rect rx="12"></rect></svg>
           <div class="kachel-innen">
             <p class="augenbraue">Rundum</p>
@@ -219,7 +230,7 @@
 
       <div class="referenz-zeile">
 
-        <a class="referenz-kachel auftritt" href="https://www.prometizekiri.com/" target="_blank" rel="noopener">
+        <a class="referenz-kachel" href="https://www.prometizekiri.com/" target="_blank" rel="noopener">
           <img src="medien/referenzen/prometi-startseite.webp"
                srcset="medien/referenzen/prometi-startseite-760.webp 760w,
                        medien/referenzen/prometi-startseite.webp 1280w"
@@ -228,7 +239,7 @@
           <span class="name">ProMeti Facility Services<span class="nur-fuer-screenreader">, öffnet prometizekiri.com in einem neuen Tab</span></span>
         </a>
 
-        <div class="auftritt auftritt-2">
+        <div>
           <p class="referenz-name"><strong>ProMeti Facility Services</strong></p>
           <a class="weiter" href="referenzen/index.html">Alle Referenzen<span class="pfeil" aria-hidden="true">→</span></a>
         </div>
@@ -246,22 +257,22 @@
       <h2>Vom ersten Anruf bis live</h2>
 
       <ol class="ablauf">
-        <li class="auftritt">
+        <li>
           <span class="nr">01</span>
           <h3>Gespräch</h3>
           <p>Wir klären, was die Seite können muss und ob wir die Richtigen dafür sind.</p>
         </li>
-        <li class="auftritt auftritt-2">
+        <li>
           <span class="nr">02</span>
           <h3>Offerte</h3>
           <p>Sie bekommen einen Fixpreis mit klarem Umfang. Was drinsteht, gilt.</p>
         </li>
-        <li class="auftritt auftritt-3">
+        <li>
           <span class="nr">03</span>
           <h3>Entwurf</h3>
           <p>Sie sehen Skizzen und Masken der Seiten und geben sie frei. Erst danach wird gebaut.</p>
         </li>
-        <li class="auftritt auftritt-4">
+        <li>
           <span class="nr">04</span>
           <h3>Umsetzung</h3>
           <p>Wir bauen die Seite. Am Ende geht sie live und Sie bekommen alle Dateien und Zugänge.</p>
@@ -279,8 +290,8 @@
        ==================================================== -->
   <section class="abschluss">
     <div class="wrap">
-      <p class="abschluss-zeile auftritt">Reden wir über Ihr Projekt.</p>
-      <a class="knopf auftritt auftritt-2" href="kontakt.html">Unverbindlich anfragen</a>
+      <p class="abschluss-zeile">Reden wir über Ihr Projekt.</p>
+      <a class="knopf" href="kontakt.html">Unverbindlich anfragen</a>
     </div>
   </section>
 
@@ -324,10 +335,10 @@
 
       <nav class="fuss-spalte" aria-labelledby="fuss-seiten">
         <h2 id="fuss-seiten">Seiten</h2>
-        <a href="#leistungen">Leistungen</a>
+        <a href="#ueber-uns">Über uns</a>
+        <a href="leistungen.html">Leistungen</a>
         <a href="referenzen/index.html">Referenzen</a>
         <a href="#ablauf">Ablauf</a>
-        <a href="#ueber-uns">Über uns</a>
         <a href="kontakt.html">Kontakt</a>
       </nav>
 

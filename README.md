@@ -29,19 +29,21 @@ ohne trägt.
 ## Aufbau
 
 ```
-index.html            Startseite
-kontakt.html          Kontaktseite mit Formular
-impressum.html        Impressum
-datenschutz.html      Datenschutzerklärung
-referenzen/index.html Referenzen als Bildergalerie, ein Bild pro Projekt
-stil/tokens.css       Farben, Abstände, Rundungen. Die einzige Stelle dafür
-stil/basis.css        Grundlagen, Kopf, Titelband, Fuss, Referenz-Kachel, Sektionen
-stil/seiten.css       nur impressum.html und datenschutz.html: Fliesstext, Tabellen
-stil/kontakt.css      nur kontakt.html: Zweispalter, Anfragekarte, Formular
-skript/haupt.js       mitlaufender Kopf und der gezeichnete Rahmen der Kacheln
-markenlogo/           Logo, Favicons, App Icons, Vorschaubild fürs Teilen
-medien/referenzen/    Bildschirmfotos der Kundenprojekte
-kazuvate_Logo.jpg     die ursprüngliche Bilddatei, liegt nur noch als Beleg hier
+index.html             Startseite
+leistungen.html        Leistungen: Schnelligkeit, Sichtbarkeit, Rundum, groesser gezeigt
+kontakt.html           Kontaktseite mit Formular
+impressum.html         Impressum
+datenschutz.html       Datenschutzerklärung
+referenzen/index.html  Referenzen als Bildergalerie, ein Bild pro Projekt
+stil/tokens.css        Farben, Abstände, Rundungen. Die einzige Stelle dafür
+stil/basis.css         Grundlagen, Kopf, Titelband, Fuss, Referenz-Kachel, Sektionen
+stil/seiten.css        nur impressum.html und datenschutz.html: Fliesstext, Tabellen
+stil/kontakt.css       nur kontakt.html: Zweispalter, Anfragekarte, Formular
+stil/leistungen.css    nur leistungen.html: grosse Nummern, Hover-Reaktion
+skript/haupt.js        mitlaufender Kopf, Menue-Schublade, Symbolzeichnung, Kachelrahmen
+markenlogo/            Logo, Favicons, App Icons, Vorschaubild fürs Teilen
+medien/referenzen/     Bildschirmfotos der Kundenprojekte
+kazuvate_Logo.jpg      die ursprüngliche Bilddatei, liegt nur noch als Beleg hier
 ```
 
 Das Logo steht einmal als `symbol` im HTML und wird oben und unten per `use`
@@ -85,6 +87,29 @@ die drei Texte sind bewusst ähnlich lang. Kommt eine vierte Leistung dazu,
 bricht das Raster auf zwei Zeilen um und die Texte müssen nochmal angeglichen
 werden.
 
+## Leistungen-Seite
+
+`leistungen.html` zeigt dieselben drei Punkte wie die Bento-Kacheln unter
+"Warum kazuvate" auf der Startseite - Schnelligkeit, Sichtbarkeit, Rundum -,
+hier groesser und einzeln durchgezogen statt als Kachel-Trio: eine Liste mit
+grosser Nummer links, Titel und Text rechts, getrennt durch Haarlinien im
+Markenton.
+
+Entstanden am 20.08.2026, weil der Menuepunkt "Leistungen" bis dahin auf einen
+Anker zeigte, der zwischenzeitlich aus Versehen aus der Seite gefallen war
+(siehe Bewegung unten fuer den Zusammenhang) - und weil Kasum diese drei Punkte
+als "die drei Leistungen" bezeichnet, nicht die Sektion `#leistungen` mit
+One-Pager, Mehrseitiger Website und Wartung. Beide Abschnitte heissen jetzt
+"Leistungen", meinen aber unterschiedliche Dinge: die Sektion auf der
+Startseite beschreibt, welche Art Website wir bauen, die eigene Seite, warum
+man sie bei uns bauen laesst. Nur die eigene Seite ist von der Navigation aus
+erreichbar, die Sektion bleibt als Ankerziel bestehen, ohne Link darauf.
+
+Keine Icons: die sind auf der Startseite fuers Leistungen-Trio schon vergeben,
+hier soll die Zahl selbst der Blickfang sein. Die einzige Bewegung ist eine
+kleine Reaktion beim Zeigen - Nummer wird oliv und rueckt 6 Pixel nach rechts -,
+keine beim Scrollen, siehe Bewegung.
+
 ## Über uns
 
 Über uns ist **keine eigene Seite**, sondern steht im Kopfbereich der
@@ -98,12 +123,53 @@ getrennt nur durch Haarlinien. Bei kazuvate laufen die Linien im Markenton
 (`--linie-marke`, Oliv mit 28 % Deckkraft) statt in Grau.
 
 Der Text bricht bei 56 Zeichen um, die Linien laufen über die volle Breite.
-Die rechte Hälfte bleibt absichtlich leer — dort kommt später etwas hin, ohne
-dass das Raster nochmal angefasst werden muss.
+Ab 1150 Pixel trägt die rechte Hälfte einen Faden, siehe unten; darunter bleibt
+sie leer.
 
 Die Texte sind nicht übersetzt, sondern auf kazuvate umgeschrieben: Schweizer
 KMU statt US-Trades, und ohne Behauptungen über Dutzende gebaute Seiten, die
 heute noch nicht stimmen würden.
+
+## Faden
+
+Rechts neben den drei Über-uns-Abschnitten läuft ab 1150 Pixel Breite eine
+handgezeichnete Linie, die sich beim Scrollen weiterzeichnet: halb gezogen,
+sobald „Wer wir sind" von unten ins Bild kommt, fertig gezogen, sobald „Mit
+wem wir arbeiten" oben aus dem Bild läuft.
+
+**Ursprünglich als React-Komponente vorgeschlagen** (Framer Motion,
+`useScroll`/`useTransform`, `pathLength`-Motion-Value). Umgesetzt ist stattdessen
+reines SVG plus rund 25 Zeilen JavaScript — kein npm, kein Build, keine neue
+Abhängigkeit:
+
+- `pathLength="1"` steht direkt am `<path>` und normiert dessen Länge auf 1.
+  `stroke-dasharray: 1` zusammen mit einem `stroke-dashoffset` zwischen 0 und 1
+  ist der klassische SVG-Zeichentrick — ohne dass JavaScript die echte
+  Pixellänge messen muss, wie es die Kachelrahmen und die Leistungs-Symbole
+  noch tun.
+- `skript/haupt.js` berechnet bei jedem Scroll- und Resize-Ereignis den
+  Fortschritt durch `.hero-abschnitte` (dieselbe Formel wie Framers
+  Standard-Scrollbereich `["start end", "end start"]`) und setzt den
+  Dashoffset direkt als Inline-Style.
+- `vector-effect="non-scaling-stroke"` hält die Strichbreite konstant, egal
+  wie das SVG durch `preserveAspectRatio="none"` gestreckt wird — die Linie
+  soll die volle Höhe des Bereichs treffen, nicht nur einen mittigen
+  Ausschnitt.
+- Der Pfad selbst ist ein handgezeichnetes Original, keine Kopie aus dem
+  React-Beispiel: eine Sinuskurve, per Catmull-Rom-Spline zu weichen
+  Kurvensegmenten verrechnet. Eine fremde Bibliotheks-Grafik 1:1 in eine Seite
+  zu kopieren, die mit „kein Baukasten" wirbt, wäre kaum stimmig gewesen.
+
+Ohne JavaScript steht die Linie fertig gezeichnet da (`stroke-dashoffset: 0`)
+— eine ruhige, statische Deko statt eines Fehlerbilds. Unter 1150 Pixel ist
+sie ganz ausgeblendet, weil dort nicht genug Platz neben dem Text ist.
+
+**Zur Technologiefrage:** Kasum hatte kurz React/TypeScript/Tailwind/shadcn
+installiert, um eine fertige Komponente einzubauen. Dagegen sprachen zwei
+Dinge: React plus Framer Motion allein wiegen mehr als die ganze restliche
+Seite zusammen, und die Startseite behauptet wörtlich „kein Framework, keine
+fremden Skripte" (Meta-Beschreibung). Entschieden wurde für den gleichen
+visuellen Effekt in der bestehenden Technik, siehe auch Bewegung oben.
 
 ## Ansprache
 
@@ -141,26 +207,42 @@ ScrollTrigger eher 40 — das Budget für JavaScript liegt bei 10. Und eine
 40-kB-Bibliothek auf der Seite, die „von Hand geschrieben, kein Ballast"
 verkauft, ist das erste, was ein technisch versierter Kunde bemerkt.
 
-Alles Bewegte steckt in `skript/haupt.js` (9.8 kB roh, komprimiert etwa 3) und
-in CSS-Übergängen:
+**Kein Scroll-Reveal.** Bis zum 20.08.2026 blendeten Blöcke beim Runterscrollen
+nacheinander ein (IntersectionObserver, Klasse `.auftritt`/`.sichtbar`). Kasum
+hat das an diesem Tag verworfen — für ihn ist genau dieses „man scrollt runter
+und Dinge tauchen auf" das Erkennungszeichen einer Vibe-Coding-Seite. Der Block
+ist ersatzlos aus `skript/haupt.js` raus, keine Klassen `auftritt*`/`sichtbar`
+mehr irgendwo im HTML. Alle Blöcke stehen von Anfang an da.
 
-- **Auftritt**: Blöcke stehen 14 Pixel tiefer und durchsichtig da, bis sie ins
-  Bild kommen. Ein IntersectionObserver setzt `.sichtbar`, CSS blendet ein.
-  Nebeneinanderliegende Blöcke sind über `.auftritt-2` bis `.auftritt-4` um je
-  80 ms gestaffelt. Einmal sichtbar, bleibt sichtbar.
-- **Strichzeichnung**: Die drei Symbole bei den Leistungen zeichnen sich
-  selbst, sobald ihre Spalte ins Bild kommt — dieselbe Technik wie beim
+**Wobei dieser Umbau eine Weile lang etwas kaputt gemacht hat:** eine frühere
+Fassung des Auftritt-Umbaus hat aus Versehen die ganze Leistungen-Sektion
+(One-Pager, Mehrseitige Website, Wartung) mitgelöscht, weil ein Textersatz eine
+grössere Textspanne traf als beabsichtigt. Deshalb lief der Menüpunkt
+„Leistungen" damals ins Leere. Per `git checkout` auf den letzten Commit
+zurückgeholt, dann sauber neu aufgebaut — daraus ist bei der Gelegenheit auch
+`leistungen.html` entstanden, siehe oben.
+
+Was an Bewegung bleibt, steckt in `skript/haupt.js` (rund 9 kB roh, komprimiert
+unter 3) und in CSS-Übergängen:
+
+- **Strichzeichnung**: Die drei Symbole bei den Leistungen zeichnen sich einmal
+  selbst, kurz nachdem die Seite geladen ist — dieselbe Technik wie beim
   Kachelrahmen: JavaScript misst die Länge jeder Form, CSS lässt den Versatz
-  auf null laufen.
+  auf null laufen. Gebunden ans Laden, nicht ans Scrollen.
 - **Kopf**: läuft mit, Schriftzug fährt beim Scrollen zusammen.
 - **Schublade**: die Navigation auf dem Handy, siehe unten.
+- **Leistungen-Seite**: Nummer wird beim Zeigen oliv und rückt 6 Pixel nach
+  rechts, reine Hover-Reaktion, siehe oben.
+- **Kachelrahmen** und **Referenz-Kachel**: zeichnen sich beziehungsweise
+  blenden ein, wenn man mit der Maus darüberfährt — auch das reine
+  Hover-Reaktion, kein Auto-Play.
 
-Der erste Bildschirm bewegt sich nicht. H1 und die drei Über-uns-Abschnitte
-stehen sofort da — die Markenrichtung verbietet Ladeanimationen, und der erste
-Eindruck soll fertig sein, nicht im Aufbau.
+Der erste Bildschirm bewegt sich ohnehin nicht. H1 und die drei
+Über-uns-Abschnitte stehen sofort da — die Markenrichtung verbietet
+Ladeanimationen, und der erste Eindruck soll fertig sein, nicht im Aufbau.
 
-`prefers-reduced-motion` schaltet alles ab: dann steht die Seite fertig da,
-statt nur schneller einzublenden.
+`prefers-reduced-motion` schaltet an, was an Übergängen übrig ist: dann steht
+auch die Symbolzeichnung sofort fertig da statt langsam zu zeichnen.
 
 **Ohne JavaScript** bleibt alles sichtbar und bedienbar. Eine Zeile im Kopf
 jeder Seite setzt die Klasse `js` am Wurzelelement; jede Regel, die etwas
