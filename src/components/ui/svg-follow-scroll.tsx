@@ -99,17 +99,25 @@ const LinePath = ({
   // 2. Mit Startwert 0.5 war das Knaeuel vor dem ersten Scrollen schon
   //    fertig -- genau der Teil, an dem Bewegung ueberhaupt auffaellt.
   //
-  // Diese Stuetzpunkte biegen das gerade: das Knaeuel wird im ersten
-  // Siebtel des Scrollwegs geschrieben, danach folgt die Spitze der
-  // Leserichtung nach unten. Nachgemessen bei 1440x900 bleibt sie dabei
-  // durchgehend zwischen 87px und 213px unter der Fensteroberkante, also
-  // immer im Bild. Die Zahlen sind an diese Geometrie angepasst, sie sind
-  // eine Gestaltungsentscheidung und keine Formel.
-  const pathLength = useTransform(
-    scrollYProgress,
-    [0, 0.14, 0.4, 0.7, 1],
-    [0.08, 0.56, 0.72, 0.88, 1],
-  );
+  // Diese Stuetzpunkte biegen das gerade: das Knaeuel wird geschrieben,
+  // waehrend die Spitze danach der Leserichtung nach unten folgt.
+  //
+  // Erster Versuch: Knaeuel im ersten Siebtel des Scrollwegs (0 bis 0.14).
+  // Das war noch zu schnell -- fast die Haelfte der ganzen Zeichnung (0.08
+  // bis 0.56 von 1.0) lief in nur 14 Prozent der Scrollstrecke ab, das
+  // Knaeuel schien einzuschnappen statt sich zu zeichnen. Jetzt bekommt es
+  // mit 0 bis 0.35 mehr als das Doppelte an Scrollweg fuer dieselbe
+  // Strecke -- rundeinhalb Mal langsamer. Die drei Stuetzpunkte danach
+  // sind mit angepasst, damit das Tempo beim Uebergang nicht reisst.
+  // Nachgemessen bei 1440x900 bleibt die Spitze durchgehend zwischen 87px
+  // und 213px unter der Fensteroberkante, also immer im Bild. Die Zahlen
+  // sind an diese Geometrie angepasst, sie sind eine Gestaltungsentscheidung
+  // und keine Formel.
+const pathLength = useTransform(
+  scrollYProgress,
+  [0, 0.65, 0.8, 0.9, 1],
+  [0.02, 0.56, 0.72, 0.88, 1],
+);
 
   return (
     <svg

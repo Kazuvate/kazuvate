@@ -223,9 +223,16 @@ verdeckt haben:
   (`[0, 1] → [0.5, 1]` in der Vorlage) stand die Spitze über die halbe
   Scrollstrecke fast still und schoss danach nach unten weg — und mit dem
   Startwert 0.5 war das Knäuel vor dem ersten Scrollen ohnehin schon fertig.
-  Jetzt fünf Stützpunkte: das Knäuel wird im ersten Siebtel geschrieben, danach
-  folgt die Spitze der Leserichtung. Nachgemessen bei 1440 × 900 bleibt sie
-  dabei durchgehend zwischen 165 und 386 Pixeln unter der Fensteroberkante.
+  Jetzt fünf Stützpunkte: das Knäuel wird zuerst geschrieben, danach folgt die
+  Spitze der Leserichtung. Nachgemessen bei 1440 × 900 bleibt sie dabei
+  durchgehend zwischen 165 und 386 Pixeln unter der Fensteroberkante.
+
+  Der erste Wurf gab dem Knäuel nur die ersten 14 Prozent des Scrollwegs
+  (`[0, 0.14, 0.4, 0.7, 1]`) — fast die halbe Zeichnung lief in einem
+  Siebtel der Strecke ab, das Knäuel schien einzuschnappen statt sich zu
+  zeichnen. Kasum hat das am 20.08.2026 abends nochmal gemeldet. Jetzt
+  bekommt das Knäuel die ersten 35 Prozent (`[0, 0.35, 0.6, 0.82, 1]`),
+  gut zweieinhalb Mal so viel Scrollweg für dieselbe Strecke.
 - **Zu spät gestartet.** `offset: ["start end", "end start"]` liess den
   Fortschritt schon laufen, bevor überhaupt gescrollt werden konnte — der
   Bereich steht ganz oben auf der Seite und ist beim ersten Bild bereits da.
