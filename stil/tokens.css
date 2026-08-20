@@ -16,7 +16,13 @@
   --grund:      #F5F4EF;     /* Seitenhintergrund, Papierton */
   --karte:      #FFFFFF;     /* Karten, Formularfelder */
   --karte-2:    #EBEAE1;     /* abgesetzte Baender */
-  --tinte:      #000000;     /* Ueberschriften, betonter Text */
+  /* Kein reines Schwarz. #000 auf dem Papierton --grund traegt 19:1
+     Kontrast und wirkt daneben kuehl und hart -- der Grund ist warm,
+     die Schrift war es nicht. #16190F ist derselbe Ton wie die
+     Markenflaeche, nur bis fast auf Schwarz abgedunkelt: 17.4:1, also
+     immer noch weit ueber allem, was WCAG verlangt, aber es gehoert
+     sichtbar zur Palette statt daneben zu stehen. Geaendert 21.08.2026. */
+  --tinte:      #16190F;     /* Ueberschriften, betonter Text */
   --tinte-2:    #454C36;     /* zweite Textebene */
   --still:      #5E6650;     /* Labels, Legenden */
   --linie:      #DCDBD0;
@@ -25,6 +31,18 @@
      Der volle Oliv-Ton waere als Linie zu laut, deshalb mit
      Deckkraft statt als eigener Hexwert. */
   --linie-marke: rgb(63 80 25 / .28);
+
+  /* --- Fokus ----------------------------------------------
+     Die Farbe des Tastaturrings. Als eigener Token, weil sie sich
+     nach dem Untergrund richten muss: --olive auf --flaeche traegt
+     nur 1.44:1 und war auf Kopf, Titelband und Fuss praktisch
+     unsichtbar -- genau dort, wo der Ring als erstes gebraucht wird.
+     stil/basis.css setzt --fokus auf diesen Flaechen auf den hellen
+     Ton um; weil Custom Properties vererben, gilt das automatisch
+     fuer jeden Link darin und der :focus-visible-Block bleibt einer.
+     WCAG 2.2 verlangt 3:1 fuer Fokusindikatoren, hell auf --flaeche
+     sind es 11.4:1. Eingefuehrt 21.08.2026. */
+  --fokus:      var(--olive);
 
   /* --- Abstaende ------------------------------------------ */
   --s1: 4px;  --s2: 8px;  --s3: 12px; --s4: 16px;
@@ -46,8 +64,12 @@
   --kurve:    cubic-bezier(.22, 1, .36, 1);
   --sofort:   160ms;   /* Knopfdruck, direkte Rueckmeldung */
   --kurz:     200ms;   /* Hover und kleine Zustandswechsel */
-  --lang:     650ms;   /* Einblenden beim Scrollen */
   --zeichen-dauer:  900ms;   /* Strichzeichnung der Symbole beim Laden */
+  /* --lang: 650ms stand hier bis zum 21.08.2026 fuer "Einblenden beim
+     Scrollen". Die Scroll-Reveals sind am 20.08.2026 ersatzlos aus
+     haupt.js geflogen, der Token war seitdem in keiner einzigen Regel
+     mehr referenziert. Ein Token, den nichts benutzt, liest sich beim
+     naechsten Mal wie eine Vorgabe, die man einhalten muesste. */
 }
 
 /* Bewusst kein Dunkelmodus.

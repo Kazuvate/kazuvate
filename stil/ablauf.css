@@ -1,0 +1,208 @@
+/* ============================================================
+   kazuvate | Ablauf
+   Die vier Schritte, die auf der Startseite als knappe Zeile in
+   vier Spalten stehen, hier als senkrechter Strang: Nummer im
+   Kreis links, Text rechts, dazwischen eine Haarlinie im
+   Markenton, die von Schritt zu Schritt durchlaeuft.
+
+   Warum ein Strang und nicht das Nummern-Layout von
+   stil/leistungen.css: dort sind die drei Punkte gleichrangig und
+   koennen in beliebiger Reihenfolge gelesen werden. Hier ist die
+   Reihenfolge die Aussage. Eine Linie, die die Schritte verbindet,
+   sagt das ohne ein Wort -- und unterscheidet die Seite sichtbar
+   von der Leistungen-Seite, statt sie zu wiederholen.
+
+   Bewusst ohne Scroll-Animation. Bis zum 20.08.2026 blendeten
+   Bloecke beim Vorbeiscrollen ein, Kasum hat das an diesem Tag
+   abgelehnt: genau dieses Muster liest er als Vibe-Coding-Zeichen.
+   Die Linie steht deshalb von Anfang an ganz da und zeichnet sich
+   nicht mit -- das waere ausserdem eine Wiederholung des Fadens
+   auf der Startseite. Die einzige Bewegung hier ist eine kleine
+   Reaktion auf den Zeiger.
+
+   Eigene Datei, damit andere Seiten dieses CSS nicht mitladen.
+   Farben ausschliesslich aus tokens.css.
+   ============================================================ */
+
+main#inhalt{ padding: var(--s8) 0 0; }
+
+/* Ein Satz vor der Liste, der sagt, warum die Seite ueberhaupt
+   existiert. 62ch wie .nachsatz auf der Startseite. */
+.ablauf-vorspann{
+  max-width: 62ch;
+  margin-bottom: var(--s8);
+  font-size: 1.06rem;
+  color: var(--tinte-2);
+}
+
+.ablauf-schritte{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Auf schmalen Schirmen steht die Nummer ueber dem Text und ein
+   Strang waere Unsinn: die Linie muesste quer durch den Absatz
+   laufen. Dort trennt stattdessen eine Haarlinie oben, wie in der
+   Ablauf-Sektion der Startseite. */
+.ablauf-schritt{
+  position: relative;
+  display: grid;
+  gap: var(--s4);
+  padding: var(--s6) 0 var(--s8);
+  border-top: 1px solid var(--linie-marke);
+}
+.ablauf-schritt:last-child{ padding-bottom: var(--s7); }
+
+@media (min-width: 760px){
+  /* Die erste Spalte ist exakt so breit wie der Kreis. Alles
+     andere waere eine Falle: der Kreis hat eine feste Breite und
+     saesse in einer breiteren Spalte links statt in ihrer Mitte,
+     die Linie unten liefe dann sichtbar neben ihm vorbei. */
+  .ablauf-schritt{
+    grid-template-columns: 3.5rem minmax(0, 1fr);
+    column-gap: var(--s7);
+    align-items: start;
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  /* Der Strang. Beginnt unter dem Kreis und laeuft bis zur
+     Unterkante des Schritts -- weil die Schritte direkt
+     aneinandergrenzen, trifft er dort genau auf den naechsten
+     Kreis. Beim letzten Schritt faellt er weg, sonst zeigte die
+     Linie ins Leere. left ist die Mitte der Spalte und damit die
+     Mitte des Kreises. */
+  .ablauf-schritt::before{
+    content: "";
+    position: absolute;
+    left: calc(1.75rem - .5px);
+    top: 3.9rem;
+    bottom: 0;
+    width: 1px;
+    background: var(--linie-marke);
+  }
+  .ablauf-schritt:last-child::before{ content: none; }
+}
+
+/* Die Nummer traegt hier mehr Gewicht als auf der Startseite: sie
+   ist der Knoten im Strang. Deshalb der Kreis mit Papierfarbe --
+   ohne ihn liefe die Linie sichtbar hinter der Ziffer durch.
+   aria-hidden im HTML, weil die Nummer direkt darunter als
+   "Schritt 01" im Text steht und sonst doppelt vorgelesen wuerde. */
+.ablauf-zahl{
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border: 1px solid var(--linie-marke);
+  border-radius: 50%;
+  background: var(--karte);
+  color: var(--olive);
+  font-size: .84rem;
+  font-weight: 650;
+  letter-spacing: .08em;
+  transition: border-color var(--kurz) var(--kurve),
+              color var(--kurz) var(--kurve);
+}
+
+.ablauf-inhalt .augenbraue{ margin-bottom: var(--s3); }
+.ablauf-inhalt h2{
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  max-width: 18ch;
+}
+.ablauf-inhalt p{
+  margin-top: var(--s4);
+  color: var(--tinte-2);
+  max-width: 58ch;
+}
+/* Der erste Absatz traegt die Aussage, der zweite begruendet sie --
+   dieselbe Abstufung wie im Ueber-uns-Block der Startseite. */
+.ablauf-inhalt > p:not(.augenbraue):first-of-type{ color: var(--tinte); }
+
+/* --- Fakten je Schritt --------------------------------------
+   Dauer und was vom Kunden kommt. Genau die zwei Fragen, die im
+   Gespraech als naechstes kommen, deshalb stehen sie abgesetzt
+   statt im Fliesstext vergraben. Als <dl>, weil es Paare aus
+   Bezeichnung und Wert sind und kein Fliesstext.
+   ------------------------------------------------------------ */
+.schritt-fakten{
+  margin: var(--s5) 0 0;
+  padding-top: var(--s4);
+  border-top: 1px solid var(--linie);
+  max-width: 58ch;
+  display: grid;
+  gap: var(--s4);
+}
+@media (min-width: 620px){
+  .schritt-fakten{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s5);
+  }
+}
+.schritt-fakten dt{
+  font-size: .72rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--still);
+}
+.schritt-fakten dd{
+  margin: var(--s2) 0 0;
+  color: var(--tinte-2);
+  font-size: .96rem;
+  line-height: 1.55;
+}
+
+/* --- Danach --------------------------------------------------
+   Ohne Nummer und ohne Strang, damit die Zaehlung 01 bis 04
+   deckungsgleich zur Startseite bleibt. Der abgesetzte Grundton
+   markiert, dass hier etwas anderes anfaengt: nicht mehr das
+   Projekt, sondern das, was danach laeuft.
+   ------------------------------------------------------------ */
+.ablauf-danach{
+  margin-top: var(--s7);
+  /* Auf dem Handy bleiben von 390px Fensterbreite nach den
+     Seitenraendern 346px. Mit var(--s7) rundum blieben davon 250px
+     Textbreite uebrig -- der Kasten frisst dann mehr Platz als er
+     Inhalt traegt. Deshalb dort der kleinere Innenabstand. */
+  padding: var(--s6) var(--s5);
+  background: var(--karte-2);
+  border-radius: var(--radius);
+}
+@media (min-width: 760px){
+  .ablauf-danach{ padding: var(--s7); }
+}
+.ablauf-danach h2{
+  font-size: clamp(1.4rem, 2.8vw, 1.8rem);
+  max-width: 22ch;
+}
+.ablauf-danach p{
+  margin-top: var(--s4);
+  color: var(--tinte-2);
+  max-width: 58ch;
+}
+.ablauf-danach > p:not(.augenbraue):first-of-type{ color: var(--tinte); }
+
+/* Der Abschluss braucht Luft zum Kasten darueber. */
+main#inhalt .abschluss{ margin-top: var(--s9); }
+
+/* --- Bewegung ------------------------------------------------
+   Die einzige der Seite: beim Zeigen nimmt der Knoten die
+   Markenfarbe an. Kein Scroll-Bezug, keine Verschiebung -- der
+   Kreis sitzt auf einer Linie, jede Bewegung wuerde den Strang
+   sichtbar aufreissen.
+
+   Nur fuer echte Zeiger: der Block enthaelt keinen Link und kein
+   Formularfeld, es gibt also nichts, das per Tastatur fokussiert
+   werden koennte. Ein tabindex nur fuer diesen Zierrat wuerde
+   Tastaturnutzern einen leeren Stopp bescheren -- schlechter als
+   die Bewegung wegzulassen. Gleiche Ueberlegung wie in
+   stil/leistungen.css.
+   ------------------------------------------------------------ */
+@media (hover: hover) and (pointer: fine){
+  .ablauf-schritt:hover .ablauf-zahl{
+    border-color: var(--olive);
+    color: var(--olive);
+  }
+}

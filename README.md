@@ -56,6 +56,7 @@ ohne trägt.
 ```
 index.html             Startseite, bindet als einzige auch src/main.tsx ein
 leistungen.html        Leistungen: Schnelligkeit, Sichtbarkeit, Rundum, groesser gezeigt
+ablauf.html            Ablauf: die vier Schritte ausgeschrieben, mit Dauer und Mitwirkung
 kontakt.html           Kontaktseite mit Formular
 impressum.html         Impressum
 datenschutz.html       Datenschutzerklärung
@@ -66,6 +67,7 @@ stil/basis.css         Grundlagen, Kopf, Titelband, Fuss, Referenz-Kachel, Sekti
 stil/seiten.css        nur impressum.html und datenschutz.html: Fliesstext, Tabellen
 stil/kontakt.css       nur kontakt.html: Zweispalter, Anfragekarte, Formular
 stil/leistungen.css    nur leistungen.html: grosse Nummern, Hover-Reaktion
+stil/ablauf.css        nur ablauf.html: senkrechter Strang, Nummernkreise, Faktenpaare
 
 src/main.tsx                            haengt den Faden in die Startseite ein
 src/components/ui/svg-follow-scroll.tsx die Faden-Komponente (React, framer-motion)
@@ -152,6 +154,37 @@ hier soll die Zahl selbst der Blickfang sein. Die einzige Bewegung ist eine
 kleine Reaktion beim Zeigen - Nummer wird oliv und rueckt 6 Pixel nach rechts -,
 keine beim Scrollen, siehe Bewegung.
 
+## Ablauf-Seite
+
+`ablauf.html`, gebaut am 21.08.2026. Der Menüpunkt „Ablauf" zeigte bis dahin auf
+den Anker `#ablauf` auf der Startseite — vier Spalten mit je einem Satz. Das
+reicht für die Übersicht, beantwortet aber keine der Fragen, die im Gespräch
+tatsächlich kommen: wie lange dauert das, was müssen Sie liefern, wann
+entscheiden Sie.
+
+Genau das steht jetzt auf der eigenen Seite. Gleiche Nummern und gleiche
+Reihenfolge wie auf der Startseite, damit man den Block wiedererkennt, dazu pro
+Schritt zwei Angaben: **Dauer** und **Von Ihnen**. Danach ein fünfter Abschnitt
+ohne Nummer über das, was nach dem Livegang passiert — ohne Nummer, damit die
+Zählung 01 bis 04 eins zu eins zur Startseite passt.
+
+Die Sektion auf der Startseite bleibt als Kurzfassung stehen und bekommt einen
+Link „Ablauf im Detail", gleiche Bauart wie „Alle Referenzen". Ohne den wäre die
+Seite nur über die Navigation erreichbar.
+
+**Darstellung:** ein senkrechter Strang statt der grossen Nummern von
+`leistungen.html`. Dort sind die drei Punkte gleichrangig und in beliebiger
+Reihenfolge lesbar; hier *ist* die Reihenfolge die Aussage, und eine Linie, die
+die Schritte verbindet, sagt das ohne ein Wort. Die erste Rasterspalte ist exakt
+so breit wie der Nummernkreis (3.5rem) — in einer breiteren Spalte sässe der
+Kreis links statt in ihrer Mitte und die Linie liefe sichtbar an ihm vorbei.
+
+Ab 760 Pixel; darunter steht die Nummer über dem Text und es trennen Haarlinien
+wie in der Ablauf-Sektion der Startseite, weil ein Strang dort quer durch den
+Absatz laufen müsste. Die Linie steht von Anfang an ganz da und zeichnet sich
+nicht mit — das wäre eine Wiederholung des Fadens und ausserdem Scroll-Animation,
+siehe Bewegung.
+
 ## Über uns
 
 Über uns ist **keine eigene Seite**, sondern steht im Kopfbereich der
@@ -227,12 +260,15 @@ verdeckt haben:
   Spitze der Leserichtung. Nachgemessen bei 1440 × 900 bleibt sie dabei
   durchgehend zwischen 165 und 386 Pixeln unter der Fensteroberkante.
 
-  Der erste Wurf gab dem Knäuel nur die ersten 14 Prozent des Scrollwegs
-  (`[0, 0.14, 0.4, 0.7, 1]`) — fast die halbe Zeichnung lief in einem
-  Siebtel der Strecke ab, das Knäuel schien einzuschnappen statt sich zu
-  zeichnen. Kasum hat das am 20.08.2026 abends nochmal gemeldet. Jetzt
-  bekommt das Knäuel die ersten 35 Prozent (`[0, 0.35, 0.6, 0.82, 1]`),
-  gut zweieinhalb Mal so viel Scrollweg für dieselbe Strecke.
+  Das Tempo hat zwei Korrekturen gebraucht. Der erste Wurf gab dem Knäuel
+  nur die ersten 14 Prozent des Scrollwegs (`[0, 0.14, 0.4, 0.7, 1]`) — fast
+  die halbe Zeichnung lief in einem Siebtel der Strecke ab, das Knäuel schien
+  einzuschnappen statt sich zu zeichnen. 35 Prozent waren immer noch zu
+  schnell. Es steht jetzt auf `[0, 0.65, 0.8, 0.9, 1] → [0.02, 0.56, 0.72,
+  0.88, 1]`: das Knäuel bekommt knapp zwei Drittel der Strecke, die Fahrt
+  nach unten das letzte Drittel. Damit liegt die Kennlinie näher an linear
+  als an der reinen Geometrie-Korrektur — eine Entscheidung für Tempo, von
+  Kasum so gesetzt.
 - **Zu spät gestartet.** `offset: ["start end", "end start"]` liess den
   Fortschritt schon laufen, bevor überhaupt gescrollt werden konnte — der
   Bereich steht ganz oben auf der Seite und ist beim ersten Bild bereits da.
@@ -365,6 +401,33 @@ auch die Symbolzeichnung sofort fertig da statt langsam zu zeichnen.
 jeder Seite setzt die Klasse `js` am Wurzelelement; jede Regel, die etwas
 versteckt, hängt daran. Fällt das Skript aus, fehlt die Klasse und die Seite
 steht wie ein Dokument da.
+
+## Aufräumrunde 21.08.2026
+
+Acht Punkte aus einem Durchgang über die ganze Website, alle im CSS an Ort und
+Stelle kommentiert:
+
+| Was | Vorher | Jetzt |
+|---|---|---|
+| Fokusring auf dunklen Flächen | Oliv auf `--flaeche`, **1.44:1** — im Kopf praktisch unsichtbar | Token `--fokus`, auf Kopf/Titelband/Fuss/Sprungmarke hell, **11.9:1** |
+| Klickfläche Impressum/Datenschutz | 23px hoch, einen Pixel unter WCAG 2.2 AA (2.5.8) | 31px |
+| `leistungen.html` von der Startseite | nicht verlinkt | „Die drei Punkte im Detail" unter den Bento-Kacheln |
+| Dreimal eine Liste ab `01` | index, ablauf.html **und** kontakt.html | Kontaktseite führt keine Nummern mehr, Strich als Marker + Link auf ablauf.html |
+| Zeilenlänge Leistungen/Bento | dreispaltig ab 860px → **35 bzw. 33 Zeichen** bei 1000px | dreispaltig ab 1100px, dort einspaltig **60 Zeichen** |
+| `--tinte` | `#000000`, reines Schwarz auf Papierton | `#16190F`, gehört zur Palette, 16.2:1 |
+| `p{ max-width: 66ch }` global | traf jedes `<p>`, auch Labels und zentrierte Zeilen | weg; die Grenze steht am Fliesstext (`.lauf p`, `.vorab p`, `.leistungen p`, `.kachel p`) |
+| Token `--lang: 650ms` | seit dem Entfernen der Scroll-Reveals von nichts mehr benutzt | entfernt |
+
+Zwei Dinge, die dabei nebenbei aufgefallen sind und gleich mit weggefallen sind:
+`.anders-kopf .augenbraue{max-width:none}` war nur die Notwehr gegen die globale
+`p`-Regel, und `.referenz-zeile .weiter` ist zu `.weiter` verallgemeinert, weil
+jetzt drei Stellen denselben Pfeil-Link brauchen.
+
+**Was die Breakpoint-Änderung nicht löst:** ab 1100px trägt eine Spalte wieder
+39 Zeichen, und mehr kann sie nicht. Der `.wrap` ist auf 1140px gedeckelt, eine
+von drei Spalten also nie breiter als rund 320px. Für zwei Sätze Spaltentext ist
+das Zeitungsmass und in Ordnung; wer echte 45 bis 75 Zeichen will, muss die
+Sektion aus dem 1140er-Raster nehmen.
 
 ## Menü auf dem Handy
 

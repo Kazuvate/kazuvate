@@ -10,8 +10,13 @@
 /* --- Fliesstext -------------------------------------------- */
 .rechtstext{ padding: var(--s8) 0 var(--s9); }
 
-/* 760px statt 66ch, damit Tabellen Luft haben. Die Zeilenlaenge
-   im Fliesstext begrenzt p{max-width:66ch} aus basis.css. */
+/* 760px statt 66ch, damit Tabellen Luft haben. Die Zeilenlaenge im
+   Fliesstext haelt `.lauf p` weiter unten -- bis zum 21.08.2026 kam
+   sie von der globalen Regel p{max-width:66ch} in basis.css. Die ist
+   weg, weil sie jedes <p> der Website traf, auch Labels und zentrierte
+   Zeilen. Nachgemessen sind Impressum und Datenschutz die einzigen
+   Seiten, auf denen echter Fliesstext daran hing: 42 Absaetze, die
+   ohne Ersatz von 605 auf 760 Pixel gewachsen waeren. */
 .lauf{
   max-width: 760px;
   counter-reset: abschnitt;
@@ -43,7 +48,7 @@
   margin: var(--s6) 0 var(--s2);
 }
 
-.lauf p{ margin: 0 0 var(--s4); color: var(--tinte-2); }
+.lauf p{ margin: 0 0 var(--s4); color: var(--tinte-2); max-width: 66ch; }
 .lauf ul{
   margin: 0 0 var(--s4);
   padding-left: 1.15em;
@@ -67,6 +72,9 @@
   font-size: 1.1rem;
   color: var(--tinte);
   margin: 0;
+  /* Derselbe Wert, den vorher die globale Regel gab: bei 1.1rem sind
+     66ch rund 626px, der Vorspann bleibt damit unveraendert breit. */
+  max-width: 66ch;
 }
 
 /* --- Adressblock -------------------------------------------- */

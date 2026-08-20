@@ -73,17 +73,30 @@
   display: grid;
   gap: var(--s5);
 }
+/* Statt der Nummer ein Strich im Markenton, siehe Begruendung im
+   HTML. align-self: start plus margin-top setzt ihn auf die Mitte der
+   ersten Textzeile -- baseline hilft hier nicht, eine leere Box hat
+   keine. Der Wert ist nachgemessen und nicht gerechnet: das ::before
+   erbt die 17px des <li>, der Absatz daneben laeuft auf .96rem. */
 .schritte li{
   display: grid;
-  grid-template-columns: 2.4rem 1fr;
-  gap: var(--s3);
-  align-items: baseline;
+  grid-template-columns: 1.5rem 1fr;
+  gap: var(--s4);
+  align-items: start;
+}
+.schritte li::before{
+  content: "";
+  height: 1px;
+  background: var(--olive);
+  align-self: start;
+  margin-top: .78em;
 }
 .schritte p{
   color: var(--tinte-2);
   font-size: .96rem;
   max-width: 46ch;
 }
+.schritte .weiter{ margin-top: var(--s5); }
 
 /* --- Lieber telefonieren ------------------------------------ */
 .lieber-reden{

@@ -44,6 +44,7 @@ export default defineConfig({
       input: {
         start: path.resolve(__dirname, "index.html"),
         leistungen: path.resolve(__dirname, "leistungen.html"),
+        ablauf: path.resolve(__dirname, "ablauf.html"),
         kontakt: path.resolve(__dirname, "kontakt.html"),
         impressum: path.resolve(__dirname, "impressum.html"),
         datenschutz: path.resolve(__dirname, "datenschutz.html"),

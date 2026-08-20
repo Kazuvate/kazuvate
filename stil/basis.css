@@ -30,16 +30,39 @@ body{
 }
 
 h1, h2, h3{ line-height: 1.2; letter-spacing: -.02em; font-weight: 700; margin: 0; }
-p{ margin: 0; max-width: 66ch; }
+/* Bis zum 21.08.2026 stand hier zusaetzlich max-width: 66ch. Als
+   globale Regel traf sie jedes <p> der Website: auch Labels, kurze
+   Zeilen und zentrierte Texte, die keine Zeilenlaenge haben, an der
+   man etwas begrenzen koennte. Sichtbar wurde das an der Ausnahme, die
+   sie erzwang -- `.anders-kopf .augenbraue{max-width:none}`, weil das
+   zentrierte Label sonst in einer zu schmalen Box zentrierte statt auf
+   der Seite. Nachgemessen haengt echter Fliesstext nur an zwei Stellen
+   daran, `.lauf p` und `.vorab p` auf Impressum und Datenschutz; beide
+   haben die Grenze jetzt selbst, siehe stil/seiten.css. Zeilenlaenge
+   gehoert an den Fliesstext, nicht an das Element. */
+p{ margin: 0; }
 img, svg{ max-width: 100%; }
 
 a{ color: var(--olive); }
 
 :focus-visible{
-  outline: 2px solid var(--olive);
+  outline: 2px solid var(--fokus);
   outline-offset: 3px;
   border-radius: 4px;
 }
+/* Kopf, Titelband und Fuss stehen auf --flaeche. Der olive Ring traegt
+   dort 1.44:1 und war praktisch unsichtbar -- ausgerechnet im Kopf, wo
+   der erste Tabulatorsprung landet. Diese Zeile stellt --fokus fuer
+   alles darin auf den hellen Ton um (11.4:1). Custom Properties
+   vererben, es braucht also keine Regel je Element und der
+   :focus-visible-Block oben bleibt der einzige.
+
+   .sprung steht im Quelltext vor dem Kopf und ist damit kein Kind von
+   ihm -- er liegt beim Fokussieren aber darueber, also gilt dasselbe. */
+.kopf,
+.titel,
+.fuss,
+.sprung{ --fokus: var(--auf-flaeche); }
 
 .wrap{
   max-width: var(--breite);
@@ -472,7 +495,17 @@ a{ color: var(--olive); }
   font-size: .84rem;
   color: var(--auf-flaeche-still);
 }
+/* 13.4px Schrift mal Zeilenhoehe 1.7 ergibt eine 23px hohe Klickflaeche
+   -- einen Pixel unter den 24x24, die WCAG 2.2 AA (2.5.8) fuer
+   Zeigerziele verlangt, und auf dem Handy spuerbar zu klein. Vier Pixel
+   Innenabstand oben und unten machen 31px daraus. inline-block muss
+   sein: auf einem reinen Inline-Element vergroessert padding-block die
+   Zeilenhoehe nicht mit, die Flaeche waere zwar da, wuerde aber in die
+   Nachbarzeile ragen statt Platz zu schaffen. Der Fuss ist flex mit
+   eigenem gap, die Zeile darf also hoeher werden. */
 .fuss-unten a{
+  display: inline-block;
+  padding-block: 4px;
   color: inherit;
   transition: opacity var(--kurz) var(--kurve);
 }
@@ -632,7 +665,20 @@ a{ color: var(--olive); }
   border-top: 1px solid var(--linie-marke);
   border-bottom: 1px solid var(--linie-marke);
 }
-@media (min-width: 860px){
+/* Dreispaltig erst ab 1100px, bis zum 21.08.2026 waren es 860px.
+   Nachgemessen bei 1000px Fensterbreite: eine Spalte war 270px breit
+   und trug 35 Zeichen pro Zeile -- der Umbruch zerhackte jeden Satz in
+   vier Fetzen. Einspaltig sind es dort jetzt 60.
+
+   Was das *nicht* loest: ab 1100px sind es wieder 39 Zeichen, und mehr
+   kann dreispaltig hier nicht werden. Der .wrap ist auf 1140px
+   gedeckelt, eine Spalte also nie breiter als rund 320px. Fuer
+   durchlaufenden Fliesstext waere das zu wenig; fuer drei kurze
+   Spaltentexte von zwei Saetzen ist es Zeitungsmass und geht in
+   Ordnung. Wer echte 45 bis 75 Zeichen will, muss die Sektion aus dem
+   1140er-Raster nehmen oder auf zwei Spalten gehen -- beides ein
+   Eingriff ins Raster, nicht in diese Regel. */
+@media (min-width: 1100px){
   .leistungen{ grid-template-columns: repeat(3, 1fr); }
   /* Die Trennlinie sitzt links am zweiten und dritten Feld, nicht
      rechts am ersten und zweiten: sonst haengt aussen eine Linie,
@@ -642,7 +688,7 @@ a{ color: var(--olive); }
     padding-left: var(--s6);
   }
 }
-@media (max-width: 859px){
+@media (max-width: 1099px){
   .leistungen li + li{ border-top: 1px solid var(--linie-marke); }
 }
 .leistungen li{
@@ -717,6 +763,10 @@ a{ color: var(--olive); }
 .leistungen p{
   color: var(--tinte-2);
   font-size: .96rem;
+  /* Greift nur einspaltig, unter 1100px: dreispaltig ist die Spalte
+     schon schmaler als 60 Zeichen. Ersetzt die globale p-Regel, die
+     bis zum 21.08.2026 hier die Zeilenlaenge hielt. */
+  max-width: 60ch;
 }
 
 .nr{
@@ -744,13 +794,11 @@ a{ color: var(--olive); }
    --umfang, weil CSS die Pixelmasse eines Elements nicht kennt.
    ------------------------------------------------------------ */
 .anders-kopf{ text-align: center; }
-.anders-kopf .augenbraue{
-  color: var(--still);
-  /* Ohne das bleibt der Absatz durch p{max-width:66ch} schmaler als
-     der Container, sitzt links und der Text zentriert nur in dieser
-     schmalen Box statt auf der Seite. */
-  max-width: none;
-}
+/* max-width: none stand hier bis zum 21.08.2026: die globale Regel
+   p{max-width:66ch} machte den Absatz schmaler als den Container, das
+   zentrierte Label sass dann links und zentrierte nur in seiner eigenen
+   schmalen Box. Die globale Regel ist weg, die Ausnahme dazu auch. */
+.anders-kopf .augenbraue{ color: var(--still); }
 .anders-kopf h2{
   max-width: 24ch;
   margin-inline: auto;
@@ -761,7 +809,12 @@ a{ color: var(--olive); }
   gap: var(--s4);
   margin-top: var(--s7);
 }
-@media (min-width: 860px){
+/* Gleiche Rechnung wie bei den Leistungen: bei 1000px trug eine
+   Kachel 242px und damit 33 Zeichen pro Zeile, jetzt einspaltig 60.
+   Dreispaltig deshalb erst ab 1100px -- mit derselben Einschraenkung,
+   siehe Kommentar bei .leistungen: ab 1100px sind es 36 Zeichen und
+   das Raster gibt nicht mehr her. */
+@media (min-width: 1100px){
   .bento{ grid-template-columns: repeat(3, 1fr); }
 }
 
@@ -826,6 +879,9 @@ a{ color: var(--olive); }
   margin-top: var(--s4);
   color: var(--tinte-2);
   font-size: .92rem;
+  /* Wie bei .leistungen p: haelt die Zeile im einspaltigen Zustand
+     unter 1100px. */
+  max-width: 60ch;
 }
 
 /* --- Referenz auf der Startseite --------------------------- */
@@ -843,20 +899,25 @@ a{ color: var(--olive); }
 }
 .referenz-zeile .referenz-kachel{ max-width: 380px; }
 .referenz-name{ font-size: 1.15rem; }
-.referenz-zeile .weiter{
+/* Weiterfuehrender Link mit Pfeil. Stand bis zum 20.08.2026 nur
+   als `.referenz-zeile .weiter` da und war damit an eine einzige
+   Stelle gebunden. Jetzt allgemein, weil die Ablauf-Sektion
+   denselben Link auf ablauf.html braucht -- ein zweites, gleich
+   aussehendes Muster daneben waere Doppelarbeit. */
+.weiter{
   display: inline-block;
   margin-top: var(--s3);
   font-weight: 650;
   font-size: .96rem;
   text-decoration: none;
 }
-.referenz-zeile .weiter .pfeil{
+.weiter .pfeil{
   display: inline-block;
   margin-left: var(--s2);
   transition: transform var(--kurz) var(--kurve);
 }
 @media (hover: hover) and (pointer: fine){
-  .referenz-zeile .weiter:hover .pfeil{ transform: translateX(4px); }
+  .weiter:hover .pfeil{ transform: translateX(4px); }
 }
 
 /* --- Ablauf ------------------------------------------------ */
