@@ -15,6 +15,11 @@
 
 <link rel="stylesheet" href="../stil/tokens.css">
 <link rel="stylesheet" href="../stil/basis.css">
+
+<!-- Sagt dem CSS, dass JavaScript laeuft. Muss hier oben stehen und darf
+     nicht in haupt.js: das laedt mit defer und kaeme zu spaet, die Bloecke
+     waeren kurz sichtbar, bevor sie sich fuer ihren Auftritt verstecken. -->
+<script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
 
@@ -37,12 +42,23 @@
       <span>kazuvate</span>
     </a>
 
-    <nav class="navigation" aria-label="Hauptnavigation">
-      <a href="../index.html#leistungen">Leistungen</a>
-      <a href="index.html" aria-current="page">Referenzen</a>
-      <a href="../index.html#ablauf">Ablauf</a>
-      <a href="../index.html#ueber-uns">Über uns</a>
-      <a href="../kontakt.html">Kontakt</a>
+    <!-- Nur mit JavaScript sichtbar, siehe basis.css: ohne Skript
+         liesse sich die Schublade nicht oeffnen. -->
+    <button class="menue-knopf" type="button" aria-expanded="false"
+            aria-controls="hauptmenue" aria-label="Menü öffnen">
+      <span class="balken" aria-hidden="true"></span>
+      <span class="balken" aria-hidden="true"></span>
+      <span class="balken" aria-hidden="true"></span>
+    </button>
+
+    <nav class="navigation" id="hauptmenue" aria-label="Hauptnavigation">
+      <div class="navigation-innen">
+        <a href="../index.html#leistungen">Leistungen</a>
+        <a href="index.html" aria-current="page">Referenzen</a>
+        <a href="../index.html#ablauf">Ablauf</a>
+        <a href="../index.html#ueber-uns">Über uns</a>
+        <a href="../kontakt.html">Kontakt</a>
+      </div>
     </nav>
 
     <a class="kopf-knopf" href="../kontakt.html">Unverbindlich anfragen</a>
@@ -64,7 +80,7 @@
 
     <div class="referenz-galerie">
 
-      <a class="referenz-kachel" href="https://www.prometizekiri.com/" target="_blank" rel="noopener">
+      <a class="referenz-kachel auftritt" href="https://www.prometizekiri.com/" target="_blank" rel="noopener">
         <img src="../medien/referenzen/prometi-startseite.webp"
              srcset="../medien/referenzen/prometi-startseite-760.webp 760w,
                      ../medien/referenzen/prometi-startseite.webp 1280w"
@@ -81,8 +97,8 @@
        im Nichts und der Besucher hat keinen naechsten Schritt. -->
   <section class="abschluss">
     <div class="wrap">
-      <p class="abschluss-zeile">Bauen wir etwas, das funktioniert.</p>
-      <a class="knopf" href="../kontakt.html">Unverbindlich anfragen</a>
+      <p class="abschluss-zeile auftritt">Bauen wir etwas, das funktioniert.</p>
+      <a class="knopf auftritt auftritt-2" href="../kontakt.html">Unverbindlich anfragen</a>
     </div>
   </section>
 

@@ -63,6 +63,47 @@ a{ color: var(--olive); }
 }
 .sprung:focus{ left: var(--s5); }
 
+/* --- Auftritt ----------------------------------------------
+   Ein Block steht leicht tiefer und durchsichtig da, bis er ins
+   Bild kommt; dann setzt skript/haupt.js die Klasse .sichtbar.
+
+   Zwei Eigenschaften gleichzeitig, Deckkraft und Verschiebung.
+   Das weicht von der Regel in der Markenrichtung ab, die genau
+   das verbietet. Grund: mit Deckkraft allein wirkt der Auftritt
+   wie ein Bildfehler, erst die kleine Bewegung macht daraus eine
+   Richtung. Die Verschiebung ist deshalb auf 14px begrenzt, halb
+   so weit wie beim Vorbild, und beide Eigenschaften laufen auf
+   derselben Kurve, damit es eine Bewegung bleibt und nicht zwei.
+
+   Nur mit JavaScript: ohne die Klasse `js` am Wurzelelement
+   greift keine dieser Regeln und alles steht sofort da. */
+.js .auftritt{
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity var(--auftritt-dauer) var(--kurve),
+              transform var(--auftritt-dauer) var(--kurve);
+}
+.js .auftritt.sichtbar{
+  opacity: 1;
+  transform: none;
+}
+
+/* Staffelung fuer nebeneinanderliegende Bloecke. Mehr als vier
+   Stufen braucht es nicht: was danach kaeme, wartet so lange,
+   dass es wie ein Ladefehler aussieht. */
+/* Zwei Ausnahmen: .auftritt.sichtbar setzt transform, und das ist
+   spezifischer als .kachel:hover und .knopf:active. Ohne diese
+   zwei Zeilen verlieren die Elemente, die einen Auftritt haben,
+   ihre Reaktion auf Zeiger und Klick. */
+@media (hover: hover) and (pointer: fine){
+  .js .kachel.auftritt.sichtbar:hover{ transform: translateY(-3px); }
+}
+.js .knopf.auftritt.sichtbar:active{ transform: scale(.97); }
+
+.js .auftritt-2{ transition-delay: 80ms; }
+.js .auftritt-3{ transition-delay: 160ms; }
+.js .auftritt-4{ transition-delay: 240ms; }
+
 .nur-fuer-screenreader{
   position: absolute;
   width: 1px; height: 1px;
@@ -141,7 +182,12 @@ a{ color: var(--olive); }
   transform: translateX(-8px);
 }
 
-.navigation{
+.navigation{ display: flex; }
+/* Die Punkte sitzen in einem eigenen Container: die Schublade auf
+   dem Handy animiert die Hoehe der .navigation, und Abstaende auf
+   demselben Element blieben dabei auch im geschlossenen Zustand
+   stehen. */
+.navigation-innen{
   display: flex;
   gap: var(--s6);
 }
@@ -159,27 +205,24 @@ a{ color: var(--olive); }
     padding-block: var(--s3);
     row-gap: var(--s3);
   }
-  /* Seit Über uns dazugekommen ist, sind es fuenf Punkte. Mit den
-     alten 24px Abstand lief Kontakt aus dem sichtbaren Bereich und
-     war nur noch durch Wischen erreichbar. Mit 12px und einer Spur
-     kleinerer Schrift passen alle fuenf auf ein uebliches Handy.
-     Auf sehr schmalen Geraeten wischt man weiter, deshalb bleibt
-     overflow-x stehen. */
+  /* Ohne JavaScript bleibt es bei der alten Zeile unter dem Kopf:
+     fuenf Punkte mit engem Abstand, notfalls wischbar. Laeuft das
+     Skript, uebernimmt die Schublade weiter unten. */
   .navigation{
     order: 3;
     flex-basis: 100%;
+  }
+  .navigation-innen{
     gap: var(--s3);
     overflow-x: auto;
     scrollbar-width: none;
   }
-  .navigation a{ font-size: .88rem; }
-  .navigation::-webkit-scrollbar{ display: none; }
-  .navigation a{ white-space: nowrap; }
+  .navigation-innen::-webkit-scrollbar{ display: none; }
+  .navigation a{ white-space: nowrap; font-size: .88rem; }
 
   /* Zweizeilig ist der Kopf hoch. Gescrollt rueckt er enger
      zusammen, damit vom Bildschirm mehr Inhalt uebrig bleibt.
-     Die Navigation bleibt trotzdem stehen: vier Punkte sind der
-     einzige Weg durch die Seite, ein Klappmenue gibt es nicht. */
+     Der Knopf bleibt sichtbar, die Schublade liegt darunter. */
   .kopf.gescrollt .kopf-innen{
     padding-block: var(--s2);
     row-gap: var(--s2);
@@ -235,6 +278,83 @@ a{ color: var(--olive); }
 /* Gedrueckt geht der Knopf leicht zusammen. Ohne das fuehlt sich
    ein Klick an, als haette die Seite ihn nicht gehoert. */
 .kopf-knopf:active{ transform: scale(.97); }
+
+/* --- Menueknopf und Schublade -------------------------------
+   Ab fuenf Punkten passt die Navigation auf dem Handy nicht mehr
+   in eine Zeile. Statt sie wegzuwischen, liegt sie unter dem Kopf
+   in einer Schublade. Der Knopf erscheint nur, wenn JavaScript
+   laeuft: ohne ihn koennte man die Schublade nicht oeffnen, und
+   ohne Schublade steht die Navigation wie frueher als Zeile da.
+   ------------------------------------------------------------ */
+.menue-knopf{ display: none; }
+
+@media (max-width: 859px){
+  .js .menue-knopf{
+    display: grid;
+    place-items: center;
+    /* order 2 stellt ihn hinter den Anfrage-Knopf, also ganz nach
+       rechts. Ohne das saesse er links neben der Marke, weil er im
+       Quelltext vor der Navigation steht. */
+    order: 2;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    margin-left: var(--s3);
+    padding: 0;
+    background: none;
+    border: 0;
+    color: inherit;
+    cursor: pointer;
+  }
+  .menue-knopf .balken{
+    width: 20px;
+    height: 1.5px;
+    background: currentColor;
+    transition: transform var(--kurz) var(--kurve),
+                opacity var(--kurz) var(--kurve);
+  }
+  /* Aus drei Balken wird ein Kreuz: der obere kippt nach unten,
+     der untere nach oben, der mittlere verschwindet. */
+  .menue-offen .menue-knopf .balken:first-child{ transform: translateY(6.5px) rotate(45deg); }
+  .menue-offen .menue-knopf .balken:nth-child(2){ opacity: 0; }
+  .menue-offen .menue-knopf .balken:last-child{ transform: translateY(-6.5px) rotate(-45deg); }
+
+  /* Die Schublade selbst. grid-template-rows von 0fr auf 1fr ist
+     der einzige Weg, eine unbekannte Hoehe zu animieren, ohne sie
+     vorher zu kennen. max-height mit Fantasiewert waere die
+     Alternative und ruckelt. */
+  .js .navigation{
+    order: 3;
+    flex-basis: 100%;
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: hidden;
+    opacity: 0;
+    /* visibility zusaetzlich, sonst bleiben die Punkte in der
+       geschlossenen Schublade mit der Tabulatortaste erreichbar
+       und der Fokus wandert in etwas Unsichtbares. Der Wechsel
+       kommt am Ende, damit das Zufahren noch zu sehen ist. */
+    visibility: hidden;
+    transition: grid-template-rows var(--kurz) var(--kurve),
+                opacity var(--kurz) var(--kurve),
+                visibility 0s linear var(--kurz);
+  }
+  .js .menue-offen .navigation{
+    grid-template-rows: 1fr;
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+  /* Der Innencontainer traegt die Abstaende. Auf dem aeusseren
+     wuerden sie auch bei 0fr Hoehe uebrig bleiben. */
+  .js .navigation-innen{
+    display: grid;
+    gap: var(--s4);
+    min-height: 0;
+    padding-block: var(--s4) var(--s2);
+  }
+  .js .navigation a{ font-size: 1rem; }
+}
 
 /* --- Titelband -------------------------------------------
    Kopfbereich der Unterseiten. Sitzt direkt unter dem Kopf und
@@ -550,8 +670,38 @@ a{ color: var(--olive); }
   stroke-linejoin: round;
 }
 /* Der Punkt im Fensterbalken ist gefuellt statt umrandet, bei
-   knapp zwei Pixel Durchmesser wuerde eine Kontur nur schmieren. */
-.leistung-zeichen .punkt{ fill: currentColor; stroke: none; }
+   knapp zwei Pixel Durchmesser wuerde eine Kontur nur schmieren.
+   Er hat keine Kontur, also zeichnet er sich auch nicht, sondern
+   blendet am Ende der Strichzeichnung ein. */
+.leistung-zeichen .punkt{
+  fill: currentColor;
+  stroke: none;
+}
+.js .leistung-zeichen.bereit .punkt{
+  opacity: 0;
+  transition: opacity var(--kurz) var(--kurve) var(--zeichen-dauer);
+}
+.js .sichtbar .leistung-zeichen.bereit .punkt{ opacity: 1; }
+
+/* Die Symbole zeichnen sich selbst, sobald ihre Spalte ins Bild
+   kommt: dieselbe Technik wie beim Kachelrahmen. haupt.js setzt
+   Strichmuster und Versatz auf die Laenge jeder Form, hier wandert
+   der Versatz auf null.
+
+   Die Klasse .bereit kommt erst nach dem Messen dazu. Ohne sie
+   gilt keine Transition, sonst zeichnete sich das Symbol beim
+   Laden einmal sichtbar rueckwaerts weg. */
+.js .leistung-zeichen.bereit > *{
+  transition: stroke-dashoffset var(--zeichen-dauer) var(--kurve);
+}
+.js .sichtbar .leistung-zeichen.bereit > *{ stroke-dashoffset: 0 !important; }
+
+/* Die Formen laufen nacheinander los statt alle zugleich: erst
+   der Rahmen, dann was darin steht. */
+.js .leistung-zeichen.bereit > *:nth-child(2){ transition-delay: 120ms; }
+.js .leistung-zeichen.bereit > *:nth-child(3){ transition-delay: 200ms; }
+.js .leistung-zeichen.bereit > *:nth-child(4){ transition-delay: 280ms; }
+.js .leistung-zeichen.bereit > *:nth-child(5){ transition-delay: 360ms; }
 
 .leistungen h3{
   font-size: 1.14rem;
@@ -825,4 +975,10 @@ a{ color: var(--olive); }
     transition-duration: .01ms !important;
     animation-duration: .01ms !important;
   }
+  /* Ohne diesen Block waeren die Bloecke zwar sofort statt langsam
+     da, aber immer noch erst beim Scrollen. Wer weniger Bewegung
+     eingestellt hat, soll die Seite fertig vorfinden. */
+  .js .auftritt{ opacity: 1; transform: none; }
+  .js .leistung-zeichen.bereit > *{ stroke-dashoffset: 0 !important; }
+  .js .leistung-zeichen.bereit .punkt{ opacity: 1; }
 }

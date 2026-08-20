@@ -133,6 +133,55 @@ eine Vercel Function, die es noch nicht gibt. Bis dahin sind Telefon und Mail
 der einzige Weg, der wirklich ankommt. Die HTML5-Prüfung (`required`,
 `type=email`) greift schon jetzt.
 
+## Bewegung
+
+Kein GSAP, kein anime.js, keine Bibliothek. Beide waren am 20.08.2026 kurz
+installiert und sind wieder raus: GSAP kostet komprimiert rund 28 kB, mit
+ScrollTrigger eher 40 — das Budget für JavaScript liegt bei 10. Und eine
+40-kB-Bibliothek auf der Seite, die „von Hand geschrieben, kein Ballast"
+verkauft, ist das erste, was ein technisch versierter Kunde bemerkt.
+
+Alles Bewegte steckt in `skript/haupt.js` (9.8 kB roh, komprimiert etwa 3) und
+in CSS-Übergängen:
+
+- **Auftritt**: Blöcke stehen 14 Pixel tiefer und durchsichtig da, bis sie ins
+  Bild kommen. Ein IntersectionObserver setzt `.sichtbar`, CSS blendet ein.
+  Nebeneinanderliegende Blöcke sind über `.auftritt-2` bis `.auftritt-4` um je
+  80 ms gestaffelt. Einmal sichtbar, bleibt sichtbar.
+- **Strichzeichnung**: Die drei Symbole bei den Leistungen zeichnen sich
+  selbst, sobald ihre Spalte ins Bild kommt — dieselbe Technik wie beim
+  Kachelrahmen: JavaScript misst die Länge jeder Form, CSS lässt den Versatz
+  auf null laufen.
+- **Kopf**: läuft mit, Schriftzug fährt beim Scrollen zusammen.
+- **Schublade**: die Navigation auf dem Handy, siehe unten.
+
+Der erste Bildschirm bewegt sich nicht. H1 und die drei Über-uns-Abschnitte
+stehen sofort da — die Markenrichtung verbietet Ladeanimationen, und der erste
+Eindruck soll fertig sein, nicht im Aufbau.
+
+`prefers-reduced-motion` schaltet alles ab: dann steht die Seite fertig da,
+statt nur schneller einzublenden.
+
+**Ohne JavaScript** bleibt alles sichtbar und bedienbar. Eine Zeile im Kopf
+jeder Seite setzt die Klasse `js` am Wurzelelement; jede Regel, die etwas
+versteckt, hängt daran. Fällt das Skript aus, fehlt die Klasse und die Seite
+steht wie ein Dokument da.
+
+## Menü auf dem Handy
+
+Unter 860 Pixel liegt die Navigation in einer Schublade unter dem Kopf, der
+Knopf sitzt rechts neben „Unverbindlich anfragen". Fünf Punkte passen nicht
+mehr in eine Zeile, ohne dass Kontakt aus dem Bild läuft.
+
+Die Höhe animiert über `grid-template-rows` von `0fr` auf `1fr` — der einzige
+Weg, eine unbekannte Höhe zu animieren, ohne sie vorher zu kennen. Geschlossen
+ist die Schublade auch für die Tabulatortaste zu (`visibility: hidden`), sonst
+wandert der Fokus in etwas Unsichtbares. Escape schliesst, ein Klick auf einen
+Punkt ebenfalls.
+
+Ohne JavaScript erscheint der Knopf gar nicht erst und die Navigation steht
+wie früher als Zeile unter dem Kopf.
+
 ## Kopf
 
 Der Kopf läuft beim Scrollen mit (`position: sticky`). Sobald die Seite 40
