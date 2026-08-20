@@ -1,2 +1,7 @@
+# Abhaengigkeiten und Build-Ergebnis: beides wird aus package.json bzw.
+# den Quelldateien wiederhergestellt, gehoert also nicht ins Repo.
 node_modules/
-package-lock.json
+dist/
+
+# Vites Zwischenspeicher
+.vite/

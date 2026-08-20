@@ -521,55 +521,56 @@ a{ color: var(--olive); }
 
    Bis zum 20.08.2026 stand die Ueberschrift in einer eigenen Spalte
    links neben dem Text. Jetzt steht sie darueber und der Text bleibt
-   in der linken Haelfte, waehrend die Linien ueber die volle Breite
-   laufen: rechts ist damit Platz fuer das, was spaeter dazukommt,
-   ohne dass das Raster nochmal angefasst werden muss. */
+   in der linken Haelfte.
+
+   Die Linien liefen zuerst ueber die volle Breite bis an den rechten
+   Rand. Sie enden jetzt dort, wo der Text endet: 56ch ist dieselbe
+   Begrenzung wie bei `.hero-text p` darunter, bei gleicher Schriftgroesse
+   also exakt dieselbe Kante. Eine Linie, die weit ueber ihren Text
+   hinausschiesst, trennt nichts mehr, sie zeigt nur ins Leere -- und die
+   freie Flaeche rechts gehoert seit dem Faden ohnehin ihm. */
 .hero-abschnitte{
-  position: relative;   /* haelt den Faden im rechten Rand */
   margin-top: var(--s8);
+  max-width: 56ch;
   border-top: 1px solid var(--linie-marke);
 }
 
-/* --- Faden -----------------------------------------------------
-   Nur ab 1150px: der Text ist auf 56ch begrenzt (~530px), darunter
-   bleibt bei schmaleren Bildschirmen nicht genug Platz fuer eine
-   eigene Spalte, ohne dass der Faden den Text beruehrt.
+/* --- Faden-Bereich ----------------------------------------------
+   Umschliesst H1 und die drei Ueber-uns-Bloecke, damit die
+   React-Insel (#faden-root, siehe faden/) genau von der
+   Ueberschrift bis zum Ende von "Mit wem wir arbeiten" reicht --
+   Kasums Vorgabe. position:relative haelt #faden-root im rechten
+   Rand dieses Bereichs, nicht der ganzen Seite.
 
-   pathLength="1" im SVG normiert die Pfadlaenge, deshalb reicht
-   hier ein einheitenloser Anteil (0 bis 1) statt einer gemessenen
-   Pixellaenge. vector-effect haelt den Strich immer gleich dick,
-   egal wie das SVG auf dem Bildschirm skaliert wird.
+   Nur ab 1150px sichtbar: der Text ist auf 56ch begrenzt (~513px),
+   darunter bleibt nicht genug Platz fuer eine eigene Spalte, ohne
+   dass die Linie den Text beruehrt. Unter der Grenze bleibt
+   #faden-root leer, React haengt trotzdem ein (kein Schaden,
+   nur unsichtbar), damit es beim Vergroessern des Fensters sofort
+   erscheint statt einen Neuladen zu brauchen.
 
-   Ohne JavaScript bleibt der Faden fertig gezeichnet stehen
-   (Anfangswert 0): eine ruhige Deko, kein Fehlerbild. Erst mit
-   Skript zieht sich der Anfang auf halb zurueck und der Faden
-   folgt danach dem Scrollen wieder nach vorn. */
-.hero-faden{ display: none; }
+   Breite: 460px statt der ersten 220px. Ab 1150px ist `.wrap` innen
+   immer 1060px breit (1140px minus 2x40px Rand) -- ein groesserer
+   Bildschirm macht die Spalte also nicht breiter, ein fester Wert reicht.
+   Der Text nimmt davon 513px, die H1 darueber laut ihrer 16ch-Grenze bis
+   zu 574px; 460px lassen zu beiden genug Luft. 220px waren zu schmal: das
+   SVG ist 1278:2690 proportioniert und wurde in einem 220x1084-Kasten quer
+   um Faktor 2.7 zusammengedrueckt -- daher der gequetschte Eindruck. Mit
+   460px und `preserveAspectRatio="meet"` (siehe
+   src/components/ui/svg-follow-scroll.tsx) sitzt der Faden unverzerrt
+   drin und ist mehr als doppelt so breit wie vorher. */
+.hero-faden-bereich{ position: relative; }
+
+#faden-root{ display: none; pointer-events: none; }
 @media (min-width: 1150px){
-  .hero-faden{
+  #faden-root{
     display: block;
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
-    width: 220px;
-    pointer-events: none;
+    width: 460px;
   }
-}
-.hero-faden path{
-  fill: none;
-  stroke: var(--olive);
-  stroke-width: 3px;
-  stroke-linecap: round;
-  vector-effect: non-scaling-stroke;
-  stroke-dasharray: 1;
-  stroke-dashoffset: 0;
-}
-/* Leichtes Glaetten zwischen zwei Scroll-Ereignissen, kein hartes
-   Springen von Wert zu Wert. Kurz genug, dass der Faden dem
-   Scrollen trotzdem folgt statt hinterherzuhinken. */
-.js .hero-faden path{
-  transition: stroke-dashoffset 80ms linear;
 }
 
 .hero-abschnitt{

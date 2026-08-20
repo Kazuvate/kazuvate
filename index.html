@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Webdesign für KMU in der Schweiz | kazuvate</title>
-<meta name="description" content="Handgebaute Websites für kleine und mittlere Unternehmen in der Schweiz. Kein WordPress, kein Baukasten, keine fremden Skripte.">
+<meta name="description" content="Handgebaute Websites für kleine und mittlere Unternehmen in der Schweiz. Kein WordPress, kein Baukasten.">
 <meta name="theme-color" content="#2C3616">
 
 <link rel="icon" href="markenlogo/favicon.ico" sizes="32x32">
@@ -72,48 +72,56 @@
   <!-- ====================== Kopfbereich ====================== -->
   <section class="hero">
     <div class="wrap">
-      <h1>Webdesign für KMU in der Schweiz</h1>
 
-      <!-- Drei kurze Abschnitte direkt unter dem Titel, Aufbau wie auf
-           portdigitalco.com/about: alles linksbuendig untereinander,
-           getrennt nur durch Haarlinien. Es gibt keine eigene Seite mehr
-           dafuer, Startseite und Ueber uns sind seit 20.08.2026 dieselbe
-           Seite. Der Anker traegt deshalb dieser Block. -->
-      <div class="hero-abschnitte" id="ueber-uns">
+      <!-- ---------- React-Insel: Faden ----------
+           Einziges Stueck React auf der Seite. Spannt sich von der
+           Ueberschrift bis zum Ende von "Mit wem wir arbeiten" auf,
+           damit die SVG-Linie genau diesen Bereich abdecken kann (siehe
+           useScroll-Ziel in src/components/ui/svg-follow-scroll.tsx).
+           Der Rest der Seite bleibt handgeschriebenes HTML/CSS/JS, nur
+           dieser eine Baustein ist mit React, TypeScript, Tailwind und
+           framer-motion gebaut -- siehe README-Abschnitt "Faden". -->
+      <div class="hero-faden-bereich" id="hero-faden-bereich">
 
-        <div class="hero-abschnitt">
-          <p class="augenbraue">Wer wir sind</p>
-          <div class="hero-text">
-            <p>kazuvate baut Websites für kleine und mittlere Unternehmen in der Schweiz. Keine Generalisten, keine fremden Vorlagen: Jede Seite entsteht von Hand, für einen Betrieb, der von Kundschaft aus der Region lebt.</p>
-            <p>Diese Beschränkung ist Absicht. Wer nur eine Sorte Kunden bedient, wird darin schnell gut.</p>
+        <h1>Webdesign für KMU in der Schweiz</h1>
+
+        <!-- Drei kurze Abschnitte direkt unter dem Titel, Aufbau wie auf
+             portdigitalco.com/about: alles linksbuendig untereinander,
+             getrennt nur durch Haarlinien. Es gibt keine eigene Seite mehr
+             dafuer, Startseite und Ueber uns sind seit 20.08.2026 dieselbe
+             Seite. Der Anker traegt deshalb dieser Block. -->
+        <div class="hero-abschnitte" id="ueber-uns">
+
+          <div class="hero-abschnitt">
+            <p class="augenbraue">Wer wir sind</p>
+            <div class="hero-text">
+              <p>kazuvate baut Websites für kleine und mittlere Unternehmen in der Schweiz. Keine Generalisten, keine fremden Vorlagen: Jede Seite entsteht von Hand, für einen Betrieb, der von Kundschaft aus der Region lebt.</p>
+              <p>Diese Beschränkung ist Absicht. Wer nur eine Sorte Kunden bedient, wird darin schnell gut.</p>
+            </div>
           </div>
+
+          <div class="hero-abschnitt">
+            <p class="augenbraue">Was uns antreibt</p>
+            <div class="hero-text">
+              <p>Betriebe, die ihr Handwerk beherrschen und online trotzdem kaum vorkommen: Diese Lücke ist uns immer wieder aufgefallen. Die grossen Agenturen zu teuer, die Baukästen zu beliebig, dazwischen nichts.</p>
+              <p>Genau das ändern wir. Wer früh aufsteht und saubere Arbeit abliefert, hat verlässliche Anfragen verdient.</p>
+            </div>
+          </div>
+
+          <div class="hero-abschnitt">
+            <p class="augenbraue">Mit wem wir arbeiten</p>
+            <div class="hero-text">
+              <p>Sanitär, Elektro und Heizung, Reinigung, Gartenbau, Maler und Gipser, Transport, Treuhand und Praxen: Betriebe, die von der Umgebung leben. Wenn Sie Ihr Fach beherrschen und wollen, dass mehr Leute Sie finden, sind wir die Richtigen.</p>
+              <p>Die Zahl der Kunden halten wir bewusst klein. Ihr Auftrag geht nicht an ein Juniorteam, Sie reden direkt mit denen, die bauen.</p>
+            </div>
+          </div>
+
         </div>
 
-        <div class="hero-abschnitt">
-          <p class="augenbraue">Was uns antreibt</p>
-          <div class="hero-text">
-            <p>Betriebe, die ihr Handwerk beherrschen und online trotzdem kaum vorkommen: Diese Lücke ist uns immer wieder aufgefallen. Die grossen Agenturen zu teuer, die Baukästen zu beliebig, dazwischen nichts.</p>
-            <p>Genau das ändern wir. Wer früh aufsteht und saubere Arbeit abliefert, hat verlässliche Anfragen verdient.</p>
-          </div>
-        </div>
-
-        <div class="hero-abschnitt">
-          <p class="augenbraue">Mit wem wir arbeiten</p>
-          <div class="hero-text">
-            <p>Sanitär, Elektro und Heizung, Reinigung, Gartenbau, Maler und Gipser, Transport, Treuhand und Praxen: Betriebe, die von der Umgebung leben. Wenn Sie Ihr Fach beherrschen und wollen, dass mehr Leute Sie finden, sind wir die Richtigen.</p>
-            <p>Die Zahl der Kunden halten wir bewusst klein. Ihr Auftrag geht nicht an ein Juniorteam, Sie reden direkt mit denen, die bauen.</p>
-          </div>
-        </div>
-
-        <!-- Faden, der dem Scrollfortschritt durch die drei Bloecke
-             folgt: startet halb gezeichnet, ist fertig gezeichnet, wenn
-             "Mit wem wir arbeiten" den oberen Bildrand erreicht. Nur ab
-             1150px sichtbar, siehe stil/basis.css -- darunter kollidiert
-             er mit dem Text. pathLength="1" normiert die Pfadlaenge auf
-             1, damit skript/haupt.js keine echte Pixellaenge messen muss. -->
-        <svg class="hero-faden" viewBox="0 0 260 820" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-          <path pathLength="1" d="M160.4 0.0C166.1 6.5 186.5 26.0 194.4 39.0C202.3 52.0 207.6 65.1 208.0 78.1C208.4 91.1 204.1 104.1 196.9 117.1C189.7 130.1 177.2 143.2 164.6 156.2C152.0 169.2 135.3 182.2 121.3 195.2C107.3 208.2 91.7 221.3 80.8 234.3C69.9 247.3 60.3 260.3 55.9 273.3C51.5 286.3 51.0 299.4 54.5 312.4C58.0 325.4 66.6 338.4 76.9 351.4C87.2 364.4 102.4 377.5 116.2 390.5C130.0 403.5 146.9 416.5 159.9 429.5C172.9 442.5 186.1 455.6 194.1 468.6C202.1 481.6 207.4 494.6 207.9 507.6C208.4 520.6 204.2 533.7 197.1 546.7C190.0 559.7 177.6 572.7 165.1 585.7C152.6 598.7 135.9 611.8 121.9 624.8C107.9 637.8 92.3 650.8 81.3 663.8C70.3 676.8 60.6 689.9 56.1 702.9C51.6 715.9 50.9 728.9 54.3 741.9C57.7 754.9 66.3 768.0 76.5 781.0C86.7 794.0 109.2 813.5 115.7 820.0"/>
-        </svg>
+        <!-- React haengt sich hier ein, siehe src/main.tsx. Ohne
+             JavaScript bleibt dieser Knoten leer -- die Seite braucht
+             ihn nicht, um lesbar und bedienbar zu sein. -->
+        <div id="faden-root" aria-hidden="true"></div>
 
       </div>
 
@@ -364,6 +372,13 @@
 <!-- Eigenes Skript, kein fremder Server. Am Ende des Body und mit
      defer, damit die Seite nicht darauf warten muss. -->
 <script src="skript/haupt.js" defer></script>
+
+<!-- React-Insel "Faden": Quelle in src/, gebuendelt von Vite. Im Dev-Modus
+     (npm run dev) laedt Vite die TypeScript-Datei direkt und tauscht
+     Aenderungen live aus; beim npm run build wird daraus eine fertige
+     JS-Datei in dist/. Sucht sich beim Start #hero-faden-bereich und
+     #faden-root; findet es die nicht, passiert nichts. -->
+<script type="module" src="/src/main.tsx"></script>
 
 </body>
 </html>

@@ -3,27 +3,28 @@
    Eigenes Skript, keine Bibliothek, kein fremder Server. Die
    Aussage "keine fremden Skripte" bleibt damit unberuehrt.
 
-   Fuenf Aufgaben, jede in einem eigenen Block, damit die eine
+   Vier Aufgaben, jede in einem eigenen Block, damit die eine
    nicht die andere mitreisst:
    1. Kopf: Klasse setzen, sobald gescrollt wird.
    2. Menue: die Schublade auf dem Handy oeffnen und schliessen.
-   3. Faden: der Strich neben "Wer wir sind" folgt dem Scrollen.
-   4. Zeichen: die Strichlaengen der Leistungs-Symbole messen.
-   5. Kacheln: den Umfang des Rahmens messen.
+   3. Zeichen: die Strichlaengen der Leistungs-Symbole messen.
+   4. Kacheln: den Umfang des Rahmens messen.
 
-   Bis zum 20.08.2026 gab es an dieser Stelle einen anderen Block:
+   Bis zum 20.08.2026 gab es an dieser Stelle einen fuenften Block:
    Bloecke, die beim Scrollen ins Bild kommen, blendeten sich
    einmalig nacheinander ein. Kasum wollte das nicht mehr — genau
    dieses "man scrollt runter und Dinge tauchen auf" ist fuer ihn
    das Erkennungszeichen von Vibe-Coding-Seiten. Der Block ist
    ersatzlos raus, keine IntersectionObserver mehr in dieser Datei.
 
-   Der Faden weiter unten ist etwas anderes: keine einmalige
-   Reaktion auf "im Bild angekommen", sondern eine durchgehende
-   Kopplung an die Scrollposition selbst, die sich staendig
-   veraendert, waehrend man liest. Kasum hat das am 20.08.2026
-   ausdruecklich so angefragt, als Ersatz fuer eine urspruenglich
-   mit Framer Motion/React gebaute Vorlage.
+   **Der Faden neben "Wer wir sind" ist seit dem 20.08.2026 kein
+   Vanilla-Block mehr.** Erste Fassung war Vanilla-CSS/JS wie der
+   Rest dieser Datei, Kasum wollte danach ausdruecklich die echte
+   React-Komponente aus seiner Vorlage. Er lebt jetzt als eigene
+   React-Insel in `faden/`, kompiliert nach `skript/faden/faden.js`
+   und `.css`, in `index.html` per eigenem `<script type="module">`
+   eingebunden. Siehe `faden/README.md` und den README-Abschnitt
+   "Faden" fuer Aufbau und Begruendung.
 
    Alles hier ist Zugabe. Faellt das Skript aus, bleibt die Seite
    vollstaendig lesbar und bedienbar: die Klasse `js` am
@@ -72,50 +73,6 @@
   // Beim Laden mitten auf der Seite, etwa nach einem Sprung auf
   // einen Anker oder beim Zurueckblaettern, ist schon gescrollt.
   pruefen();
-})();
-
-/* --- Faden ----------------------------------------------------
-   Der Faden neben den drei Ueber-uns-Bloecken zeichnet sich weiter,
-   waehrend man durch den Bereich scrollt: halb gezeichnet, sobald
-   "Wer wir sind" von unten ins Bild kommt, ganz gezeichnet, sobald
-   "Mit wem wir arbeiten" oben aus dem Bild laeuft.
-
-   `pathLength="1"` steht direkt auf dem <path> im HTML und normiert
-   dessen geometrische Laenge auf 1. Dadurch reicht hier ein
-   Anteilswert zwischen 0 und 1, kein gemessener Pixelwert wie beim
-   Kachelrahmen weiter unten.
-   ------------------------------------------------------------ */
-(function () {
-  'use strict';
-
-  var pfad = document.querySelector('.hero-faden path');
-  var bereich = document.querySelector('.hero-abschnitte');
-  if (!pfad || !bereich) return;
-
-  function fortschritt() {
-    var rechteck = bereich.getBoundingClientRect();
-    var vh = window.innerHeight;
-    // 0, sobald die Oberkante des Bereichs von unten ins Bild
-    // kommt; 1, sobald die Unterkante oben aus dem Bild laeuft.
-    // Dieselbe Spanne wie ein Scroll-Ziel ohne eigene Grenzen in
-    // Framer Motion (Standard dort: "start end" bis "end start").
-    var wert = (vh - rechteck.top) / (vh + rechteck.height);
-    return Math.min(1, Math.max(0, wert));
-  }
-
-  function zeichnen() {
-    // Startet halb gezeichnet statt bei null: ein Faden, der schon
-    // da ist und sich fortsetzt, nicht einer, der aus dem Nichts
-    // entsteht.
-    var gezeichneterAnteil = 0.5 + fortschritt() * 0.5;
-    pfad.style.strokeDashoffset = String(1 - gezeichneterAnteil);
-  }
-
-  window.addEventListener('scroll', zeichnen, { passive: true });
-  window.addEventListener('resize', zeichnen);
-
-  // Beim Laden mitten auf der Seite ist schon ein Teil "gescrollt".
-  zeichnen();
 })();
 
 /* --- Menue --------------------------------------------------
