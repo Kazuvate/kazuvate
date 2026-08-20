@@ -1,0 +1,33 @@
+/* ============================================================
+   kazuvate | Danke
+   Die Bestaetigungsseite nach einem abgeschickten Formular. Eine
+   einzige zentrierte Botschaft, kein Raster -- es gibt nur diese
+   eine Aussage und einen Weg zurueck. Eigene, kleine Datei statt
+   ein paar Zeilen in stil/basis.css, damit keine andere Seite
+   dieses CSS mitladen muss.
+   ============================================================ */
+
+main#inhalt{
+  padding: var(--s10) 0;
+  text-align: center;
+}
+
+.danke-inhalt{
+  max-width: 46ch;
+  margin-inline: auto;
+}
+
+.danke-inhalt .augenbraue{ margin-bottom: var(--s4); }
+
+.danke-inhalt h1{
+  font-size: clamp(1.9rem, 4.5vw, 2.6rem);
+  margin-bottom: var(--s5);
+}
+
+.danke-inhalt p{
+  margin: 0 0 var(--s4);
+  color: var(--tinte-2);
+}
+.danke-inhalt p a{ color: var(--olive); }
+
+.danke-inhalt .knopf{ margin-top: var(--s5); }

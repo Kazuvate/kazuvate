@@ -176,32 +176,50 @@ main#inhalt{ padding: var(--s8) 0 0; }
    markiert, dass hier etwas anderes anfaengt: nicht mehr das
    Projekt, sondern das, was danach laeuft.
    ------------------------------------------------------------ */
+/* Seit dem 21.08.2026 zentriert und deutlich kompakter, auf Kasums
+   Wunsch. Vorher lief der Kasten ueber die vollen 1060px des Rasters,
+   trug darin aber nur 532px Text -- die Haelfte davon war Leere. Jetzt
+   ist er auf 760px begrenzt und mittig gesetzt, der Inhalt steht
+   zentriert darin und fuellt ihn. Innenabstand var(--s6) statt
+   var(--s7): der Kasten soll ein abgesetzter Absatz sein, kein Saal. */
 .ablauf-danach{
   margin-top: var(--s7);
+  max-width: 760px;
+  margin-inline: auto;
   /* Auf dem Handy bleiben von 390px Fensterbreite nach den
-     Seitenraendern 346px. Mit var(--s7) rundum blieben davon 250px
-     Textbreite uebrig -- der Kasten frisst dann mehr Platz als er
-     Inhalt traegt. Deshalb dort der kleinere Innenabstand. */
+     Seitenraendern 346px. Mit var(--s6) seitlich blieben davon 282px
+     Textbreite uebrig -- deshalb dort der kleinere Innenabstand. */
   padding: var(--s6) var(--s5);
   background: var(--karte-2);
   border-radius: var(--radius);
+  text-align: center;
 }
 @media (min-width: 760px){
-  .ablauf-danach{ padding: var(--s7); }
+  .ablauf-danach{ padding: var(--s6); }
 }
+/* max-width raus: "Der Livegang ist kein Schlussstrich." hat 35
+   Zeichen und brach an den 22ch immer in zwei Zeilen. Der Satz soll
+   auf einer stehen. text-wrap: balance teilt erst dann auf, wenn das
+   Fenster wirklich zu schmal ist, und dann auf gleich lange Zeilen. */
 .ablauf-danach h2{
   font-size: clamp(1.4rem, 2.8vw, 1.8rem);
-  max-width: 22ch;
+  margin-inline: auto;
+  text-wrap: balance;
 }
+/* 54ch statt 58: zentrierter Fliesstext braucht eine kuerzere Zeile
+   als linksbuendiger. Beide Kanten flattern, und je laenger die
+   Zeile, desto mehr faellt das auf. */
 .ablauf-danach p{
-  margin-top: var(--s4);
+  margin: var(--s4) auto 0;
   color: var(--tinte-2);
-  max-width: 58ch;
+  max-width: 54ch;
 }
 .ablauf-danach > p:not(.augenbraue):first-of-type{ color: var(--tinte); }
 
-/* Der Abschluss braucht Luft zum Kasten darueber. */
-main#inhalt .abschluss{ margin-top: var(--s9); }
+/* Luft zum Kasten darueber, aber nicht mehr die vollen var(--s9):
+   der Kasten ist jetzt kompakt, ein 96px-Graben danach wuerde ihn
+   wieder allein im Raum stehen lassen. */
+main#inhalt .abschluss{ margin-top: var(--s8); }
 
 /* --- Bewegung beim Zeigen ------------------------------------
    Beim Zeigen nimmt der Knoten die Markenfarbe an. Keine

@@ -132,17 +132,37 @@
          Das einzige Formular der Seite, seit die Kontaktsektion
          auf der Startseite entfernt wurde. Vorname, Name, E-Mail
          und Nachricht sind Pflicht, Organisation ist freiwillig.
-         Der Empfaenger unter /api/kontakt existiert noch nicht:
-         bis zum Deploy der Vercel Function kommen nur Telefon und
-         Mail wirklich an. -->
+         /api/kontakt ist eine Vercel Function, siehe api/kontakt.js;
+         sie schickt die Anfrage per Resend an kasumbajrami7@gmail.com
+         weiter, mit Antwortadresse der anfragenden Person. -->
     <div class="kontakt-rechts">
       <div class="anfrage-karte" id="anfrage">
 
         <h2 class="anfrage-titel">Anfrage senden</h2>
 
+        <!-- Erscheint nur, wenn api/kontakt.js nach einem gescheiterten
+             Versand mit ?fehler=... hierher zurueckschickt. Eingeblendet
+             und aus der Adresse wieder entfernt von skript/haupt.js. -->
+        <p class="formular-fehler" id="formular-fehler" hidden>Die Anfrage konnte nicht verschickt werden. Bitte versuchen Sie es nochmal oder rufen Sie uns direkt an: <a href="tel:+41786707973">+41 78 670 79 73</a>.</p>
+
         <form class="formular" action="/api/kontakt" method="post">
 
           <p class="formular-hinweis">Felder mit <span aria-hidden="true">*</span> sind Pflichtfelder.</p>
+
+          <!-- Spamschutz ohne Captcha, angekuendigt im Datenschutz-Abschnitt
+               "Kontaktformular": ein fuer Menschen unsichtbares Feld, das
+               nur ein Bot ausfuellt (siehe .fangfeld in stil/kontakt.css
+               und die Pruefung in api/kontakt.js), plus ein Zeitstempel,
+               den skript/haupt.js beim Laden der Seite eintraegt -- schafft
+               jemand das ganze Formular in unter zwei Sekunden, war es kein
+               Mensch. name="webseite" ist der Koeder: ein Bot, der blind
+               jedes Feld ausfuellt, das nach einer URL aussieht, tappt
+               eher hier hinein als in ein zufaelliges Feld. -->
+          <div class="fangfeld" aria-hidden="true">
+            <label for="webseite">Ihre Website</label>
+            <input type="text" id="webseite" name="webseite" tabindex="-1" autocomplete="off">
+          </div>
+          <input type="hidden" name="zeit" id="kontakt-zeit" value="">
 
           <div class="feld">
             <label for="vorname">Vorname <span class="pflicht" aria-hidden="true">*</span></label>
@@ -240,7 +260,6 @@
       <span>Kazuvate Bajrami</span>
       <a href="impressum.html">Impressum</a>
       <a href="datenschutz.html">Datenschutz</a>
-      <span>Keine Cookies, kein Tracking</span>
     </div>
 
   </div>

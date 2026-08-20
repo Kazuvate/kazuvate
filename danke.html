@@ -4,17 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Referenzen | kazuvate</title>
-<meta name="description" content="Websites, die kazuvate gebaut hat. Handgebautes Frontend für Schweizer KMU.">
+<title>Danke | kazuvate</title>
+<meta name="description" content="Ihre Anfrage bei kazuvate ist angekommen. Wir melden uns innert 24 Stunden.">
 <meta name="theme-color" content="#2C3616">
+<!-- Bestaetigungsseite, kein eigener Inhalt: soll nicht in Suchergebnissen
+     auftauchen, dafuer gibt es kontakt.html. -->
+<meta name="robots" content="noindex">
 
-<link rel="icon" href="../markenlogo/favicon.ico" sizes="32x32">
-<link rel="icon" href="../markenlogo/favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="../markenlogo/apple-touch-icon.png">
-<link rel="manifest" href="../markenlogo/site.webmanifest">
+<link rel="icon" href="markenlogo/favicon.ico" sizes="32x32">
+<link rel="icon" href="markenlogo/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="markenlogo/apple-touch-icon.png">
+<link rel="manifest" href="markenlogo/site.webmanifest">
 
-<link rel="stylesheet" href="../stil/tokens.css">
-<link rel="stylesheet" href="../stil/basis.css">
+<link rel="stylesheet" href="stil/tokens.css">
+<link rel="stylesheet" href="stil/basis.css">
+<link rel="stylesheet" href="stil/danke.css">
 
 <!-- Sagt dem CSS, dass JavaScript laeuft. Muss hier oben stehen und darf
      nicht in haupt.js: das laedt mit defer und kaeme zu spaet. Traegt heute
@@ -38,7 +42,7 @@
 <header class="kopf">
   <div class="wrap kopf-innen">
 
-    <a class="marke" href="../index.html">
+    <a class="marke" href="index.html">
       <svg viewBox="0 0 585.51 442.90" role="img" aria-label="kazuvate"><use href="#marke"></use></svg>
       <span>kazuvate</span>
     </a>
@@ -54,55 +58,36 @@
 
     <nav class="navigation" id="hauptmenue" aria-label="Hauptnavigation">
       <div class="navigation-innen">
-        <a href="../index.html#ueber-uns">Über uns</a>
-        <a href="../leistungen.html">Leistungen</a>
-        <a href="index.html" aria-current="page">Referenzen</a>
-        <a href="../ablauf.html">Ablauf</a>
-        <a href="../kontakt.html">Kontakt</a>
+        <a href="index.html#ueber-uns">Über uns</a>
+        <a href="leistungen.html">Leistungen</a>
+        <a href="referenzen/index.html">Referenzen</a>
+        <a href="ablauf.html">Ablauf</a>
+        <a href="kontakt.html">Kontakt</a>
       </div>
     </nav>
 
-    <a class="kopf-knopf" href="../kontakt.html">Unverbindlich anfragen</a>
+    <a class="kopf-knopf" href="kontakt.html">Unverbindlich anfragen</a>
 
   </div>
 </header>
 
-<!-- ====================== Titelband ====================== -->
-<div class="titel">
-  <div class="wrap">
-    <h1>Referenzen</h1>
-    <p class="unter">Websites, die wir gebaut haben. Ein Bild, ein Link. Am besten spricht die Seite selbst.</p>
-  </div>
-</div>
-
-<!-- ====================== Inhalt ====================== -->
+<!-- ====================== Inhalt ======================
+     Eine einzige zentrierte Aussage, kein Raster: es gibt nur diese
+     eine Botschaft und einen Weg zurueck. Der Telefonlink ist bewusst
+     da -- wer nach dem Absenden noch unsicher ist, ob es angekommen
+     ist, soll die Nummer nicht erst im Fuss suchen muessen.
+     ==================================================== -->
 <main id="inhalt">
-  <div class="wrap referenz-bereich">
+  <div class="wrap danke-inhalt">
 
-    <div class="referenz-galerie">
+    <p class="augenbraue">Danke</p>
+    <h1>Ihre Anfrage ist angekommen.</h1>
+    <p>Wir lesen sie in Ruhe und melden uns innert 24 Stunden bei Ihnen, meist per Mail.</p>
+    <p>Es pressiert? Rufen Sie direkt an: <a href="tel:+41786707973">+41 78 670 79 73</a>.</p>
 
-      <a class="referenz-kachel" href="https://www.prometizekiri.com/" target="_blank" rel="noopener">
-        <img src="../medien/referenzen/prometi-startseite.webp"
-             srcset="../medien/referenzen/prometi-startseite-760.webp 760w,
-                     ../medien/referenzen/prometi-startseite.webp 1280w"
-             sizes="(min-width: 640px) 500px, 100vw"
-             width="1280" height="860" loading="lazy" decoding="async" alt="">
-        <span class="name">ProMeti Facility Services<span class="nur-fuer-screenreader">, öffnet prometizekiri.com in einem neuen Tab</span></span>
-      </a>
-
-    </div>
+    <a class="knopf" href="index.html">Zur Startseite<span class="pfeil" aria-hidden="true">→</span></a>
 
   </div>
-
-  <!-- Abschluss. Ohne ihn endet die Seite nach der letzten Kachel
-       im Nichts und der Besucher hat keinen naechsten Schritt. -->
-  <section class="abschluss">
-    <div class="wrap">
-      <p class="abschluss-zeile">Bauen wir etwas, das funktioniert.</p>
-      <a class="knopf" href="../kontakt.html">Unverbindlich anfragen<span class="pfeil" aria-hidden="true">→</span></a>
-    </div>
-  </section>
-
 </main>
 
 <!-- ====================== Fuss ====================== -->
@@ -143,11 +128,11 @@
 
       <nav class="fuss-spalte" aria-labelledby="fuss-seiten">
         <h2 id="fuss-seiten">Seiten</h2>
-        <a href="../index.html#ueber-uns">Über uns</a>
-        <a href="../leistungen.html">Leistungen</a>
-        <a href="index.html">Referenzen</a>
-        <a href="../ablauf.html">Ablauf</a>
-        <a href="../kontakt.html">Kontakt</a>
+        <a href="index.html#ueber-uns">Über uns</a>
+        <a href="leistungen.html">Leistungen</a>
+        <a href="referenzen/index.html">Referenzen</a>
+        <a href="ablauf.html">Ablauf</a>
+        <a href="kontakt.html">Kontakt</a>
       </nav>
 
       <div class="fuss-spalte">
@@ -161,8 +146,8 @@
 
     <div class="fuss-unten">
       <span>Kazuvate Bajrami</span>
-      <a href="../impressum.html">Impressum</a>
-      <a href="../datenschutz.html">Datenschutz</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
     </div>
 
   </div>
@@ -170,7 +155,7 @@
 
 <!-- Eigenes Skript, kein fremder Server. Am Ende des Body und mit
      defer, damit die Seite nicht darauf warten muss. -->
-<script src="../skript/haupt.js" defer></script>
+<script src="skript/haupt.js" defer></script>
 
 </body>
 </html>

@@ -9,6 +9,8 @@
    2. Menue: die Schublade auf dem Handy oeffnen und schliessen.
    3. Zeichen: die Strichlaengen der Leistungs-Symbole messen.
    4. Kacheln: den Umfang des Rahmens messen.
+   5. Formular: Zeitstempel gegen Spam setzen, Fehlermeldung nach
+      einem gescheiterten Versand einblenden. Nur auf kontakt.html.
 
    Bis zum 20.08.2026 gab es an dieser Stelle einen fuenften Block:
    Bloecke, die beim Scrollen ins Bild kommen, blendeten sich
@@ -245,3 +247,37 @@
     });
   }
 })();
+
+/* --- Formular --------------------------------------------------
+   Zwei Dinge fuers Kontaktformular auf kontakt.html, beide im
+   Datenschutz-Abschnitt "Kontaktformular" angekuendigt: ein
+   Zeitstempel gegen Bots, die ein Formular in Millisekunden statt
+   in Sekunden ausfuellen (api/kontakt.js prueft ihn), und das
+   Einblenden der Fehlermeldung nach einem gescheiterten Versand.
+
+   Beide Elemente gibt es nur auf kontakt.html, deshalb die fruehen
+   Ausstiege -- auf jeder anderen Seite endet der Block sofort.
+   ------------------------------------------------------------ */
+(function () {
+  'use strict';
+
+  var zeit = document.getElementById('kontakt-zeit');
+  if (zeit) zeit.value = Date.now();
+
+  var fehler = document.getElementById('formular-fehler');
+  if (!fehler) return;
+
+  var art = new URLSearchParams(window.location.search).get('fehler');
+  if (!art) return;
+
+  fehler.hidden = false;
+
+  // Die Adresse wieder sauber machen: ohne das bliebe ?fehler=...
+  // in der URL stehen, und ein Neuladen der Seite wuerde die
+  // Meldung erneut zeigen, obwohl langst nichts mehr fehlgeschlagen
+  // ist.
+  var url = new URL(window.location.href);
+  url.searchParams.delete('fehler');
+  window.history.replaceState(null, '', url.pathname + url.hash);
+})();
+

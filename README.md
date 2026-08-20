@@ -55,6 +55,7 @@ ohne trägt.
 
 ```
 index.html             Startseite, bindet als einzige auch src/main.tsx ein
+danke.html              Bestaetigungsseite nach abgeschicktem Formular, noindex
 leistungen.html        Leistungen: Schnelligkeit, Sichtbarkeit, Rundum, groesser gezeigt
 ablauf.html            Ablauf: die vier Schritte ausgeschrieben, bindet src/ablauf.tsx ein
 kontakt.html           Kontaktseite mit Formular
@@ -68,6 +69,7 @@ stil/seiten.css        nur impressum.html und datenschutz.html: Fliesstext, Tabe
 stil/kontakt.css       nur kontakt.html: Zweispalter, Anfragekarte, Formular
 stil/leistungen.css    nur leistungen.html: grosse Nummern, Hover-Reaktion
 stil/ablauf.css        nur ablauf.html: senkrechter Strang, Nummernkreise, Faktenpaare
+stil/danke.css          nur danke.html: zentrierte Bestaetigung
 
 src/main.tsx                            haengt den Faden in die Startseite ein
 src/ablauf.tsx                          haengt den Fortschrittsstrang in ablauf.html ein
@@ -81,6 +83,7 @@ markenlogo/            Logo, Favicons, App Icons, Vorschaubild fürs Teilen
 medien/referenzen/     Bildschirmfotos der Kundenprojekte
 kazuvate_Logo.jpg      die ursprüngliche Bilddatei, liegt nur noch als Beleg hier
 
+api/kontakt.js          Vercel Function: schickt das Formular per Resend als Mail
 vite.config.ts         Multi-Page-Konfiguration: jede HTML-Datei ein Einstiegspunkt
 dist/                  Ergebnis von npm run build, nicht im Repo
 ```
@@ -110,6 +113,25 @@ stehen.
 
 Das Monogramm ist dasselbe Zeichen wie auf `kasumbajrami.dev`, hier aber als
 Schrift statt als Bild: spart eine Datei und bleibt in jeder Grösse scharf.
+
+Beide Kreise sind am 21.08.2026 von 46 auf 50 Pixel gewachsen, der Rand von 1
+auf 1.5 Pixel und von 30 auf 45 Prozent Deckkraft. Vorher war der Kreis auf der
+dunklen Fläche kaum zu sehen und die zwei Knöpfe wirkten wie ein Versehen statt
+wie zwei Links.
+
+**Die Zeile ganz unten** trug bis dahin vier Einträge: Firmenname, Impressum,
+Datenschutz und „Keine Cookies, kein Tracking". Der letzte ist raus — die Aussage
+steht in der Datenschutzerklärung, wo sie hingehört, und im Fuss stand sie als
+Behauptung neben zwei Links. Impressum und Datenschutz sind jetzt eine Spur
+grösser, halbfett und im vollen hellen Ton: das eine ist eine Angabe, das andere
+sind zwei Links, die man finden können muss.
+
+Dazu ein Ausrichtungsfehler, der erst durch die Klickflächen-Korrektur entstand:
+ohne `align-items` gilt in einem Flex-Container `stretch`, alle Kinder werden auf
+die Zeilenhöhe gedehnt und ihr Text sitzt oben in der Box. Die beiden Links
+tragen aber vier Pixel Innenabstand — ihr Text sass damit vier Pixel tiefer als
+der Firmenname daneben, und die Zeile lief sichtbar schief. `align-items: center`
+stellt alle auf dieselbe Mitte.
 
 Zwei Stolpersteine, die im CSS als Kommentar stehen: `.fuss svg` gibt jedem SVG
 im Fuss 16 Pixel Abstand nach unten, deshalb braucht das LinkedIn-Zeichen
@@ -183,7 +205,12 @@ Genau das steht jetzt auf der eigenen Seite. Gleiche Nummern und gleiche
 Reihenfolge wie auf der Startseite, damit man den Block wiedererkennt, dazu pro
 Schritt zwei Angaben: **Dauer** und **Von Ihnen**. Danach ein fünfter Abschnitt
 ohne Nummer über das, was nach dem Livegang passiert — ohne Nummer, damit die
-Zählung 01 bis 04 eins zu eins zur Startseite passt.
+Zählung 01 bis 04 eins zu eins zur Startseite passt. Dieser Kasten ist seit dem
+21.08.2026 zentriert und auf 760 Pixel begrenzt: vorher lief er über die vollen
+1060 des Rasters, trug darin aber nur 532 Pixel Text — die Hälfte davon war
+Leere. Die Absätze sind auf 54 Zeichen begrenzt statt auf 58, weil zentrierter
+Fliesstext eine kürzere Zeile braucht als linksbündiger: beide Kanten flattern,
+und je länger die Zeile, desto mehr fällt das auf.
 
 Die Sektion auf der Startseite bleibt als Kurzfassung stehen und bekommt einen
 Link „Ablauf im Detail", gleiche Bauart wie „Alle Referenzen". Ohne den wäre die
@@ -365,6 +392,30 @@ keine Anfrage an Dritte, setzt keine Cookies und misst nichts.
 
 Ohne JavaScript bleibt `#faden-root` leer — kein Fehler, keine Lücke im Layout.
 
+## Abschlussblock
+
+Jede Seite ausser der Kontaktseite endet mit `.abschluss`: eine Zeile, ein Knopf,
+weiter geht es auf `kontakt.html`. **Seit dem 21.08.2026 zentriert.** Die Zeile
+„Reden wir über Ihr Projekt." brach vorher immer in zwei Zeilen, weil auf
+`.abschluss-zeile` ein `max-width: 20ch` stand und der Satz 27 Zeichen hat. Die
+Grenze ist weg, der Satz steht auf einer Zeile, und `text-wrap: balance` teilt
+erst dann auf, wenn das Fenster wirklich zu schmal wird — dann auf zwei gleich
+lange Zeilen statt ein einzelnes Wort in die zweite zu hängen.
+
+Der Knopf ist ein `inline-block`, `text-align: center` auf der Sektion zentriert
+ihn also mit, ohne eigene Regel.
+
+**Der Knopf selbst ist einladender geworden**, weil der wichtigste Knopf der
+Seite vorher dasass wie eine Beschriftung: 16/32 statt 14/26 Innenabstand, eine
+Spur grössere Schrift, ein Pfeil der beim Zeigen nachrückt, und ein Schatten im
+Tintenton statt in Neutralgrau — neutrales Grau wirkt auf dem warmen Papierton
+wie aufgeklebt. Beim Zeigen hebt er zwei Pixel an und der Schatten wächst mit;
+ohne das mitwachsende Weichzeichnen sieht ein Anheben aus, als wäre das Element
+verrutscht statt näher gekommen.
+
+Die Pfeil-Regel stand bis dahin in `stil/kontakt.css`, weil es den Pfeil nur dort
+gab. Sie ist nach `stil/basis.css` gewandert.
+
 ## Ansprache
 
 Alle Kundentexte stehen in der **Wir-Form**, auch wenn hier vorerst nur einer
@@ -388,10 +439,53 @@ Nachrichtenfeld fragt nach dem Betrieb, nicht nach einer Nachricht: was jemand
 macht und was die Website leisten soll, ist die Angabe, mit der sich eine
 Antwort schreiben lässt.
 
-**Das Formular sendet noch nirgendwohin.** `action="/api/kontakt"` zeigt auf
-eine Vercel Function, die es noch nicht gibt. Bis dahin sind Telefon und Mail
-der einzige Weg, der wirklich ankommt. Die HTML5-Prüfung (`required`,
-`type=email`) greift schon jetzt.
+**Das Formular sendet seit dem 21.08.2026 wirklich.** `action="/api/kontakt"`
+zeigt auf [api/kontakt.js](#api-kontakt), eine Vercel Function. Die HTML5-Prüfung
+(`required`, `type=email`) greift zusätzlich, nicht stattdessen — die Function
+prüft dieselben Pflichtfelder serverseitig nach, für den Fall eines direkten
+POST ohne Browser.
+
+**Spamschutz ohne Captcha**, wie im Datenschutz-Abschnitt „Kontaktformular"
+beschrieben: ein für Menschen unsichtbares Feld (`.fangfeld`, `name="webseite"`)
+und ein Zeitstempel, den `skript/haupt.js` beim Laden der Seite in ein
+verstecktes Feld schreibt. Kommt die Anfrage weniger als zwei Sekunden nach
+dem Laden an, war es kein Mensch. Beide Fälle bekommen dieselbe Antwort wie
+ein echter Erfolg — eine Weiterleitung auf `danke.html`, keine Fehlermeldung.
+Das verrät einem Bot nicht, dass er aufgeflogen ist, und kostet nichts, weil
+gar keine Mail verschickt wird.
+
+Schlägt der echte Versand fehl (falscher oder fehlender API-Schlüssel, Resend
+nicht erreichbar), leitet die Function zurück auf `kontakt.html?fehler=versand`.
+Ein Skript-Block in `skript/haupt.js` blendet dann `#formular-fehler` ein — eine
+vorbereitete, mit `hidden` versteckte Meldung samt Telefonnummer als Ausweg —
+und räumt den Query-Parameter per `history.replaceState` wieder aus der Adresse,
+damit ein Neuladen die Meldung nicht erneut zeigt.
+
+<a name="api-kontakt"></a>**`api/kontakt.js`** schickt die Anfrage per
+[Resend](https://resend.com) an `kasumbajrami7@gmail.com`, mit `reply_to` auf
+die Adresse der anfragenden Person — eine Antwort aus dem Mailprogramm geht
+damit direkt an den Kunden, nicht an Resend. Bis auf Resends REST-API selbst
+keine neue Abhängigkeit: kein SDK, `fetch` reicht.
+
+**Zwei Dinge fehlen noch, bevor das live geht:**
+
+1. Ein Resend-Konto (kostenlos, 100 Mails/Tag) mit `kasumbajrami7@gmail.com`
+   erstellen und unter *API Keys* einen Schlüssel erzeugen.
+2. Den Schlüssel in Vercel unter *Project Settings → Environment Variables*
+   als `RESEND_API_KEY` eintragen.
+
+Bis dahin schlägt jeder Versand fehl und die Fehlermeldung mit der
+Telefonnummer greift — die Seite bricht also nicht, sie fällt auf den Weg
+zurück, der auch vorher schon der einzige war.
+
+Absender ist vorerst `onboarding@resend.dev`, Resends Test-Adresse: sie
+funktioniert ohne eigene Domain, verschickt aber nur an die E-Mail, mit der
+das Resend-Konto angelegt wurde. Das genügt hier, weil genau diese Adresse
+ohnehin der Empfänger ist. Sobald `kazuvate.ch` gekauft und bei Resend als
+Domain verifiziert ist (SPF/DKIM-Einträge), kann der Absender in
+`api/kontakt.js` auf `Kazuvate <kontakt@kazuvate.ch>` wechseln — erst dann
+kommt Mail auch bei anderen Empfängern an, nicht nur bei dieser einen
+Testadresse.
 
 ## Bewegung
 
@@ -541,11 +635,17 @@ Der Rest der Seite ist auch so lesbar.
 Startseite und laden zusätzlich `stil/seiten.css`. Eigene Datei, damit die
 Startseite kein CSS lädt, das sie nie braucht.
 
-Die Texte beschreiben den Zustand, den die Seite beim Livegang haben soll,
-nicht den heutigen. Vercel und Resend stehen als Auftragsbearbeiter drin und
-das Kontaktformular ist beschrieben, obwohl es beides noch nicht gibt. Vor dem
-Livegang gegenlesen. Die vollständige Liste der offenen Punkte steht im Second
-Brain unter `02 Projekte/Kazuvate/Kazuvate Website.md`.
+Die Texte beschrieben lange den Zustand, den die Seite beim Livegang haben
+soll, nicht den damaligen: Vercel und Resend standen als Auftragsbearbeiter
+drin, obwohl das Kontaktformular noch nirgendwohin sendete. Seit `api/kontakt.js`
+das Formular am 21.08.2026 tatsächlich verschickt, stimmt das wieder.
+
+Zwei kleinere Ungenauigkeiten sind bei der Gelegenheit mitkorrigiert: der
+Abschnitt „Kontaktformular" verwies noch auf „das Formular auf der Startseite"
+(das Formular ist seit dem 19.08.2026 auf `kontakt.html`) und nannte eine
+Telefonnummer als Formularfeld, die es im echten Formular nie gab. Vor dem
+Livegang trotzdem einmal ganz gegenlesen. Die vollständige Liste der offenen
+Punkte steht im Second Brain unter `02 Projekte/Kazuvate/Kazuvate Website.md`.
 
 ## Referenzen
 

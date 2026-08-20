@@ -162,6 +162,33 @@
   font-size: .88rem;
 }
 
+/* Ehrenpot gegen Formular-Spam, siehe der Kommentar im HTML und
+   api/kontakt.js fuer die Pruefung. display:none reicht eigentlich
+   schon -- die meisten Spam-Bots werten kein CSS aus, sie lesen nur
+   das rohe HTML und schicken jedes <input> mit, das sie finden --,
+   aber ein absolut positioniertes Feld ausserhalb des Bildschirms
+   faengt auch die selteneren Bots, die tatsaechlich rendern. Kein
+   grid-column noetig: ein absolut positioniertes Grid-Kind nimmt
+   ohnehin keine eigene Zelle ein und stoert die Nachbarn nicht. */
+.fangfeld{
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.formular-fehler{
+  margin: 0 0 var(--s5);
+  padding: var(--s4) var(--s5);
+  background: var(--karte-2);
+  border-radius: var(--radius);
+  color: var(--tinte);
+  font-size: .94rem;
+  line-height: 1.55;
+}
+.formular-fehler a{ color: var(--olive); }
+
 .feld{
   display: grid;
   gap: var(--s2);
@@ -216,12 +243,6 @@
 }
 .formular-fuss a{ color: var(--olive); }
 
-/* --- Pfeil in Knoepfen -------------------------------------- */
-.knopf .pfeil{
-  display: inline-block;
-  margin-left: var(--s2);
-  transition: transform var(--kurz) var(--kurve);
-}
-@media (hover: hover) and (pointer: fine){
-  .knopf:hover .pfeil{ transform: translateX(4px); }
-}
+/* Der Pfeil in Knoepfen stand bis zum 21.08.2026 hier, weil es ihn
+   nur auf der Kontaktseite gab. Seit die Abschluss-Knoepfe aller
+   Seiten einen tragen, steht die Regel in stil/basis.css. */
