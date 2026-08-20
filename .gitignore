@@ -5,3 +5,10 @@ dist/
 
 # Vites Zwischenspeicher
 .vite/
+
+# Lokale Umgebungsvariablen, z.B. RESEND_API_KEY fuer api/kontakt.js.
+# .env.example bleibt ausgenommen: die traegt keinen echten Wert, nur
+# den Namen der Variable, und dient als Vorlage im Repo.
+.env
+.env.local
+.env.*.local
