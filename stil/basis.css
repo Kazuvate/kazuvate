@@ -686,6 +686,7 @@ a{ color: var(--olive); }
   .leistungen li + li{
     border-left: 1px solid var(--linie-marke);
     padding-left: var(--s6);
+    transition: border-color var(--kurz) var(--kurve);
   }
 }
 @media (max-width: 1099px){
@@ -698,25 +699,23 @@ a{ color: var(--olive); }
    Block genauso breit endet wie die Ueberschrift darueber. */
 .leistungen li:last-child{ padding-right: 0; }
 
-.leistungen .nr{
-  display: block;
-  color: var(--still);
-  margin-bottom: var(--s6);
-}
-
 /* Zeichen aus Rechtecken, Linien und Kreisen, keine Bibliothek.
    Nur Kontur, kein Fuellton: gefuellte Symbole wirken neben der
    duennen Haarlinie wie Fremdkoerper. */
+/* 32 statt 28 Pixel, seit die Nummer darueber weg ist: das Zeichen
+   ist jetzt das Erste im Feld und darf den Platz nehmen, den die
+   Zahl hatte. */
 .leistung-zeichen{
   display: block;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   margin-bottom: var(--s5);
   fill: none;
   stroke: var(--tinte);
   stroke-width: 1.4;
   stroke-linecap: round;
   stroke-linejoin: round;
+  transition: stroke var(--kurz) var(--kurve);
 }
 /* Der Punkt im Fensterbalken ist gefuellt statt umrandet, bei
    knapp zwei Pixel Durchmesser wuerde eine Kontur nur schmieren.
@@ -744,10 +743,15 @@ a{ color: var(--olive); }
    erst einen Wimpernschlag spaeter. Ohne .bereit gilt keine
    Transition, sonst zeichnete sich das Symbol beim Laden einmal
    sichtbar rueckwaerts weg. */
-.js .leistung-zeichen.bereit > *{
+.js .leistung-zeichen.bereit > *:not(.punkt){
+  /* --laenge setzt skript/haupt.js je Form, CSS kennt die Masse
+     eines Pfades nicht. Strichmuster und Versatz stehen jetzt hier
+     statt als Inline-Stil im Skript -- siehe Begruendung dort. */
+  stroke-dasharray: var(--laenge);
+  stroke-dashoffset: var(--laenge);
   transition: stroke-dashoffset var(--zeichen-dauer) var(--kurve);
 }
-.js .leistung-zeichen.gezeichnet > *{ stroke-dashoffset: 0 !important; }
+.js .leistung-zeichen.gezeichnet > *:not(.punkt){ stroke-dashoffset: 0; }
 
 /* Die Formen laufen nacheinander los statt alle zugleich: erst
    der Rahmen, dann was darin steht. */
@@ -755,6 +759,40 @@ a{ color: var(--olive); }
 .js .leistung-zeichen.bereit > *:nth-child(3){ transition-delay: 200ms; }
 .js .leistung-zeichen.bereit > *:nth-child(4){ transition-delay: 280ms; }
 .js .leistung-zeichen.bereit > *:nth-child(5){ transition-delay: 360ms; }
+
+/* --- Die Zeichen beim Zeigen ---------------------------------
+   Bis zum 21.08.2026 stand ueber jedem Feld eine Nummer und sonst
+   passierte hier nichts. Die Nummer ist weg (siehe index.html),
+   dafuer schreibt sich das Zeichen unter dem Zeiger ein zweites
+   Mal -- dieselbe Technik wie beim Laden, nur als Animation statt
+   als Transition, damit sie erneut von vorne laufen kann. Dazu
+   nimmt es die Markenfarbe an und die Trennlinie rechts wird eine
+   Spur kraeftiger.
+
+   Kein Scroll-Bezug, auch hier nicht: was beim Runterscrollen von
+   selbst auftaucht, hat Kasum am 20.08.2026 abgelehnt. Bewegung
+   gibt es nur, wenn jemand sie ausloest.
+
+   Auf Touch passiert nichts -- dort steht das fertig gezeichnete
+   Zeichen, wie bisher auch. */
+@keyframes zeichen-nochmal{
+  from{ stroke-dashoffset: var(--laenge); }
+  to{ stroke-dashoffset: 0; }
+}
+@media (hover: hover) and (pointer: fine){
+  .js .leistungen li:hover .leistung-zeichen.gezeichnet > *:not(.punkt){
+    animation: zeichen-nochmal var(--zeichen-dauer) var(--kurve) both;
+  }
+  /* Die Formen laufen nacheinander los, gleiche Staffelung wie beim
+     Laden: erst der Rahmen, dann was darin steht. */
+  .js .leistungen li:hover .leistung-zeichen > *:nth-child(2){ animation-delay: 120ms; }
+  .js .leistungen li:hover .leistung-zeichen > *:nth-child(3){ animation-delay: 200ms; }
+  .js .leistungen li:hover .leistung-zeichen > *:nth-child(4){ animation-delay: 280ms; }
+  .js .leistungen li:hover .leistung-zeichen > *:nth-child(5){ animation-delay: 360ms; }
+
+  .leistungen li:hover .leistung-zeichen{ stroke: var(--olive); }
+  .leistungen li:hover{ border-left-color: var(--olive); }
+}
 
 .leistungen h3{
   font-size: 1.14rem;
@@ -1043,9 +1081,15 @@ a{ color: var(--olive); }
     transition-duration: .01ms !important;
     animation-duration: .01ms !important;
   }
-  /* Ohne diese zwei Zeilen stuende das Symbol zwar sofort statt
-     langsam da, aber die grundsaetzliche Transition-Regel weiter
-     oben wuerde trotzdem laufen, sobald .gezeichnet dazukommt. */
-  .js .leistung-zeichen.bereit > *{ stroke-dashoffset: 0 !important; }
+  /* Ohne diese Zeilen stuende das Symbol zwar sofort statt langsam
+     da, aber die grundsaetzliche Transition-Regel weiter oben wuerde
+     trotzdem laufen, sobald .gezeichnet dazukommt. `animation: none`
+     kam am 21.08.2026 dazu: seitdem schreibt sich das Zeichen beim
+     Zeigen ein zweites Mal, und eine Keyframe-Animation ueberlebt
+     das blosse Kuerzen der Dauer weiter oben. */
+  .js .leistung-zeichen.bereit > *{
+    stroke-dashoffset: 0 !important;
+    animation: none !important;
+  }
   .js .leistung-zeichen.bereit .punkt{ opacity: 1; }
 }

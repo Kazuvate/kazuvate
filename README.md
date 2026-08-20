@@ -56,7 +56,7 @@ ohne trägt.
 ```
 index.html             Startseite, bindet als einzige auch src/main.tsx ein
 leistungen.html        Leistungen: Schnelligkeit, Sichtbarkeit, Rundum, groesser gezeigt
-ablauf.html            Ablauf: die vier Schritte ausgeschrieben, mit Dauer und Mitwirkung
+ablauf.html            Ablauf: die vier Schritte ausgeschrieben, bindet src/ablauf.tsx ein
 kontakt.html           Kontaktseite mit Formular
 impressum.html         Impressum
 datenschutz.html       Datenschutzerklärung
@@ -70,7 +70,9 @@ stil/leistungen.css    nur leistungen.html: grosse Nummern, Hover-Reaktion
 stil/ablauf.css        nur ablauf.html: senkrechter Strang, Nummernkreise, Faktenpaare
 
 src/main.tsx                            haengt den Faden in die Startseite ein
+src/ablauf.tsx                          haengt den Fortschrittsstrang in ablauf.html ein
 src/components/ui/svg-follow-scroll.tsx die Faden-Komponente (React, framer-motion)
+src/components/ui/ablauf-strang.tsx     der Fortschrittsstrang auf ablauf.html
 src/lib/utils.ts                        cn()-Helfer (shadcn-Konvention)
 src/index.css                           nur Tailwind-Utilities, kein Preflight
 
@@ -124,6 +126,21 @@ stehen direkt im HTML — Fenster für den One-Pager, zwei versetzte Fenster fü
 die mehrseitige Website, eine Uhr für Wartung und Textpflege. Keine
 Icon-Bibliothek: das wäre eine Fremddatei für drei Symbole, und Fremddateien
 sind hier das, was wir gerade nicht wollen.
+
+**Die Nummern 01 bis 03 sind am 21.08.2026 weggefallen** und die Liste ist von
+`<ol>` auf `<ul>` gewechselt. One-Pager, mehrseitige Website und Wartung sind
+keine Reihenfolge, die man abarbeitet, sondern drei Angebote zur Auswahl — eine
+Zählung behauptet einen Ablauf, den es hier nicht gibt. Dafür wird das Zeichen
+unter dem Zeiger lebendig: es schreibt sich ein zweites Mal, nimmt die
+Markenfarbe an, und die Trennlinie rechts wird eine Spur kräftiger. Das Zeichen
+ist ausserdem von 28 auf 32 Pixel gewachsen, weil es jetzt das Erste im Feld ist.
+
+Dafür musste `skript/haupt.js` umgestellt werden: es schrieb Strichmuster und
+Versatz bis dahin als Inline-Stil auf jede Form. Inline schlägt jede
+Stylesheet-Regel, weshalb im CSS ein `!important` stehen musste — und
+`!important` schlägt wiederum jede `@keyframes`-Animation. Damit war jede weitere
+Bewegung an diesen Formen blockiert. Das Skript gibt jetzt nur noch die Länge als
+Custom Property `--laenge` weiter, Strichmuster und Versatz stehen im CSS.
 
 Bis zum 20.08.2026 standen die Leistungen als dreispaltige Zeilen untereinander,
 mit der Begründung, dass Karten gleich lange Texte erzwingen. Das gilt weiter:
@@ -181,9 +198,39 @@ Kreis links statt in ihrer Mitte und die Linie liefe sichtbar an ihm vorbei.
 
 Ab 760 Pixel; darunter steht die Nummer über dem Text und es trennen Haarlinien
 wie in der Ablauf-Sektion der Startseite, weil ein Strang dort quer durch den
-Absatz laufen müsste. Die Linie steht von Anfang an ganz da und zeichnet sich
-nicht mit — das wäre eine Wiederholung des Fadens und ausserdem Scroll-Animation,
-siehe Bewegung.
+Absatz laufen müsste.
+
+### Der Strang füllt sich beim Scrollen
+
+Seit dem 21.08.2026, auf Kasums Wunsch. Vorbild ist **notemage.app**, von ihm als
+Referenz geschickt: dort besteht der Pfad aus zwei deckungsgleichen SVG-Pfaden —
+`.pl-base` blass im Hintergrund, `.pl-fill` in der Markenfarbe darüber, dessen
+`stroke-dashoffset` am Scrollfortschritt hängt — und die erreichten Knoten
+bekommen eine Klasse `.pl-lit`.
+
+Übernommen ist das Prinzip, nicht die Technik. Bei notemage ist der Pfad
+geschwungen, deshalb braucht es dort ein SVG und die Rechnung über die Pfadlänge.
+Der Strang hier ist kerzengerade — eine Linie mit `scaleY` erledigt dasselbe,
+läuft auf der Grafikkarte und braucht kein Vermessen von Pfaden.
+
+Drei Teile, alle in `src/components/ui/ablauf-strang.tsx`:
+
+- die **Füllung** wächst per `scaleY` von oben nach unten
+- die **Spitze** wandert mit; sie liegt hinter den Knoten, verschwindet also in
+  einem Kreis und kommt darunter wieder heraus
+- ein **Ring** je Knoten geht auf, sobald die Spitze ihn erreicht — nur Kontur,
+  ein gefüllter Kreis würde die Nummer verdecken
+
+Das Scroll-Ziel ist die Spur selbst, nicht die Liste, mit
+`offset: ["start center", "end center"]`. Damit steht die Spitze immer auf
+Fenstermitte: man scrollt, und der Punkt bleibt dort, wo man gerade liest.
+
+**Das ist kein Scroll-Reveal.** Abgelehnt hat Kasum am 20.08.2026 Blöcke, die
+beim Vorbeiscrollen *einblenden*. Hier blendet nichts ein — jeder Schritt steht
+von der ersten Sekunde an vollständig da, bewegt wird nur die Anzeige, wie weit
+man selbst gekommen ist. Bei `prefers-reduced-motion` steht der Strang gefüllt
+und ohne Spitze da; ohne JavaScript bleibt die blasse Grundspur, und die Seite
+ist unverändert lesbar.
 
 ## Über uns
 
@@ -366,6 +413,13 @@ hat das an diesem Tag verworfen — für ihn ist genau dieses „man scrollt run
 und Dinge tauchen auf" das Erkennungszeichen einer Vibe-Coding-Seite. Der Block
 ist ersatzlos aus `skript/haupt.js` raus, keine Klassen `auftritt*`/`sichtbar`
 mehr irgendwo im HTML. Alle Blöcke stehen von Anfang an da.
+
+**Scroll-*gebunden* ist erlaubt, Scroll-*Reveal* nicht.** Zwei Dinge hängen am
+Scrollfortschritt: der Faden im Kopfbereich der Startseite und seit dem
+21.08.2026 der Fortschrittsstrang auf `ablauf.html`. Beide blenden nichts ein —
+was sie zeigen, steht von Anfang an vollständig da, bewegt wird nur eine Anzeige
+darüber. Das ist die Grenze: eine Bewegung, die vom Scrollen *abhängt*, ist in
+Ordnung; eine, die Inhalt vom Scrollen *abhängig macht*, nicht.
 
 **Wobei dieser Umbau eine Weile lang etwas kaputt gemacht hat:** eine frühere
 Fassung des Auftritt-Umbaus hat aus Versehen die ganze Leistungen-Sektion

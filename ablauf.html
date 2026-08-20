@@ -88,98 +88,113 @@
      Livegang passiert. Bewusst ohne Nummer, damit die Zaehlung
      eins zu eins zur Startseite passt.
 
-     Keine Scroll-Animation, wie auf allen anderen Seiten seit dem
-     20.08.2026. Die einzige Bewegung ist eine kleine Reaktion auf
-     den Zeiger, siehe stil/ablauf.css.
+     Der Strang links fuellt sich beim Runterscrollen, siehe die
+     React-Insel weiter unten. Kein Scroll-Reveal: die Schritte
+     stehen von Anfang an vollstaendig da, bewegt wird nur die
+     Anzeige des Fortschritts.
      ==================================================== -->
 <main id="inhalt">
   <div class="wrap">
 
     <p class="ablauf-vorspann">Sie sollen vor der Zusage wissen, worauf Sie sich einlassen: wer wann was tut, wie lange es dauert und an welchen Stellen Sie entscheiden. Deshalb steht der ganze Ablauf hier und nicht erst in der Offerte.</p>
 
-    <ol class="ablauf-schritte">
+    <!-- ---------- React-Insel: Fortschrittsstrang ----------
+         Der Wrapper traegt position:relative, damit #strang-root und
+         die Knoten in der Liste dasselbe Koordinatensystem haben --
+         die Komponente misst die Kreise und zeichnet dorthin.
+         Siehe src/ablauf.tsx und src/components/ui/ablauf-strang.tsx.
 
-      <li class="ablauf-schritt">
-        <span class="ablauf-zahl" aria-hidden="true">01</span>
-        <div class="ablauf-inhalt">
-          <p class="augenbraue">Schritt 01</p>
-          <h2>Gespräch</h2>
-          <p>Zwanzig Minuten am Telefon oder bei Ihnen im Betrieb. Wir wollen wissen, wonach Ihre Kundschaft sucht, wer heute bei Ihnen anruft und warum, und was an der jetzigen Lösung stört.</p>
-          <p>Am Ende dieses Gesprächs sagen wir Ihnen, ob wir die Richtigen sind. Braucht Ihr Vorhaben einen Onlineshop, ein Buchungssystem mit Verfügbarkeiten oder einen Mitgliederbereich, hören Sie das hier und nicht erst in der Offerte. Wir nennen Ihnen dann, was stattdessen passt.</p>
-          <dl class="schritt-fakten">
-            <div>
-              <dt>Dauer</dt>
-              <dd>20 bis 30 Minuten</dd>
-            </div>
-            <div>
-              <dt>Von Ihnen</dt>
-              <dd>Nichts vorbereiten. Ein Gespräch, keine Präsentation.</dd>
-            </div>
-          </dl>
-        </div>
-      </li>
+         Ohne JavaScript bleibt #strang-root leer und es steht die
+         blasse Grundspur aus stil/ablauf.css da, wie vorher auch. -->
+    <div class="ablauf-strang-bereich">
 
-      <li class="ablauf-schritt">
-        <span class="ablauf-zahl" aria-hidden="true">02</span>
-        <div class="ablauf-inhalt">
-          <p class="augenbraue">Schritt 02</p>
-          <h2>Offerte</h2>
-          <p>Sie bekommen einen Fixpreis, keine Stundenschätzung. Darin steht Seite für Seite, was gebaut wird, was an Texten und Bildern von Ihnen kommt, was wir liefern und wann die Seite live geht.</p>
-          <p>Was drinsteht, gilt. Kommt später ein Wunsch dazu, der nicht in der Offerte steht, nennen wir den Preis dafür, bevor wir daran arbeiten. Auf der Schlussrechnung steht keine Position, die Sie nicht vorher gesehen haben.</p>
-          <dl class="schritt-fakten">
-            <div>
-              <dt>Dauer</dt>
-              <dd>Innert zwei Arbeitstagen nach dem Gespräch</dd>
-            </div>
-            <div>
-              <dt>Von Ihnen</dt>
-              <dd>Eine Zusage oder eine Absage. Beides ist in Ordnung.</dd>
-            </div>
-          </dl>
-        </div>
-      </li>
+      <div id="strang-root" aria-hidden="true"></div>
 
-      <li class="ablauf-schritt">
-        <span class="ablauf-zahl" aria-hidden="true">03</span>
-        <div class="ablauf-inhalt">
-          <p class="augenbraue">Schritt 03</p>
-          <h2>Entwurf</h2>
-          <p>Bevor eine Zeile Code entsteht, sehen Sie die Seite: Aufbau, Reihenfolge der Abschnitte, Schrift, Farben und die echten Texte an ihrem Platz. Keine Blindtexte, keine Platzhalterbilder aus einer Fotodatenbank.</p>
-          <p>Sie geben den Entwurf frei oder sagen, was anders soll. Eine Korrekturrunde ist eingerechnet. Gebaut wird erst, wenn Sie einverstanden sind — so wird nichts zweimal gemacht und Sie sehen keine Rechnung für Arbeit, die Sie nie wollten.</p>
-          <dl class="schritt-fakten">
-            <div>
-              <dt>Dauer</dt>
-              <dd>Erste Woche des Projekts</dd>
-            </div>
-            <div>
-              <dt>Von Ihnen</dt>
-              <dd>Logo, Bilder und vorhandene Texte. Fehlt etwas, schreiben wir es.</dd>
-            </div>
-          </dl>
-        </div>
-      </li>
+      <ol class="ablauf-schritte" id="ablauf-schritte">
 
-      <li class="ablauf-schritt">
-        <span class="ablauf-zahl" aria-hidden="true">04</span>
-        <div class="ablauf-inhalt">
-          <p class="augenbraue">Schritt 04</p>
-          <h2>Umsetzung</h2>
-          <p>Wir bauen die Seite von Hand: HTML, CSS und so viel JavaScript, wie sie wirklich braucht. Dazu die Dinge, die niemand sieht und die trotzdem darüber entscheiden, ob Sie gefunden werden — Titel und Beschreibungen für die Suche, strukturierte Firmendaten, Google-Unternehmensprofil, saubere Bildgrössen.</p>
-          <p>Vor dem Livegang prüfen wir die Seite auf Handy, Tablet und Rechner und einmal komplett mit der Tastatur allein. Danach geht sie online, und Sie bekommen alle Dateien, die Domain und sämtliche Zugänge auf Ihren Namen. Nichts davon bleibt bei uns liegen.</p>
-          <dl class="schritt-fakten">
-            <div>
-              <dt>Dauer</dt>
-              <dd>Zwei bis vier Wochen vom ersten Gespräch bis live</dd>
-            </div>
-            <div>
-              <dt>Von Ihnen</dt>
-              <dd>Eine letzte Freigabe, bevor die Seite online geht.</dd>
-            </div>
-          </dl>
-        </div>
-      </li>
+        <li class="ablauf-schritt">
+          <span class="ablauf-zahl" aria-hidden="true">01</span>
+          <div class="ablauf-inhalt">
+            <p class="augenbraue">Schritt 01</p>
+            <h2>Gespräch</h2>
+            <p>Zwanzig Minuten am Telefon oder bei Ihnen im Betrieb. Wir wollen wissen, wonach Ihre Kundschaft sucht, wer heute bei Ihnen anruft und warum, und was an der jetzigen Lösung stört.</p>
+            <p>Am Ende dieses Gesprächs sagen wir Ihnen, ob wir die Richtigen sind. Braucht Ihr Vorhaben einen Onlineshop, ein Buchungssystem mit Verfügbarkeiten oder einen Mitgliederbereich, hören Sie das hier und nicht erst in der Offerte. Wir nennen Ihnen dann, was stattdessen passt.</p>
+            <dl class="schritt-fakten">
+              <div>
+                <dt>Dauer</dt>
+                <dd>20 bis 30 Minuten</dd>
+              </div>
+              <div>
+                <dt>Von Ihnen</dt>
+                <dd>Nichts vorbereiten. Ein Gespräch, keine Präsentation.</dd>
+              </div>
+            </dl>
+          </div>
+        </li>
 
-    </ol>
+        <li class="ablauf-schritt">
+          <span class="ablauf-zahl" aria-hidden="true">02</span>
+          <div class="ablauf-inhalt">
+            <p class="augenbraue">Schritt 02</p>
+            <h2>Offerte</h2>
+            <p>Sie bekommen einen Fixpreis, keine Stundenschätzung. Darin steht Seite für Seite, was gebaut wird, was an Texten und Bildern von Ihnen kommt, was wir liefern und wann die Seite live geht.</p>
+            <p>Was drinsteht, gilt. Kommt später ein Wunsch dazu, der nicht in der Offerte steht, nennen wir den Preis dafür, bevor wir daran arbeiten. Auf der Schlussrechnung steht keine Position, die Sie nicht vorher gesehen haben.</p>
+            <dl class="schritt-fakten">
+              <div>
+                <dt>Dauer</dt>
+                <dd>Zwei bis vier Arbeitstage nach dem Gespräch</dd>
+              </div>
+              <div>
+                <dt>Von Ihnen</dt>
+                <dd>Eine Zusage oder eine Absage. Beides ist in Ordnung.</dd>
+              </div>
+            </dl>
+          </div>
+        </li>
+
+        <li class="ablauf-schritt">
+          <span class="ablauf-zahl" aria-hidden="true">03</span>
+          <div class="ablauf-inhalt">
+            <p class="augenbraue">Schritt 03</p>
+            <h2>Entwurf</h2>
+            <p>Bevor eine Zeile Code entsteht, sehen Sie die Seite: Aufbau, Reihenfolge der Abschnitte, Schrift, Farben und die echten Texte an ihrem Platz. Keine Blindtexte, keine Platzhalterbilder aus einer Fotodatenbank.</p>
+            <p>Sie geben den Entwurf frei oder sagen, was anders soll. Eine Korrekturrunde ist eingerechnet. Gebaut wird erst, wenn Sie einverstanden sind — so wird nichts zweimal gemacht und Sie sehen keine Rechnung für Arbeit, die Sie nie wollten.</p>
+            <dl class="schritt-fakten">
+              <div>
+                <dt>Dauer</dt>
+                <dd>Erste Woche des Projekts</dd>
+              </div>
+              <div>
+                <dt>Von Ihnen</dt>
+                <dd>Logo, Bilder und vorhandene Texte. Fehlt etwas, schreiben wir es.</dd>
+              </div>
+            </dl>
+          </div>
+        </li>
+
+        <li class="ablauf-schritt">
+          <span class="ablauf-zahl" aria-hidden="true">04</span>
+          <div class="ablauf-inhalt">
+            <p class="augenbraue">Schritt 04</p>
+            <h2>Umsetzung</h2>
+            <p>Wir bauen die Seite von Hand: HTML, CSS und so viel JavaScript, wie sie wirklich braucht. Dazu die Dinge, die niemand sieht und die trotzdem darüber entscheiden, ob Sie gefunden werden — Titel und Beschreibungen für die Suche, strukturierte Firmendaten, Google-Unternehmensprofil, saubere Bildgrössen.</p>
+            <p>Vor dem Livegang prüfen wir die Seite auf Handy, Tablet und Rechner und einmal komplett mit der Tastatur allein. Danach geht sie online, und Sie bekommen alle Dateien, die Domain und sämtliche Zugänge auf Ihren Namen. Nichts davon bleibt bei uns liegen.</p>
+            <dl class="schritt-fakten">
+              <div>
+                <dt>Dauer</dt>
+                <dd>Zwei bis vier Wochen vom ersten Gespräch bis live</dd>
+              </div>
+              <div>
+                <dt>Von Ihnen</dt>
+                <dd>Eine letzte Freigabe, bevor die Seite online geht.</dd>
+              </div>
+            </dl>
+          </div>
+        </li>
+
+      </ol>
+
+    </div>
 
     <!-- Ohne Nummer: die Zaehlung 01 bis 04 soll deckungsgleich mit
          der Startseite bleiben. Inhaltlich gehoert der Abschnitt
@@ -273,6 +288,11 @@
 <!-- Eigenes Skript, kein fremder Server. Am Ende des Body und mit
      defer, damit die Seite nicht darauf warten muss. -->
 <script src="skript/haupt.js" defer></script>
+
+<!-- React-Insel "Fortschrittsstrang": Quelle in src/, gebuendelt von
+     Vite. Sucht sich beim Start #ablauf-schritte und #strang-root;
+     findet es die nicht, passiert nichts. -->
+<script type="module" src="/src/ablauf.tsx"></script>
 
 </body>
 </html>

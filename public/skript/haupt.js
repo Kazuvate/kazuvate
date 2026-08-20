@@ -151,8 +151,15 @@
       var laenge = form.getTotalLength();
       if (!laenge) return;
 
-      form.style.strokeDasharray = laenge + 'px';
-      form.style.strokeDashoffset = laenge + 'px';
+      // Nur die Laenge weitergeben, Strichmuster und Versatz setzt das
+      // CSS daraus. Bis zum 21.08.2026 schrieb dieser Block beides
+      // direkt als Inline-Stil -- der schlaegt jede Stylesheet-Regel,
+      // weshalb im CSS ein !important stehen musste, und !important
+      // schlaegt wiederum jede @keyframes-Animation. Damit war jede
+      // weitere Bewegung an diesen Formen blockiert. Ueber eine
+      // Custom Property greift die normale Kaskade, und das Zeichen
+      // kann sich beim Zeigen ein zweites Mal schreiben.
+      form.style.setProperty('--laenge', laenge + 'px');
     });
 
     svg.classList.add('bereit');

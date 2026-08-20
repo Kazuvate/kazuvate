@@ -12,13 +12,20 @@
    sagt das ohne ein Wort -- und unterscheidet die Seite sichtbar
    von der Leistungen-Seite, statt sie zu wiederholen.
 
-   Bewusst ohne Scroll-Animation. Bis zum 20.08.2026 blendeten
-   Bloecke beim Vorbeiscrollen ein, Kasum hat das an diesem Tag
-   abgelehnt: genau dieses Muster liest er als Vibe-Coding-Zeichen.
-   Die Linie steht deshalb von Anfang an ganz da und zeichnet sich
-   nicht mit -- das waere ausserdem eine Wiederholung des Fadens
-   auf der Startseite. Die einzige Bewegung hier ist eine kleine
-   Reaktion auf den Zeiger.
+   Seit dem 21.08.2026 fuellt sich der Strang beim Runterscrollen,
+   mit einer wandernden Spitze und einem Ring, der an jedem
+   erreichten Knoten aufgeht -- auf Kasums Wunsch, Vorbild
+   notemage.app. Gezeichnet wird das von React, siehe
+   src/components/ui/ablauf-strang.tsx und den Block ganz unten in
+   dieser Datei.
+
+   Das widerspricht der Absage an Scroll-Reveals vom 20.08.2026
+   nicht: abgelehnt hat Kasum Bloecke, die beim Vorbeiscrollen
+   *einblenden*. Hier blendet nichts ein. Jeder Schritt steht von
+   der ersten Sekunde an vollstaendig da, mit Kreis, Nummer, Text
+   und Fakten -- bewegt wird nur die Anzeige, wie weit man selbst
+   gekommen ist. Ohne JavaScript bleibt die blasse Grundspur unten
+   stehen und die Seite ist unveraendert lesbar.
 
    Eigene Datei, damit andere Seiten dieses CSS nicht mitladen.
    Farben ausschliesslich aus tokens.css.
@@ -67,12 +74,15 @@ main#inhalt{ padding: var(--s8) 0 0; }
     border-top: 0;
   }
 
-  /* Der Strang. Beginnt unter dem Kreis und laeuft bis zur
-     Unterkante des Schritts -- weil die Schritte direkt
-     aneinandergrenzen, trifft er dort genau auf den naechsten
-     Kreis. Beim letzten Schritt faellt er weg, sonst zeigte die
-     Linie ins Leere. left ist die Mitte der Spalte und damit die
-     Mitte des Kreises. */
+  /* Die Grundspur: blass, steht immer da, auch ohne JavaScript.
+     Sie ist das Gegenstueck zu `.pl-base` bei notemage.app -- die
+     gefuellte Linie legt React darueber.
+
+     Beginnt unter dem Kreis und laeuft bis zur Unterkante des
+     Schritts; weil die Schritte direkt aneinandergrenzen, trifft
+     sie dort genau auf den naechsten Kreis. Beim letzten Schritt
+     faellt sie weg, sonst zeigte die Linie ins Leere. left ist die
+     Mitte der Spalte und damit die Mitte des Kreises. */
   .ablauf-schritt::before{
     content: "";
     position: absolute;
@@ -93,6 +103,12 @@ main#inhalt{ padding: var(--s8) 0 0; }
 .ablauf-zahl{
   display: grid;
   place-items: center;
+  /* Ueber der Fuellung und ueber der wandernden Spitze: beide laufen
+     durch die Knotenmitte, und der Papierton des Kreises schneidet
+     sie sauber ab. Ohne das liefe die Linie sichtbar durch die Zahl,
+     und die Spitze klebte darauf. */
+  position: relative;
+  z-index: 1;
   width: 3.5rem;
   height: 3.5rem;
   border: 1px solid var(--linie-marke);
@@ -187,11 +203,11 @@ main#inhalt{ padding: var(--s8) 0 0; }
 /* Der Abschluss braucht Luft zum Kasten darueber. */
 main#inhalt .abschluss{ margin-top: var(--s9); }
 
-/* --- Bewegung ------------------------------------------------
-   Die einzige der Seite: beim Zeigen nimmt der Knoten die
-   Markenfarbe an. Kein Scroll-Bezug, keine Verschiebung -- der
-   Kreis sitzt auf einer Linie, jede Bewegung wuerde den Strang
-   sichtbar aufreissen.
+/* --- Bewegung beim Zeigen ------------------------------------
+   Beim Zeigen nimmt der Knoten die Markenfarbe an. Keine
+   Verschiebung -- der Kreis sitzt auf einer Linie, jede Bewegung
+   wuerde den Strang sichtbar aufreissen. Die zweite Bewegung der
+   Seite ist der Fortschritt am Scroll, siehe unten.
 
    Nur fuer echte Zeiger: der Block enthaelt keinen Link und kein
    Formularfeld, es gibt also nichts, das per Tastatur fokussiert
@@ -205,4 +221,71 @@ main#inhalt .abschluss{ margin-top: var(--s9); }
     border-color: var(--olive);
     color: var(--olive);
   }
+}
+
+
+/* --- Fortschrittsstrang ---------------------------------------
+   Gezeichnet von src/components/ui/ablauf-strang.tsx, siehe dort
+   fuer den Mechanismus und die Herkunft (notemage.app). Hier steht
+   nur, wie die drei Teile aussehen: gefuellte Linie, wandernde
+   Spitze, aufleuchtender Ring.
+
+   Wichtig fuer die Stapelung: weder .ablauf-strang-bereich noch
+   #strang-root noch .strang duerfen einen eigenen z-index tragen.
+   Sonst waeren die Kinder in einem eigenen Stapel gefangen und der
+   Ring kaeme nie ueber die Knoten. So liegen alle im selben Stapel
+   wie .ablauf-zahl und ordnen sich frei ein:
+
+     0  Fuellung und Spitze  -- hinter den Knoten
+     1  .ablauf-zahl         -- der Kreis mit der Nummer
+     2  Ring                 -- ueber dem Kreis, aber nur Kontur
+   -------------------------------------------------------------- */
+.ablauf-strang-bereich{ position: relative; }
+
+#strang-root{ pointer-events: none; }
+
+.strang{
+  position: absolute;
+  width: 0;
+}
+
+.strang-fuellung{
+  position: absolute;
+  top: 0;
+  left: -1px;
+  width: 2px;
+  height: 100%;
+  background: var(--olive);
+  /* Von oben nach unten wachsen, nicht aus der Mitte. */
+  transform-origin: top;
+  z-index: 0;
+}
+
+/* Zwei Pixel statt der einen Haarlinie der Grundspur: die Fuellung
+   soll den zurueckgelegten Teil deutlich vom noch offenen abheben,
+   sonst sieht man beim Scrollen nicht, dass ueberhaupt etwas
+   passiert. Sie deckt die Grundspur damit vollstaendig ab. */
+
+.strang-spitze{
+  position: absolute;
+  top: 0;
+  left: -5px;
+  width: 10px;
+  height: 10px;
+  margin-top: -5px;
+  border-radius: 50%;
+  background: var(--olive);
+  z-index: 0;
+}
+
+.strang-ring{
+  position: absolute;
+  left: 50%;
+  border: 1.5px solid var(--olive);
+  border-radius: 50%;
+  /* Groesse und top setzt die Komponente, beides ist gemessen. Der
+     Ring sitzt deckungsgleich auf dem Knoten, deshalb die halbe
+     Verschiebung in beide Richtungen. */
+  transform: translate(-50%, -50%);
+  z-index: 2;
 }
