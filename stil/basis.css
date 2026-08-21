@@ -25,14 +25,18 @@
 
 /* Der Kopf laeuft mit und liegt beim Sprung auf einen Anker sonst
    ueber der Ueberschrift. scroll-padding-top haelt den Zielpunkt
-   um Kopfhoehe tiefer. Mobil ist der Kopf zweizeilig, deshalb
-   dort mehr. */
+   um Kopfhoehe tiefer. Ohne JavaScript bleibt der mobile Kopf
+   zweizeilig; mit JavaScript ist die Navigation eingeklappt und
+   braucht nur die kompakte Kopfhoehe. */
 html{
   scroll-behavior: smooth;
   scroll-padding-top: 108px;
 }
 @media (min-width: 860px){
   html{ scroll-padding-top: 86px; }
+}
+@media (max-width: 859px){
+  html.js{ scroll-padding-top: 72px; }
 }
 
 body{
@@ -204,9 +208,14 @@ a{ color: var(--olive); }
   .kopf-innen{
     flex-wrap: wrap;
     min-height: 0;
-    padding-block: var(--s3);
+    padding-block: var(--s2);
     row-gap: var(--s3);
   }
+  /* Mit JavaScript ist die Navigation geschlossen kein zweiter
+     sichtbarer Kopfbereich. Ohne den eigenen Wert bliebe der row-gap
+     trotzdem stehen und machte den Balken hoeher als sein Inhalt. */
+  .js .kopf-innen{ row-gap: 0; }
+  .js .menue-offen .kopf-innen{ row-gap: var(--s2); }
   /* Der Anfrage-Knopf stand bis zum 21.08.2026 auch auf dem Handy in
      der Kopfzeile. Er ist dort das breiteste Element und hat die Zeile
      so weit gefuellt, dass Marke, Knopf und Menueknopf zusammen 146px
@@ -240,6 +249,11 @@ a{ color: var(--olive); }
      erste Zeile nur noch Marke und Menueknopf. */
   .kopf.gescrollt .kopf-innen{
     padding-block: var(--s2);
+  }
+  .js .kopf.gescrollt .kopf-innen{
+    row-gap: 0;
+  }
+  .js .kopf.gescrollt.menue-offen .kopf-innen{
     row-gap: var(--s2);
   }
 }
@@ -271,6 +285,11 @@ a{ color: var(--olive); }
   .navigation a:hover::after{ transform: scaleX(1); }
 }
 .navigation a:focus-visible::after{ transform: scaleX(1); }
+.navigation a[aria-current="page"]{
+  opacity: 1;
+  font-weight: 650;
+}
+.navigation a[aria-current="page"]::after{ transform: scaleX(1); }
 
 .kopf-knopf{
   margin-left: auto;
@@ -305,15 +324,14 @@ a{ color: var(--olive); }
 
 @media (max-width: 859px){
   .js .menue-knopf{
-    display: grid;
-    place-items: center;
+    display: block;
+    position: relative;
     /* order 2 haelt ihn hinter der Marke. Seit der Anfrage-Knopf auf
        dem Handy nicht mehr mitlaeuft, traegt der Menueknopf selbst das
        margin-left:auto, das ihn nach rechts schiebt -- vorher kam das
        vom Knopf davor. Ohne beides saesse er links neben der Marke,
        weil er im Quelltext vor der Navigation steht. */
     order: 2;
-    gap: 5px;
     width: 44px;
     height: 44px;
     margin-left: auto;
@@ -324,17 +342,23 @@ a{ color: var(--olive); }
     cursor: pointer;
   }
   .menue-knopf .balken{
+    position: absolute;
+    top: calc(50% - .75px);
+    left: 12px;
     width: 20px;
     height: 1.5px;
     background: currentColor;
+    transform-origin: center;
     transition: transform var(--kurz) var(--kurve),
                 opacity var(--kurz) var(--kurve);
   }
-  /* Aus drei Balken wird ein Kreuz: der obere kippt nach unten,
-     der untere nach oben, der mittlere verschwindet. */
-  .menue-offen .menue-knopf .balken:first-child{ transform: translateY(6.5px) rotate(45deg); }
-  .menue-offen .menue-knopf .balken:nth-child(2){ opacity: 0; }
-  .menue-offen .menue-knopf .balken:last-child{ transform: translateY(-6.5px) rotate(-45deg); }
+  .menue-knopf .balken:first-child{ transform: translateY(-6px); }
+  .menue-knopf .balken:last-child{ transform: translateY(6px); }
+  /* Alle Balken liegen auf derselben Mitte. So entsteht beim Oeffnen
+     ein symmetrisches Kreuz statt des frueheren schiefen Pfeils. */
+  .menue-offen .menue-knopf .balken:first-child{ transform: rotate(45deg); }
+  .menue-offen .menue-knopf .balken:nth-child(2){ opacity: 0; transform: scaleX(.2); }
+  .menue-offen .menue-knopf .balken:last-child{ transform: rotate(-45deg); }
 
   /* Die Schublade selbst. grid-template-rows von 0fr auf 1fr ist
      der einzige Weg, eine unbekannte Hoehe zu animieren, ohne sie
@@ -366,9 +390,12 @@ a{ color: var(--olive); }
      wuerden sie auch bei 0fr Hoehe uebrig bleiben. */
   .js .navigation-innen{
     display: grid;
-    gap: var(--s4);
+    gap: 0;
     min-height: 0;
-    padding-block: var(--s4) var(--s2);
+    padding-block: 0;
+  }
+  .js .menue-offen .navigation-innen{
+    padding-block: var(--s1) var(--s2);
   }
   /* In der Schublade steht mehr Platz zur Verfuegung als in der alten
      Zeile, also darf jeder Punkt die vollen 44px Trefferflaeche haben
@@ -376,7 +403,27 @@ a{ color: var(--olive); }
      kleben also nicht aneinander. */
   .js .navigation a{
     font-size: 1rem;
-    padding-block: 9px;
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding-block: 0;
+  }
+  /* Kontakt ist im mobilen Menue zugleich der direkte naechste Schritt.
+     Der Knopf erscheint nur in der geoeffneten Schublade und vergroessert
+     den geschlossenen Kopf daher nicht. */
+  .js .navigation-innen a:last-child{
+    justify-content: center;
+    min-height: 48px;
+    margin-top: var(--s2);
+    padding-inline: var(--s4);
+    border-radius: var(--radius-knopf);
+    background: var(--auf-flaeche);
+    color: var(--flaeche);
+    opacity: 1;
+    font-weight: 650;
+  }
+  .js .navigation-innen a:last-child::after{
+    display: none;
   }
 }
 

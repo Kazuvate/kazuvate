@@ -579,9 +579,12 @@ Sektion aus dem 1140er-Raster nehmen.
 
 ## Menü auf dem Handy
 
-Unter 860 Pixel liegt die Navigation in einer Schublade unter dem Kopf, der
-Knopf sitzt rechts neben „Unverbindlich anfragen". Fünf Punkte passen nicht
-mehr in eine Zeile, ohne dass Kontakt aus dem Bild läuft.
+Unter 860 Pixel liegt die Navigation in einer Schublade unter dem Kopf. Der
+geschlossene Kopf ist 60 Pixel hoch; links stehen Zeichen und Schriftzug,
+rechts sitzt der 44-Pixel-Menüknopf. Seine drei Linien werden beim Öffnen zu
+einem symmetrischen Kreuz. Die fünf Ziele stehen mit vollen 44-Pixel-
+Trefferflächen untereinander, Kontakt ist als heller nächster Schritt
+hervorgehoben.
 
 Die Höhe animiert über `grid-template-rows` von `0fr` auf `1fr` — der einzige
 Weg, eine unbekannte Höhe zu animieren, ohne sie vorher zu kennen. Geschlossen
@@ -597,9 +600,9 @@ wie früher als Zeile unter dem Kopf.
 Der Kopf läuft beim Scrollen mit (`position: sticky`). Sobald die Seite 40
 Pixel weit gescrollt ist, setzt `skript/haupt.js` die Klasse `.gescrollt`: der
 Schriftzug `kazuvate` fährt auf Breite null zusammen und wird durchsichtig,
-das Zeichen bleibt an genau derselben Stelle stehen, der Balken wird von 74 auf
-60 Pixel flacher und bekommt einen Schatten. Den Übergang zeichnet CSS, das
-Skript entscheidet nur wann.
+das Zeichen bleibt an genau derselben Stelle stehen. Auf dem Desktop wird der
+Balken dabei von 74 auf 60 Pixel flacher, mobil ist er schon vor dem Scrollen
+60 Pixel hoch. Den Übergang zeichnet CSS, das Skript entscheidet nur wann.
 
 Ohne JavaScript läuft der Kopf trotzdem mit und behält seinen Schriftzug. Das
 ist der Zustand, mit dem die Seite ohnehin lädt, es geht also nichts kaputt.
