@@ -100,12 +100,22 @@
         </div>
       </li>
 
-      <li class="leistung-gross">
+      <!-- Einzige Zeile mit einer dritten Spalte: dem Globus. Er sitzt
+           bewusst nur hier, weil "gefunden werden" die einzige der drei
+           Leistungen ist, die ueberhaupt einen Ort hat. Ab 1100px
+           sichtbar, darunter blendet stil/leistungen.css ihn aus und
+           src/leistungen.tsx laedt three.js dann gar nicht erst.
+           #globus-root bleibt ohne JavaScript leer -- stehen bleibt der
+           ruhige Kreis aus dem CSS, kein Fehlerbild. -->
+      <li class="leistung-gross leistung-gross--globus">
         <span class="leistung-nr">02</span>
         <div class="leistung-inhalt">
           <p class="augenbraue">Sichtbarkeit</p>
           <h2>Gefunden werden.<br>Dort, wo gesucht wird.</h2>
           <p>Google-Unternehmensprofil, strukturierte Firmendaten und überall dieselben Angaben. Das ist die Grundlage dafür, dass Sie in der Google-Suche, auf Google Maps und zunehmend auch in KI-Assistenten auftauchen.</p>
+        </div>
+        <div class="leistung-globus" aria-hidden="true">
+          <div id="globus-root"></div>
         </div>
       </li>
 
@@ -199,6 +209,12 @@
 <!-- Eigenes Skript, kein fremder Server. Am Ende des Body und mit
      defer, damit die Seite nicht darauf warten muss. -->
 <script src="skript/haupt.js" defer></script>
+
+<!-- React-Insel "Globus": Quelle in src/, gebuendelt von Vite. Sucht
+     sich beim Start #globus-root; findet es das nicht, passiert nichts.
+     Der schwere Teil (three.js) wird von dort aus nachgeladen und nur
+     ab 1100px Fensterbreite. -->
+<script type="module" src="/src/leistungen.tsx"></script>
 
 </body>
 </html>

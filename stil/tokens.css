@@ -11,6 +11,13 @@
   --flaeche-tief: #222A10;   /* Hover auf Flaechen */
   --auf-flaeche:  #F7F7F1;   /* Schrift auf oliven Flaechen */
   --auf-flaeche-still: #C3CFA8;
+  /* Der helle Oliv-Ton der Marke, bisher nur in der Markenrichtung
+     notiert ("nur Dunkelmodus") und deshalb nie hier gelandet -- es gibt
+     ja keinen Dunkelmodus. Der Globus auf leistungen.html ist aber genau
+     das: eine dunkle Flaeche mitten auf der hellen Seite, und darauf ist
+     --olive mit 1.4:1 unsichtbar. Deckt sich mit favicon.svg.
+     Eingefuehrt 21.08.2026. */
+  --olive-hell:   #93AA5E;
 
   /* --- Neutrale ------------------------------------------- */
   --grund:      #F5F4EF;     /* Seitenhintergrund, Papierton */

@@ -78,3 +78,68 @@
     transform: translateX(6px);
   }
 }
+
+/* --- Globus bei Leistung 02 --------------------------------
+   Ein sich drehender 3D-Globus neben "Sichtbarkeit", gebaut mit
+   three-globe (siehe src/components/ui/globus.tsx).
+
+   **Erst ab 1100px.** Darunter ist die Zeile einspaltig oder
+   zweispaltig, eine dritte Spalte gaebe es also gar nicht -- und
+   src/leistungen.tsx prueft dieselbe Grenze, bevor es three.js
+   ueberhaupt nachlaedt. Ein Handy soll fuer eine Deko-Grafik keine
+   300 kB holen, die es nie zu sehen bekommt. Gleiche Ueberlegung
+   wie beim Faden auf der Startseite, der ab 1150px einsetzt.
+
+   Die Spalte steht auch ohne JavaScript da und ist genau so hoch
+   wie mit: Platz wird ueber `aspect-ratio` reserviert, nicht vom
+   Inhalt bestimmt. Damit verschiebt das Nachladen nichts (CLS
+   bleibt 0), und ohne Skript bleibt der ruhige Kreis stehen.
+   ------------------------------------------------------------ */
+.leistung-globus{ display: none; }
+
+@media (min-width: 1100px){
+  /* Der Text wird auf dieser einen Zeile schmaler (46ch statt 62),
+     damit rechts eine Spalte frei wird. 46ch sind rund 400px und
+     liegen weiterhin im lesbaren Bereich -- die drei Absaetze sind
+     kurz genug dafuer. */
+  .leistung-gross--globus{
+    grid-template-columns: 10rem minmax(0, 46ch) minmax(0, 1fr);
+  }
+
+  .leistung-globus{
+    display: block;
+    justify-self: center;
+    align-self: center;
+    width: 100%;
+    max-width: 380px;
+    /* Quadratisch: die Kugel ist rund, jede andere Form waere nur
+       Leerraum an zwei Seiten. */
+    aspect-ratio: 1;
+    position: relative;
+  }
+
+  /* Die ruhige Grundflaeche: ein Kreis aus derselben Haarlinie, die
+     die Zeilen trennt. Ohne JavaScript ist er das Endergebnis, mit
+     JavaScript liegt der Globus kurz darauf darueber. Ein leeres
+     Rechteck saehe an der Stelle nach vergessenem Bild aus. */
+  .leistung-globus::before{
+    content: "";
+    position: absolute;
+    inset: 12%;
+    border: 1px solid var(--linie-marke);
+    border-radius: 50%;
+  }
+
+  #globus-root{
+    position: absolute;
+    inset: 0;
+  }
+
+  /* Der Canvas selbst. Die Groesse kommt vom Elternteil, three.js
+     setzt sonst Inline-Masse aus dem letzten gemessenen Zustand. */
+  .globus-canvas{
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
