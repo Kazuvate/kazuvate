@@ -7,6 +7,22 @@
 /* --- Grundlagen ------------------------------------------- */
 *, *::before, *::after{ box-sizing: border-box; }
 
+/* Selbst gehostet, eine einzige Variable-Datei deckt 400 bis 700 ab --
+   zaehlt als eine der zwei erlaubten Schriftdateien im Performance-Budget,
+   nicht zwei. Liegt in public/schriften/, Vite reicht public/ unveraendert
+   unter der Wurzel durch, deshalb der Pfad ab "/" statt relativ zur Datei.
+   font-display: optional statt swap: die Seite darf beim ersten Besuch
+   kurz im Systemfont stehenbleiben, tauscht aber nie mitten im Lesen um --
+   das waere eine Verschiebung (CLS), und das Budget dafuer ist 0.05. */
+@font-face{
+  font-family: "General Sans";
+  src: url("/schriften/GeneralSans-Variable.woff2") format("woff2-variations"),
+       url("/schriften/GeneralSans-Variable.woff2") format("woff2");
+  font-weight: 200 700;
+  font-style: normal;
+  font-display: optional;
+}
+
 /* Der Kopf laeuft mit und liegt beim Sprung auf einen Anker sonst
    ueber der Ueberschrift. scroll-padding-top haelt den Zielpunkt
    um Kopfhoehe tiefer. Mobil ist der Kopf zweizeilig, deshalb
@@ -23,7 +39,7 @@ body{
   margin: 0;
   background: var(--grund);
   color: var(--tinte);
-  font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  font-family: "General Sans", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
   font-size: 17px;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
@@ -134,6 +150,10 @@ a{ color: var(--olive); }
   gap: 0;
   text-decoration: none;
   color: inherit;
+  transition: opacity var(--kurz) var(--kurve);
+}
+@media (hover: hover) and (pointer: fine){
+  .marke:hover{ opacity: .8; }
 }
 .marke svg{
   height: 30px;
@@ -339,14 +359,22 @@ a{ color: var(--olive); }
 }
 
 /* --- Titelband -------------------------------------------
-   Kopfbereich der Unterseiten. Sitzt direkt unter dem Kopf und
-   traegt dieselbe Flaeche, damit oben ein durchgehender Block
-   entsteht statt zwei Streifen.
-   ---------------------------------------------------------- */
+   Kopfbereich der Unterseiten, sitzt direkt unter dem Kopf.
+   Bis zum 21.08.2026 trug es dieselbe Flaeche wie der Kopf, ohne
+   Naht dazwischen -- am Bildschirm verschmolzen Navigation und
+   Seitentitel dadurch zu einem einzigen, zu grossen Block, kein
+   Kopf und kein Titelband mehr zu erkennen. Jetzt eine Stufe
+   dunkler (--flaeche-tief, derselbe Ton, den Knopf und Draht-Icon
+   schon fuers Hover benutzen, kein neuer Hex-Wert) plus eine
+   helle Haarlinie an der Naht, dieselbe Bauart wie die Trennlinie
+   in .fuss-unten. Der Kopf bleibt in --flaeche, das Titelband
+   rutscht eine Stufe tiefer -- zwei Flaechen derselben Familie
+   statt einer verschmolzenen. */
 .titel{
-  background: var(--flaeche);
+  background: var(--flaeche-tief);
   color: var(--auf-flaeche);
   padding: var(--s6) 0 var(--s8);
+  border-top: 1px solid rgb(247 247 241 / .1);
 }
 .titel .oben{
   font-size: .72rem;
