@@ -764,18 +764,20 @@ a{ color: var(--olive); }
   box-shadow: 0 4px 12px -10px rgb(27 33 16 / .5);
 }
 
-/* Der Pfeil im Knopf. Stand bis zum 21.08.2026 in stil/kontakt.css,
-   weil es ihn nur dort gab -- jetzt tragen ihn die Abschluss-Knoepfe
-   aller Seiten. aria-hidden im HTML: ein Screenreader wuerde sonst
-   "Unverbindlich anfragen Rechtspfeil" vorlesen. */
-.knopf .pfeil{
-  display: inline-block;
-  margin-left: var(--s2);
-  transition: transform var(--kurz) var(--kurve);
-}
-@media (hover: hover) and (pointer: fine){
-  .knopf:hover .pfeil{ transform: translateX(4px); }
-}
+/* Hier stand bis zum 22.08.2026 der Pfeil im Knopf, mit einer eigenen
+   Hover-Regel, die ihn vier Pixel nach rechts schob. Beides ist weg.
+
+   Ersatzlos, und zwar bewusst: der Knopf hat drei Zeilen weiter oben
+   bereits eine vollstaendige Reaktion auf das Zeigen -- er hebt sich
+   um zwei Pixel, der Schatten waechst, die Flaeche wird eine Stufe
+   dunkler. Der wandernde Pfeil war eine vierte Bewegung obendrauf.
+   Eine gefuellte Flaeche mit Beschriftung ist ohnehin als
+   Schaltflaeche zu erkennen; das Zeichen hat ihr nichts hinzugefuegt.
+
+   Ein erster Anlauf hat hier eine eigene Hover-Regel hinterlassen.
+   Die stand nach der Regel oben, hatte dieselbe Spezifitaet und hat
+   deren zwei Pixel auf einen heruntergesetzt -- der Knopf reagierte
+   danach schwaecher als vorher. Wieder entfernt. */
 
 /* --- Leistungen -------------------------------------------
    Drei Spalten nebeneinander, getrennt durch senkrechte
@@ -1060,6 +1062,13 @@ a{ color: var(--olive); }
 }
 
 /* --- Referenz auf der Startseite --------------------------- */
+/* Zwei Kacheln nebeneinander statt Kachel plus Textspalte, seit der
+   zweiten Referenz am 22.08.2026. Vorher: `380px 1fr`, also eine feste
+   Bildspalte und daneben Name und Link.
+
+   minmax(0, 1fr) statt 1fr, weil ein Grid-Element sonst nie schmaler
+   wird als sein Inhalt -- bei Bildern in einer Kachel sprengt das die
+   Spalte, statt sie mitwachsen zu lassen. */
 .referenz-zeile{
   display: grid;
   gap: var(--s6);
@@ -1067,25 +1076,63 @@ a{ color: var(--olive); }
 }
 @media (min-width: 860px){
   .referenz-zeile{
-    grid-template-columns: 380px 1fr;
-    gap: var(--s7);
-    align-items: center;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s6);
+    align-items: start;
   }
 }
-.referenz-zeile .referenz-kachel{ max-width: 380px; }
-.referenz-name{ font-size: 1.15rem; }
+/* Die alte Begrenzung auf 380px galt der einen festen Bildspalte.
+   Jetzt teilen sich zwei Kacheln die Breite und duerfen mitwachsen. */
 /* Weiterfuehrender Link mit Pfeil. Stand bis zum 20.08.2026 nur
    als `.referenz-zeile .weiter` da und war damit an eine einzige
    Stelle gebunden. Jetzt allgemein, weil die Ablauf-Sektion
    denselben Link auf ablauf.html braucht -- ein zweites, gleich
    aussehendes Muster daneben waere Doppelarbeit. */
+/* Der Pfeil davor: bis zum 22.08.2026 stand hinter jedem dieser Links
+   ein Unicode-Pfeil, der beim Zeigen vier Pixel nach rechts rutschte.
+   Kasums Urteil: "der Pfeil ist wirklich nicht schoen". Alle zwoelf
+   sind ersatzlos aus dem Markup verschwunden.
+
+   An seine Stelle tritt kein zweites Zeichen, sondern eine Linie vor
+   dem Text. Begruendung: die ganze Seite trennt mit Haarlinien statt
+   mit Kaesten -- zwischen den Ueber-uns-Bloecken, zwischen den
+   Leistungsspalten, unter jedem Ablaufschritt. Ein Strich ist hier
+   also kein neues Motiv, sondern das vorhandene an einer weiteren
+   Stelle. Ein Pfeil dagegen war das einzige Piktogramm im ganzen
+   Auftritt und stand allein.
+
+   Die Linie liegt bei zwei Dritteln und faehrt beim Zeigen auf die
+   volle Laenge aus. Diese Bewegung nach rechts traegt die Bedeutung,
+   die vorher der Pfeil tragen musste. scaleX statt width, damit nichts
+   neu umbricht -- dieselbe Begruendung wie beim Unterstrich der
+   Navigation. */
 .weiter{
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s3);
   margin-top: var(--s3);
   font-weight: 650;
   font-size: .96rem;
   text-decoration: none;
 }
+.weiter::before{
+  content: "";
+  flex: none;
+  width: 26px;
+  height: 1.5px;
+  background: currentColor;
+  transform: scaleX(.62);
+  transform-origin: left center;
+  transition: transform var(--kurz) var(--kurve);
+}
+@media (hover: hover) and (pointer: fine){
+  .weiter:hover::before{ transform: scaleX(1); }
+}
+/* Die Tastatur bekommt dieselbe Rueckmeldung wie die Maus. Ohne das
+   waere der Link beim Durchtabben das einzige Element der Seite ohne
+   eigene Reaktion. */
+.weiter:focus-visible::before{ transform: scaleX(1); }
+
 /* Der Link war 26px hoch, das ist reine Zeilenhoehe ohne Polster.
    Mit dem Finger getroffen werden soll er trotzdem: 9px oben und
    unten ergeben 44px, die Groesse, die Apple als Mindestmass nennt.
@@ -1096,14 +1143,10 @@ a{ color: var(--olive); }
     padding-block: 9px;
     margin-top: 3px;
   }
-}
-.weiter .pfeil{
-  display: inline-block;
-  margin-left: var(--s2);
-  transition: transform var(--kurz) var(--kurve);
-}
-@media (hover: hover) and (pointer: fine){
-  .weiter:hover .pfeil{ transform: translateX(4px); }
+  /* Ohne Zeigegeraet gibt es kein Hover, die Linie bliebe also ewig
+     bei zwei Dritteln stehen und saehe aus wie ein Fehler. Auf dem
+     Handy steht sie deshalb von vornherein voll ausgefahren da. */
+  .weiter::before{ transform: scaleX(1); }
 }
 
 /* --- Ablauf ------------------------------------------------ */

@@ -32,6 +32,7 @@
 
 import {
   motion,
+  useMotionValueEvent,
   useReducedMotion,
   useScroll,
   useTransform,
@@ -117,10 +118,10 @@ export function AblaufStrang({ liste }: StrangProps) {
   // Geometrie, die es so nie gab.
   if (!mass) return null;
 
-  return <Spur mass={mass} />;
+  return <Spur mass={mass} liste={liste} />;
 }
 
-function Spur({ mass }: { mass: Mass }) {
+function Spur({ mass, liste }: { mass: Mass; liste: HTMLElement }) {
   const spurRef = useRef<HTMLDivElement>(null);
   const wenigerBewegung = useReducedMotion();
 
@@ -133,6 +134,63 @@ function Spur({ mass }: { mass: Mass }) {
   const { scrollYProgress } = useScroll({
     target: spurRef,
     offset: ["start center", "end center"],
+  });
+
+  // Die Nummern selbst haben bis zum 22.08.2026 nicht mitreagiert: der
+  // Strang lief, die Ringe gingen an, aber 01 bis 04 sahen am Ende
+  // genauso aus wie am Anfang. Auf Kasums Wunsch fuellt sich jetzt der
+  // Kreis, sobald die Spitze ihn erreicht -- aus leer wird ausgefuellt,
+  // die uebliche Lesart fuer "das liegt hinter Ihnen".
+  //
+  // Die Klasse wird direkt im DOM gesetzt statt ueber React-State: die
+  // <li> mit den Nummern stehen im handgeschriebenen HTML und gehoeren
+  // nicht zu dieser Komponente. Ein State-Update pro Scrollschritt
+  // waere ausserdem ein Rendering pro Frame, ein classList.toggle ist
+  // eine Zeigeroperation. Dasselbe Muster wie beim Faden auf der
+  // Startseite, wo <motion.path> aus dem gleichen Grund durch
+  // useMotionValueEvent ersetzt wurde.
+  const zahlen = useRef<HTMLElement[]>([]);
+
+  // Aus einem Fortschrittswert den Zustand aller vier Kreise setzen.
+  // Dieselbe Schwelle von vier Prozent wie beim Ring weiter unten,
+  // damit Ring und Fuellung im selben Moment umschalten und nicht
+  // kurz hintereinander.
+  const anwenden = (wert: number) => {
+    zahlen.current.forEach((z, i) => {
+      const anteil = mass.knoten[i];
+      if (anteil === undefined) return;
+      z.classList.toggle("ist-erreicht", wert >= anteil - 0.04);
+    });
+  };
+
+  useLayoutEffect(() => {
+    zahlen.current = Array.from(
+      liste.querySelectorAll<HTMLElement>(".ablauf-zahl"),
+    );
+
+    if (wenigerBewegung) {
+      // Wer Bewegung reduziert haben will, bekommt keinen wandernden
+      // Zustand, sondern den Endzustand: alle Schritte ausgefuellt.
+      zahlen.current.forEach((z) => z.classList.add("ist-erreicht"));
+    } else {
+      // Der Startzustand muss hier gesetzt werden, nicht erst beim
+      // ersten Scrollen: useMotionValueEvent feuert ausschliesslich bei
+      // einer Aenderung. Ohne diese Zeile stuende Kreis 01 beim Laden
+      // leer da, waehrend sein Ring daneben schon leuchtet -- der Ring
+      // haengt an useTransform und hat von Anfang an einen Wert.
+      anwenden(scrollYProgress.get());
+    }
+
+    const beimVerlassen = zahlen.current;
+    return () => beimVerlassen.forEach((z) => z.classList.remove("ist-erreicht"));
+    // anwenden haengt nur an mass.knoten, das mit der Komponente neu
+    // entsteht -- kein Grund, es in die Abhaengigkeiten zu nehmen.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [liste, wenigerBewegung, scrollYProgress]);
+
+  useMotionValueEvent(scrollYProgress, "change", (wert) => {
+    if (wenigerBewegung) return;
+    anwenden(wert);
   });
 
   return (

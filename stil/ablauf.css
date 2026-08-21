@@ -119,7 +119,32 @@ main#inhalt{ padding: var(--s8) 0 0; }
   font-weight: 650;
   letter-spacing: .08em;
   transition: border-color var(--kurz) var(--kurve),
-              color var(--kurz) var(--kurve);
+              color var(--kurz) var(--kurve),
+              background-color var(--kurz) var(--kurve);
+}
+
+/* Erreichter Schritt, gesetzt von src/components/ui/ablauf-strang.tsx,
+   sobald die Spitze des Strangs den Knoten passiert.
+
+   Aus leer wird ausgefuellt. Das ist die uebliche Lesart fuer "erledigt"
+   und braucht keine Beschriftung: die Kreise oberhalb der Leseposition
+   sind voll, die darunter leer.
+
+   Die drei Eigenschaften standen als transition schon seit dem Bau des
+   Strangs in der Regel darueber, ohne dass sie je etwas zu tun hatten --
+   es gab keine Regel, die border-color oder color geaendert haette.
+   Jetzt gibt es sie.
+
+   Kein Scroll-Reveal: die Nummer steht von Anfang an da, lesbar und
+   vollstaendig. Was sich aendert, ist allein die Anzeige, wie weit man
+   selbst gekommen ist -- dieselbe Begruendung wie beim Strang. */
+.ablauf-zahl.ist-erreicht{
+  background: var(--olive);
+  border-color: var(--olive);
+  /* --auf-flaeche, nicht --karte: derselbe helle Ton, den jede oliv
+     hinterlegte Flaeche im Projekt fuer ihre Schrift benutzt. Auf
+     --olive traegt er 8.9:1. */
+  color: var(--auf-flaeche);
 }
 
 .ablauf-inhalt .augenbraue{ margin-bottom: var(--s3); }
