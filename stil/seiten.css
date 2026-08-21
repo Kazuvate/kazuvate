@@ -144,6 +144,18 @@
 }
 .uebersicht a:hover{ color: var(--olive); text-decoration: underline; }
 
+/* Die Rechtsseiten waren bis zum 21.08.2026 die einzigen ohne eigene
+   Handy-Anpassung -- diese Datei kannte genau eine Media Query, und die
+   war fuer den Desktop. Auf dem Handy standen dadurch die Augenbraue
+   der Uebersicht und der Tabellenkopf bei 11.5px, und die dreizehn
+   Sprungmarken der Uebersicht waren 25px hohe Ziele, die dicht
+   untereinander liegen. Genau die Kombination, bei der man daneben
+   tippt und im falschen Abschnitt landet. */
+@media (max-width: 859px){
+  .uebersicht h2{ font-size: .8rem; }
+  .uebersicht a{ padding: 10px 0; }
+}
+
 /* --- Tabelle ------------------------------------------------ */
 .tab{
   overflow-x: auto;
@@ -173,3 +185,10 @@
 }
 .tab tbody td:first-child{ color: var(--tinte); font-weight: 650; }
 .tab tr:last-child td{ border-bottom: 0; }
+
+/* Muss hinter .tab thead th stehen, nicht davor: beide Regeln haben
+   dieselbe Spezifitaet, also gewinnt die spaetere. Beim ersten Versuch
+   stand diese Query weiter oben in der Datei und blieb wirkungslos. */
+@media (max-width: 859px){
+  .tab thead th{ font-size: .8rem; }
+}

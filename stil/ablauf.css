@@ -163,6 +163,12 @@ main#inhalt{ padding: var(--s8) 0 0; }
   font-weight: 600;
   color: var(--still);
 }
+/* Gleiche Anhebung wie bei .augenbraue und .nr in basis.css: .72rem
+   sind 11.5px und auf dem Handy zu klein. Acht Stellen auf dieser
+   Seite -- die Beschriftungen "Dauer", "Ergebnis" und so weiter. */
+@media (max-width: 859px){
+  .schritt-fakten dt{ font-size: .8rem; }
+}
 .schritt-fakten dd{
   margin: var(--s2) 0 0;
   color: var(--tinte-2);

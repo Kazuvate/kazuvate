@@ -207,6 +207,19 @@ a{ color: var(--olive); }
     padding-block: var(--s3);
     row-gap: var(--s3);
   }
+  /* Der Anfrage-Knopf stand bis zum 21.08.2026 auch auf dem Handy in
+     der Kopfzeile. Er ist dort das breiteste Element und hat die Zeile
+     so weit gefuellt, dass Marke, Knopf und Menueknopf zusammen 146px
+     Kopfhoehe ergaben -- 18 Prozent eines iPhone-Bildschirms, bevor
+     der erste Inhalt beginnt. Kasums Ansage: oben gehoert die
+     Navigation hin, nicht der Knopf.
+
+     Verloren geht dabei nichts: derselbe Aufruf steht auf jeder Seite
+     noch zweimal im Fliesstext, im Kopfbereich und am Seitenende. Auf
+     dem Desktop bleibt der Knopf unveraendert stehen, dort ist die
+     Zeile breit genug fuer beides. */
+  .kopf-knopf{ display: none; }
+
   /* Ohne JavaScript bleibt es bei der alten Zeile unter dem Kopf:
      fuenf Punkte mit engem Abstand, notfalls wischbar. Laeuft das
      Skript, uebernimmt die Schublade weiter unten. */
@@ -222,9 +235,9 @@ a{ color: var(--olive); }
   .navigation-innen::-webkit-scrollbar{ display: none; }
   .navigation a{ white-space: nowrap; font-size: .88rem; }
 
-  /* Zweizeilig ist der Kopf hoch. Gescrollt rueckt er enger
-     zusammen, damit vom Bildschirm mehr Inhalt uebrig bleibt.
-     Der Knopf bleibt sichtbar, die Schublade liegt darunter. */
+  /* Gescrollt rueckt der Kopf enger zusammen, damit vom Bildschirm
+     mehr Inhalt uebrig bleibt. Seit der Knopf weg ist, traegt die
+     erste Zeile nur noch Marke und Menueknopf. */
   .kopf.gescrollt .kopf-innen{
     padding-block: var(--s2);
     row-gap: var(--s2);
@@ -294,14 +307,16 @@ a{ color: var(--olive); }
   .js .menue-knopf{
     display: grid;
     place-items: center;
-    /* order 2 stellt ihn hinter den Anfrage-Knopf, also ganz nach
-       rechts. Ohne das saesse er links neben der Marke, weil er im
-       Quelltext vor der Navigation steht. */
+    /* order 2 haelt ihn hinter der Marke. Seit der Anfrage-Knopf auf
+       dem Handy nicht mehr mitlaeuft, traegt der Menueknopf selbst das
+       margin-left:auto, das ihn nach rechts schiebt -- vorher kam das
+       vom Knopf davor. Ohne beides saesse er links neben der Marke,
+       weil er im Quelltext vor der Navigation steht. */
     order: 2;
     gap: 5px;
     width: 44px;
     height: 44px;
-    margin-left: var(--s3);
+    margin-left: auto;
     padding: 0;
     background: none;
     border: 0;
@@ -355,7 +370,14 @@ a{ color: var(--olive); }
     min-height: 0;
     padding-block: var(--s4) var(--s2);
   }
-  .js .navigation a{ font-size: 1rem; }
+  /* In der Schublade steht mehr Platz zur Verfuegung als in der alten
+     Zeile, also darf jeder Punkt die vollen 44px Trefferflaeche haben
+     statt der bisherigen 35px. Der gap darunter bleibt, die Punkte
+     kleben also nicht aneinander. */
+  .js .navigation a{
+    font-size: 1rem;
+    padding-block: 9px;
+  }
 }
 
 /* --- Titelband -------------------------------------------
@@ -402,6 +424,9 @@ a{ color: var(--olive); }
   letter-spacing: .18em;
   text-transform: uppercase;
   font-weight: 600;
+}
+@media (max-width: 859px){
+  .titel .stand{ font-size: .82rem; }
 }
 
 /* --- Fuss -------------------------------------------------- */
@@ -511,6 +536,20 @@ a{ color: var(--olive); }
   transition: opacity var(--kurz) var(--kurve);
 }
 .fuss-spalte a:hover{ opacity: 1; text-decoration: underline; }
+/* Dieselbe Rechnung wie bei .weiter und den Schubladenpunkten: 26px
+   Zeilenhoehe sind fuer einen Finger zu wenig. Das margin-bottom von
+   9px wird zu padding-block, dadurch waechst die Trefferflaeche auf
+   44px, ohne dass der Abstand zwischen den Zeilen groesser wird --
+   die Polster der Nachbarn stossen jetzt aneinander statt durch einen
+   Aussenabstand getrennt zu sein. Die Ueberschrift daneben traegt
+   dieselben 11.5px wie die Augenbraue und wird gleich mit angehoben. */
+@media (max-width: 859px){
+  .fuss-spalte h2{ font-size: .8rem; }
+  .fuss-spalte a{
+    margin-bottom: 0;
+    padding-block: 9px;
+  }
+}
 
 .fuss-ort{
   display: block;
@@ -558,6 +597,11 @@ a{ color: var(--olive); }
 }
 .fuss-unten a:hover{ opacity: .75; }
 .fuss-unten a[aria-current]{ text-decoration: none; opacity: .6; }
+/* Impressum und Datenschutz sind die letzten beiden Ziele, die auf dem
+   Handy unter 44px lagen (33px). Aus 4px Polster werden 10px. */
+@media (max-width: 859px){
+  .fuss-unten a{ padding-block: 10px; }
+}
 
 /* --- Sektionen der Startseite -----------------------------
    Getrennt durch Haarlinien statt durch Kaesten. Ein Kasten um
@@ -573,6 +617,15 @@ a{ color: var(--olive); }
   font-weight: 600;
   color: var(--olive);
   margin: 0 0 var(--s4);
+}
+/* .72rem sind 11.5px. Am Bildschirm mit Abstand gelesen geht das,
+   auf dem Handy in der Hand ist es zu klein -- gemessen am 21.08.2026
+   an dreizehn Stellen, die alle unter der 12px-Grenze lagen. Versalien
+   und die weite Laufweite retten das nur zum Teil.
+   .8rem sind 12.8px und halten den Charakter der Augenbraue, ohne sie
+   in die Naehe des Fliesstextes zu ruecken. Der Desktop bleibt bei .72. */
+@media (max-width: 859px){
+  .augenbraue{ font-size: .8rem; }
 }
 
 .sektion h2{
@@ -892,6 +945,11 @@ a{ color: var(--olive); }
   letter-spacing: .1em;
   color: var(--olive);
 }
+/* .74rem sind 11.8px, dieselbe Groessenordnung wie die Augenbraue und
+   auf dem Handy aus demselben Grund zu klein. */
+@media (max-width: 859px){
+  .nr{ font-size: .82rem; }
+}
 
 .nachsatz{
   margin-top: var(--s5);
@@ -1027,6 +1085,17 @@ a{ color: var(--olive); }
   font-weight: 650;
   font-size: .96rem;
   text-decoration: none;
+}
+/* Der Link war 26px hoch, das ist reine Zeilenhoehe ohne Polster.
+   Mit dem Finger getroffen werden soll er trotzdem: 9px oben und
+   unten ergeben 44px, die Groesse, die Apple als Mindestmass nennt.
+   Das margin-top faellt um dieselben 9px, damit der sichtbare Abstand
+   zum Text darueber genau gleich bleibt wie vorher. */
+@media (max-width: 859px){
+  .weiter{
+    padding-block: 9px;
+    margin-top: 3px;
+  }
 }
 .weiter .pfeil{
   display: inline-block;
