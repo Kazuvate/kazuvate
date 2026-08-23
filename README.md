@@ -69,6 +69,7 @@ stil/seiten.css        nur impressum.html und datenschutz.html: Fliesstext, Tabe
 stil/kontakt.css       nur kontakt.html: Zweispalter, Anfragekarte, Formular
 stil/leistungen.css    nur leistungen.html: grosse Nummern, Hover-Reaktion
 stil/ablauf.css        nur ablauf.html: senkrechter Strang, Nummernkreise, Faktenpaare
+stil/titelmotive.css   nur Leistungen, Referenzen, Ablauf: grosse Titel und ihre drei Motive
 stil/danke.css          nur danke.html: zentrierte Bestaetigung
 
 src/main.tsx                            haengt den Faden in die Startseite ein
@@ -534,16 +535,27 @@ unter 3) und in CSS-Übergängen:
 - **Schublade**: die Navigation auf dem Handy, siehe unten.
 - **Leistungen-Seite**: Nummer wird beim Zeigen oliv und rückt 6 Pixel nach
   rechts, reine Hover-Reaktion, siehe oben.
+- **Inszenierte Titelbänder**: Leistungen, Referenzen und Ablauf teilen seit
+  dem 22.08.2026 eine deutlich höhere Bühne und grosse weisse Typografie.
+  Darin zeichnet sich je Seite einmal ein eigenes Motiv: Faden mit `01–03`,
+  zwei Browserrahmen oder ein Vierer-Strang. Alles liegt als HTML, Inline-SVG
+  und CSS in der Seite; es gibt dafür kein neues JavaScript und keine neue
+  Abhängigkeit. Kontakt und die Rechtsseiten laden `titelmotive.css` nicht.
 - **Kachelrahmen** und **Referenz-Kachel**: zeichnen sich beziehungsweise
   blenden ein, wenn man mit der Maus darüberfährt — auch das reine
   Hover-Reaktion, kein Auto-Play.
 
-Der erste Bildschirm bewegt sich ohnehin nicht. H1 und die drei
-Über-uns-Abschnitte stehen sofort da — die Markenrichtung verbietet
-Ladeanimationen, und der erste Eindruck soll fertig sein, nicht im Aufbau.
+Der erste Bildschirm der Startseite bleibt ruhig: H1 und die drei
+Über-uns-Abschnitte stehen sofort da. Die drei genannten Unterseiten sind die
+bewusste Ausnahme, weil ihr grosser Seiteneinstieg selbst gestalterische
+Kompetenz zeigen soll. Ihre Choreografie endet nach rund einer Sekunde und
+wiederholt sich nicht.
 
 `prefers-reduced-motion` schaltet an, was an Übergängen übrig ist: dann steht
-auch die Symbolzeichnung sofort fertig da statt langsam zu zeichnen.
+auch die Symbolzeichnung sofort fertig da statt langsam zu zeichnen. Die neuen
+Titelmotive definieren Animation nur innerhalb von `no-preference`; mit
+reduzierter Bewegung gibt es deshalb weder eine Wartezeit noch kurz versteckte
+Texte oder Motive.
 
 **Ohne JavaScript** bleibt alles sichtbar und bedienbar. Eine Zeile im Kopf
 jeder Seite setzt die Klasse `js` am Wurzelelement; jede Regel, die etwas

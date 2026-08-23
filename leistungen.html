@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="stil/tokens.css">
 <link rel="stylesheet" href="stil/basis.css">
 <link rel="stylesheet" href="stil/leistungen.css">
+<link rel="stylesheet" href="stil/titelmotive.css">
 
 <!-- Sagt dem CSS, dass JavaScript laeuft. Muss hier oben stehen und darf
      nicht in haupt.js: das laedt mit defer und kaeme zu spaet. Traegt heute
@@ -33,6 +34,7 @@
   </symbol>
 </svg>
 
+<div class="scroll-balken" aria-hidden="true"></div>
 <a class="sprung" href="#inhalt">Zum Inhalt springen</a>
 
 <!-- ====================== Kopf ====================== -->
@@ -68,11 +70,35 @@
   </div>
 </header>
 
-<!-- ====================== Titelband ====================== -->
-<div class="titel">
-  <div class="wrap">
-    <h1>Leistungen</h1>
-    <p class="unter">Drei Dinge, auf die es bei einer Website ankommt. Und wie wir sie angehen.</p>
+<!-- ====================== Grosser Seiteneinstieg ======================
+     Bis zum 22.08.2026 stand hier zusaetzlich ein gezeichnetes Motiv
+     (Linie plus drei Kreise). Kasum hat es nach dem ersten Blick
+     verworfen: auf 390px schnitt Kreis "02" durch das "n" von
+     "Leistungen", und die dunkelgruene Flaeche insgesamt wirkte zu
+     schwer. Jetzt traegt allein der Titel die Aussage -- weiss mit
+     duennem gruenen Rand, siehe .titel--gross h1 in
+     stil/titelmotive.css. -->
+<div class="titel titel--gross titel--leistungen">
+  <div class="wrap titel-inhalt">
+    <!-- Vorspann-Zeile ist seit 23.08.2026 weg, auf Kasums Wunsch --
+         die drei Titelseiten sollen nur noch die Ueberschrift tragen.
+         Die Linie darunter zeichnet sich beim Laden einmal selbst,
+         dieselbe Technik wie beim Faden auf der Startseite (SVG,
+         pathLength=1, stroke-dashoffset), nur ohne React: eine simple
+         Kurve unter drei Titelzeilen braucht kein eigenes Bauteil.
+
+         Die Linie liegt seit demselben Tag nicht mehr in .titel-kopf,
+         sondern direkt hier in .titel-inhalt: Kasums Ansage war "die
+         Linie soll bis ganz nach hinten gehen", also bis an den
+         rechten Rand des Wrap-Inhalts, nicht nur bis ans Ende von
+         "Leistungen". Auf ablauf.html liegt sie ausdruecklich weiter
+         in .titel-kopf -- "aendere nichts an Ablauf". -->
+    <div class="titel-kopf">
+      <div class="titel-wort"><h1>Leistungen</h1></div>
+    </div>
+    <svg class="titel-linie" viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <path pathLength="1" d="M0 11 Q75 3 150 11 Q225 19 300 11"></path>
+    </svg>
   </div>
 </div>
 
@@ -82,9 +108,9 @@
      grosser und einzeln durchgezogen statt als Kachel-Trio.
      Grosse Nummer links, Inhalt rechts, getrennt durch Haarlinien
      im Markenton wie beim Ueber-uns-Block. Keine Scroll-Animation:
-     die Bloecke stehen von Anfang an da. Die einzige Bewegung ist
-     eine kleine Reaktion beim Zeigen oder Fokussieren, siehe
-     stil/leistungen.css.
+     die Bloecke stehen von Anfang an da. Im Inhalt reagiert nur die
+     Nummer beim Zeigen oder Fokussieren, siehe stil/leistungen.css;
+     das Titelmotiv darueber laeuft einmal beim Seiteneinstieg.
      ==================================================== -->
 <main id="inhalt">
   <div class="wrap">
@@ -100,22 +126,22 @@
         </div>
       </li>
 
-      <!-- Einzige Zeile mit einer dritten Spalte: dem Globus. Er sitzt
-           bewusst nur hier, weil "gefunden werden" die einzige der drei
-           Leistungen ist, die ueberhaupt einen Ort hat. Ab 1100px
-           sichtbar, darunter blendet stil/leistungen.css ihn aus und
-           src/leistungen.tsx laedt three.js dann gar nicht erst.
-           #globus-root bleibt ohne JavaScript leer -- stehen bleibt der
-           ruhige Kreis aus dem CSS, kein Fehlerbild. -->
-      <li class="leistung-gross leistung-gross--globus">
+      <!-- Bis zum 22.08.2026 stand hier ein sich drehender 3D-Globus
+           neben dem Text (three-globe, ab 1100px sichtbar). Auf
+           Kasums ausdruecklichen Wunsch entfernt: "den globus kannst
+           du eigentlich entfernen". Zeile jetzt gleich aufgebaut wie
+           01 und 03. Die Komponente selbst
+           (src/components/ui/globus.tsx, src/daten/globus-boegen.ts,
+           src/leistungen.tsx) ist geloescht, nicht nur ausgeblendet --
+           samt three/three-globe/@react-three/fiber aus package.json,
+           das war mit 545 kB gzip der mit Abstand schwerste einzelne
+           Baustein der ganzen Seite. -->
+      <li class="leistung-gross">
         <span class="leistung-nr">02</span>
         <div class="leistung-inhalt">
           <p class="augenbraue">Sichtbarkeit</p>
           <h2>Gefunden werden.<br>Dort, wo gesucht wird.</h2>
           <p>Google-Unternehmensprofil, strukturierte Firmendaten und überall dieselben Angaben. Das ist die Grundlage dafür, dass Sie in der Google-Suche, auf Google Maps und zunehmend auch in KI-Assistenten auftauchen.</p>
-        </div>
-        <div class="leistung-globus" aria-hidden="true">
-          <div id="globus-root"></div>
         </div>
       </li>
 
@@ -209,12 +235,7 @@
 <!-- Eigenes Skript, kein fremder Server. Am Ende des Body und mit
      defer, damit die Seite nicht darauf warten muss. -->
 <script src="skript/haupt.js" defer></script>
-
-<!-- React-Insel "Globus": Quelle in src/, gebuendelt von Vite. Sucht
-     sich beim Start #globus-root; findet es das nicht, passiert nichts.
-     Der schwere Teil (three.js) wird von dort aus nachgeladen und nur
-     ab 1100px Fensterbreite. -->
-<script type="module" src="/src/leistungen.tsx"></script>
+<script type="module" src="/src/bewegung.ts"></script>
 
 </body>
 </html>

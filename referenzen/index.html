@@ -15,6 +15,7 @@
 
 <link rel="stylesheet" href="../stil/tokens.css">
 <link rel="stylesheet" href="../stil/basis.css">
+<link rel="stylesheet" href="../stil/titelmotive.css">
 
 <!-- Sagt dem CSS, dass JavaScript laeuft. Muss hier oben stehen und darf
      nicht in haupt.js: das laedt mit defer und kaeme zu spaet. Traegt heute
@@ -32,6 +33,7 @@
   </symbol>
 </svg>
 
+<div class="scroll-balken" aria-hidden="true"></div>
 <a class="sprung" href="#inhalt">Zum Inhalt springen</a>
 
 <!-- ====================== Kopf ====================== -->
@@ -67,11 +69,27 @@
   </div>
 </header>
 
-<!-- ====================== Titelband ====================== -->
-<div class="titel">
-  <div class="wrap">
-    <h1>Referenzen</h1>
-    <p class="unter">Websites und Anwendungen, die wir gebaut haben. Ein Bild, ein Link. Am besten spricht die Seite selbst.</p>
+<!-- ====================== Grosser Seiteneinstieg ======================
+     Bis zum 22.08.2026 trugen zwei abstrahierte Browserfenster das
+     seiteneigene Motiv, ebenfalls entfernt -- zu schwer auf der
+     dunklen Flaeche. Kasum mag die Grafik selbst ausdruecklich
+     ("diese sehen ja gut aus"), nur nicht hier: sein Vorschlag ist ein
+     heller Hintergrund mit gruenen Akzenten, Platz noch nicht
+     festgelegt. Das Markup steht bewusst nicht mehr hier, sondern in
+     stil/titelmotive.css als Git-Historie -- neu bauen statt eine
+     Leiche im DOM lassen, sobald der Platz feststeht. -->
+<div class="titel titel--gross titel--referenzen">
+  <div class="wrap titel-inhalt">
+    <!-- Vorspann-Zeile weg seit 23.08.2026, siehe leistungen.html fuer
+         die Begruendung. Dieselbe sich selbst zeichnende Linie, hier
+         ebenfalls als direktes Kind von .titel-inhalt statt in
+         .titel-kopf -- "bis ganz nach hinten", siehe leistungen.html. -->
+    <div class="titel-kopf">
+      <div class="titel-wort"><h1>Referenzen</h1></div>
+    </div>
+    <svg class="titel-linie" viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <path pathLength="1" d="M0 11 Q75 3 150 11 Q225 19 300 11"></path>
+    </svg>
   </div>
 </div>
 
@@ -190,6 +208,7 @@
 <!-- Eigenes Skript, kein fremder Server. Am Ende des Body und mit
      defer, damit die Seite nicht darauf warten muss. -->
 <script src="../skript/haupt.js" defer></script>
+<script type="module" src="/src/bewegung.ts"></script>
 
 </body>
 </html>

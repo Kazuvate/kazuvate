@@ -1,0 +1,288 @@
+/* ============================================================
+   kazuvate | Titelbaender
+   Nur Leistungen, Referenzen und Ablauf laden diese Datei.
+
+   Geschichte in drei Schritten, alle am 22./23.08.2026:
+   1. Jede Seite trug ein eigenes gezeichnetes Motiv (Linie mit drei
+      Kreisen, Vierer-Strang, zwei Browserfenster). Zu viel, ein Kreis
+      schnitt sogar durch den Buchstaben "n" bei "Leistungen" -- alle
+      drei entfernt.
+   2. Ersatz: weisse Schrift mit gruener Kontur auf dunkler Flaeche.
+      Die dunkle Flaeche stellte sich als das eigentliche Problem
+      heraus (geerbt von .titel in basis.css, nicht mal absichtlich
+      gesetzt) -- Flaeche raus, Schrift auf --tinte gedreht, Kontur
+      auf das Gruen von Kopf und Fuss (--flaeche).
+   3. Auch das noch nicht: "innen schwarz, Rand gruen" gefiel nicht.
+      Jetzt der einfachste Weg von allen -- Schrift direkt in Gruen,
+      keine Kontur mehr, dafuer eine Linie darunter, die sich beim
+      Laden einmal einblendet (clip-path, siehe dort -- ein erster
+      Versuch mit stroke-dashoffset wie beim Faden auf der Startseite
+      ist an einem echten Rendering-Fehler gescheitert, ebenfalls
+      dokumentiert an Ort und Stelle). Der Vorspanntext unter jedem
+      Titel ist ersatzlos gestrichen.
+
+   Farben ausschliesslich aus tokens.css. Die schlichte .titel
+   (Impressum, Datenschutz) ist von alledem unberuehrt.
+   ============================================================ */
+
+.titel--gross{
+  background: none;
+  color: var(--tinte);
+  border-top: 0;
+  padding: var(--s7) 0 var(--s6);
+}
+
+/* Wrapper nur ums Titelwort, shrink-to-fit (width: max-content, wie
+   das h1 selbst). Auf ablauf.html liegt die Linie weiterhin direkt
+   darin, ihr width:100% trifft dort also die Textbreite -- Kasums
+   Ansage vom 23.08.2026 war ausdruecklich "aendere nichts an Ablauf".
+
+   Auf leistungen.html und referenzen/index.html liegt die Linie seit
+   demselben Tag nicht mehr hier drin, sondern eine Ebene hoeher als
+   direktes Kind von .titel-inhalt (siehe dort): "die Linie soll bis
+   ganz nach hinten gehen" -- bis an den rechten Rand des Wrap-Inhalts,
+   nicht nur bis ans Ende des Wortes. Dieselbe Klasse .titel-linie,
+   derselbe width:100%-Wert, nur eine Stufe weiter oben im Baum
+   eingehaengt, deshalb bezieht sich die Prozentzahl dort auf die volle
+   Wrap-Breite statt auf die schmale Textbreite. */
+.titel-kopf{
+  position: relative;
+  width: max-content;
+}
+
+.titel-wort{
+  overflow: hidden;
+  width: 100%;
+  /* Der erste Versuch (.26em unten) hat den eigentlichen Fehler nicht
+     behoben, nur die Zahl im Quelltext veraendert: em bezieht sich auf
+     die SCHRIFTGROESSE VON .titel-wort SELBST, und die ist nie gesetzt
+     -- geerbt vom Flieszettext, um die 17px. Bei einer h1 mit 55px
+     Schriftgroesse (kleinste Stufe) wurde aus ".26em" beim Nachmessen
+     4.4px Puffer, nicht die gewollten 14px. Auf der groessten Stufe
+     (h1 bis 112px) waere derselbe Fehler noch krasser gewesen. Der
+     Deszender des "g" in "Leistungen" reicht weiter runter als diese
+     4.4px, wurde also weiterhin abgeschnitten -- das war der Fehler,
+     den Kasum am 23.08.2026 zurecht gemeldet hat.
+
+     Jetzt feste Pixelwerte statt em, an denselben drei Bruchstellen
+     wie die h1-Schriftgroesse gestaffelt, grosszuegig bemessen statt
+     auf den Punkt genau. */
+  padding: 6px .03em 20px;
+  margin-left: -.03em;
+}
+
+.titel--gross h1{
+  max-width: none;
+  width: max-content;
+  /* Kleiner und duenner als zuvor -- Kasums Wort war "die Titel sind
+     immer ein bisschen zu dick". 700 auf 600 im Gewicht, die
+     Schriftgroessen selbst rund ein Fuenftel kleiner in jeder der
+     drei Stufen unten. */
+  font-size: clamp(2.4rem, 11vw, 3.8rem);
+  font-weight: 600;
+  line-height: .86;
+  letter-spacing: -.06em;
+  white-space: nowrap;
+  text-wrap: nowrap;
+  /* Direkt gruen gefuellt, keine Kontur mehr. Der Umweg ueber
+     -webkit-text-stroke ist zweimal gescheitert: erst unsichtbar
+     (falscher Farbkontrast gegen dunklen Grund), dann unerwuenscht
+     ("innen schwarz, Rand gruen" -- genau das wollte Kasum nicht).
+     Diese Fassung ist die einfachste und robusteste der drei:
+     dieselbe Flaeche wie Kopf und Fuss (--flaeche), einmal gesetzt,
+     kein Zusammenspiel aus Fuellung und Kontur, das schiefgehen kann. */
+  color: var(--flaeche);
+}
+
+/* Bezugsrahmen fuer die volle Linienbreite auf leistungen.html und
+   referenzen/index.html (siehe .titel-kopf weiter oben): dort haengt
+   .titel-linie direkt hier drin statt in .titel-kopf, ihr width:100%
+   braucht deshalb hier den position:relative-Anker. Auf ablauf.html
+   traegt .titel-kopf diesen Anker schon selbst, dort aendert die
+   Zeile hier nichts, weil die Linie dort gar nicht direktes Kind
+   von .titel-inhalt ist. */
+.titel-inhalt{
+  position: relative;
+}
+
+/* Der laengste Titel bekommt auf sehr schmalen Bildschirmen eine
+   eigene Untergrenze. So bleibt er auch mit der System-Ersatzschrift
+   innerhalb der 320px-Breite, bevor General Sans geladen ist. */
+.titel--referenzen h1{
+  font-size: clamp(2.1rem, 10.5vw, 3.7rem);
+}
+
+/* --- Linie unter dem Titel ----------------------------------
+   Ersetzt die drei fruehen Seitenmotive nicht als Grafik, sondern als
+   Geste: eine einzelne handgezeichnete Kurve, die sich beim Laden
+   einmal einzeichnet -- nach demselben Prinzip wie der Faden auf der
+   Startseite, aber mit einer anderen Technik dahinter, siehe unten.
+
+   preserveAspectRatio="none" plus ein fester 300x20-viewBox: dieselbe
+   Technik wie beim fruehen Leistungen-Motiv, dieselbe Kurve dehnt sich
+   auf jede Textbreite von 375px-Handy bis 900px-Desktop, ohne dass elf
+   verschiedene Pfade noetig waeren. */
+.titel-linie{
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 100%;
+  height: 14px;
+}
+
+/* "Ablauf" hat keinen Buchstaben mit Unterlaenge, die Grundwerte oben
+   passen fuer diese Seite unveraendert -- Kasums Ansage war
+   ausdruecklich, an Ablauf nichts zu aendern.
+
+   "Leistungen" und "Referenzen" haben je ein "g", das seit dem
+   Deszender-Fix in .titel-wort genug Puffer bekommt, um nicht
+   abgeschnitten zu werden. Bei -8px sass die Linie aber genau in
+   diesem Pufferbereich: sie lief mitten durchs "g", und weil Linie
+   und Buchstabe dieselbe Farbe --flaeche tragen, sah das aus wie eine
+   unterbrochene Linie, nicht wie eine Kreuzung. Hier deshalb klar
+   unter den ganzen Deszender-Puffer geschoben, nur fuer diese beiden
+   Seiten. */
+.titel--leistungen .titel-linie,
+.titel--referenzen .titel-linie{
+  bottom: -22px;
+}
+
+.titel-linie path{
+  fill: none;
+  stroke: var(--flaeche);
+  stroke-width: 2px;
+  stroke-linecap: round;
+  /* Ohne das wuerde preserveAspectRatio="none" die Strichbreite mit
+     verzerren -- bei einer 900px breiten Ueberschrift und 20 Einheiten
+     Hoehe im viewBox waere die Linie waagerecht papierduenn, senkrecht
+     dick. non-scaling-stroke haelt sie in jeder Breite gleich fein. */
+  vector-effect: non-scaling-stroke;
+}
+
+/* --- Einmalige Choreografie -------------------------------
+   Der Grundzustand oben ist immer fertig sichtbar. Alte Browser und
+   Reduced Motion bekommen deshalb ohne Sonderbehandlung eine voll
+   nutzbare, stabile Seite -- der Pfad steht dort direkt fertig
+   gezeichnet da, ohne Clip.
+
+   Erster Anlauf war stroke-dasharray plus pathLength="1", dieselbe
+   Technik wie beim Faden auf der Startseite. Nachgemessen (Scratchpad,
+   23.08.2026) zeigte sich ein echter Rendering-Fehler, kein
+   Wahrnehmungsproblem: bei "Leistungen" und "Referenzen" reicht die
+   Linie inzwischen ueber die volle Wrap-Breite (siehe .titel-inhalt
+   weiter oben), also ueber 900px aus einem nur 300 Einheiten breiten
+   viewBox gestreckt -- mehr als das Dreifache. In Kombination mit
+   vector-effect:non-scaling-stroke hat der Browser die gestrichelte
+   Linie (dasharray:1, ein einziger Strich ueber die ganze Pfadlaenge)
+   dabei mittig unterbrochen gezeichnet: mit rotem Diagnose-Strich
+   sichtbar zwei getrennte Stuecke statt eines durchgehenden. Bei
+   deaktiviertem dasharray verschwand die Luecke sofort wieder --
+   die Ursache liegt in genau diesem Zusammenspiel unter extremer
+   Streckung, nicht am Pfad selbst.
+
+   Ersetzt durch clip-path: der Pfad steht die ganze Zeit vollstaendig
+   und fertig gezeichnet da, eine reine Ausblendmaske deckt ihn zu
+   Beginn komplett zu und faehrt beim Laden von links nach rechts weg.
+   Sieht identisch aus wie das Zeichnen vorher, ohne SVG-Innenleben,
+   das bei extremer Streckung falsch rendern kann. */
+.titel-linie{
+  clip-path: inset(0 100% 0 0);
+}
+
+@media (prefers-reduced-motion: no-preference){
+  .titel--gross h1{
+    animation: titel-wort-ein 680ms var(--kurve) 60ms both;
+  }
+
+  .titel-linie{
+    /* Start bei 550ms: die h1-Animation braucht bis 740ms (680+60),
+       die Linie faengt schon an, bevor der Titel ganz zur Ruhe kommt
+       -- liest sich als eine zusammenhaengende Bewegung statt zweier
+       Schritte hintereinander. */
+    animation: titel-linie-ein 900ms var(--kurve) 550ms both;
+  }
+}
+
+@keyframes titel-linie-ein{
+  from{ clip-path: inset(0 100% 0 0); }
+  to{ clip-path: inset(0 0% 0 0); }
+}
+
+@keyframes titel-wort-ein{
+  from{ transform: translateY(112%); }
+  to{ transform: translateY(0); }
+}
+
+/* --- Breitere Ansichten ---------------------------------- */
+@media (min-width: 560px){
+  .titel--gross{
+    padding: var(--s8) 0 var(--s7);
+  }
+
+  .titel--gross h1{
+    font-size: clamp(3.6rem, 9.5vw, 5.4rem);
+  }
+
+  .titel--referenzen h1{
+    font-size: clamp(3.3rem, 8.5vw, 5.2rem);
+  }
+
+  .titel-wort{
+    padding-bottom: 28px;
+  }
+
+  .titel-linie{
+    bottom: -10px;
+    height: 18px;
+  }
+
+  /* .titel-wort hat hier 28px Deszender-Puffer, dieselbe Ausnahme wie
+     bei der Grundregel oben, nur fuer Leistungen und Referenzen. */
+  .titel--leistungen .titel-linie,
+  .titel--referenzen .titel-linie{
+    bottom: -30px;
+  }
+
+  .titel-linie path{
+    stroke-width: 2.4px;
+  }
+}
+
+@media (min-width: 860px){
+  .titel--gross{
+    padding: var(--s8) 0 var(--s8);
+  }
+
+  .titel--gross h1{
+    font-size: clamp(5.2rem, 8.5vw, 7rem);
+  }
+
+  .titel--referenzen h1{
+    font-size: clamp(4.9rem, 8vw, 6.7rem);
+  }
+
+  .titel-wort{
+    padding-bottom: 36px;
+  }
+
+  .titel-linie{
+    bottom: -13px;
+    height: 22px;
+  }
+
+  /* .titel-wort hat hier 36px Deszender-Puffer. */
+  .titel--leistungen .titel-linie,
+  .titel--referenzen .titel-linie{
+    bottom: -38px;
+  }
+
+  .titel-linie path{
+    stroke-width: 2.8px;
+  }
+}
+
+@media (min-width: 1200px){
+  .titel--gross h1{
+    margin-left: -.02em;
+  }
+}
