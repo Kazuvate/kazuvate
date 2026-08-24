@@ -144,6 +144,18 @@
               </div>
             </dl>
           </div>
+          <!-- Motiv als dritte Spalte, siehe stil/ablauf.css. Nur hier
+               bei Schritt 01: von den vier Vorlagen zeigt nur diese ein
+               Gespraech. Die Spalte gibt es ab 1140px in jedem Schritt,
+               02 bis 04 lassen sie leer -- kommt spaeter ein passendes
+               Motiv dazu, genuegt eine Zeile wie diese. Leeres alt, weil
+               reiner Schmuck. -->
+          <picture class="motiv">
+            <source media="(min-width: 1140px) and (prefers-reduced-motion: no-preference)"
+                    srcset="medien/motive/gespraech.svg">
+            <img class="motiv-bild" alt="" width="500" height="500" decoding="async"
+                 src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'/%3E">
+          </picture>
         </li>
 
         <li class="ablauf-schritt">

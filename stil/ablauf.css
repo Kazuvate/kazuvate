@@ -95,6 +95,45 @@ main#inhalt{ padding: var(--s8) 0 0; }
   .ablauf-schritt:last-child::before{ content: none; }
 }
 
+/* --- Motiv in der dritten Spalte -----------------------------
+   Neben dem Text jedes Schritts standen bei 1440px Fensterbreite
+   382 leere Pixel, bei einer Schritthoehe von rund 500 -- die
+   groesste zusammenhaengende Leerflaeche der ganzen Website. Kasums
+   Ansage vom 25.08.2026 war, sie zu fuellen, ausdruecklich rechts.
+
+   Die Spalte kommt in jedem der vier Schritte dazu, gefuellt ist
+   heute nur Schritt 01. Das kostet nichts: der Fliesstext ist
+   ohnehin auf 58ch begrenzt, die zweite Spalte war also nie
+   gefuellt, nur breit. Der Strang links bleibt unberuehrt -- er
+   haengt an der ersten Spalte, und deren Breite aendert sich nicht.
+
+   Begruendung fuer <img> statt inline und fuer die Grenze bei
+   1140px steht ausfuehrlich in stil/leistungen.css, dieselbe
+   Ueberlegung.
+   -------------------------------------------------------------- */
+@media (min-width: 1140px){
+  .ablauf-schritt{
+    grid-template-columns: 3.5rem minmax(0, 58ch) minmax(0, 1fr);
+  }
+
+  .ablauf-schritt .motiv{
+    display: block;
+    width: 100%;
+    /* Groesser als die 260px auf leistungen.html: ein Schritt ist
+       hier rund 500px hoch statt 250, ein kleines Motiv wuerde in
+       der Flaeche verschwinden. */
+    max-width: 320px;
+    justify-self: center;
+    align-self: center;
+  }
+}
+
+/* Dauerschleife, deshalb bei abbestellter Bewegung ganz weg --
+   dieselbe Begruendung wie in stil/leistungen.css. */
+@media (prefers-reduced-motion: reduce){
+  .ablauf-schritt .motiv{ display: none; }
+}
+
 /* Die Nummer traegt hier mehr Gewicht als auf der Startseite: sie
    ist der Knoten im Strang. Deshalb der Kreis mit Papierfarbe --
    ohne ihn liefe die Linie sichtbar hinter der Ziffer durch.
