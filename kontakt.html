@@ -8,6 +8,71 @@
 <meta name="description" content="Erzählen Sie uns von Ihrem Betrieb. Antwort innert 24 Stunden. Telefon, E-Mail und Anfrageformular für Webdesign in der Schweiz.">
 <meta name="theme-color" content="#2C3616">
 
+<!-- ====================== Suchmaschinen ======================
+     Die kanonische Adresse dieser Seite. Sie ist noetig, weil Vercel
+     dieselbe Datei unter mehreren Adressen ausliefert: die Startseite
+     liegt sowohl unter / als auch unter /index.html, die Referenzen
+     unter /referenzen/ und /referenzen/index.html. Ohne diese Zeile
+     sind das fuer eine Suchmaschine zwei Seiten mit identischem
+     Inhalt, und sie entscheidet selbst, welche sie nimmt.
+
+     Die Adresse muss zeichengleich mit der in public/sitemap.xml
+     stehen. Zwei Angaben, die sich widersprechen, sind schlechter als
+     eine. Gepruefte Regel fuer diese Domain: /leistungen ohne .html
+     ist 404, die Endung gehoert also dazu; /referenzen/ dagegen
+     funktioniert und ist die kuerzere der beiden Formen. -->
+<link rel="canonical" href="https://kazuvate.ch/kontakt.html">
+
+<!-- Link-Vorschau in WhatsApp, LinkedIn, Slack, Signal und iMessage.
+     Ohne diese Zeilen zeigt jeder geteilte Link auf kazuvate.ch nur
+     die nackte Adresse -- markenlogo/og.png liegt seit dem 19.08.2026
+     im Repo und war bis heute nirgends verlinkt.
+
+     og:image braucht eine vollstaendige Adresse mit Protokoll, ein
+     relativer Pfad wird von keinem der Dienste aufgeloest. Deshalb
+     liegt markenlogo/ seit dem 25.08.2026 unter public/: nur von dort
+     reicht Vite Dateien unveraendert und ohne Inhalts-Hash im Namen
+     durch, und nur dann bleibt die Adresse ueber Deploys hinweg
+     gleich. Vorher war /markenlogo/og.png im gebauten dist/ gar nicht
+     vorhanden -- ebenso wenig wie die drei Icons, die
+     site.webmanifest verlangt. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="kazuvate">
+<meta property="og:locale" content="de_CH">
+<meta property="og:url" content="https://kazuvate.ch/kontakt.html">
+<meta property="og:title" content="Kontakt">
+<meta property="og:description" content="Erzählen Sie uns von Ihrem Betrieb. Antwort innert 24 Stunden. Telefon, E-Mail und Anfrageformular für Webdesign in der Schweiz.">
+<meta property="og:image" content="https://kazuvate.ch/markenlogo/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Das KV-Monogramm von kazuvate, hell auf olivgruenem Grund">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- Brotkrumenpfad. Es gibt keine sichtbare Krumenleiste auf der
+     Seite; die Hierarchie ist trotzdem echt und einstufig, und Google
+     zeigt sie im Suchtreffer statt der nackten URL an. -->
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Startseite",
+        "item": "https://kazuvate.ch/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Kontakt",
+        "item": "https://kazuvate.ch/kontakt.html"
+      }
+    ]
+  }
+</script>
+<!-- =========================================================== -->
+
 <link rel="icon" href="markenlogo/favicon.ico" sizes="32x32">
 <link rel="icon" href="markenlogo/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="markenlogo/apple-touch-icon.png">

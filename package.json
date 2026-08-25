@@ -6,6 +6,7 @@
   "description": "Website der Webdesign-Firma kazuvate, Basel",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node werkzeug/sitemap-bauen.mjs",
     "build": "vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit"

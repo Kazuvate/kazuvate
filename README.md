@@ -80,14 +80,33 @@ src/lib/utils.ts                        cn()-Helfer (shadcn-Konvention)
 src/index.css                           nur Tailwind-Utilities, kein Preflight
 
 public/skript/haupt.js mitlaufender Kopf, Menue-Schublade, Symbolzeichnung, Kachelrahmen
-markenlogo/            Logo, Favicons, App Icons, Vorschaubild fürs Teilen
+public/markenlogo/     Logo, Favicons, App Icons, Vorschaubild fürs Teilen
+public/robots.txt      steht so im Repo
+public/sitemap.xml     erzeugt, siehe werkzeug/sitemap-bauen.mjs
 medien/referenzen/     Bildschirmfotos der Kundenprojekte
+medien/motive/         die vier Seitenmotive, erzeugt aus werkzeug/vorlagen/
 kazuvate_Logo.jpg      die ursprüngliche Bilddatei, liegt nur noch als Beleg hier
+
+werkzeug/              läuft nie mit aus, steht in keiner Eingangsliste in vite.config.ts
+werkzeug/motive-aufbereiten.mjs  färbt die Lottie-Vorlagen auf die Marke um und verkleinert sie
+werkzeug/sitemap-bauen.mjs       schreibt public/sitemap.xml, läuft als prebuild
+werkzeug/motive-vorschau.html    Vorlage neben Markenfassung, nur zum Anschauen
+werkzeug/vorlagen/               die vier Lottie-Exporte, wie sie ankamen
 
 api/kontakt.js          Vercel Function: schickt das Formular per Resend als Mail
 vite.config.ts         Multi-Page-Konfiguration: jede HTML-Datei ein Einstiegspunkt
 dist/                  Ergebnis von npm run build, nicht im Repo
 ```
+
+**Warum `markenlogo/` unter `public/` liegt:** dieselbe Überlegung wie bei
+`skript/`, aber mit einem Fehler als Anlass. `site.webmanifest` verweist auf
+`/markenlogo/icon-192.png` und zwei weitere Icons — der Verweis steht in einer
+JSON-Datei, die Vite nicht anfasst, also wurden die drei Dateien nie nach
+`dist/` kopiert und waren auf der gebauten Seite 404. Dasselbe galt für
+`og.png`, sobald es als `og:image` gebraucht wurde. Eine Adresse, die von
+aussen fest verdrahtet ist, darf keinen Hash im Namen tragen und muss den
+Deploy überleben: dafür ist `public/` da. Seit dem 25.08.2026 liegt der ganze
+Ordner dort, alle relativen Pfade in den acht Seiten stimmen unverändert.
 
 **Warum `public/skript/` und nicht `skript/`:** Vite verarbeitet alles, was es
 im HTML findet, und benennt es beim Bauen um (Hash im Dateinamen). Bei einem

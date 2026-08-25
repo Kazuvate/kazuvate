@@ -1,0 +1,19 @@
+# kazuvate.ch
+# Liegt in public/ und wird von Vite unveraendert nach dist/ gereicht --
+# eine Datei, die unter einer festen Adresse erreichbar sein muss, darf
+# keinen Inhalts-Hash im Namen tragen.
+
+User-agent: *
+Allow: /
+
+# Der Endpunkt des Kontaktformulars. Nimmt nur POST entgegen, es gibt
+# dort nichts zu lesen und nichts zu indexieren.
+Disallow: /api/
+
+# danke.html steht bewusst NICHT hier, obwohl die Seite nicht in den
+# Index gehoert. Sie traegt <meta name="robots" content="noindex">, und
+# damit eine Suchmaschine dieses noindex ueberhaupt sehen kann, muss sie
+# die Seite abrufen duerfen. Ein Disallow hier wuerde das verhindern --
+# die Seite koennte dann trotzdem als blosse URL im Index landen.
+
+Sitemap: https://kazuvate.ch/sitemap.xml

@@ -11,6 +11,27 @@
      auftauchen, dafuer gibt es kontakt.html. -->
 <meta name="robots" content="noindex">
 
+<!-- ====================== Suchmaschinen ======================
+     Die kanonische Adresse dieser Seite. Sie ist noetig, weil Vercel
+     dieselbe Datei unter mehreren Adressen ausliefert: die Startseite
+     liegt sowohl unter / als auch unter /index.html, die Referenzen
+     unter /referenzen/ und /referenzen/index.html. Ohne diese Zeile
+     sind das fuer eine Suchmaschine zwei Seiten mit identischem
+     Inhalt, und sie entscheidet selbst, welche sie nimmt.
+
+     Die Adresse muss zeichengleich mit der in public/sitemap.xml
+     stehen. Zwei Angaben, die sich widersprechen, sind schlechter als
+     eine. Gepruefte Regel fuer diese Domain: /leistungen ohne .html
+     ist 404, die Endung gehoert also dazu; /referenzen/ dagegen
+     funktioniert und ist die kuerzere der beiden Formen. -->
+<link rel="canonical" href="https://kazuvate.ch/danke.html">
+
+<!-- Kein Open Graph: die Seite traegt noindex und wird nie
+     geteilt, sie ist nur die Landung nach dem Absenden des
+     Formulars. Das Canonical bleibt trotzdem, es faengt
+     Adressen mit angehaengten Parametern ab. -->
+<!-- =========================================================== -->
+
 <link rel="icon" href="markenlogo/favicon.ico" sizes="32x32">
 <link rel="icon" href="markenlogo/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="markenlogo/apple-touch-icon.png">
