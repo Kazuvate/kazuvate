@@ -57,7 +57,14 @@
   </symbol>
 </svg>
 
-<div class="scroll-balken" aria-hidden="true"></div>
+<!-- Hier lag bis zum 31.08.2026 ein 3px hoher Fortschrittsbalken am
+     oberen Bildrand, der sich beim Scrollen fuellte. Entfernt, weil
+     er nichts anzeigte, was der Besucher nicht schon wusste: eine
+     Marketingseite mit fuenf Abschnitten liest niemand so lange,
+     dass er wissen muss, wie weit er ist. Ein Lesefortschritt gehoert
+     an einen langen Text, nicht an eine Seite, die man in einer
+     Minute durchscrollt. Markup, CSS und der GSAP-Block dazu sind
+     ersatzlos raus. -->
 <a class="sprung" href="#inhalt">Zum Inhalt springen</a>
 
 <!-- ====================== Kopf ====================== -->
@@ -102,7 +109,9 @@
 <main id="inhalt">
   <div class="wrap danke-inhalt">
 
-    <p class="augenbraue">Danke</p>
+    <!-- Augenbraue "DANKE" ueber "Ihre Anfrage ist angekommen."
+         entfernt am 31.08.2026: dasselbe Wort wie im Seitentitel,
+         und die Ueberschrift darunter sagt es ohnehin. -->
     <h1>Ihre Anfrage ist angekommen.</h1>
     <p>Wir lesen sie in Ruhe und melden uns innert 24 Stunden bei Ihnen, meist per Mail.</p>
     <p>Es pressiert? Rufen Sie direkt an: <a href="tel:+41786707973">+41 78 670 79 73</a>.</p>

@@ -187,7 +187,14 @@
   </symbol>
 </svg>
 
-<div class="scroll-balken" aria-hidden="true"></div>
+<!-- Hier lag bis zum 31.08.2026 ein 3px hoher Fortschrittsbalken am
+     oberen Bildrand, der sich beim Scrollen fuellte. Entfernt, weil
+     er nichts anzeigte, was der Besucher nicht schon wusste: eine
+     Marketingseite mit fuenf Abschnitten liest niemand so lange,
+     dass er wissen muss, wie weit er ist. Ein Lesefortschritt gehoert
+     an einen langen Text, nicht an eine Seite, die man in einer
+     Minute durchscrollt. Markup, CSS und der GSAP-Block dazu sind
+     ersatzlos raus. -->
 <a class="sprung" href="#inhalt">Zum Inhalt springen</a>
 
 <!-- ====================== Kopf ====================== -->
@@ -286,10 +293,17 @@
   </section>
 
   <!-- ====================== Leistungen ====================== -->
+      <!-- Hier stand bis zum 31.08.2026 eine Augenbraue: kleine
+           Versalien im Markenton ueber der Ueberschrift. Sie hat den
+           Namen des Menuepunkts wiederholt und der Ueberschrift
+           darunter nichts hinzugefuegt. Vier davon standen auf dieser
+           Seite, ueber jeder einzelnen Sektion -- genau das Muster,
+           das eine Seite nach Baukasten aussehen laesst. Die
+           Augenbrauen, die eine eigene Aussage tragen (die drei
+           Kacheln, die drei Bloecke im Kopfbereich), stehen weiterhin. -->
   <section class="sektion" id="leistungen">
     <div class="wrap">
 
-      <p class="augenbraue">Leistungen</p>
       <h2>Was wir für Sie bauen</h2>
 
       <!-- Drei Spalten, getrennt durch senkrechte Haarlinien: Zeichen,
@@ -346,7 +360,6 @@
     <div class="wrap">
 
       <div class="anders-kopf">
-        <p class="augenbraue">Warum kazuvate?</p>
         <h2>Drei Dinge machen wir anders.</h2>
       </div>
 
@@ -398,7 +411,6 @@
   <section class="sektion" id="referenz">
     <div class="wrap">
 
-      <p class="augenbraue">Referenzen</p>
       <h2>Gebaut und live</h2>
 
       <!-- Bis zum 22.08.2026 stand hier eine Kachel links und rechts
@@ -443,7 +455,6 @@
   <section class="sektion" id="ablauf">
     <div class="wrap">
 
-      <p class="augenbraue">Ablauf</p>
       <h2>Vom ersten Anruf bis live</h2>
 
       <ol class="ablauf">

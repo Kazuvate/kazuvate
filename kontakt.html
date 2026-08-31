@@ -102,7 +102,14 @@
   </symbol>
 </svg>
 
-<div class="scroll-balken" aria-hidden="true"></div>
+<!-- Hier lag bis zum 31.08.2026 ein 3px hoher Fortschrittsbalken am
+     oberen Bildrand, der sich beim Scrollen fuellte. Entfernt, weil
+     er nichts anzeigte, was der Besucher nicht schon wusste: eine
+     Marketingseite mit fuenf Abschnitten liest niemand so lange,
+     dass er wissen muss, wie weit er ist. Ein Lesefortschritt gehoert
+     an einen langen Text, nicht an eine Seite, die man in einer
+     Minute durchscrollt. Markup, CSS und der GSAP-Block dazu sind
+     ersatzlos raus. -->
 <a class="sprung" href="#inhalt">Zum Inhalt springen</a>
 
 <!-- ====================== Kopf ====================== -->
@@ -165,8 +172,10 @@
     <!-- ---------- Linke Spalte ---------- -->
     <div class="kontakt-links">
 
-      <p class="augenbraue">Kontakt</p>
-
+      <!-- Hier stand bis zum 31.08.2026 eine Augenbraue "KONTAKT"
+           ueber der H1. Sie wiederholte den Menuepunkt, den
+           Seitentitel und den Tab-Titel -- dreimal dasselbe Wort,
+           bevor der erste Satz kommt. "Reden wir." traegt allein. -->
       <h1 class="gross">Reden<br>wir.</h1>
 
       <p class="kontakt-vor">Erzählen Sie uns von Ihrem Betrieb und was die Website leisten soll. Wir melden uns innert 24 Stunden. Das erste Gespräch ist unverbindlich und kostet nichts.</p>

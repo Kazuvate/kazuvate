@@ -114,28 +114,19 @@ a{ color: var(--olive); }
 }
 .sprung:focus{ left: var(--s5); }
 
-/* Scroll-Fortschrittsbalken, seit 22.08.2026. GSAP setzt scaleX ueber
-   den ganzen Ladevorgang, siehe src/bewegung.ts. Die Grundregel hier
-   deckt zwei Faelle ab, in denen kein GSAP laeuft: bis das Modul
-   geladen hat (kurzer Blitz eines leeren Strichs statt eines vollen)
-   und bei prefers-reduced-motion, wo bewegung.ts den Balken absichtlich
-   nie anfasst -- ohne scaleX:0 hier stuende sonst ein Strich in voller
-   Breite und behauptete "ganz gelesen", ohne dass sich je etwas bewegt
-   hat. z-index 31: eine Stufe ueber der Sprungmarke (30), die wiederum
-   ueber dem mitlaufenden Kopf (20) liegt -- der Balken bleibt so in
-   jedem Zustand oben sichtbar. */
-.scroll-balken{
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: var(--olive);
-  transform: scaleX(0);
-  transform-origin: left center;
-  z-index: 31;
-  pointer-events: none;
-}
+/* Hier stand bis zum 31.08.2026 der Scroll-Fortschrittsbalken:
+   ein 3px hoher Strich am oberen Bildrand, dessen scaleX GSAP am
+   Scrollfortschritt haengte. Ersatzlos raus.
+
+   Grund: er hat nichts angezeigt, was der Besucher nicht ohnehin
+   wusste. Eine Fortschrittsanzeige beantwortet die Frage "wie lange
+   noch" -- die stellt sich in einem langen Artikel, nicht auf einer
+   Marketingseite mit fuenf Abschnitten, die man in einer Minute
+   durchscrollt. Damit war er reine Bewegung ohne Aufgabe, und genau
+   das ist das Muster, an dem man generisch gebaute Seiten erkennt.
+
+   Mit ihm faellt auch der einzige Grund weg, ScrollTrigger ohne
+   trigger-Element zu benutzen. */
 
 .nur-fuer-screenreader{
   position: absolute;
