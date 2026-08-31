@@ -37,10 +37,23 @@ export default defineConfig({
   build: {
     outDir: "dist",
     emptyOutDir: true,
+
+    // Ausdruecklich aus, obwohl es Vites Standard ist. Eine Source Map
+    // im Produktionsordner liefert den kompletten unminifizierten
+    // Quelltext samt Kommentaren aus und ist auf einer Seite, die
+    // handgebauten Code verkauft, das genaue Gegenteil von
+    // Aufgeraeumtsein. Als Zeile hier steht die Entscheidung schwarz
+    // auf weiss und faellt jedem auf, der sie umdrehen will.
+    sourcemap: false,
+
     rollupOptions: {
       // Ohne diese Liste baut Vite nur index.html und die anderen Seiten
       // fehlen im dist/-Ordner -- inklusive aller Links, die auf sie
       // zeigen. Kommt eine Seite dazu, muss sie hier mit rein.
+      //
+      // Die Liste muss ausserdem zu SEITEN in werkzeug/sitemap-bauen.mjs
+      // passen. Nicht eins zu eins: danke.html und 404.html stehen hier,
+      // aber nicht in der Sitemap, beide tragen noindex.
       input: {
         start: path.resolve(__dirname, "index.html"),
         leistungen: path.resolve(__dirname, "leistungen.html"),
@@ -50,6 +63,16 @@ export default defineConfig({
         impressum: path.resolve(__dirname, "impressum.html"),
         datenschutz: path.resolve(__dirname, "datenschutz.html"),
         referenzen: path.resolve(__dirname, "referenzen/index.html"),
+
+        // Die Fehlerseite. Der Schluessel heisst absichtlich "fehler"
+        // und nicht "404": Rollup benutzt den Schluessel als Namen des
+        // erzeugten Bundles, und ein Dateiname, der mit einer Ziffer
+        // beginnt, ist kein gueltiger JavaScript-Bezeichner. Die
+        // ausgelieferte Datei heisst trotzdem dist/404.html, das
+        // richtet sich nach dem Pfad, nicht nach dem Schluessel -- und
+        // genau dieser Name ist es, den Vercel ohne weitere
+        // Konfiguration mit Status 404 ausliefert.
+        fehler: path.resolve(__dirname, "404.html"),
       },
     },
   },

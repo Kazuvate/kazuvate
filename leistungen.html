@@ -48,9 +48,13 @@
 <meta property="og:image:alt" content="Das KV-Monogramm von kazuvate, hell auf olivgruenem Grund">
 <meta name="twitter:card" content="summary_large_image">
 
-<!-- Brotkrumenpfad. Es gibt keine sichtbare Krumenleiste auf der
-     Seite; die Hierarchie ist trotzdem echt und einstufig, und Google
-     zeigt sie im Suchtreffer statt der nackten URL an. -->
+<!-- Brotkrumenpfad. Deckt sich seit dem 31.08.2026 Wort fuer Wort
+     mit der sichtbaren Krumenleiste im Koerper dieser Seite. Bis
+     dahin stand hier "es gibt keine sichtbare Krumenleiste" -- das
+     war erlaubt, aber strukturierte Daten, denen auf der Seite
+     selbst nichts entspricht, sind der Fall, den Googles Richtlinie
+     als Grund zum Ignorieren nennt. Im Suchtreffer steht damit der
+     Pfad statt der nackten URL. -->
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -166,6 +170,20 @@
     </svg>
   </div>
 </div>
+
+<!-- ====================== Brotkrumen ======================
+     Wort fuer Wort dasselbe wie der BreadcrumbList im Kopf dieser
+     Seite. Steht unter dem Titelband statt darin: das Titelband
+     traegt seit dem 23.08.2026 nur noch die Ueberschrift.
+     ==================================================== -->
+<nav class="krumen" aria-label="Brotkrumen">
+  <div class="wrap">
+    <ol>
+      <li><a href="index.html">Startseite</a></li>
+      <li aria-current="page">Leistungen</li>
+    </ol>
+  </div>
+</nav>
 
 <!-- ====================== Inhalt ======================
      Dieselben drei Punkte wie in der Sektion "Warum kazuvate" auf

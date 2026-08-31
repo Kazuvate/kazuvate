@@ -1,7 +1,15 @@
 /* ============================================================
    kazuvate | Basis
-   Grundlagen, Kopf und Fuss. Alles dazwischen ist noch Platzhalter.
+   Grundlagen plus alles, was auf mehr als einer Seite vorkommt:
+   Kopf, Titelband, Brotkrumen, Sektionen der Startseite, Fuss.
+   Seiteneigenes CSS liegt daneben (kontakt.css, leistungen.css,
+   ablauf.css, seiten.css, danke.css, titelmotive.css).
    Farben ausschliesslich ueber die Tokens aus tokens.css.
+
+   Die Zeile "Alles dazwischen ist noch Platzhalter" stand hier bis
+   zum 31.08.2026 und stimmte seit dem 19.08.2026 nicht mehr. Ein
+   Kommentar, der Platzhalter behauptet, wo keine sind, ist genau die
+   Sorte Ueberrest, nach der man in einer fremden Datei sucht.
    ============================================================ */
 
 /* --- Grundlagen ------------------------------------------- */
@@ -499,6 +507,87 @@ a{ color: var(--olive); }
   .titel .stand{ font-size: .82rem; }
 }
 
+/* --- Brotkrumen --------------------------------------------
+   Seit 31.08.2026 auf allen sechs Unterseiten. Den BreadcrumbList
+   als JSON-LD gibt es seit dem 25.08.2026 im Kopf jeder Unterseite;
+   dort stand als Kommentar ausdruecklich "Es gibt keine sichtbare
+   Krumenleiste auf der Seite". Jetzt gibt es sie, und beide sagen
+   dasselbe -- strukturierte Daten, die etwas behaupten, das auf der
+   Seite nicht steht, sind laut Googles eigener Richtlinie ein
+   Grund, sie ganz zu ignorieren.
+
+   Die Leiste sitzt zwischen Titelband und <main>, nicht im
+   Titelband. Das ist Absicht: Kasum hat am 23.08.2026 die
+   Vorspann-Zeile aus dem Titelband nehmen lassen, "die drei
+   Titelseiten sollen nur noch die Ueberschrift tragen". Eine
+   Krumenzeile ueber der H1 waere genau diese Zeile zurueck. Auf dem
+   hellen Papierton darunter ist sie eine eigene, ruhige Zeile und
+   ruehrt den dunklen Block nicht an.
+
+   Nicht auf index.html (die Startseite ist die Wurzel, eine Krume
+   auf sich selbst ist keine) und nicht auf danke.html (noindex,
+   Sackgasse nach dem Absenden). */
+.krumen{
+  padding-block: var(--s5) 0;
+  font-size: .88rem;
+  color: var(--still);
+}
+.krumen ol{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+/* Der Trenner steht als CSS-Zeichen da und nicht im Markup: ein
+   Schraegstrich im HTML wuerde von Screenreadern mitgelesen
+   ("Startseite Schraegstrich Leistungen"), aus generiertem Inhalt
+   liest ihn keiner vor. aria-hidden waere die zweite Moeglichkeit
+   und ein Element mehr pro Krume. */
+.krumen li + li::before{
+  content: "/";
+  margin-right: var(--s2);
+  color: var(--linie-kraeftig);
+}
+.krumen a{
+  color: var(--still);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color var(--kurz) var(--kurve),
+              border-color var(--kurz) var(--kurve);
+}
+@media (hover: hover) and (pointer: fine){
+  .krumen a:hover{
+    color: var(--olive);
+    border-bottom-color: var(--linie-marke);
+  }
+}
+/* Die aktuelle Seite ist bewusst kein Link. Ein Link, der auf die
+   Seite fuehrt, auf der man schon steht, ist eine Sackgasse mit
+   Tastaturstopp. */
+.krumen [aria-current="page"]{
+  color: var(--tinte-2);
+  font-weight: 600;
+}
+/* Auf dem Handy ist "Startseite" bei .88rem eine rund 24px hohe Zeile
+   und damit ein zu kleines Tippziel. Zehn Pixel oben und unten machen
+   44px daraus, das Mass, das Apple als Minimum nennt -- dieselbe
+   Rechnung wie beim Link .weiter weiter unten. Der Abstand nach oben
+   faellt um dieselben zehn Pixel, damit der sichtbare Abstand zum
+   Titelband gleich bleibt. display:inline-block ist noetig, weil
+   senkrechtes Polster an einem reinen Inline-Element die Zeilenbox
+   nicht wachsen laesst und der Trefferbereich damit gleich klein
+   bliebe, wie er war. */
+@media (max-width: 859px){
+  .krumen{ padding-top: 14px; }
+  .krumen a{
+    display: inline-block;
+    padding-block: 10px;
+  }
+}
+
 /* --- Fuss -------------------------------------------------- */
 .fuss{
   background: var(--flaeche);
@@ -774,6 +863,18 @@ a{ color: var(--olive); }
     bottom: 0;
     width: 460px;
   }
+}
+/* Diese drei Zeilen kamen bis zum 31.08.2026 als Tailwind-Klassen
+   `h-full w-full` aus der React-Komponente. Sie stehen jetzt hier,
+   weil dafuer clsx und tailwind-merge (zusammen rund 8 kB gzip) im
+   Bundle der Startseite lagen -- fuer zwei Klassen. `display: block`
+   kommt dazu: ein inline dargestelltes SVG bekommt von der
+   Zeilenhoehe unten ein paar Pixel Luft, die niemand bestellt hat.
+   Begruendung ausfuehrlich in src/components/ui/svg-follow-scroll.tsx. */
+#faden-root svg{
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .hero-abschnitt{

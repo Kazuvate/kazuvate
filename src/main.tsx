@@ -2,7 +2,16 @@ import { createRoot } from "react-dom/client";
 import { StrictMode } from "react";
 
 import { Faden } from "@/components/ui/svg-follow-scroll";
-import "./index.css";
+
+/**
+ * `import "./index.css"` stand hier bis zum 31.08.2026 und hat Tailwinds
+ * Utility-Ebene in das Bundle der Startseite gezogen. Gebraucht wurden
+ * davon genau zwei Klassen am Faden-SVG; die stehen jetzt als
+ * `#faden-root svg` in stil/basis.css. Die Datei src/index.css bleibt
+ * liegen, weil components.json darauf zeigt: sobald wieder ein
+ * shadcn-Bauteil eingefuegt wird, das Tailwind-Klassen mitbringt,
+ * gehoert der Import hier zurueck.
+ */
 
 /**
  * Einhaenge-Punkt fuer die React-Insel. Kein Router, keine App-Struktur

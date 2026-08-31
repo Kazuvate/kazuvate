@@ -1,8 +1,11 @@
 /* ============================================================
-   kazuvate | Rechtsseiten
-   Fliesstext und Tabellen fuer impressum.html und datenschutz.html.
+   kazuvate | Rechtsseiten und Fehlerseite
+   Fliesstext und Tabellen fuer impressum.html und datenschutz.html,
+   dazu seit 31.08.2026 die Wegweiserliste auf 404.html.
    Bewusst eine eigene Datei, damit andere Seiten kein CSS laden,
-   das sie nie brauchen.
+   das sie nie brauchen. Die Datei hiess bis zum 19.08.2026
+   rechtliches.css und wurde umbenannt, weil sie ab da nicht mehr
+   nur Rechtstexte traegt -- die Fehlerseite ist der dritte Fall.
    Das Titelband steht in basis.css, weil es der Kopf jeder
    Unterseite ist. Farben ausschliesslich aus tokens.css.
    ============================================================ */
@@ -191,4 +194,64 @@
    stand diese Query weiter oben in der Datei und blieb wirkungslos. */
 @media (max-width: 859px){
   .tab thead th{ font-size: .8rem; }
+}
+
+/* --- Fehlerseite (404.html) --------------------------------
+   Eine Liste von Wegen statt eines Sackgassen-Satzes. Wer hier
+   landet, hat ein Ziel gehabt und es nicht erreicht; die naechste
+   Zeile muss ihm eines anbieten, das es wirklich gibt.
+
+   Bewusst keine Suche und kein "zurueck"-Knopf: eine Suche gibt es
+   auf dieser Website nicht, und der Zurueck-Knopf des Browsers ist
+   der einzige, der zuverlaessig weiss, wo der Besucher herkommt. */
+.fehler{ padding: var(--s8) 0 var(--s9); }
+
+.fehler-titel{
+  font-size: .74rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--still);
+  margin: 0 0 var(--s6);
+}
+
+.fehler-wege{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--linie-marke);
+  max-width: 760px;
+}
+.fehler-wege li{
+  padding: var(--s5) 0;
+  border-bottom: 1px solid var(--linie-marke);
+}
+/* Der Name steht als Block, damit die ganze Zeilenbreite anklickbar
+   ist und nicht nur das Wort selbst. Die Beschreibung darunter
+   gehoert bewusst NICHT in den Link: sie beschreibt das Ziel, sie
+   ist nicht sein Name -- vorgelesen wuerde der Link sonst zwei
+   Saetze lang. */
+.fehler-wege a{
+  display: block;
+  font-size: clamp(1.3rem, 3.2vw, 1.7rem);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  color: var(--tinte);
+  text-decoration: none;
+  transition: color var(--kurz) var(--kurve),
+              transform var(--kurz) var(--kurve);
+}
+@media (hover: hover) and (pointer: fine){
+  .fehler-wege a:hover{
+    color: var(--olive);
+    /* Sechs Pixel nach rechts, dieselbe Bewegung wie die Nummern auf
+       leistungen.html. Eine Eigenschaft, nicht zwei -- color zaehlt
+       hier als Farbwechsel, nicht als zweite Bewegung. */
+    transform: translateX(6px);
+  }
+}
+.fehler-wege p{
+  margin: var(--s2) 0 0;
+  color: var(--tinte-2);
+  max-width: 60ch;
 }

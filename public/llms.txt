@@ -1,0 +1,63 @@
+# kazuvate
+
+> kazuvate baut handgeschriebene Frontend-Websites für kleine und mittlere
+> Unternehmen in der Schweiz. HTML, CSS und JavaScript von Hand, kein
+> WordPress, kein Baukasten, keine Vorlage. Sitz in Basel, Kunden in der
+> ganzen Schweiz.
+
+Rechtsträger ist das Einzelunternehmen Kazuvate Bajrami, Inhaber Kasum
+Bajrami, Riehenstrasse 80, 4058 Basel. Im Auftritt schreibt sich die Marke
+durchgehend klein: kazuvate. Telefon +41 78 670 79 73, E-Mail
+kasumbajrami7@gmail.com.
+
+Ein Projekt dauert zwei bis vier Wochen. Preise stehen nicht auf der
+Website, weil sie vom Umfang abhängen und im Gespräch festgelegt werden.
+Die Website setzt keine Cookies, bindet kein Tracking ein und lädt keine
+Dateien von fremden Servern.
+
+Nicht verwechseln mit PromptPrinter (promptprinter.app), dem eigenen
+SaaS-Produkt desselben Inhabers. kazuvate ist die Webdesign-Firma.
+
+## Seiten
+
+- [Startseite](https://kazuvate.ch/): Wer wir sind, was wir bauen, für
+  welche Betriebe. Enthält die Kurzfassung von Leistungen, Referenzen und
+  Ablauf.
+- [Leistungen](https://kazuvate.ch/leistungen.html): Die drei Punkte, in
+  denen wir uns unterscheiden. Schnelligkeit (Wochen statt Monate),
+  Sichtbarkeit (Google-Unternehmensprofil, strukturierte Firmendaten,
+  überall dieselben Angaben) und Rundum (Domain, Hosting, Kontaktformular,
+  Textänderungen, Bewertungen, monatlicher Sichtbarkeitsbericht).
+- [Referenzen](https://kazuvate.ch/referenzen/): Gebaute Websites und
+  Anwendungen, jeweils als Bildschirmfoto mit Link auf das laufende
+  Ergebnis. Derzeit ProMeti Facility Services, PromptPrinter und die
+  Herzumschlag-Challenge.
+- [Ablauf](https://kazuvate.ch/ablauf.html): Die vier Schritte eines
+  Projekts. Gespräch, Offerte, Entwurf mit Freigabe, Umsetzung. Dazu, wie
+  lange jeder Schritt dauert und was wir dafür vom Kunden brauchen.
+- [Kontakt](https://kazuvate.ch/kontakt.html): Telefon, E-Mail und
+  Anfrageformular. Wir antworten innert 24 Stunden.
+
+## Was wir bauen
+
+- One-Pager: eine einzelne Seite mit allem, was zählt. Leistungen, Kontakt
+  und Anfahrt.
+- Mehrseitige Website: fünf bis acht Unterseiten mit eigener Struktur für
+  Leistungen, Team und Referenzen.
+- Wartung und Textpflege: Änderungen innert 24 Stunden, dazu Hosting,
+  Sicherungen und ein Auge auf die Ladezeit.
+
+## Was wir nicht bauen
+
+Wortlaut nach dem ersten Schritt auf https://kazuvate.ch/ablauf.html: Wer
+einen Onlineshop, ein Buchungssystem mit Verfügbarkeiten oder einen
+Mitgliederbereich braucht, hört das schon im ersten Gespräch und nicht erst
+in der Offerte. Wir sagen dann, was stattdessen passt.
+
+## Optional
+
+- [Impressum](https://kazuvate.ch/impressum.html): Firmenangaben,
+  Rechtsform, Gerichtsstand, Haftung.
+- [Datenschutzerklärung](https://kazuvate.ch/datenschutz.html): Umgang mit
+  Daten nach revidiertem Schweizer Datenschutzgesetz. Kein Tracking, keine
+  Cookies, keine fremden Skripte.

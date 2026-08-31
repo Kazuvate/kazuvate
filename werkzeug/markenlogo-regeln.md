@@ -1,5 +1,12 @@
 # Markenlogo kazuvate
 
+Die Dateien selbst liegen weiterhin in `public/markenlogo/`. Diese
+Beschreibung lag bis zum 31.08.2026 als `README.md` dazwischen und wurde
+damit mitausgeliefert: sie war unter `https://kazuvate.ch/markenlogo/README.md`
+oeffentlich abrufbar. Vite reicht alles aus `public/` unveraendert durch, es
+gibt dort keine Ausnahmeliste. Deshalb steht der Text jetzt hier bei den
+anderen Werkzeugen und nicht mehr bei den Bildern.
+
 Vektorisiert aus `../kazuvate_Logo.jpg` am 19.08.2026. Ab jetzt ist **`logo.svg` das
 Master-Asset**. Die JPG wird nicht mehr ausgeliefert und nur noch als Herkunftsnachweis
 aufbewahrt.

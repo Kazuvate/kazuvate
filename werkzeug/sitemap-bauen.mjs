@@ -45,9 +45,11 @@ const SEITEN = [
   { datei: "kontakt.html",          pfad: "/kontakt.html",     rang: "0.8" },
   { datei: "impressum.html",        pfad: "/impressum.html",   rang: "0.3" },
   { datei: "datenschutz.html",      pfad: "/datenschutz.html", rang: "0.3" },
-  // danke.html fehlt hier mit Absicht: die Seite traegt noindex. Eine
-  // Seite in die Sitemap zu schreiben und ihr gleichzeitig das
-  // Indexieren zu verbieten, sind zwei widerspruechliche Signale.
+  // danke.html und 404.html fehlen hier mit Absicht: beide tragen
+  // noindex. Eine Seite in die Sitemap zu schreiben und ihr
+  // gleichzeitig das Indexieren zu verbieten, sind zwei
+  // widerspruechliche Signale. Die Fehlerseite waere zusaetzlich
+  // sinnlos, weil sie unter keiner festen Adresse steht.
 ];
 
 const heute = new Date().toISOString().slice(0, 10);

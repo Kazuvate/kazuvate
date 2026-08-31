@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Seite nicht gefunden | kazuvate</title>
+<meta name="description" content="Diese Adresse gibt es auf kazuvate.ch nicht. Hier stehen die Seiten, die es gibt.">
+<meta name="theme-color" content="#2C3616">
+
+<!-- ====================== Suchmaschinen ======================
+     Diese Seite hat bewusst kein <link rel="canonical"> und kein
+     Open Graph. Beides setzt voraus, dass die Seite unter genau einer
+     Adresse steht; diese hier wird von Vercel unter jeder Adresse
+     ausgeliefert, die es nicht gibt. Ein Canonical waere also auf
+     tausend verschiedenen URLs derselbe und wuerde behaupten, all
+     diese Adressen seien dieselbe echte Seite.
+
+     Der Statuscode 404 kommt von Vercel selbst, nicht aus dem HTML:
+     eine Datei namens 404.html im Ausgabeordner wird ohne weitere
+     Konfiguration mit Status 404 ausgeliefert, sobald keine andere
+     Datei auf die Adresse passt. Deshalb steht sie in der
+     Eingangsliste von vite.config.ts und landet als dist/404.html im
+     Build. Nicht in public/: dort waere sie zwar auch im dist/, aber
+     Vite wuerde die Verweise auf CSS und Skripte darin nicht mit
+     verarbeiten.
+
+     noindex ist trotzdem drin: ein 404 gehoert nicht in den Index,
+     und falls die Seite je aus Versehen mit Status 200 ausgeliefert
+     wird, verhindert das eine sogenannte Soft-404 im Index.
+     ==================================================== -->
+<meta name="robots" content="noindex">
+
+<link rel="icon" href="/markenlogo/favicon.ico" sizes="32x32">
+<link rel="icon" href="/markenlogo/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/markenlogo/apple-touch-icon.png">
+<link rel="manifest" href="/markenlogo/site.webmanifest">
+
+<!-- Alle Pfade auf dieser Seite sind absolut, mit fuehrendem
+     Schraegstrich. Das ist der einzige Unterschied zu den anderen
+     sieben Seiten und der Grund dafuer: diese Datei wird auch unter
+     /gibt/es/nicht ausgeliefert. Ein relativer Pfad wie
+     "stil/basis.css" wuerde von dort aus auf /gibt/es/stil/basis.css
+     zeigen und ins Leere laufen -- die Fehlerseite waere ungestaltet,
+     ausgerechnet die Seite, auf der ein Besucher am ehesten den
+     Eindruck bekommt, hier sei etwas kaputt. -->
+<link rel="stylesheet" href="/stil/tokens.css">
+<link rel="stylesheet" href="/stil/basis.css">
+<link rel="stylesheet" href="/stil/seiten.css">
+
+<!-- Sagt dem CSS, dass JavaScript laeuft. Muss hier oben stehen und darf
+     nicht in haupt.js: das laedt mit defer und kaeme zu spaet. Traegt heute
+     nur noch das Menue auf dem Handy und die Symbolzeichnung, beide brauchen
+     die Klasse um ueberhaupt etwas zu tun. -->
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+
+<!-- Marke einmal definiert, unten zweimal verwendet. Spart eine zweite Kopie
+     des Pfads und einen HTTP-Aufruf. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="marke" viewBox="0 0 585.51 442.90">
+    <path fill="currentColor" fill-rule="evenodd" d="M0.00 0.19L79.97 0.39L80.19 169.50L153.51 170.08L283.43 0.19L380.99 0.15L222.91 208.75L314.29 442.90L226.95 442.73L153.34 250.65L79.93 250.95L79.93 442.90L0.03 442.90ZM256.87 212.24L328.91 117.34L382.37 254.94L487.38 0.26L585.51 0.00L417.18 442.90L346.61 442.90Z"/>
+  </symbol>
+</svg>
+
+<div class="scroll-balken" aria-hidden="true"></div>
+<a class="sprung" href="#inhalt">Zum Inhalt springen</a>
+
+<!-- ====================== Kopf ====================== -->
+<header class="kopf">
+  <div class="wrap kopf-innen">
+
+    <a class="marke" href="/">
+      <svg viewBox="0 0 585.51 442.90" role="img" aria-label="kazuvate"><use href="#marke"></use></svg>
+      <span>kazuvate</span>
+    </a>
+
+    <!-- Nur mit JavaScript sichtbar, siehe basis.css: ohne Skript
+         liesse sich die Schublade nicht oeffnen. -->
+    <button class="menue-knopf" type="button" aria-expanded="false"
+            aria-controls="hauptmenue" aria-label="Menü öffnen">
+      <span class="balken" aria-hidden="true"></span>
+      <span class="balken" aria-hidden="true"></span>
+      <span class="balken" aria-hidden="true"></span>
+    </button>
+
+    <!-- Kein aria-current auf einem der Punkte: die aktuelle Adresse
+         ist keiner davon, das ist ja der Grund fuer diese Seite. -->
+    <nav class="navigation" id="hauptmenue" aria-label="Hauptnavigation">
+      <div class="navigation-innen">
+        <a href="/#ueber-uns">Über uns</a>
+        <a href="/leistungen.html">Leistungen</a>
+        <a href="/referenzen/">Referenzen</a>
+        <a href="/ablauf.html">Ablauf</a>
+        <a href="/kontakt.html">Kontakt</a>
+      </div>
+    </nav>
+
+    <a class="kopf-knopf" href="/kontakt.html">Unverbindlich anfragen</a>
+
+  </div>
+</header>
+
+<!-- ====================== Titelband ======================
+     Die schlichte Fassung wie bei Impressum und Datenschutz, nicht
+     das grosse Titelband der drei Inhaltsseiten. Eine Fehlerseite
+     soll nicht wie ein Kapitel aussehen.
+     ==================================================== -->
+<div class="titel">
+  <div class="wrap">
+    <p class="oben">Fehler 404</p>
+    <h1>Diese Seite gibt es nicht</h1>
+    <p class="unter">Die Adresse führt ins Leere. Meistens liegt es an einem Tippfehler oder an einem alten Link. Unten stehen die Seiten, die es gibt.</p>
+  </div>
+</div>
+
+<!-- ====================== Inhalt ====================== -->
+<main id="inhalt" class="fehler">
+  <div class="wrap">
+
+    <h2 class="fehler-titel">Weiter geht es hier</h2>
+
+    <ul class="fehler-wege">
+      <li>
+        <a href="/">Startseite</a>
+        <p>Wer wir sind, was wir bauen, für wen wir arbeiten.</p>
+      </li>
+      <li>
+        <a href="/leistungen.html">Leistungen</a>
+        <p>Schnelligkeit, Sichtbarkeit und alles aus einer Hand.</p>
+      </li>
+      <li>
+        <a href="/referenzen/">Referenzen</a>
+        <p>Websites und Anwendungen, die wir gebaut haben.</p>
+      </li>
+      <li>
+        <a href="/ablauf.html">Ablauf</a>
+        <p>Vom ersten Gespräch bis zum Livegang, Schritt für Schritt.</p>
+      </li>
+      <li>
+        <a href="/kontakt.html">Kontakt</a>
+        <p>Telefon, E-Mail und das Anfrageformular. Antwort innert 24 Stunden.</p>
+      </li>
+    </ul>
+
+  </div>
+
+  <!-- Abschluss. Gleiche Bauart wie auf allen anderen Seiten: ohne
+       ihn endet die Seite im Nichts, und das waere hier besonders
+       schade -- wer auf einer Fehlerseite landet, sucht etwas. -->
+  <section class="abschluss">
+    <div class="wrap">
+      <p class="abschluss-zeile">Nicht gefunden, was Sie suchen?</p>
+      <a class="knopf" href="/kontakt.html">Unverbindlich anfragen</a>
+    </div>
+  </section>
+
+</main>
+
+<!-- ====================== Fuss ====================== -->
+<footer class="fuss">
+  <div class="wrap">
+
+    <div class="fuss-raster">
+
+      <div>
+        <svg viewBox="0 0 585.51 442.90" role="img" aria-label="kazuvate"><use href="#marke"></use></svg>
+        <p>Handgebaute Frontend-Websites für KMU in der Schweiz.</p>
+
+        <!-- Kasum persoenlich: eigene Seite und LinkedIn. Beide oeffnen in
+             einem neuen Tab, damit kazuvate.ch offen bleibt. Das Monogramm
+             ist dasselbe Zeichen wie auf kasumbajrami.dev, hier als Schrift
+             statt als Bild: spart eine Datei und bleibt in jeder Groesse
+             scharf. -->
+        <div class="fuss-draehte">
+
+          <a class="draht-knopf" href="https://kasumbajrami.dev/index.html"
+             target="_blank" rel="noopener"
+             aria-label="Persönliche Website von Kasum Bajrami, öffnet in einem neuen Tab">
+            <span class="monogramm" aria-hidden="true">KB</span>
+          </a>
+
+          <a class="draht-knopf" href="https://www.linkedin.com/in/kasum-bajrami-885a653a6/"
+             target="_blank" rel="noopener"
+             aria-label="Kasum Bajrami auf LinkedIn, öffnet in einem neuen Tab">
+            <!-- viewBox auf 448 statt 512 gekuerzt: der Pfad ist 448 hoch, mit 512
+                 saesse das Zeichen im Kreis zwei Pixel zu hoch. -->
+            <svg viewBox="0 0 448 448" aria-hidden="true" focusable="false">
+              <path fill="currentColor" d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"/>
+            </svg>
+          </a>
+
+        </div>
+      </div>
+
+      <nav class="fuss-spalte" aria-labelledby="fuss-seiten">
+        <h2 id="fuss-seiten">Seiten</h2>
+        <a href="/#ueber-uns">Über uns</a>
+        <a href="/leistungen.html">Leistungen</a>
+        <a href="/referenzen/">Referenzen</a>
+        <a href="/ablauf.html">Ablauf</a>
+        <a href="/kontakt.html">Kontakt</a>
+      </nav>
+
+      <div class="fuss-spalte">
+        <h2>Kontakt</h2>
+        <a href="tel:+41786707973">+41 78 670 79 73</a>
+        <a href="mailto:kasumbajrami7@gmail.com">kasumbajrami7@gmail.com</a>
+        <span class="fuss-ort">Basel, Schweiz</span>
+      </div>
+
+    </div>
+
+    <div class="fuss-unten">
+      <span>Kazuvate Bajrami</span>
+      <a href="/impressum.html">Impressum</a>
+      <a href="/datenschutz.html">Datenschutz</a>
+    </div>
+
+  </div>
+</footer>
+
+<!-- Eigenes Skript, kein fremder Server. Am Ende des Body und mit
+     defer, damit die Seite nicht darauf warten muss. -->
+<script src="/skript/haupt.js" defer></script>
+<script type="module" src="/src/bewegung.ts"></script>
+
+</body>
+</html>

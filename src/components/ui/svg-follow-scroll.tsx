@@ -38,17 +38,33 @@
 import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { useRef } from "react";
 
-import { cn } from "@/lib/utils";
+/**
+ * Hier stand bis zum 31.08.2026 `import { cn } from "@/lib/utils"`, der
+ * shadcn-Helfer, und damit `clsx` plus `tailwind-merge` im Bundle der
+ * Startseite. Gebraucht wurde davon eine einzige Zeile:
+ * `cn("h-full w-full", className)` -- zwei feste Klassen und ein
+ * className, das nie gesetzt wird, weil src/main.tsx die Komponente
+ * ohne aufruft. Fuer diese eine Zeile lagen rund 8 kB gzip auf jeder
+ * Startseite, mehr als das gesamte handgeschriebene skript/haupt.js.
+ *
+ * Ersatz: die Groesse steht als `#faden-root svg` in stil/basis.css,
+ * dort, wo die Spalte drumherum ohnehin schon definiert ist. Damit
+ * braucht die Komponente gar kein className mehr.
+ *
+ * `src/lib/utils.ts` und `src/index.css` bleiben trotzdem im Repo
+ * stehen: components.json zeigt darauf, und beim naechsten
+ * eingefuegten shadcn-Bauteil erwartet der Import genau diese Pfade.
+ * Sie sind ab jetzt Werkzeug, nicht Teil der ausgelieferten Seite.
+ */
 
 interface FadenProps {
   /** DOM-Element, dessen Durchlauf die Linie zeichnet. */
   zielElement: HTMLElement;
-  className?: string;
 }
 
 /** Rendert die Vorlage-Sektion nach, jetzt an einen echten Inhaltsbereich
  *  der Seite gebunden statt an eine eigene 350vh-Sektion. */
-export function Faden({ zielElement, className }: FadenProps) {
+export function Faden({ zielElement }: FadenProps) {
   const zielRef = useRef<HTMLElement>(zielElement);
 
   const { scrollYProgress } = useScroll({
@@ -72,19 +88,12 @@ export function Faden({ zielElement, className }: FadenProps) {
     offset: ["start 20%", "end 25%"],
   });
 
-  return (
-    <LinePath
-      className={cn("h-full w-full", className)}
-      scrollYProgress={scrollYProgress}
-    />
-  );
+  return <LinePath scrollYProgress={scrollYProgress} />;
 }
 
 const LinePath = ({
-  className,
   scrollYProgress,
 }: {
-  className?: string;
   scrollYProgress: MotionValue<number>;
 }) => {
   // Vorlage: [0, 1] -> [0.5, 1], linear von halb gezeichnet nach ganz.
@@ -139,7 +148,6 @@ const LinePath = ({
       // Spaltenbreite in stil/basis.css (#faden-root).
       preserveAspectRatio="xMidYMid meet"
       xmlns="http://www.w3.org/2000/svg"
-      className={className}
       aria-hidden="true"
       focusable="false"
     >

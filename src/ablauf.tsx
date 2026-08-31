@@ -2,7 +2,12 @@ import { createRoot } from "react-dom/client";
 import { StrictMode } from "react";
 
 import { AblaufStrang } from "@/components/ui/ablauf-strang";
-import "./index.css";
+
+/**
+ * Kein `import "./index.css"` mehr, siehe src/main.tsx fuer die
+ * Begruendung. Der Strang hat nie Tailwind-Klassen benutzt, er
+ * arbeitet ausschliesslich mit .strang* aus stil/ablauf.css.
+ */
 
 /**
  * Einhaenge-Punkt fuer die React-Insel auf ablauf.html, Gegenstueck zu
