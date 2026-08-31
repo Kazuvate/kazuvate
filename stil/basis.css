@@ -1440,34 +1440,22 @@ a{ color: var(--olive); }
   .referenz-kachel .name{ opacity: 1; }
 }
 
-/* --- Seitenmotive ---------------------------------------------
-   Die gezeichneten Motive rechts neben dem Text auf leistungen.html
-   und ablauf.html. Sie stecken in einem <picture>, damit die Datei
-   ueberhaupt nur dann geholt wird, wenn sie auch zu sehen ist --
-   die Bedingung steht am <source>, nicht nur im CSS. Ein blosses
-   display:none reicht dafuer nicht: ein ausgeblendetes <img> mit
-   src wird trotzdem geladen, am 25.08.2026 bei 375px nachgemessen
-   (alle drei Dateien angefordert). Mit dem <picture> sind es null.
+/* Hier stand bis zum 31.08.2026 der gemeinsame Teil der
+   Seitenmotive: .motiv und .motiv-bild, die Huelle fuer die
+   umgefaerbten Lottie-Grafiken rechts neben dem Text auf
+   leistungen.html und ablauf.html. Alles raus, samt den Dateien
+   in medien/motive/ und dem Skript, das sie erzeugt hat.
 
-   Das <picture> selbst ist das Rasterfeld, nicht das <img> darin.
-   Der naheliegende Weg waere display:contents auf der Huelle
-   gewesen, damit das Bild direkt im Raster landet -- das
-   funktioniert bei einem <div> auch, bei <picture> aber nicht:
-   Chrome behaelt dafuer eine eigene Box, das Bild rutschte dadurch
-   in Spalte 1 der naechsten Zeile. Am 25.08.2026 mit einem
-   Gegenversuch (div gegen picture, sonst identisch) nachgewiesen.
-
-   Wo das Motiv wie breit ist, steht bei der jeweiligen Seite:
-   stil/leistungen.css und stil/ablauf.css. Hier nur, was fuer
-   beide gilt.
-   -------------------------------------------------------------- */
-.motiv{ display: none; }
-
-.motiv-bild{
-  display: block;
-  width: 100%;
-  height: auto;
-}
+   Begruendung steht im Markup von leistungen.html: Bestandsgrafik
+   auf einer Seite, die handgebaut gegen Vorlage verkauft, plus 421
+   Endlosschleifen. Der technisch interessante Teil dieser Loesung
+   ist trotzdem festgehalten, weil er wiederkommt, sobald wieder ein
+   Bild nur ab einer Breite geladen werden soll: die Bedingung muss
+   an das <source> eines <picture>, nicht ins CSS -- ein
+   ausgeblendetes <img> mit src laedt trotzdem, am 25.08.2026 bei
+   375px nachgemessen. Und display:contents auf der Huelle
+   funktioniert bei <picture> nicht, Chrome behaelt dafuer eine
+   eigene Box. Ausfuehrlich in der Git-Historie. */
 
 @media (prefers-reduced-motion: reduce){
   html{ scroll-behavior: auto; }

@@ -69,7 +69,7 @@ stil/seiten.css        nur impressum.html und datenschutz.html: Fliesstext, Tabe
 stil/kontakt.css       nur kontakt.html: Zweispalter, Anfragekarte, Formular
 stil/leistungen.css    nur leistungen.html: grosse Nummern, Hover-Reaktion
 stil/ablauf.css        nur ablauf.html: senkrechter Strang, Nummernkreise, Faktenpaare
-stil/titelmotive.css   nur Leistungen, Referenzen, Ablauf: grosse Titel und ihre drei Motive
+stil/titelmotive.css   nur Leistungen, Referenzen, Ablauf: grosse Titelbaender und ihre Linie
 stil/danke.css          nur danke.html: zentrierte Bestaetigung
 
 src/main.tsx                            haengt den Faden in die Startseite ein
@@ -84,14 +84,11 @@ public/markenlogo/     Logo, Favicons, App Icons, Vorschaubild fürs Teilen
 public/robots.txt      steht so im Repo
 public/sitemap.xml     erzeugt, siehe werkzeug/sitemap-bauen.mjs
 medien/referenzen/     Bildschirmfotos der Kundenprojekte
-medien/motive/         die vier Seitenmotive, erzeugt aus werkzeug/vorlagen/
 kazuvate_Logo.jpg      die ursprüngliche Bilddatei, liegt nur noch als Beleg hier
 
 werkzeug/              läuft nie mit aus, steht in keiner Eingangsliste in vite.config.ts
-werkzeug/motive-aufbereiten.mjs  färbt die Lottie-Vorlagen auf die Marke um und verkleinert sie
 werkzeug/sitemap-bauen.mjs       schreibt public/sitemap.xml, läuft als prebuild
-werkzeug/motive-vorschau.html    Vorlage neben Markenfassung, nur zum Anschauen
-werkzeug/vorlagen/               die vier Lottie-Exporte, wie sie ankamen
+werkzeug/markenlogo-regeln.md    Markenregeln zum Logo, lag frueher in public/markenlogo/
 
 api/kontakt.js          Vercel Function: schickt das Formular per Resend als Mail
 vite.config.ts         Multi-Page-Konfiguration: jede HTML-Datei ein Einstiegspunkt

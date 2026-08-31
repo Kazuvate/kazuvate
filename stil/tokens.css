@@ -11,19 +11,16 @@
   --flaeche-tief: #222A10;   /* Hover auf Flaechen */
   --auf-flaeche:  #F7F7F1;   /* Schrift auf oliven Flaechen */
   --auf-flaeche-still: #C3CFA8;
-  /* Der helle Oliv-Ton der Marke, in der Markenrichtung als "nur
-     Dunkelmodus" notiert und deshalb lange nicht hier -- es gibt ja
-     keinen Dunkelmodus. Deckt sich mit favicon.svg. Eingefuehrt
-     21.08.2026 fuer den Globus auf leistungen.html, der am 22.08.2026
-     wieder verschwunden ist.
-
-     ACHTUNG, deshalb steht er trotzdem noch hier: keine CSS-Regel
-     benutzt ihn heute, aber die Farbleiter in
-     werkzeug/motive-aufbereiten.mjs tut es. Sie ist die zweithellste
-     Grün-Stufe der Seitenmotive in medien/motive/. Wer den Wert
-     aendert, muss das Skript einmal laufen lassen, sonst driften
-     Motive und Palette auseinander. */
-  --olive-hell:   #93AA5E;
+  /* Hier stand --olive-hell: #93AA5E, der helle Oliv-Ton aus der
+     Markenrichtung. Er kam am 21.08.2026 fuer den Globus auf
+     leistungen.html dazu, der am 22.08.2026 wieder verschwand;
+     danach hielt ihn nur noch die Farbleiter in
+     werkzeug/motive-aufbereiten.mjs am Leben. Mit den Seitenmotiven
+     ist am 31.08.2026 auch das Skript weg, und damit der letzte
+     Benutzer. Ein Token, den nichts benutzt, liest sich beim
+     naechsten Mal wie eine Vorgabe, die man einhalten muesste --
+     deshalb raus statt stehenlassen. Der Wert steht weiterhin in
+     Kazuvate Marke, falls je ein Dunkelmodus kommt. */
 
   /* --- Neutrale ------------------------------------------- */
   --grund:      #F5F4EF;     /* Seitenhintergrund, Papierton */

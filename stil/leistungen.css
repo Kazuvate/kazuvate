@@ -38,14 +38,12 @@
   .leistung-gross{ grid-template-columns: 10rem minmax(0, 62ch); }
 }
 
-/* Ab hier kommt das Motiv als dritte Spalte dazu, siehe unten.
-   62ch wird dabei zu 58ch -- ohne sichtbaren Verlust: der Fliesstext
-   ist ohnehin schon auf 58ch begrenzt (siehe .leistung-inhalt p
-   weiter unten) und die Ueberschrift auf 18ch. Die 62ch-Spalte war
-   also an keiner Stelle gefuellt, sie war nur breit. */
-@media (min-width: 1140px){
-  .leistung-gross{ grid-template-columns: 10rem minmax(0, 58ch) minmax(0, 1fr); }
-}
+/* Ab 1140px kam hier bis zum 31.08.2026 eine dritte Spalte fuer
+   das Seitenmotiv dazu, die zweite schrumpfte dafuer von 62ch auf
+   58ch. Mit dem Motiv ist beides weg: das Raster bleibt ab 1100px
+   bei zwei Spalten, und die 62ch stehen dem Text wieder ganz zur
+   Verfuegung -- gefuellt hat er sie ohnehin nie, der Fliesstext
+   ist auf 58ch begrenzt und die Ueberschrift auf 18ch. */
 
 /* Grosse, ruhige Nummer statt eines Symbols: die Zeichen sind auf
    der Startseite schon vergeben (Leistungen-Sektion), hier soll
@@ -88,61 +86,15 @@
   }
 }
 
-/* --- Motiv in der dritten Spalte -----------------------------
-   Rechts neben dem Text standen bei 1440px Fensterbreite 239 leere
-   Pixel neben jeder der drei Zeilen -- die Stelle, die Kasum am
-   25.08.2026 gefuellt haben wollte. Jetzt steht dort je ein
-   gezeichnetes Motiv aus medien/motive/, eingebunden als <img>.
-
-   Warum <img> und nicht inline im HTML: die vier Vorlagen tragen
-   alle dieselben IDs (i0, i1, i2 ...). Drei davon auf einer Seite
-   inline wuerden sich gegenseitig die Verweise kapern. Als eigene
-   Datei hat jede ihren eigenen Dokumentbaum, und nebenbei sind die
-   Dateien einzeln zwischenspeicherbar und werden nicht bei jedem
-   HTML-Abruf mitgeschickt.
-
-   Warum erst ab 1140px: darunter reicht die Breite nicht fuer drei
-   Spalten, ohne dass der Fliesstext unter 50 Zeichen faellt.
-
-   Die Regel hier blendet nur aus. Dass unter 1140px auch nichts
-   geladen wird, erledigt das <picture> im HTML -- die Bedingung
-   steht dort ein zweites Mal am <source>. Beides ist noetig: ein
-   ausgeblendetes <img> mit src laedt trotzdem, das war am
-   25.08.2026 bei 375px nachgemessen der Fall (alle drei Dateien
-   angefordert). Aendert sich die Grenze, muss sie an beiden
-   Stellen mit.
-   -------------------------------------------------------------- */
-@media (min-width: 1140px){
-  .leistung-gross .motiv{
-    display: block;
-    width: 100%;
-    /* Ohne Obergrenze wuerde das Motiv auf sehr breiten Schirmen
-       mitwachsen und den Text erschlagen. 260px ist etwa die Hoehe
-       eines Textblocks dieser Seite (gemessen 211 bis 249px), das
-       Motiv steht damit neben dem Text und nicht ueber ihm. */
-    max-width: 260px;
-    justify-self: center;
-    /* Der Text beginnt oben (align-items: start), das Motiv sitzt
-       auf halber Hoehe -- sonst haengt es bei der laengsten Zeile
-       sichtbar zu hoch. */
-    align-self: center;
-  }
-}
-
-/* Die Motive laufen in Dauerschleife. Das ist die eine Stelle, an
-   der sich auf dieser Website etwas ohne Zutun des Besuchers bewegt;
-   wer Bewegung abbestellt hat, bekommt sie deshalb gar nicht erst --
-   und laedt sie auch nicht, siehe die zweite Bedingung am <source>.
-
-   Ausblenden statt anhalten: die Bewegung steckt als SMIL in der
-   SVG-Datei, und SMIL laesst sich von aussen per CSS weder anhalten
-   noch auf ein Standbild stellen. Ein Standbild waere ausserdem
-   leer -- die Vorlagen beginnen alle mit scale(0,0). Der Text
-   daneben ist die eigentliche Aussage, das Motiv nur Schmuck, es
-   faellt also niemandem etwas weg. */
-@media (prefers-reduced-motion: reduce){
-  .leistung-gross .motiv{ display: none; }
-}
+/* Hier stand der Motiv-Abschnitt: das umgefaerbte Lottie-Bild in
+   der dritten Spalte, ab 1140px, hoechstens 260px breit, bei
+   abbestellter Bewegung ganz ausgeblendet, weil SMIL sich von
+   aussen weder anhalten noch auf ein Standbild stellen laesst.
+   Entfernt am 31.08.2026, Begruendung im Markup von
+   leistungen.html. Damit stehen rechts neben den drei Zeilen
+   wieder rund 240 leere Pixel -- dieselbe Flaeche wie vor dem
+   25.08.2026. Wer sie fuellen will, soll etwas hineinbauen, das
+   es nur bei kazuvate gibt. */
 
 /* Bis zum 22.08.2026 stand hier der Abschnitt "Globus bei Leistung 02"
    -- ein sich drehender 3D-Globus (three-globe) ab 1100px neben dem
