@@ -82,6 +82,35 @@
      naechsten Mal wie eine Vorgabe, die man einhalten muesste. */
 }
 
+/* Erhoehter Kontrast, seit 31.08.2026.
+
+   Wer im Betriebssystem "mehr Kontrast" eingestellt hat, hat einen
+   Grund dazu: schlechtes Licht, ein billiger Bildschirm, oder Augen,
+   denen 8:1 nicht reicht. Die drei Textebenen und die beiden
+   Haarlinien fallen dann auf die jeweils kraeftigere Stufe zusammen.
+
+   Der Block steht hier und nicht in basis.css, weil er ausschliesslich
+   Farbtokens umsetzt -- tokens.css ist die einzige Farbquelle des
+   Projekts, und eine zweite Palette in einer Layoutdatei waere genau
+   der Bruch, den diese Regel verhindern soll. Deshalb auch keine neuen
+   Hex-Werte: jede Zeile zeigt auf ein Token, das es schon gibt.
+
+   Was das kostet: die Abstufung zwischen Fliesstext, zweiter Ebene und
+   Label verschwindet, alle drei stehen dann im Tintenton. Die
+   Hierarchie traegt in diesem Modus allein Groesse und Gewicht. Das
+   ist die richtige Reihenfolge -- eine Hierarchie, die nur aus drei
+   Grautoenen besteht, ist ohnehin keine. */
+@media (prefers-contrast: more){
+  :root{
+    --tinte-2: var(--tinte);
+    --still:   var(--tinte);
+    --linie:   var(--linie-kraeftig);
+    /* Oliv mit 28 Prozent war die leiseste Linie der Seite und ist das
+       erste, was bei schlechten Sichtverhaeltnissen verschwindet. */
+    --linie-marke: var(--olive);
+  }
+}
+
 /* Bewusst kein Dunkelmodus.
    Das Portfolio wurde am 08.08.2026 auf reines Hell umgestellt, hier gilt
    dasselbe. Die dunklen Werte stehen in der Markenrichtung bereit, falls es

@@ -73,6 +73,122 @@ img, svg{ max-width: 100%; }
 
 a{ color: var(--olive); }
 
+/* --- Mikrodetails ----------------------------------------------
+   Eingefuehrt am 31.08.2026. Nichts davon sieht man auf einem
+   Bildschirmfoto -- man sieht es erst, wenn jemand die Seite
+   tatsaechlich benutzt: Text markiert, in ein Feld tippt, das
+   Impressum ausdruckt, mit erhoehtem Kontrast surft. Genau dort
+   trennt sich eine gebaute Seite von einer generierten.
+   ---------------------------------------------------------------- */
+
+/* Die Seite gibt es nur hell, das steht so in tokens.css. Ohne diese
+   Zeile weiss der Browser das nicht: auf einem Rechner im
+   Dunkelmodus zeichnet er seine eigenen Bedienelemente dunkel, allen
+   voran die Bildlaufleiste -- ein dunkler Rahmen um eine
+   papierfarbene Seite. Nachgemessen: mit `prefers-color-scheme: dark`
+   meldete `getComputedStyle(html).colorScheme` bisher "normal". */
+html{ color-scheme: light; }
+
+/* Markierter Text. Ohne Regel nimmt der Browser sein eigenes Blau --
+   die einzige Farbe der ganzen Seite, die nicht aus dem Logo kommt,
+   und sie taucht ausgerechnet dann auf, wenn jemand etwas
+   herauskopiert: eine Telefonnummer, eine Adresse, einen Satz fuers
+   Angebot. Deckkraft statt Volltonfarbe, damit ein markiertes Wort
+   im Fliesstext nicht schwerer wiegt als eine Ueberschrift. */
+::selection{
+  background: rgb(63 80 25 / .22);
+  color: var(--tinte);
+}
+/* Auf den oliven Flaechen traegt dieselbe Markierung nichts, sie
+   waere Oliv auf Oliv. Dort dreht sie um: helle Flaeche, dunkle
+   Schrift. Gleiche Ueberlegung wie beim Fokusring, der auf diesen
+   Flaechen ebenfalls auf den hellen Ton umschaltet. */
+.kopf ::selection,
+.titel ::selection,
+.fuss ::selection{
+  background: rgb(247 247 241 / .28);
+  color: var(--auf-flaeche);
+}
+
+/* Der Schreibcursor im Formular. Stand auf dem Standard-Schwarz des
+   Browsers; oliv ist derselbe Ton, den auch der Fokusring und das
+   Pflichtfeld-Sternchen tragen. */
+input,
+textarea{ caret-color: var(--olive); }
+
+/* Notausgang fuer lange Zeichenketten ohne Leerzeichen: Mailadressen,
+   Domains, Dateinamen. Gemessen bei 320px Fensterbreite passt
+   "kasumbajrami7@gmail.com" heute mit 22 Pixeln Reserve -- das ist
+   kein Sicherheitsabstand, sondern Glueck. Eine Adresse mit drei
+   Zeichen mehr, ein Kundenname im Fliesstext, und die Seite scrollt
+   waagrecht. `anywhere` statt `break-word`, weil nur `anywhere` auch
+   die Mindestbreite des Elements schrumpfen laesst und damit
+   verhindert, dass das Raster selbst zu breit wird. */
+a,
+p,
+h1, h2, h3,
+li,
+dd, dt{ overflow-wrap: anywhere; }
+
+/* --- Druck ------------------------------------------------------
+   Impressum und Datenschutz sind Dokumente, die Leute ausdrucken
+   oder als PDF ablegen, und die Kontaktseite landet auch mal auf
+   Papier. Ohne diese Regeln kaeme auf jedem Blatt der olivgruene
+   Kopfbalken mit, die Navigation, der Fuss und der Anfragen-Knopf --
+   vier Dinge, die auf Papier nichts tun.
+
+   Die Adressen der Links stehen im Druck hinter dem Linktext, sonst
+   ist ein Verweis auf Papier eine Sackgasse. Nur externe: interne
+   Adressen ausschreiben wuerde jeden Absatz mit "kazuvate.ch/..."
+   verstopfen.
+   ---------------------------------------------------------------- */
+@media print{
+  /* Die Krumenleiste steht bewusst mit auf dieser Liste: "Startseite /
+     Impressum" beantwortet auf Papier keine Frage, dort gibt es nichts
+     zu navigieren. Am Bildschirm dagegen bleibt sie. */
+  .kopf,
+  .fuss,
+  .sprung,
+  .kopf-knopf,
+  .krumen,
+  .abschluss,
+  .titel-linie{ display: none; }
+
+  html{ scroll-padding-top: 0; }
+
+  body{
+    background: #fff;
+    color: #000;
+    font-size: 11pt;
+  }
+
+  .titel{
+    background: none;
+    color: #000;
+    border: 0;
+    padding: 0 0 var(--s5);
+  }
+  /* Die Stand-Zeile traegt --auf-flaeche-still, einen hellen Gruenton
+     fuer die dunkle Flaeche. Auf weissem Papier war sie damit kaum zu
+     lesen -- im ersten Probedruck nachgesehen. Das Datum ist bei einem
+     Rechtstext aber genau die Angabe, wegen der man ihn ausdruckt. */
+  .titel .stand{ color: #000; }
+
+  .wrap{ max-width: none; padding-inline: 0; }
+
+  a{ color: #000; text-decoration: underline; }
+  a[href^="http"]::after{
+    content: " (" attr(href) ")";
+    font-size: .85em;
+    word-break: break-all;
+  }
+
+  /* Ein Abschnitt soll nicht zwischen Ueberschrift und erstem Satz
+     umbrechen, und eine Tabelle nicht mitten in einer Zeile. */
+  h1, h2, h3{ break-after: avoid; }
+  .tab, .adresse, .kachel{ break-inside: avoid; }
+}
+
 :focus-visible{
   outline: 2px solid var(--fokus);
   outline-offset: 3px;
