@@ -57,7 +57,25 @@ body{
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3{ line-height: 1.2; letter-spacing: -.02em; font-weight: 700; margin: 0; }
+/* text-wrap: balance seit 02.09.2026, und erst seit diesem Tag
+   wirklich noetig. Bei 34px H2 war eine Schlusszeile mit einem
+   einzelnen Wort eine Unschoenheit; bei 53px und 120px ist sie ein
+   Loch in der Flaeche, das man vor dem Text sieht. Der Browser
+   verteilt die Zeilen jetzt gleichmaessig, statt jede Zeile bis zum
+   Anschlag zu fuellen und den Rest haengen zu lassen.
+
+   Nur auf Ueberschriften, nicht auf Fliesstext: balance rechnet den
+   Umbruch mehrfach durch und ist ab etwa sechs Zeilen bewusst
+   wirkungslos. Fuer Absaetze waere pretty das richtige Mittel, aber
+   die Zeilenlaenge ist hier ohnehin ueberall auf 56 bis 62 Zeichen
+   begrenzt, und damit entstehen die Fehler gar nicht erst. */
+h1, h2, h3{
+  line-height: 1.2;
+  letter-spacing: -.02em;
+  font-weight: 700;
+  margin: 0;
+  text-wrap: balance;
+}
 /* Bis zum 21.08.2026 stand hier zusaetzlich max-width: 66ch. Als
    globale Regel traf sie jedes <p> der Website: auch Labels, kurze
    Zeilen und zentrierte Texte, die keine Zeilenlaenge haben, an der
@@ -115,6 +133,56 @@ html{ color-scheme: light; }
    Pflichtfeld-Sternchen tragen. */
 input,
 textarea{ caret-color: var(--olive); }
+
+/* Die Aufleuchtfarbe beim Antippen. Dieselbe Ueberlegung wie bei
+   ::selection weiter oben, nur fuer den Finger statt fuer die Maus:
+   ohne Regel malt iOS und Android einen grauschwarzen Kasten ueber
+   das getippte Element -- wieder eine Farbe, die nicht aus dem Logo
+   kommt, und wieder genau in dem Moment sichtbar, in dem jemand die
+   Seite tatsaechlich benutzt. Zwoelf Prozent Oliv statt der 22 bei
+   der Markierung: eine Beruehrung ist kuerzer als eine Auswahl und
+   braucht weniger, um quittiert zu werden.
+
+   Das betrifft ueberwiegend Kunden: die Zielgruppe sind Betriebe,
+   deren Inhaber die Seite auf dem Handy oeffnen. Ergaenzt 02.09.2026. */
+a,
+button,
+summary,
+input,
+textarea,
+label{ -webkit-tap-highlight-color: rgb(63 80 25 / .12); }
+
+/* Nimmt die rund 300 Millisekunden Wartezeit, die mobile Browser vor
+   einem Klick einlegen, um noch auf einen zweiten Tipp fuer den
+   Doppeltipp-Zoom zu warten. Der Zoom mit zwei Fingern bleibt davon
+   unberuehrt, es faellt nur die Verzoegerung weg -- und mit ihr der
+   Eindruck, die Seite reagiere traege. Das ist auf einer Seite, deren
+   Verkaufsargument die Ladezeit ist, mehr als eine Kleinigkeit. */
+a,
+button,
+summary,
+label,
+.knopf,
+.kopf-knopf{ touch-action: manipulation; }
+
+/* Ausgleich fuer die Aussparung am oberen Bildrand. Betrifft das
+   Querformat auf einem iPhone: dort liegt die Kamera an der linken
+   oder rechten Kante, und der Kopf laeuft als vollbreiter Balken
+   darunter durch. Ohne diese Zeile beginnt "kazuvate" hinter der
+   Aussparung. max() statt einer festen Addition, damit der Rand auf
+   jedem Geraet ohne Aussparung genau der bisherige bleibt. */
+.kopf .wrap,
+.fuss .wrap{
+  padding-left: max(var(--rand), env(safe-area-inset-left));
+  padding-right: max(var(--rand), env(safe-area-inset-right));
+}
+@media (min-width: 900px){
+  .kopf .wrap,
+  .fuss .wrap{
+    padding-left: max(var(--rand-gross), env(safe-area-inset-left));
+    padding-right: max(var(--rand-gross), env(safe-area-inset-right));
+  }
+}
 
 /* Notausgang fuer lange Zeichenketten ohne Leerzeichen: Mailadressen,
    Domains, Dateinamen. Gemessen bei 320px Fensterbreite passt
@@ -591,8 +659,21 @@ dd, dt{ overflow-wrap: anywhere; }
   color: var(--auf-flaeche-still);
   margin: 0 0 var(--s4);
 }
+/* Der dritte Grad zwischen --gross und --riesig, seit 02.09.2026.
+   Er braucht einen eigenen Wert und keinen der beiden Tokens: gegen
+   --riesig waere der Seitentitel so gross wie die Startseite und
+   naehme ihr das eine Bild, das sie hat; auf --gross waere er so
+   gross wie eine Sektionsueberschrift auf derselben Seite und
+   ordnete sich ihr damit gleich. 74px liegen sichtbar ueber der
+   H2 und sichtbar unter der Startseite.
+
+   18ch bleiben: "Handgebaute Websites für kleine und mittlere
+   Unternehmen" ist der laengste Titel und soll umbrechen wie ein
+   Satzblock, nicht wie eine Zeile, die nicht mehr passt. */
 .titel h1{
-  font-size: clamp(2.1rem, 6vw, 3rem);
+  font-size: clamp(2.3rem, 6.4vw, 4.6rem);
+  line-height: 1;
+  letter-spacing: -.035em;
   max-width: 18ch;
 }
 .titel .unter{
@@ -894,9 +975,17 @@ dd, dt{ overflow-wrap: anywhere; }
   .augenbraue{ font-size: .8rem; }
 }
 
+/* Der zweite der beiden grossen Grade, siehe tokens.css. Bis zum
+   02.09.2026 lag die H2 bei maximal 34px und damit nur zwei
+   Schritte ueber dem Fliesstext -- eine Ueberschrift, die man
+   suchen muss, weil sie fast so gross ist wie das, was sie
+   ueberschreibt. Jetzt 53px, mit demselben Zeilen- und
+   Laufweitenausgleich wie die H1: grosse Grade brauchen beides. */
 .sektion h2{
-  font-size: clamp(1.55rem, 3.2vw, 2.1rem);
-  max-width: 22ch;
+  font-size: var(--gross);
+  line-height: 1.02;
+  letter-spacing: -.03em;
+  max-width: 18ch;
 }
 /* Erklaerender Satz direkt unter der H2 */
 .sektion-vor{
@@ -905,11 +994,32 @@ dd, dt{ overflow-wrap: anywhere; }
   max-width: 58ch;
 }
 
-/* --- Kopfbereich ------------------------------------------- */
-.hero{ padding: var(--s9) 0 var(--s10); }
+/* --- Kopfbereich -------------------------------------------
+   Umgebaut am 02.09.2026 auf die Bauart des Schweizer Plakats.
+
+   Warum diese Referenz und keine andere: die offene Frage aus dem
+   Positivseiten-Durchgang vom 31.08.2026 lautete, dass alle
+   Vorbilder dieser Seite andere Websites sind (portdigitalco.com,
+   notemage.app) und dass eine Referenzwelt ausserhalb des Webs der
+   groesste einzelne Hebel fuer Eigenheit waere. Basel ist der Ort,
+   an dem diese Referenzwelt entstanden ist, und es ist der Markt,
+   in dem diese Firma verkauft. Eine Agentur in Hamburg kann das
+   Layout kopieren, aber nicht den Grund dafuer.
+
+   Was sich konkret aendert: die H1 verlaesst die Leiter der
+   uebrigen Grade (siehe --riesig in tokens.css) und wird zum Bild
+   der Seite. Sie bricht bewusst auf drei Zeilen -- ein Satzblock,
+   keine Zeile. Zeilenabstand .94 statt 1.2: bei 120px ist 1.2 eine
+   Luecke, durch die man hindurchsieht, der Block faellt auseinander.
+   Laufweite -.04em statt -.02em, weil grosse Grade optisch weiter
+   laufen als kleine; ohne die Korrektur wirkt derselbe Wert oben
+   loser als unten. */
+.hero{ padding: var(--s8) 0 var(--s10); }
 .hero h1{
-  font-size: clamp(2.3rem, 6.5vw, 3.9rem);
-  max-width: 16ch;
+  font-size: var(--riesig);
+  line-height: .94;
+  letter-spacing: -.04em;
+  max-width: 13ch;
 }
 .hero .knopf{ margin-top: var(--s7); }
 
@@ -929,9 +1039,16 @@ dd, dt{ overflow-wrap: anywhere; }
    hinausschiesst, trennt nichts mehr, sie zeigt nur ins Leere -- und die
    freie Flaeche rechts gehoert seit dem Faden ohnehin ihm. */
 .hero-abschnitte{
-  margin-top: var(--s8);
+  margin-top: var(--s9);
   max-width: 56ch;
   border-top: 1px solid var(--linie-marke);
+}
+/* Ab hier traegt der Block zwei Spalten (siehe .hero-abschnitt
+   weiter unten), die Begrenzung muss die Randspalte und den Spalt
+   mitrechnen. Sonst endet die Haarlinie mitten im Text statt an
+   seiner rechten Kante. */
+@media (min-width: 900px){
+  .hero-abschnitte{ max-width: calc(150px + var(--spalt) + 56ch); }
 }
 
 /* --- Faden-Bereich ----------------------------------------------
@@ -949,10 +1066,13 @@ dd, dt{ overflow-wrap: anywhere; }
    erscheint statt einen Neuladen zu brauchen.
 
    Breite: 460px statt der ersten 220px. Ab 1150px ist `.wrap` innen
-   immer 1060px breit (1140px minus 2x40px Rand) -- ein groesserer
-   Bildschirm macht die Spalte also nicht breiter, ein fester Wert reicht.
-   Der Text nimmt davon 513px, die H1 darueber laut ihrer 16ch-Grenze bis
-   zu 574px; 460px lassen zu beiden genug Luft. 220px waren zu schmal: das
+   immer 1200px breit (1280px minus 2x40px Rand; bis zum 02.09.2026
+   waren es 1060 aus 1140) -- ein groesserer Bildschirm macht die
+   Spalte also nicht breiter, ein fester Wert reicht.
+   Der Text nimmt davon seit demselben Tag 687px statt 513 (Randspalte
+   150px, Spalt 24px, Textspalte 56ch), die H1 darueber laut ihrer
+   13ch-Grenze bis zu 790px. 1200 minus 460 lassen der Textspalte
+   740px, also weiterhin Luft. 220px waren zu schmal: das
    SVG ist 1278:2690 proportioniert und wurde in einem 220x1084-Kasten quer
    um Faktor 2.7 zusammengedrueckt -- daher der gequetschte Eindruck. Mit
    460px und `preserveAspectRatio="meet"` (siehe
@@ -991,6 +1111,38 @@ dd, dt{ overflow-wrap: anywhere; }
 
 /* Die Augenbraue traegt hier die Ueberschrift des Abschnitts. */
 .hero-abschnitt .augenbraue{ margin-bottom: var(--s4); }
+
+/* Zwei Register statt eines, seit 02.09.2026: das Label steht links
+   in einer eigenen schmalen Spalte, der Text rechts daneben. Bis
+   dahin stand beides untereinander an derselben Kante, und die
+   Haarlinie dazwischen musste die ganze Gliederung allein tragen.
+
+   Das ist die Anordnung von Museumsbeschilderung und technischem
+   Handbuch: eine Randspalte fuehrt, eine Textspalte erklaert. Der
+   Aufbau ist nicht erfunden, er stand schon im Markup -- Label und
+   Text waren immer zwei Dinge, sie sahen nur aus wie eines.
+
+   Die 150px sind nicht rund gewaehlt: "Mit wem wir arbeiten" ist
+   das laengste der drei Labels und bricht hier auf zwei Zeilen,
+   waehrend "Wer wir sind" einzeilig bleibt. Eine Spalte, die alle
+   drei einzeilig haelt, waere 230px breit und naehme dem Text die
+   Zeilenlaenge, ohne dass man den Gewinn saehe.
+
+   Die sechs Pixel Polster gleichen die Grundlinien an: das Label
+   ist 11.5px bei Zeilenhoehe 1.7, der Text 17px bei derselben --
+   ohne Ausgleich sitzt das Label sichtbar zu hoch. */
+@media (min-width: 900px){
+  .hero-abschnitt{
+    display: grid;
+    grid-template-columns: 150px minmax(0, 56ch);
+    gap: var(--spalt);
+    align-items: start;
+  }
+  .hero-abschnitt .augenbraue{
+    margin: 0;
+    padding-top: 6px;
+  }
+}
 
 /* 56ch statt 62: die Zeile soll sichtbar vor der Mitte enden,
    damit die rechte Haelfte als freie Flaeche lesbar bleibt und
@@ -1082,14 +1234,16 @@ dd, dt{ overflow-wrap: anywhere; }
    und trug 35 Zeichen pro Zeile -- der Umbruch zerhackte jeden Satz in
    vier Fetzen. Einspaltig sind es dort jetzt 60.
 
-   Was das *nicht* loest: ab 1100px sind es wieder 39 Zeichen, und mehr
-   kann dreispaltig hier nicht werden. Der .wrap ist auf 1140px
-   gedeckelt, eine Spalte also nie breiter als rund 320px. Fuer
-   durchlaufenden Fliesstext waere das zu wenig; fuer drei kurze
-   Spaltentexte von zwei Saetzen ist es Zeitungsmass und geht in
-   Ordnung. Wer echte 45 bis 75 Zeichen will, muss die Sektion aus dem
-   1140er-Raster nehmen oder auf zwei Spalten gehen -- beides ein
-   Eingriff ins Raster, nicht in diese Regel. */
+   Was das nur zum Teil loest: ab 1100px waren es wieder 39 Zeichen.
+   Der .wrap war auf 1140px gedeckelt, eine Spalte also nie breiter
+   als rund 320px, und hier stand deshalb: "Wer echte 45 bis 75
+   Zeichen will, muss die Sektion aus dem 1140er-Raster nehmen."
+
+   Genau das ist am 02.09.2026 passiert, nur eine Ebene hoeher: mit
+   --breite auf 1280px ist eine Spalte rund 373px breit und traegt 44
+   Zeichen. Damit ist die Einschraenkung nicht weg, aber sie liegt
+   jetzt am unteren Rand des Zeitungsmasses statt darunter. Fuer drei
+   kurze Spaltentexte von zwei Saetzen reicht das. */
 @media (min-width: 1100px){
   .leistungen{ grid-template-columns: repeat(3, 1fr); }
   /* Die Trennlinie sitzt links am zweiten und dritten Feld, nicht
@@ -1206,8 +1360,15 @@ dd, dt{ overflow-wrap: anywhere; }
   .leistungen li:hover{ border-left-color: var(--olive); }
 }
 
+/* 1.28 statt 1.14rem seit 02.09.2026. Nicht um der Groesse willen:
+   die H2 darueber ist am selben Tag von 34 auf 53px gegangen, und
+   ein Spaltentitel, der sich gegenueber einer 53px-Ueberschrift
+   nicht behauptet, faellt in den Fliesstext zurueck. Der Abstand
+   zwischen Ueberschrift und Titel soll gross sein, der zwischen
+   Titel und Text auch -- dazwischen darf nichts verschwimmen. */
 .leistungen h3{
-  font-size: 1.14rem;
+  font-size: var(--satz-5);
+  line-height: 1.25;
   margin-bottom: var(--s4);
 }
 .leistungen p{
@@ -1238,105 +1399,95 @@ dd, dt{ overflow-wrap: anywhere; }
   max-width: 62ch;
 }
 
-/* --- Warum kazuvate: Bento ---------------------------------
-   Drei Textkarten, angelehnt an portdigitalco.com: gedaempfte
-   Augenbraue ueber der Sektion, farbige Augenbraue in der Karte,
-   fetter Zweizeiler, Fliesstext. Keine Grafiken, der Text traegt.
-
-   Zwei Dinge beim Hover: der Rahmen wird von oben links einmal
-   herumgezeichnet, und die Karte hebt sich leicht. Die
-   Umfangslaenge fuer den Rahmen liefert skript/haupt.js als
-   --umfang, weil CSS die Pixelmasse eines Elements nicht kennt.
+/* --- Warum kazuvate ----------------------------------------
+   Bis zum 02.09.2026 stand hier die Beschreibung der drei
+   Textkarten nach dem Vorbild von portdigitalco.com, samt dem
+   gezeichneten Rahmen beim Zeigen und der Umfangsmessung durch
+   skript/haupt.js. Karten, Rahmen und Messung sind an diesem Tag
+   weg, die Begruendung steht bei .bento weiter unten.
    ------------------------------------------------------------ */
-.anders-kopf{ text-align: center; }
-/* max-width: none stand hier bis zum 21.08.2026: die globale Regel
-   p{max-width:66ch} machte den Absatz schmaler als den Container, das
-   zentrierte Label sass dann links und zentrierte nur in seiner eigenen
-   schmalen Box. Die globale Regel ist weg, die Ausnahme dazu auch. */
+/* Bis zum 02.09.2026 stand diese Ueberschrift als einzige der Seite
+   zentriert. Jetzt linksbuendig wie alle anderen. Der Grund ist
+   nicht Geschmack: zentrierter Satz hat keine gemeinsame Kante mit
+   dem, was darunter steht, und die ganze Gliederung dieser Seite
+   besteht aus Kanten und Haarlinien. Eine mittige Ueberschrift ueber
+   linksbuendigen Zeilen ist die eine Stelle, an der das Raster
+   ausgesetzt wurde. */
 .anders-kopf .augenbraue{ color: var(--still); }
-.anders-kopf h2{
-  max-width: 24ch;
-  margin-inline: auto;
-}
+.anders-kopf h2{ max-width: 24ch; }
 
+/* --- Warum kazuvate: drei Register --------------------------
+   Umgebaut am 02.09.2026. Vorher drei weisse Karten mit Rand,
+   Radius, gezeichnetem Rahmen beim Zeigen und drei Pixel Anhebung.
+
+   Was daran weg musste und warum:
+
+   1. **Die Anhebung.** Sie stand seit dem 31.08.2026 als offener
+      Punkt im Anti-Slop-Befund -- "Card hebt sich beim Hover an",
+      und der Einwand daneben war, dass eine schwebende Karte
+      Klickbarkeit verspricht, die es hier nicht gibt. Mit der Karte
+      selbst faellt der Punkt weg, statt weiter offen zu bleiben.
+
+   2. **Die Karte.** Der Positivseiten-Durchgang hat als Richtung
+      radikale Zurueckhaltung notiert und ausdruecklich festgehalten,
+      dass sie nicht durchgezogen ist: "Karten gibt es". Drei weisse
+      Kaesten auf dem Papierton sind die einzige Stelle der Startseite,
+      an der ein Kasten etwas umschliesst, das gar keine Einheit ist --
+      es sind drei Argumente, kein anklickbarer Gegenstand.
+
+   3. **Das dreispaltige Raster.** Die Sektion darueber ist bereits
+      dreispaltig. Zweimal dieselbe Reihe untereinander liest sich als
+      Rhythmus, nicht als Gliederung.
+
+   Was stattdessen dasteht, ist die Anordnung aus dem Kopfbereich ein
+   zweites Mal: Randspalte links, Inhalt rechts. Hier mit drei
+   Registern statt zwei -- Label, Aussage, Erklaerung -- also der
+   Aufbau eines Datenblatts. Dieselbe Idee an einer weiteren Stelle
+   statt eines zweiten Musters daneben.
+
+   Der gezeichnete Rahmen faellt damit auch. Er war eine der drei
+   Stellen, an denen die eigene Bildsprache "eine Linie, die entsteht"
+   auftrat; die anderen beiden (Faden, Titellinie) bleiben, und die
+   Haarlinien dieses Rasters sind dieselbe Familie in ruhig.
+   ------------------------------------------------------------ */
 .bento{
-  display: grid;
-  gap: var(--s4);
   margin-top: var(--s7);
-}
-/* Gleiche Rechnung wie bei den Leistungen: bei 1000px trug eine
-   Kachel 242px und damit 33 Zeichen pro Zeile, jetzt einspaltig 60.
-   Dreispaltig deshalb erst ab 1100px -- mit derselben Einschraenkung,
-   siehe Kommentar bei .leistungen: ab 1100px sind es 36 Zeichen und
-   das Raster gibt nicht mehr her. */
-@media (min-width: 1100px){
-  .bento{ grid-template-columns: repeat(3, 1fr); }
+  border-top: 1px solid var(--linie-marke);
 }
 
 .kachel{
-  position: relative;
-  background: var(--karte);
-  border: 1px solid var(--linie);
-  border-radius: var(--radius);
+  padding: var(--s7) 0;
+  border-bottom: 1px solid var(--linie-marke);
 }
-.kachel-innen{
-  position: relative;
-  z-index: 1;
-  padding: var(--s6) var(--s5);
-}
-
-/* Der gezeichnete Rahmen */
-.rahmen{
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-  pointer-events: none;
-}
-.rahmen rect{
-  fill: none;
-  stroke: var(--olive);
-  stroke-width: 1.5;
-  stroke-dasharray: var(--umfang);
-  stroke-dashoffset: var(--umfang);
-}
-/* Die Transition kommt erst, wenn das Skript den Umfang gesetzt
-   hat. Sonst ist --umfang beim ersten Aufbau noch leer, der
-   Versatz faellt auf 0 zurueck und der fertige Rahmen zeichnet
-   sich beim Laden sichtbar rueckwaerts weg. */
-.kachel.bereit .rahmen rect{
-  transition: stroke-dashoffset 700ms var(--kurve);
-}
-
-/* Anheben beim Hover. Der Schatten ist in den Tintenton getoent
-   statt neutral grau, sonst wirkt er wie aufgeklebt. */
-.kachel{
-  transition: transform var(--kurz) var(--kurve),
-              box-shadow var(--kurz) var(--kurve);
-}
-@media (hover: hover) and (pointer: fine){
-  .kachel:hover{
-    transform: translateY(-3px);
-    box-shadow: 0 14px 28px -14px rgb(27 33 16 / .22);
+/* Drei Register erst ab 1000px. Darunter stehen Label, Aussage und
+   Text untereinander -- bei schmalem Fenster ist eine Randspalte
+   nur eine Spalte, die dem Text die Breite nimmt. */
+@media (min-width: 1000px){
+  .kachel{
+    display: grid;
+    grid-template-columns: 150px minmax(0, 1fr) minmax(0, 44ch);
+    gap: var(--spalt);
+    align-items: start;
   }
-  .kachel:hover .rahmen rect{ stroke-dashoffset: 0; }
+  .kachel .augenbraue{
+    margin: 0;
+    padding-top: 8px;
+  }
 }
 
-.kachel .augenbraue{
-  margin-bottom: var(--s4);
-}
+.kachel .augenbraue{ margin-bottom: var(--s4); }
 .kachel h3{
-  font-size: 1.14rem;
-  line-height: 1.35;
+  font-size: clamp(1.3rem, 2.1vw, 1.7rem);
+  line-height: 1.15;
+  letter-spacing: -.025em;
 }
 .kachel p{
   margin-top: var(--s4);
   color: var(--tinte-2);
-  font-size: .92rem;
-  /* Wie bei .leistungen p: haelt die Zeile im einspaltigen Zustand
-     unter 1100px. */
   max-width: 60ch;
+}
+@media (min-width: 1000px){
+  .kachel p{ margin-top: 0; }
 }
 
 /* --- Referenz auf der Startseite --------------------------- */
@@ -1439,15 +1590,44 @@ dd, dt{ overflow-wrap: anywhere; }
   .ablauf{ grid-template-columns: repeat(4, 1fr); }
 }
 .ablauf li{
-  border-top: 1px solid var(--linie);
+  border-top: 1px solid var(--linie-marke);
   padding-top: var(--s4);
 }
-.ablauf .nr{ display: block; margin-bottom: var(--s2); }
-.ablauf h3{ font-size: 1.02rem; }
+/* Die Schrittzahl traegt seit dem 02.09.2026 die Spalte, statt als
+   11.8px-Label darueber zu sitzen.
+
+   Der Aufbau ist nicht neu erfunden: genau so steht die Nummer seit
+   dem 20.08.2026 auf leistungen.html -- gross, in --linie-kraeftig,
+   und der Text daneben. Hier ist es dieselbe Behandlung an der
+   Kurzfassung derselben Sache. Ein zweites Muster fuer dieselbe
+   Aufgabe waere Doppelarbeit gewesen.
+
+   Grau und nicht oliv: eine Zahl in Markenfarbe in dieser Groesse
+   zieht mehr Aufmerksamkeit als der Schritt, den sie zaehlt. Die
+   Zahl ordnet, sie ist nicht die Aussage. */
+.ablauf .nr{
+  display: block;
+  margin-bottom: var(--s3);
+  font-size: clamp(1.7rem, 2.8vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  line-height: 1;
+  color: var(--linie-kraeftig);
+  /* Vier Zahlen nebeneinander in einer Reihe, jede am Anfang ihrer
+     Spalte. In der Grundeinstellung ist die 1 in den meisten
+     Groteskschriften schmaler als die 0 -- "01" und "04" sind damit
+     verschieden breit und die vier Zahlen stehen sichtbar nicht auf
+     derselben Achse. Bei 11.8px fiel das nicht auf, bei 38px schon. */
+  font-variant-numeric: tabular-nums;
+}
+.ablauf h3{
+  font-size: var(--satz-5);
+  line-height: 1.25;
+}
 .ablauf p{
-  margin-top: var(--s2);
+  margin-top: var(--s3);
   color: var(--tinte-2);
-  font-size: .96rem;
+  font-size: var(--satz-3);
 }
 
 /* --- Kontakt ----------------------------------------------- */

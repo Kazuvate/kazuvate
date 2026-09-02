@@ -168,6 +168,22 @@
 <link rel="apple-touch-icon" href="markenlogo/apple-touch-icon.png">
 <link rel="manifest" href="markenlogo/site.webmanifest">
 
+<!-- Die Schrift vorziehen. Sie liegt in public/schriften/ und wird
+     erst entdeckt, wenn der Browser das CSS geparst und die
+     @font-face-Regel erreicht hat -- also spaet. font-display:
+     optional in stil/basis.css gibt ihr nur ein sehr kurzes Fenster:
+     trifft sie nicht rechtzeitig ein, wird sie fuer diesen
+     Seitenaufruf ganz uebersprungen und die Seite steht im
+     Systemfont. Genau dafuer ist preload das Gegenstueck -- es holt
+     die Datei sofort, damit optional sie auch benutzen kann, statt
+     sie zu verwerfen. Das CLS-Budget bleibt unberuehrt, weil sich an
+     optional nichts aendert.
+
+     crossorigin ist Pflicht und keine Zierde: Schriften werden immer
+     im anonymen CORS-Modus geholt. Ohne das Attribut laedt der
+     Browser die Datei zweimal, einmal fuer den preload und einmal
+     fuer @font-face. Ergaenzt 02.09.2026. -->
+<link rel="preload" href="/schriften/GeneralSans-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="stil/tokens.css">
 <link rel="stylesheet" href="stil/basis.css">
 
@@ -363,33 +379,35 @@
         <h2>Drei Dinge machen wir anders.</h2>
       </div>
 
+      <!-- Drei Register je Zeile: Label, Aussage, Erklaerung. Bis zum
+           02.09.2026 waren das drei weisse Karten mit gezeichnetem
+           Rahmen und einer Anhebung beim Zeigen. Begruendung fuer den
+           Umbau steht ausfuehrlich in stil/basis.css bei .bento --
+           kurz: die Anhebung stand als offener Anti-Slop-Punkt im
+           Befund vom 31.08.2026, und drei Kaesten umschliessen hier
+           drei Argumente, keine anklickbare Einheit.
+
+           Das <br> in den Ueberschriften bleibt: es setzt den Umbruch
+           dorthin, wo der Satz eine Zaesur hat, statt dorthin, wo die
+           Spalte zufaellig endet. -->
       <div class="bento">
 
         <article class="kachel">
-          <svg class="rahmen" aria-hidden="true" focusable="false"><rect rx="12"></rect></svg>
-          <div class="kachel-innen">
-            <p class="augenbraue">Schnelligkeit</p>
-            <h3>Wochen statt Monate.<br>Ohne Abstriche.</h3>
-            <p>Andere Agenturen rechnen in Monaten, weil Ihr Projekt durch mehrere Abteilungen läuft. Bei uns reden Sie direkt mit denen, die bauen. Handgebaut statt Vorlage, ohne Ballast, der die Seite langsam macht.</p>
-          </div>
+          <p class="augenbraue">Schnelligkeit</p>
+          <h3>Wochen statt Monate.<br>Ohne Abstriche.</h3>
+          <p>Andere Agenturen rechnen in Monaten, weil Ihr Projekt durch mehrere Abteilungen läuft. Bei uns reden Sie direkt mit denen, die bauen. Handgebaut statt Vorlage, ohne Ballast, der die Seite langsam macht.</p>
         </article>
 
         <article class="kachel">
-          <svg class="rahmen" aria-hidden="true" focusable="false"><rect rx="12"></rect></svg>
-          <div class="kachel-innen">
-            <p class="augenbraue">Sichtbarkeit</p>
-            <h3>Gefunden werden.<br>Dort, wo gesucht wird.</h3>
-            <p>Google-Unternehmensprofil, strukturierte Firmendaten und überall dieselben Angaben. Das ist die Grundlage dafür, dass Sie in der Google-Suche, auf Google Maps und zunehmend auch in KI-Assistenten auftauchen.</p>
-          </div>
+          <p class="augenbraue">Sichtbarkeit</p>
+          <h3>Gefunden werden.<br>Dort, wo gesucht wird.</h3>
+          <p>Google-Unternehmensprofil, strukturierte Firmendaten und überall dieselben Angaben. Das ist die Grundlage dafür, dass Sie in der Google-Suche, auf Google Maps und zunehmend auch in KI-Assistenten auftauchen.</p>
         </article>
 
         <article class="kachel">
-          <svg class="rahmen" aria-hidden="true" focusable="false"><rect rx="12"></rect></svg>
-          <div class="kachel-innen">
-            <p class="augenbraue">Rundum</p>
-            <h3>Alles aus einer Hand.<br>Von der Domain bis zur Wartung.</h3>
-            <p>Domain, Hosting, Kontaktformular, Textänderungen und ein System für echte Kundenbewertungen, dazu ein monatlicher Bericht zur Sichtbarkeit. Sie haben einen Ansprechpartner statt fünf Rechnungen.</p>
-          </div>
+          <p class="augenbraue">Rundum</p>
+          <h3>Alles aus einer Hand.<br>Von der Domain bis zur Wartung.</h3>
+          <p>Domain, Hosting, Kontaktformular, Textänderungen und ein System für echte Kundenbewertungen, dazu ein monatlicher Bericht zur Sichtbarkeit. Sie haben einen Ansprechpartner statt fünf Rechnungen.</p>
         </article>
 
       </div>

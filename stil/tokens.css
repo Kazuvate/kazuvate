@@ -59,12 +59,57 @@
   --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px;
   --s9: 96px; --s10: 128px;
 
-  /* --- Form ----------------------------------------------- */
-  --breite:   1140px;
+  /* --- Schriftgrade ---------------------------------------
+     Zwei Welten statt einer Leiter, seit 02.09.2026.
+
+     Bis dahin lief die Skala gleichmaessig mit Faktor 1.25 durch,
+     von 11.5px Label bis 62px H1. Groesster Kontrast auf der Seite
+     also Faktor 5.4. Das ist die Spanne, die jede Website hat, und
+     genau daran lag es: eine Seite, deren groesster und kleinster
+     Grad so nah beieinanderliegen, hat keine Stimme, nur Ordnung.
+
+     Jetzt zwei getrennte Bereiche. Unten eine enge, sachliche
+     Leiter fuer alles, was gelesen wird -- die Schritte sind klein,
+     weil Fliesstext, Label und Bildunterschrift nicht miteinander
+     konkurrieren sollen. Oben zwei Grade, die nicht Teil dieser
+     Leiter sind, sondern eine eigene Groessenordnung: die
+     Seitenueberschrift und die Sektionsueberschrift. Zwischen
+     --satz-1 und --riesig liegt Faktor 11.
+
+     Das ist die Bauart des Schweizer Plakats: ein Wort gross, alles
+     andere klein und exakt, nichts dazwischen. Ein Zwischengrad
+     waere die Versuchung, die Spanne zu fuellen, und genau das
+     nimmt ihr die Wirkung. */
+  --satz-1:  .72rem;    /* Label, Versalien */
+  --satz-2:  .82rem;    /* Legende, Fussnote */
+  --satz-3:  .94rem;    /* Navigation, Nebentext */
+  --satz-4:  1.0625rem; /* Fliesstext, 17px */
+  --satz-5:  1.28rem;   /* Zwischenueberschrift */
+  --gross:   clamp(1.9rem, 4.4vw, 3.3rem);   /* H2 */
+  --riesig:  clamp(2.9rem, 10vw, 7.6rem);    /* H1 der Startseite */
+
+  /* --- Form -----------------------------------------------
+     1280 statt 1140 seit 02.09.2026. Der Wert stand seit dem
+     19.08.2026 und war der Grund fuer eine Einschraenkung, die in
+     basis.css bei .leistungen ausdruecklich notiert ist: dreispaltig
+     trug eine Spalte nur 39 Zeichen, "wer echte 45 bis 75 Zeichen
+     will, muss die Sektion aus dem 1140er-Raster nehmen". Mit 1280
+     sind es 44, und der grosse Grad oben braucht die Flaeche ohnehin:
+     eine 120px-Ueberschrift in einem 1140er-Kasten sieht aus, als
+     waere sie zu gross geraten, nicht als waere sie gross gesetzt. */
+  --breite:   1280px;
   --rand:     22px;
   --rand-gross: 40px;
   --radius:   12px;
   --radius-knopf: 10px;
+
+  /* Das Raster, auf dem die Seite steht. Zwoelf Spalten, weil die
+     Seite drei- und vierteilige Reihen hat und zwoelf beides ohne
+     Rest teilt. Sichtbar wird es nicht als Linienbild, sondern
+     dadurch, dass Ueberschrift, Text und Zeile an verschiedenen
+     Spalten ansetzen statt alle an derselben linken Kante. */
+  --spalten: 12;
+  --spalt: var(--s5);
 
   /* --- Bewegung -------------------------------------------
      Ein starkes ease-out, nie das eingebaute ease. Eingebaute

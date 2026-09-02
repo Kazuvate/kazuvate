@@ -183,70 +183,23 @@
   });
 })();
 
-/* --- Kacheln ------------------------------------------------ */
-(function () {
-  'use strict';
+/* Hier lag bis zum 02.09.2026 der Messblock fuer den Kachelrahmen:
+   ein SVG-Rechteck ueber jeder Kachel, dessen Umriss beim Zeigen
+   einmal herumgezeichnet wurde. Die Umfangslaenge musste JavaScript
+   liefern, weil CSS die Pixelmasse eines Elements nicht kennt, dazu
+   kam ein ResizeObserver, der nach jeder Breitenaenderung neu mass.
 
-  var kacheln = document.querySelectorAll('.kachel');
-  if (!kacheln.length) return;
+   Mit dem Umbau der Sektion "Warum kazuvate" auf drei Register
+   (Label, Aussage, Erklaerung, getrennt durch Haarlinien) gibt es
+   keine Karte mehr, ueber der ein Rahmen liegen koennte. Der Block
+   ist damit ersatzlos raus, zusammen mit .rahmen und den vier
+   .kachel-Regeln in stil/basis.css und den drei <svg class="rahmen">
+   in index.html.
 
-  /* Ein SVG-Rechteck liegt ueber der Kachel. Sein Umriss wird als
-     gestrichelte Linie gezeichnet, deren Luecke genau so lang ist
-     wie der Umriss selbst: dadurch ist sie unsichtbar. Beim Hover
-     wandert der Versatz auf null und die Linie laeuft von oben
-     links einmal herum.
-
-     Die Laenge muss JavaScript liefern, weil CSS die Pixelmasse
-     eines Elements nicht kennt. */
-  function rahmenMessen(kachel) {
-    var rechteck = kachel.querySelector('.rahmen rect');
-    if (!rechteck) return;
-
-    var breite = kachel.offsetWidth;
-    var hoehe = kachel.offsetHeight;
-    if (!breite || !hoehe) return;
-
-    // Ein Pixel Rand, damit die Linie nicht halb abgeschnitten wird
-    rechteck.setAttribute('x', 1);
-    rechteck.setAttribute('y', 1);
-    rechteck.setAttribute('width', breite - 2);
-    rechteck.setAttribute('height', hoehe - 2);
-
-    // Einheit muss mit: CSS verwirft eine einheitenlose Zahl bei
-    // stroke-dashoffset und faellt auf 0 zurueck, der Rahmen waere
-    // dann dauerhaft sichtbar statt gezeichnet.
-    kachel.style.setProperty('--umfang', rechteck.getTotalLength() + 'px');
-  }
-
-  Array.prototype.forEach.call(kacheln, function (kachel) {
-    rahmenMessen(kachel);
-  });
-
-  // Layout einmal erzwingen: damit ist der Ausgangswert des Rahmens
-  // festgeschrieben, bevor die Transition dazukommt, und das Setzen
-  // selbst wird nicht animiert.
-  // Bewusst kein requestAnimationFrame: das feuert in einem Tab, der
-  // gerade nicht gezeichnet wird, gar nicht, und die Klasse bliebe
-  // dauerhaft aus.
-  void document.documentElement.offsetHeight;
-
-  Array.prototype.forEach.call(kacheln, function (kachel) {
-    kachel.classList.add('bereit');
-  });
-
-  // Nach einer Drehung des Geraets oder einer Breitenaenderung passt
-  // der alte Umriss nicht mehr, also neu messen.
-  if (window.ResizeObserver) {
-    var beobachter = new ResizeObserver(function (eintraege) {
-      eintraege.forEach(function (eintrag) {
-        rahmenMessen(eintrag.target);
-      });
-    });
-    Array.prototype.forEach.call(kacheln, function (kachel) {
-      beobachter.observe(kachel);
-    });
-  }
-})();
+   Das ist die Lehre vom 31.08.2026 angewandt: als der Globus ging,
+   ueberlebte sein Token --olive-hell noch zwei Wochen, weil niemand
+   beim Loeschen des Bauteils nachgesehen hat, was nur dafuer
+   existierte. Hier ist gleich mitgegangen, was nur hier hing. */
 
 /* --- Formular --------------------------------------------------
    Zwei Dinge fuers Kontaktformular auf kontakt.html, beide im

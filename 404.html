@@ -44,6 +44,22 @@
      zeigen und ins Leere laufen -- die Fehlerseite waere ungestaltet,
      ausgerechnet die Seite, auf der ein Besucher am ehesten den
      Eindruck bekommt, hier sei etwas kaputt. -->
+<!-- Die Schrift vorziehen. Sie liegt in public/schriften/ und wird
+     erst entdeckt, wenn der Browser das CSS geparst und die
+     @font-face-Regel erreicht hat -- also spaet. font-display:
+     optional in stil/basis.css gibt ihr nur ein sehr kurzes Fenster:
+     trifft sie nicht rechtzeitig ein, wird sie fuer diesen
+     Seitenaufruf ganz uebersprungen und die Seite steht im
+     Systemfont. Genau dafuer ist preload das Gegenstueck -- es holt
+     die Datei sofort, damit optional sie auch benutzen kann, statt
+     sie zu verwerfen. Das CLS-Budget bleibt unberuehrt, weil sich an
+     optional nichts aendert.
+
+     crossorigin ist Pflicht und keine Zierde: Schriften werden immer
+     im anonymen CORS-Modus geholt. Ohne das Attribut laedt der
+     Browser die Datei zweimal, einmal fuer den preload und einmal
+     fuer @font-face. Ergaenzt 02.09.2026. -->
+<link rel="preload" href="/schriften/GeneralSans-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/stil/tokens.css">
 <link rel="stylesheet" href="/stil/basis.css">
 <link rel="stylesheet" href="/stil/seiten.css">
