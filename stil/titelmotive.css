@@ -1,6 +1,13 @@
 /* ============================================================
    kazuvate | Titelbaender
-   Nur Leistungen, Referenzen und Ablauf laden diese Datei.
+   Leistungen, Referenzen, Ablauf, Impressum und Datenschutz laden
+   diese Datei. Die beiden Rechtsseiten sind seit dem 02.09.2026
+   dabei -- vorher trugen sie die dunkle Flaeche aus .titel in
+   basis.css, die einzige Unterseite ohne dieses helle Titelmotiv.
+   Auf Kasums Wunsch tragen jetzt alle Unterseiten denselben Titel.
+   Einzige verbliebene Ausnahme ist die Fehlerseite 404.html: die
+   behaelt die dunkle Flaeche, weil dort niemand hinkommt, der die
+   uebrige Website schon gesehen hat -- der Bruch faellt nicht auf.
 
    Geschichte in drei Schritten, alle am 22./23.08.2026:
    1. Jede Seite trug ein eigenes gezeichnetes Motiv (Linie mit drei
@@ -21,8 +28,8 @@
       dokumentiert an Ort und Stelle). Der Vorspanntext unter jedem
       Titel ist ersatzlos gestrichen.
 
-   Farben ausschliesslich aus tokens.css. Die schlichte .titel
-   (Impressum, Datenschutz) ist von alledem unberuehrt.
+   Farben ausschliesslich aus tokens.css. Die schlichte .titel bleibt
+   in basis.css stehen, sie traegt weiterhin die Fehlerseite.
    ============================================================ */
 
 .titel--gross{
@@ -105,11 +112,61 @@
   position: relative;
 }
 
+/* --- Stand-Zeile (Impressum, Datenschutz) --------------------
+   Die beiden Rechtsseiten sind die einzigen mit einem Erstelldatum
+   unter dem Titel. Bis zum 02.09.2026 stand es in --auf-flaeche-still
+   auf der dunklen Flaeche von .titel -- ihr Markup traegt weiterhin
+   auch die Klasse .titel, deshalb hier .titel--gross .stand statt
+   nur .stand: gleiche Selektor-Spezifitaet wie .titel .stand in
+   basis.css, gewinnt aber durch die spaetere Ladereihenfolge dieser
+   Datei. Ein helleres Gruen statt des dunklen Auf-Flaeche-Tons,
+   --still passt zur selben Rolle (Labels, Legenden) wie sonst auf
+   diesen Seiten. margin-top raeumt die sich einzeichnende Linie frei:
+   die reicht je nach Breite 22 bis 38px unter das Titelband hinaus
+   (siehe die Deszender-Ausnahme oben), var(--s7) ist an jeder Stufe
+   mehr, als sie braucht. */
+.titel--gross .stand{
+  margin-top: var(--s7);
+  color: var(--still);
+  font-size: .82rem;
+  letter-spacing: .02em;
+  font-weight: 600;
+  /* .titel .stand in basis.css setzt text-transform:uppercase; ohne
+     diese Zeile wuerde das hier durchschlagen -- dieselbe Spezifitaet
+     deckt nur die Eigenschaften ab, die diese Regel selbst setzt. */
+  text-transform: none;
+}
+
+/* Dieselbe Regel wie .titel .stand in basis.css fuer den Druck, nur
+   fuer diesen helleren Gruenton statt --auf-flaeche-still nochmal
+   ausdruecklich gesetzt -- die Datei hier laedt spaeter und wuerde
+   sonst auch beim Drucken das Bildschirm-Gruen gewinnen lassen. */
+@media print{
+  .titel--gross .stand{ color: #000; }
+}
+
 /* Der laengste Titel bekommt auf sehr schmalen Bildschirmen eine
    eigene Untergrenze. So bleibt er auch mit der System-Ersatzschrift
    innerhalb der 320px-Breite, bevor General Sans geladen ist. */
 .titel--referenzen h1{
   font-size: clamp(2.1rem, 10.5vw, 3.7rem);
+}
+
+/* "Datenschutzerklärung" ist mit 20 Zeichen mehr als doppelt so lang
+   wie "Referenzen" -- passt in keiner Bildschirmbreite einzeilig in
+   dieselbe Groessenstufe wie die anderen Titel, ohne winzig zu
+   wirken. Bricht deshalb bewusst zweizeilig um, statt weiter zu
+   schrumpfen. max-width erzwingt den Umbruch an der Sollbruchstelle,
+   die das &shy; im Markup schon setzt: "Datenschutz-" / "erklärung".
+   line-height etwas offener als die .86 der einzeiligen Titel, sonst
+   sitzen die Umlautpunkte von "ä" zu nah an den Grossbuchstaben
+   darueber -- derselbe Wert wie bei der zweizeiligen H1 auf
+   kontakt.html. */
+.titel--datenschutz h1{
+  white-space: normal;
+  text-wrap: wrap;
+  max-width: 13ch;
+  line-height: .95;
 }
 
 /* --- Linie unter dem Titel ----------------------------------
@@ -140,10 +197,16 @@
    diesem Pufferbereich: sie lief mitten durchs "g", und weil Linie
    und Buchstabe dieselbe Farbe --flaeche tragen, sah das aus wie eine
    unterbrochene Linie, nicht wie eine Kreuzung. Hier deshalb klar
-   unter den ganzen Deszender-Puffer geschoben, nur fuer diese beiden
-   Seiten. */
+   unter den ganzen Deszender-Puffer geschoben.
+
+   "Impressum" hat aus demselben Grund ein "p", und bei "Datenschutz-
+   erklärung" traegt die zweite Zeile ("erklärung") ein "g" -- beide
+   seit dem 02.09.2026 mit demselben Puffer wie Leistungen und
+   Referenzen. */
 .titel--leistungen .titel-linie,
-.titel--referenzen .titel-linie{
+.titel--referenzen .titel-linie,
+.titel--impressum .titel-linie,
+.titel--datenschutz .titel-linie{
   bottom: -22px;
 }
 
@@ -237,9 +300,11 @@
   }
 
   /* .titel-wort hat hier 28px Deszender-Puffer, dieselbe Ausnahme wie
-     bei der Grundregel oben, nur fuer Leistungen und Referenzen. */
+     bei der Grundregel oben. */
   .titel--leistungen .titel-linie,
-  .titel--referenzen .titel-linie{
+  .titel--referenzen .titel-linie,
+  .titel--impressum .titel-linie,
+  .titel--datenschutz .titel-linie{
     bottom: -30px;
   }
 
@@ -272,7 +337,9 @@
 
   /* .titel-wort hat hier 36px Deszender-Puffer. */
   .titel--leistungen .titel-linie,
-  .titel--referenzen .titel-linie{
+  .titel--referenzen .titel-linie,
+  .titel--impressum .titel-linie,
+  .titel--datenschutz .titel-linie{
     bottom: -38px;
   }
 

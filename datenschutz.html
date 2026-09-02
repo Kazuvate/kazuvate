@@ -85,6 +85,7 @@
 <link rel="stylesheet" href="stil/tokens.css">
 <link rel="stylesheet" href="stil/basis.css">
 <link rel="stylesheet" href="stil/seiten.css">
+<link rel="stylesheet" href="stil/titelmotive.css">
 
 <!-- Sagt dem CSS, dass JavaScript laeuft. Muss hier oben stehen und darf
      nicht in haupt.js: das laedt mit defer und kaeme zu spaet. Traegt heute
@@ -145,10 +146,21 @@
   </div>
 </header>
 
-<!-- ====================== Titelband ====================== -->
-<div class="titel">
-  <div class="wrap">
-    <h1>Datenschutz&shy;erklärung</h1>
+<!-- ====================== Titelband ======================
+     Seit dem 02.09.2026 dasselbe Titelmotiv wie Leistungen, Ablauf
+     und Referenzen statt der eigenen dunklen Flaeche: gruene Schrift
+     auf hellem Grund, darunter eine Linie, die sich beim Laden einmal
+     von links nach rechts einzeichnet. Siehe stil/titelmotive.css.
+     "Datenschutzerklärung" bricht dabei bewusst zweizeilig um, siehe
+     .titel--datenschutz h1 dort fuer die Begruendung. -->
+<div class="titel titel--gross titel--datenschutz">
+  <div class="wrap titel-inhalt">
+    <div class="titel-kopf">
+      <div class="titel-wort"><h1>Datenschutz&shy;erklärung</h1></div>
+    </div>
+    <svg class="titel-linie" viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <path pathLength="1" d="M0 11 Q75 3 150 11 Q225 19 300 11"></path>
+    </svg>
     <p class="stand">Stand: 19. August 2026</p>
   </div>
 </div>
