@@ -16,4 +16,46 @@ Disallow: /api/
 # die Seite abrufen duerfen. Ein Disallow hier wuerde das verhindern --
 # die Seite koennte dann trotzdem als blosse URL im Index landen.
 
+
+# --- KI-Suche: ausdruecklich erlaubt, seit 03.09.2026 ---------------
+#
+# Diese vier holen Seiten, um sie in einer Antwort zu ZITIEREN. Sie
+# bringen Sichtbarkeit, und in der KI-Suche zaehlt Domainalter deutlich
+# weniger als bei Google -- fuer eine junge Firma ist das der Kanal mit
+# dem besten Verhaeltnis von Aufwand zu Wirkung.
+#
+# Warum die Gruppen dastehen, obwohl "User-agent: *" oben ohnehin alles
+# erlaubt: eine benannte Gruppe ist die Stelle, an der spaeter jemand
+# nachsieht. Ohne sie sieht "erlaubt" genauso aus wie "nie darueber
+# nachgedacht".
+#
+# Aufpassen beim Aendern: ein Crawler liest NUR seine eigene Gruppe,
+# sobald es eine gibt -- die Regeln aus "*" gelten fuer ihn dann nicht
+# mehr. Deshalb steht das Disallow auf /api/ in jeder Gruppe noch einmal.
+# Wer das vergisst, oeffnet den Formular-Endpunkt fuer genau die
+# Crawler, die er gerade einladen wollte.
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /api/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /api/
+
+User-agent: Claude-SearchBot
+Allow: /
+Disallow: /api/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /api/
+
+# Nicht benannt und damit unter "*" laufend: die Trainings-Crawler
+# GPTBot, ClaudeBot und CCBot. Die sammeln Text zum Trainieren von
+# Modellen und bringen keine Sichtbarkeit -- ob man sie zulaesst, ist
+# eine Haltungsfrage und keine SEO-Frage. Sie sperren kostet nichts an
+# Reichweite. Offen, bis Kasum entscheidet.
+
+
 Sitemap: https://kazuvate.ch/sitemap.xml

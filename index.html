@@ -64,10 +64,22 @@
      Bewusst nicht drin: priceRange und openingHours. Beides steht
      nirgends auf der Seite, und erfundene strukturierte Daten sind
      genau die Sorte Fehler, die diese Firma nicht machen darf.
-     sameAs fehlt ebenfalls -- es gibt noch kein Google-Unternehmens-
-     profil und keine Firmenseite auf LinkedIn. Das persoenliche
-     LinkedIn-Profil steht unter founder, wo es hingehoert. Sobald das
-     Unternehmensprofil existiert, kommt es als sameAs hier dazu. -->
+     sameAs stand hier bis zum 03.09.2026 als Fehlstelle: "es gibt
+     noch kein Google-Unternehmensprofil und keine Firmenseite auf
+     LinkedIn". Das stimmt weiterhin, war als Begruendung aber zu
+     weit gefasst -- es hat zwei Profile uebersehen, die es sehr wohl
+     gibt. Kapitel 6.3 des SEO-Handbuchs nennt sameAs "die wichtigste
+     Zeile fuer KI-Suche": ohne sie sind Website, LinkedIn und GitHub
+     fuer eine Maschine drei unverbundene Seiten, die zufaellig einen
+     aehnlichen Namen tragen. Mit ihr sind sie eine Entitaet, und
+     Entitaeten sind das, was KI-Suchsysteme zitieren.
+
+     Eingetragen sind nur Profile, die tatsaechlich existieren. Die
+     Firmenseite auf LinkedIn fehlt weiterhin und gehoert hierher,
+     sobald es sie gibt. Dass beide Adressen persoenliche Profile von
+     Kasum sind und nicht Firmenprofile, ist bei einem Einzelunter-
+     nehmen kein Widerspruch: Kazuvate Bajrami und Kasum Bajrami sind
+     rechtlich dieselbe Person. -->
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -87,12 +99,17 @@
           "de-CH",
           "de"
         ],
+        "sameAs": [
+          "https://www.linkedin.com/in/kasum-bajrami-885a653a6/",
+          "https://github.com/BajKasum"
+        ],
         "founder": {
           "@type": "Person",
           "name": "Kasum Bajrami",
           "url": "https://kasumbajrami.dev/",
           "sameAs": [
-            "https://www.linkedin.com/in/kasum-bajrami-885a653a6/"
+            "https://www.linkedin.com/in/kasum-bajrami-885a653a6/",
+            "https://github.com/BajKasum"
           ]
         },
         "address": {

@@ -12,3 +12,13 @@ dist/
 .env
 .env.local
 .env.*.local
+
+# Arbeitsunterlagen, keine Projektdateien. Das SEO-Handbuch liegt im
+# Ordner, weil daran gearbeitet wird -- es gehoert aber nicht ins Repo:
+# es enthaelt Preisspannen, Nischenstrategie und das Kapitel "SEO als
+# Leistung verkaufen", also Geschaeftsinterna, und dieses Repo ist
+# oeffentlich. Auf der ausgelieferten Website landen die Dateien
+# ohnehin nie, Vite kopiert nur public/ und was aus dem Markup
+# referenziert wird.
+SEO-Handbuch-kazuvate.docx
+SEO-Handbuch-kazuvate.pdf

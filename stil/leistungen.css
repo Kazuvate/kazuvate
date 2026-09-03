@@ -102,3 +102,56 @@
    siehe leistungen.html. Mit ihm sind drei Quelldateien und drei
    npm-Pakete (three, three-globe, @react-three/fiber) aus dem Projekt
    verschwunden, zusammen der schwerste einzelne Baustein der Seite. */
+
+/* --- Haeufige Fragen ----------------------------------------
+   Ergaenzt am 03.09.2026 zusammen mit dem FAQPage-Schema, siehe
+   Kommentar im Kopf von leistungen.html.
+
+   Aufbau wie die beiden anderen Register der Website -- der
+   Ueber-uns-Block im Kopfbereich der Startseite und die drei
+   Zeilen unter "Warum kazuvate": links fuehrt eine Spalte, rechts
+   erklaert eine. Bei einer FAQ faellt das besonders leicht, weil
+   Frage und Antwort ohnehin zwei Dinge sind.
+
+   Kein Aufklapper. Ein <details>-Element waere die uebliche Wahl
+   und hier die falsche: eine zugeklappte Antwort steht zwar im
+   Markup, aber sie ist der Grund, warum jemand die Seite geoeffnet
+   hat, und vier Antworten sind keine Menge, vor der man jemanden
+   schuetzen muss. Dazu kommt der eigentliche Zweck des Abschnitts:
+   zitiert wird, was ein Modell als Textstelle herausloesen kann,
+   und sichtbarer Text ist dafuer der sichere Weg. */
+.fragen{
+  margin-top: var(--s7);
+  border-top: 1px solid var(--linie-marke);
+}
+
+.frage{
+  padding: var(--s6) 0;
+  border-bottom: 1px solid var(--linie-marke);
+}
+
+/* Zwei Register erst ab 1000px, gleiche Grenze wie bei .kachel:
+   darunter nimmt eine zweite Spalte der Antwort die Zeilenlaenge,
+   ohne dass die Trennung etwas gewinnt. */
+@media (min-width: 1000px){
+  .frage{
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 46ch);
+    gap: var(--spalt);
+    align-items: start;
+  }
+  .frage p{ margin-top: 0; }
+}
+
+.frage h3{
+  font-size: var(--satz-5);
+  line-height: 1.25;
+  letter-spacing: -.02em;
+  max-width: 26ch;
+}
+
+.frage p{
+  margin-top: var(--s4);
+  color: var(--tinte-2);
+  max-width: 60ch;
+}

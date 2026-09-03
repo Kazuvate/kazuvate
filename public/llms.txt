@@ -38,6 +38,28 @@ SaaS-Produkt desselben Inhabers. kazuvate ist die Webdesign-Firma.
 - [Kontakt](https://kazuvate.ch/kontakt.html): Telefon, E-Mail und
   Anfrageformular. Wir antworten innert 24 Stunden.
 
+## Häufige Fragen
+
+Die vier Antworten stehen wörtlich auf
+https://kazuvate.ch/leistungen.html#fragen und dort zusätzlich als
+FAQPage in strukturierten Daten.
+
+**Was kostet eine Website für ein KMU?** Der Preis hängt vom Umfang ab und
+steht deshalb nicht als Liste auf der Website. Nach dem ersten Gespräch
+folgt eine Offerte mit Fixpreis und klarem Umfang.
+
+**Wie lange dauert es, bis die Website live ist?** Zwei bis vier Wochen ab
+dem Zeitpunkt, an dem der Entwurf freigegeben ist.
+
+**Kann ich die Texte später selbst ändern?** Textänderungen sind in der
+Wartung enthalten und innert 24 Stunden umgesetzt. Wer täglich selbst
+pflegen will, bekommt auf Wunsch ein Redaktionssystem dazu.
+
+**Warum kein WordPress?** WordPress ist für Websites mit täglich neuen
+Beiträgen gebaut. Eine Firmenwebsite mit einer Handvoll Unterseiten, die
+sich zweimal im Jahr ändern, lädt ohne dieses System schneller, hat keine
+Plugin-Lücken und verursacht keine laufenden Lizenzkosten.
+
 ## Was wir bauen
 
 - One-Pager: eine einzelne Seite mit allem, was zählt. Leistungen, Kontakt
