@@ -77,10 +77,33 @@
 </script>
 <!-- =========================================================== -->
 
-<link rel="icon" href="../markenlogo/favicon.ico" sizes="32x32">
-<link rel="icon" href="../markenlogo/favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="../markenlogo/apple-touch-icon.png">
-<link rel="manifest" href="../markenlogo/site.webmanifest">
+<!-- Symbole. Alle Pfade ab "/" und nicht relativ, seit 03.09.2026.
+     Relativ aufgeloest zeigten sie von referenzen/ aus in ein
+     Verzeichnis, das es dort nicht gibt -- die Seite half sich mit
+     "../", aber ein Pfad, der je nach Seite anders geschrieben werden
+     muss, ist einer zu viel. Die Schrift steht seit dem 02.09.2026
+     ohnehin schon absolut daneben.
+
+     /favicon.ico und /favicon.svg liegen ZUSAETZLICH im Wurzel-
+     verzeichnis, obwohl markenlogo/ das Zuhause aller abgeleiteten
+     Symbole ist. Grund: Suchmaschinen und Browser fragen die
+     Wurzeladresse direkt ab, ohne ins HTML zu schauen. Bis zum
+     03.09.2026 antwortete kazuvate.ch/favicon.ico mit 404 -- und zwar
+     mit der 11 kB grossen HTML-Fehlerseite. Genau das ist der
+     wahrscheinlichste Grund, warum Google in der Trefferliste eine
+     Weltkugel statt des Zeichens gezeigt hat.
+
+     Die beiden Wurzeldateien sind Kopien aus markenlogo/. Wer dort
+     etwas aendert, muss sie mitnehmen.
+
+     sizes traegt jetzt alle drei Groessen, die wirklich in der .ico
+     stecken (16, 32 und 48). Vorher stand dort nur "32x32" und hat
+     damit die 48x48 verschwiegen -- ausgerechnet die Groesse, die
+     Google fuer die Trefferliste empfiehlt. -->
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/markenlogo/apple-touch-icon.png">
+<link rel="manifest" href="/markenlogo/site.webmanifest">
 
 <!-- Die Schrift vorziehen. Sie liegt in public/schriften/ und wird
      erst entdeckt, wenn der Browser das CSS geparst und die
