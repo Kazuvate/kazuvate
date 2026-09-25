@@ -63,6 +63,7 @@ kontakt.html           Kontaktseite mit Formular
 impressum.html         Impressum
 datenschutz.html       Datenschutzerklärung
 referenzen/index.html  Referenzen als Bildergalerie, ein Bild pro Projekt
+en/, fr/               dieselben acht Seiten auf Englisch und Franzoesisch, siehe "Drei Sprachen"
 
 stil/tokens.css        Farben, Abstände, Rundungen. Die einzige Stelle dafür
 stil/basis.css         Grundlagen, Kopf, Titelband, Fuss, Referenz-Kachel, Sektionen
@@ -699,6 +700,53 @@ Bisher eine Referenz: ProMeti Facility Services Zekiri in Basel. Das
 Bildschirmfoto liegt als WebP in `medien/referenzen/` in zwei Breiten (1280 und
 760) und wird über `srcset` ausgeliefert. Auf dem Handy lädt die
 42-kB-Fassung statt der 77-kB-Fassung.
+
+## Drei Sprachen
+
+Seit dem 25.09.2026 gibt es die ganze Website auf Deutsch, Englisch und
+Französisch. Deutsch bleibt unter den bisherigen Adressen, die anderen
+beiden liegen in eigenen Ordnern mit übersetzten Dateinamen:
+
+| Deutsch | Englisch | Französisch |
+|---|---|---|
+| `/` | `/en/` | `/fr/` |
+| `/leistungen.html` | `/en/services.html` | `/fr/prestations.html` |
+| `/ablauf.html` | `/en/process.html` | `/fr/deroulement.html` |
+| `/referenzen/` | `/en/portfolio/` | `/fr/references/` |
+| `/kontakt.html` | `/en/contact.html` | `/fr/contact.html` |
+| `/impressum.html` | `/en/legal-notice.html` | `/fr/mentions-legales.html` |
+| `/datenschutz.html` | `/en/privacy.html` | `/fr/protection-des-donnees.html` |
+| `/danke.html` | `/en/thank-you.html` | `/fr/merci.html` |
+
+**Jede Übersetzung ist eine eigene, von Hand gepflegte HTML-Datei**, wie die
+deutschen Seiten auch. Aufbau, Klassen und IDs sind dieselben, die
+Begründungen stehen nur in den Kommentaren der deutschen Datei. Wer an einer
+deutschen Seite etwas am Aufbau ändert, zieht es in beiden Übersetzungen nach.
+Die Tabelle oben steht als Liste auch in `werkzeug/sitemap-bauen.mjs`, die
+Eingänge in `vite.config.ts`. Kommt eine Seite dazu, gehört sie in alle drei
+Sprachen und an beide Stellen.
+
+In den Übersetzungen sind alle Pfade absolut (`/stil/...`, `/medien/...`,
+`/skript/haupt.js`), damit dieselbe Zeile in `/en/` und `/en/portfolio/`
+funktioniert.
+
+Was dazugehört:
+
+- **Umschalter im Kopf**, `.sprachen` in `stil/basis.css`. Jeder Link führt
+  auf dieselbe Seite in der anderen Sprache. Auf dem Handy in der ersten Zeile
+  neben dem Menüknopf. Zwischen 860 und 1099px fällt dafür der Anfrage-Knopf
+  im Kopf weg, sonst brechen die Menüpunkte zweizeilig um.
+- **`hreflang`** im Kopf jeder Seite und als `xhtml:link` in der Sitemap, je
+  alle drei Sprachen plus `x-default` auf Deutsch.
+- **Formular:** Jede Fassung schickt ihre Sprache im versteckten Feld
+  `sprache` mit. `api/kontakt.js` leitet damit auf die Danke- oder
+  Kontaktseite derselben Sprache zurück und schreibt die Sprache in Betreff
+  und Mail. Die Datenschutzerklärung nennt das Feld.
+- **Menü-Beschriftung** in `public/skript/haupt.js` nach `<html lang>`.
+- **Rechtstexte** sind übersetzt, mit dem Hinweis, dass die deutsche Fassung
+  gilt.
+- **404:** Vercel kennt nur eine `404.html`. Sie trägt je eine Zeile auf
+  Englisch und Französisch mit Link auf die jeweilige Startseite.
 
 ## Suche und KI-Suche
 

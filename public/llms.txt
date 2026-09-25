@@ -56,6 +56,17 @@ einen Onlineshop, ein Buchungssystem mit Verfügbarkeiten oder einen
 Mitgliederbereich braucht, hört das schon im ersten Gespräch und nicht erst
 in der Offerte. Wir sagen dann, was stattdessen passt.
 
+## Andere Sprachen
+
+Die ganze Website gibt es auch auf Englisch und Französisch, mit
+denselben Seiten und Angaben. Anfragen auf Englisch und Französisch
+beantworten wir in der jeweiligen Sprache.
+
+- [English](https://kazuvate.ch/en/): Web design for SMEs in Switzerland.
+  Services, portfolio, process and contact in English.
+- [Français](https://kazuvate.ch/fr/): Création de sites web pour PME en
+  Suisse. Prestations, références, déroulement et contact en français.
+
 ## Firma im Netz
 
 Dieselbe Firma unter ihren eigenen Profilen. Name, Angebot und Sitz
