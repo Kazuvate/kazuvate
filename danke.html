@@ -23,7 +23,15 @@
      stehen. Zwei Angaben, die sich widersprechen, sind schlechter als
      eine. Gepruefte Regel fuer diese Domain: /leistungen ohne .html
      ist 404, die Endung gehoert also dazu; /referenzen/ dagegen
-     funktioniert und ist die kuerzere der beiden Formen. -->
+     funktioniert und ist die kuerzere der beiden Formen.
+
+     Seit dem 25.09.2026 leiten /index.html, /referenzen/index.html und
+     die Adressen ohne .html per vercel.json auf diese Formen weiter
+     (Begruendung im README unter "Suche und KI-Suche"). Das Canonical
+     bleibt trotzdem noetig: /referenzen ohne Schraegstrich liefert
+     Vercel weiterhin aus, und jede Adresse mit angehaengtem Parameter,
+     etwa ?utm_source=linkedin, ist fuer eine Suchmaschine sonst eine
+     eigene Seite. -->
 <link rel="canonical" href="https://kazuvate.ch/danke.html">
 
 <!-- Kein Open Graph: die Seite traegt noindex und wird nie
@@ -110,7 +118,7 @@
 <header class="kopf">
   <div class="wrap kopf-innen">
 
-    <a class="marke" href="index.html">
+    <a class="marke" href="/">
       <svg viewBox="0 0 585.51 442.90" role="img" aria-label="kazuvate"><use href="#marke"></use></svg>
       <span>kazuvate</span>
     </a>
@@ -126,9 +134,9 @@
 
     <nav class="navigation" id="hauptmenue" aria-label="Hauptnavigation">
       <div class="navigation-innen">
-        <a href="index.html#ueber-uns">Über uns</a>
+        <a href="/#ueber-uns">Über uns</a>
         <a href="leistungen.html">Leistungen</a>
-        <a href="referenzen/index.html">Referenzen</a>
+        <a href="/referenzen/">Referenzen</a>
         <a href="ablauf.html">Ablauf</a>
         <a href="kontakt.html">Kontakt</a>
       </div>
@@ -155,7 +163,7 @@
     <p>Wir lesen sie in Ruhe und melden uns innert 24 Stunden bei Ihnen, meist per Mail.</p>
     <p>Es pressiert? Rufen Sie direkt an: <a href="tel:+41786707973">+41 78 670 79 73</a>.</p>
 
-    <a class="knopf" href="index.html">Zur Startseite</a>
+    <a class="knopf" href="/">Zur Startseite</a>
 
   </div>
 </main>
@@ -177,7 +185,7 @@
              scharf. -->
         <div class="fuss-draehte">
 
-          <a class="draht-knopf" href="https://kasumbajrami.dev/index.html"
+          <a class="draht-knopf" href="https://kasumbajrami.dev/"
              target="_blank" rel="noopener"
              aria-label="Persönliche Website von Kasum Bajrami, öffnet in einem neuen Tab">
             <span class="monogramm" aria-hidden="true">KB</span>
@@ -198,9 +206,9 @@
 
       <nav class="fuss-spalte" aria-labelledby="fuss-seiten">
         <h2 id="fuss-seiten">Seiten</h2>
-        <a href="index.html#ueber-uns">Über uns</a>
+        <a href="/#ueber-uns">Über uns</a>
         <a href="leistungen.html">Leistungen</a>
-        <a href="referenzen/index.html">Referenzen</a>
+        <a href="/referenzen/">Referenzen</a>
         <a href="ablauf.html">Ablauf</a>
         <a href="kontakt.html">Kontakt</a>
       </nav>

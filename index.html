@@ -20,8 +20,21 @@
      stehen. Zwei Angaben, die sich widersprechen, sind schlechter als
      eine. Gepruefte Regel fuer diese Domain: /leistungen ohne .html
      ist 404, die Endung gehoert also dazu; /referenzen/ dagegen
-     funktioniert und ist die kuerzere der beiden Formen. -->
+     funktioniert und ist die kuerzere der beiden Formen.
+
+     Seit dem 25.09.2026 leiten /index.html, /referenzen/index.html und
+     die Adressen ohne .html per vercel.json auf diese Formen weiter
+     (Begruendung im README unter "Suche und KI-Suche"). Das Canonical
+     bleibt trotzdem noetig: /referenzen ohne Schraegstrich liefert
+     Vercel weiterhin aus, und jede Adresse mit angehaengtem Parameter,
+     etwa ?utm_source=linkedin, ist fuer eine Suchmaschine sonst eine
+     eigene Seite. -->
 <link rel="canonical" href="https://kazuvate.ch/">
+
+<!-- Grosse Vorschaubilder, etwa in Google Discover oder neben einer
+     KI-Antwort, zeigt Google nur mit dieser ausdruecklichen Erlaubnis.
+     Sie sagt nichts ueber das Indexieren selbst, das bleibt erlaubt. -->
+<meta name="robots" content="max-image-preview:large">
 
 <!-- Link-Vorschau in WhatsApp, LinkedIn, Slack, Signal und iMessage.
      Ohne diese Zeilen zeigt jeder geteilte Link auf kazuvate.ch nur
@@ -79,7 +92,18 @@
      jetzt diese beiden statt Kasums persoenlicher Profile -- die
      Entitaet "kazuvate" bekommt ihre eigenen Adressen, nicht mehr die
      des Gruenders. Kasums persoenliche Profile stehen dafuer unter
-     founder.sameAs weiter unten, das ist die richtige Stelle fuer sie. -->
+     founder.sameAs weiter unten, das ist die richtige Stelle fuer sie.
+
+     Ergaenzt am 25.09.2026, drei Angaben fuer KI-Suche:
+     knowsAbout nennt die Fachgebiete, nach denen jemand fragt ("wer
+     baut Websites ohne WordPress", "wer macht strukturierte Daten").
+     Jedes davon steht sichtbar auf der Seite oder in ablauf.html
+     Schritt 04, keins ist nur fuer die Maschine erfunden.
+     contactPoint wiederholt Telefon und Mail als Kontaktweg mit
+     Sprache und Gebiet -- die Werte sind dieselben wie oben, die
+     Angabe sagt nur, wofuer sie da sind. Und #seite beschreibt die
+     Startseite selbst und haengt sie an #website und #firma, genau
+     wie der gleichnamige Knoten auf jeder Unterseite. -->
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -99,6 +123,24 @@
           "de-CH",
           "de"
         ],
+        "knowsAbout": [
+          "Webdesign",
+          "Frontend-Entwicklung",
+          "HTML",
+          "CSS",
+          "JavaScript",
+          "Suchmaschinenoptimierung",
+          "Strukturierte Daten",
+          "Google-Unternehmensprofil"
+        ],
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "customer service",
+          "telephone": "+41786707973",
+          "email": "kasumbajrami7@gmail.com",
+          "availableLanguage": "de",
+          "areaServed": "CH"
+        },
         "sameAs": [
           "https://www.linkedin.com/company/142573928",
           "https://github.com/Kazuvate"
@@ -172,6 +214,20 @@
         "name": "kazuvate",
         "inLanguage": "de-CH",
         "publisher": {
+          "@id": "https://kazuvate.ch/#firma"
+        }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://kazuvate.ch/#seite",
+        "url": "https://kazuvate.ch/",
+        "name": "Webdesign für KMU in der Schweiz",
+        "description": "Handgebaute Websites für kleine und mittlere Unternehmen in der Schweiz. Kein WordPress, kein Baukasten.",
+        "inLanguage": "de-CH",
+        "isPartOf": {
+          "@id": "https://kazuvate.ch/#website"
+        },
+        "about": {
           "@id": "https://kazuvate.ch/#firma"
         }
       }
@@ -257,7 +313,7 @@
 <header class="kopf">
   <div class="wrap kopf-innen">
 
-    <a class="marke" href="index.html">
+    <a class="marke" href="/">
       <svg viewBox="0 0 585.51 442.90" role="img" aria-label="kazuvate"><use href="#marke"></use></svg>
       <span>kazuvate</span>
     </a>
@@ -275,7 +331,7 @@
       <div class="navigation-innen">
         <a href="#ueber-uns">Über uns</a>
         <a href="leistungen.html">Leistungen</a>
-        <a href="referenzen/index.html">Referenzen</a>
+        <a href="/referenzen/">Referenzen</a>
         <a href="ablauf.html">Ablauf</a>
         <a href="kontakt.html">Kontakt</a>
       </div>
@@ -504,7 +560,7 @@
 
       </div>
 
-      <a class="weiter" href="referenzen/index.html">Alle Referenzen</a>
+      <a class="weiter" href="/referenzen/">Alle Referenzen</a>
 
     </div>
   </section>
@@ -578,7 +634,7 @@
              scharf. -->
         <div class="fuss-draehte">
 
-          <a class="draht-knopf" href="https://kasumbajrami.dev/index.html"
+          <a class="draht-knopf" href="https://kasumbajrami.dev/"
              target="_blank" rel="noopener"
              aria-label="Persönliche Website von Kasum Bajrami, öffnet in einem neuen Tab">
             <span class="monogramm" aria-hidden="true">KB</span>
@@ -601,7 +657,7 @@
         <h2 id="fuss-seiten">Seiten</h2>
         <a href="#ueber-uns">Über uns</a>
         <a href="leistungen.html">Leistungen</a>
-        <a href="referenzen/index.html">Referenzen</a>
+        <a href="/referenzen/">Referenzen</a>
         <a href="ablauf.html">Ablauf</a>
         <a href="kontakt.html">Kontakt</a>
       </nav>

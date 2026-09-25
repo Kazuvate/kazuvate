@@ -9,7 +9,8 @@
     "prebuild": "node werkzeug/sitemap-bauen.mjs",
     "build": "vite build",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "indexnow": "node werkzeug/indexnow.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",

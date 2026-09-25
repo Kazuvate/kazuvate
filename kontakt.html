@@ -20,8 +20,21 @@
      stehen. Zwei Angaben, die sich widersprechen, sind schlechter als
      eine. Gepruefte Regel fuer diese Domain: /leistungen ohne .html
      ist 404, die Endung gehoert also dazu; /referenzen/ dagegen
-     funktioniert und ist die kuerzere der beiden Formen. -->
+     funktioniert und ist die kuerzere der beiden Formen.
+
+     Seit dem 25.09.2026 leiten /index.html, /referenzen/index.html und
+     die Adressen ohne .html per vercel.json auf diese Formen weiter
+     (Begruendung im README unter "Suche und KI-Suche"). Das Canonical
+     bleibt trotzdem noetig: /referenzen ohne Schraegstrich liefert
+     Vercel weiterhin aus, und jede Adresse mit angehaengtem Parameter,
+     etwa ?utm_source=linkedin, ist fuer eine Suchmaschine sonst eine
+     eigene Seite. -->
 <link rel="canonical" href="https://kazuvate.ch/kontakt.html">
+
+<!-- Grosse Vorschaubilder, etwa in Google Discover oder neben einer
+     KI-Antwort, zeigt Google nur mit dieser ausdruecklichen Erlaubnis.
+     Sie sagt nichts ueber das Indexieren selbst, das bleibt erlaubt. -->
+<meta name="robots" content="max-image-preview:large">
 
 <!-- Link-Vorschau in WhatsApp, LinkedIn, Slack, Signal und iMessage.
      Ohne diese Zeilen zeigt jeder geteilte Link auf kazuvate.ch nur
@@ -54,23 +67,56 @@
      war erlaubt, aber strukturierte Daten, denen auf der Seite
      selbst nichts entspricht, sind der Fall, den Googles Richtlinie
      als Grund zum Ignorieren nennt. Im Suchtreffer steht damit der
-     Pfad statt der nackten URL. -->
+     Pfad statt der nackten URL.
+
+     Seit dem 25.09.2026 steht der Pfad zusammen mit einem Knoten fuer
+     die Seite selbst in einem @graph. Der Knoten sagt, zu welcher
+     Website die Seite gehoert (#website) und von wem sie handelt
+     (#firma), beides ist auf der Startseite vollstaendig beschrieben.
+     Fuer eine Maschine ist die Unterseite damit kein loses Dokument
+     mehr, sondern ein Teil derselben Firma. Name und Beschreibung des
+     Knotens sind zeichengleich mit og:title und description oben. -->
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
+    "@graph": [
       {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Startseite",
-        "item": "https://kazuvate.ch/"
+        "@type": "ContactPage",
+        "@id": "https://kazuvate.ch/kontakt.html#seite",
+        "url": "https://kazuvate.ch/kontakt.html",
+        "name": "Kontakt",
+        "description": "Erzählen Sie uns von Ihrem Betrieb. Antwort innert 24 Stunden. Telefon, E-Mail und Anfrageformular für Webdesign in der Schweiz.",
+        "inLanguage": "de-CH",
+        "isPartOf": {
+          "@id": "https://kazuvate.ch/#website"
+        },
+        "about": {
+          "@id": "https://kazuvate.ch/#firma"
+        },
+        "breadcrumb": {
+          "@id": "https://kazuvate.ch/kontakt.html#krumen"
+        },
+        "mainEntity": {
+          "@id": "https://kazuvate.ch/#firma"
+        }
       },
       {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "Kontakt",
-        "item": "https://kazuvate.ch/kontakt.html"
+        "@type": "BreadcrumbList",
+        "@id": "https://kazuvate.ch/kontakt.html#krumen",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Startseite",
+            "item": "https://kazuvate.ch/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Kontakt",
+            "item": "https://kazuvate.ch/kontakt.html"
+          }
+        ]
       }
     ]
   }
@@ -155,7 +201,7 @@
 <header class="kopf">
   <div class="wrap kopf-innen">
 
-    <a class="marke" href="index.html">
+    <a class="marke" href="/">
       <svg viewBox="0 0 585.51 442.90" role="img" aria-label="kazuvate"><use href="#marke"></use></svg>
       <span>kazuvate</span>
     </a>
@@ -171,9 +217,9 @@
 
     <nav class="navigation" id="hauptmenue" aria-label="Hauptnavigation">
       <div class="navigation-innen">
-        <a href="index.html#ueber-uns">Über uns</a>
+        <a href="/#ueber-uns">Über uns</a>
         <a href="leistungen.html">Leistungen</a>
-        <a href="referenzen/index.html">Referenzen</a>
+        <a href="/referenzen/">Referenzen</a>
         <a href="ablauf.html">Ablauf</a>
         <a href="kontakt.html" aria-current="page">Kontakt</a>
       </div>
@@ -193,7 +239,7 @@
 <nav class="krumen" aria-label="Brotkrumen">
   <div class="wrap">
     <ol>
-      <li><a href="index.html">Startseite</a></li>
+      <li><a href="/">Startseite</a></li>
       <li aria-current="page">Kontakt</li>
     </ol>
   </div>
@@ -352,7 +398,7 @@
              scharf. -->
         <div class="fuss-draehte">
 
-          <a class="draht-knopf" href="https://kasumbajrami.dev/index.html"
+          <a class="draht-knopf" href="https://kasumbajrami.dev/"
              target="_blank" rel="noopener"
              aria-label="Persönliche Website von Kasum Bajrami, öffnet in einem neuen Tab">
             <span class="monogramm" aria-hidden="true">KB</span>
@@ -373,9 +419,9 @@
 
       <nav class="fuss-spalte" aria-labelledby="fuss-seiten">
         <h2 id="fuss-seiten">Seiten</h2>
-        <a href="index.html#ueber-uns">Über uns</a>
+        <a href="/#ueber-uns">Über uns</a>
         <a href="leistungen.html">Leistungen</a>
-        <a href="referenzen/index.html">Referenzen</a>
+        <a href="/referenzen/">Referenzen</a>
         <a href="ablauf.html">Ablauf</a>
         <a href="kontakt.html" aria-current="page">Kontakt</a>
       </nav>

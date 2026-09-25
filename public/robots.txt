@@ -51,6 +51,26 @@ User-agent: Google-Extended
 Allow: /
 Disallow: /api/
 
+# --- KI-Abruf im Auftrag eines Menschen, seit 25.09.2026 -------------
+#
+# Diese drei kommen nicht von selbst vorbei, sondern wenn jemand in
+# ChatGPT, Perplexity oder Claude nach kazuvate fragt oder die Adresse
+# hineinkopiert. Unter "*" waren sie schon erlaubt; hier stehen sie aus
+# demselben Grund wie die vier oben: damit "erlaubt" als Entscheidung
+# lesbar ist. Gleiche Falle, gleiche Loesung: /api/ in jeder Gruppe.
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /api/
+
+User-agent: Perplexity-User
+Allow: /
+Disallow: /api/
+
+User-agent: Claude-User
+Allow: /
+Disallow: /api/
+
 # Nicht benannt und damit unter "*" laufend: die Trainings-Crawler
 # GPTBot, ClaudeBot und CCBot. Die sammeln Text zum Trainieren von
 # Modellen und bringen keine Sichtbarkeit -- ob man sie zulaesst, ist

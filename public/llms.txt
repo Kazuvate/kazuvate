@@ -18,6 +18,8 @@ Dateien von fremden Servern.
 Nicht verwechseln mit PromptPrinter (promptprinter.app), dem eigenen
 SaaS-Produkt desselben Inhabers. kazuvate ist die Webdesign-Firma.
 
+Stand dieser Datei: 25.09.2026.
+
 ## Seiten
 
 - [Startseite](https://kazuvate.ch/): Wer wir sind, was wir bauen, für
@@ -53,6 +55,18 @@ Wortlaut nach dem ersten Schritt auf https://kazuvate.ch/ablauf.html: Wer
 einen Onlineshop, ein Buchungssystem mit Verfügbarkeiten oder einen
 Mitgliederbereich braucht, hört das schon im ersten Gespräch und nicht erst
 in der Offerte. Wir sagen dann, was stattdessen passt.
+
+## Firma im Netz
+
+Dieselbe Firma unter ihren eigenen Profilen. Name, Angebot und Sitz
+stimmen überall mit dieser Website überein.
+
+- [kazuvate auf LinkedIn](https://www.linkedin.com/company/142573928):
+  Firmenseite.
+- [kazuvate auf GitHub](https://github.com/Kazuvate): Organisation der
+  Firma.
+- [Kasum Bajrami](https://kasumbajrami.dev/): persönliche Website des
+  Inhabers.
 
 ## Optional
 

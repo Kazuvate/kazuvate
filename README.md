@@ -30,6 +30,7 @@ den React-Dateien erscheinen sofort im Browser, ohne Neuladen. Beenden mit
 | `npm run build` | Fertige Website nach `dist/` bauen, das ist der Ordner zum Hochladen |
 | `npm run preview` | Den gebauten Stand aus `dist/` lokal anschauen, bevor er hochgeht |
 | `npm run typecheck` | TypeScript prüfen, ohne etwas zu bauen |
+| `npm run indexnow` | Nach einem Deploy alle Seiten an Bing und Co. melden, siehe „Suche und KI-Suche" |
 
 ## Stand
 
@@ -83,14 +84,18 @@ public/skript/haupt.js mitlaufender Kopf, Menue-Schublade, Symbolzeichnung, Kach
 public/markenlogo/     Logo, Favicons, App Icons, Vorschaubild fürs Teilen
 public/robots.txt      steht so im Repo
 public/sitemap.xml     erzeugt, siehe werkzeug/sitemap-bauen.mjs
+public/llms.txt        Übersicht der Firma für KI-Systeme, von Hand gepflegt
+public/04d4fb9e...txt  IndexNow-Schlüssel, siehe „Suche und KI-Suche"
 medien/referenzen/     Bildschirmfotos der Kundenprojekte
 kazuvate_Logo.jpg      die ursprüngliche Bilddatei, liegt nur noch als Beleg hier
 
 werkzeug/              läuft nie mit aus, steht in keiner Eingangsliste in vite.config.ts
 werkzeug/sitemap-bauen.mjs       schreibt public/sitemap.xml, läuft als prebuild
+werkzeug/indexnow.mjs            meldet die Sitemap-Adressen über IndexNow, von Hand
 werkzeug/markenlogo-regeln.md    Markenregeln zum Logo, lag frueher in public/markenlogo/
 
 api/kontakt.js          Vercel Function: schickt das Formular per Resend als Mail
+vercel.json            Weiterleitungen und Cache-Regeln, siehe „Suche und KI-Suche"
 vite.config.ts         Multi-Page-Konfiguration: jede HTML-Datei ein Einstiegspunkt
 dist/                  Ergebnis von npm run build, nicht im Repo
 ```
@@ -694,6 +699,64 @@ Bisher eine Referenz: ProMeti Facility Services Zekiri in Basel. Das
 Bildschirmfoto liegt als WebP in `medien/referenzen/` in zwei Breiten (1280 und
 760) und wird über `srcset` ausgeliefert. Auf dem Handy lädt die
 42-kB-Fassung statt der 77-kB-Fassung.
+
+## Suche und KI-Suche
+
+Durchgang vom 25.09.2026, nach einem Prompt zu SEO, AEO und GEO. Das meiste
+war schon da (Titel mit Zielbegriffen, Canonical, Open Graph, Firmendaten mit
+`sameAs`, Brotkrumen, `llms.txt`, KI-Crawler in der `robots.txt`). Gefehlt
+hat, was man nur an der laufenden Seite sieht.
+
+### vercel.json
+
+JSON kennt keine Kommentare, deshalb steht die Begründung hier.
+
+**Weiterleitungen.** `/index.html` und `/referenzen/index.html` lieferten
+dieselbe Seite wie `/` und `/referenzen/` mit Status 200. Das Canonical hat
+das schon aufgelöst, eine Weiterleitung ist aber das stärkere Signal und
+sammelt fremde Links auf der richtigen Adresse. Dazu `/leistungen`,
+`/ablauf`, `/kontakt`, `/impressum` und `/datenschutz` ohne Endung: die waren
+404. Menschen tippen sie so, und KI-Assistenten raten Adressen gern ohne
+`.html`. Alle permanent (308).
+
+Bewusst **keine** Weiterleitung von `/referenzen` auf `/referenzen/`. Vercel
+liefert beide aus, und ob eine Regel mit Quelle `/referenzen` auch
+`/referenzen/` trifft, hängt an der Mustererkennung. Trifft sie, dreht sich
+die Seite im Kreis. Das Canonical reicht dort.
+
+**Cache.** Vercel schickte für jede Datei `max-age=0, must-revalidate`, auch
+für die Dateien unter `/assets/`, deren Name einen Inhalts-Hash trägt. Jeder
+wiederkehrende Besucher hat also jedes Stylesheet und jedes Skript einmal beim
+Server nachgefragt, bevor die Seite stand. Jetzt ein Jahr und `immutable`:
+ändert sich eine Datei, ändert sich ihr Name, und die alte wird nie mehr
+angefragt. Dasselbe für `/schriften/`. Die Schrift hat keinen Hash im Namen,
+**wer sie austauscht, gibt ihr deshalb einen neuen Dateinamen** und passt
+`@font-face` und das `preload` in allen Seiten an.
+
+### Interne Links auf die kanonischen Adressen
+
+Alle Links auf die Startseite und die Referenzen zeigten auf `index.html` und
+`referenzen/index.html`, also auf die Adressen, die das Canonical gerade
+abwählt. Jetzt `/`, `/#ueber-uns` und `/referenzen/`, absolut ab der Wurzel:
+auf der Referenzenseite zeigte das relative `index.html` sonst je nach
+Aufruf mit oder ohne Schrägstrich auf eine andere Seite.
+
+### IndexNow
+
+`npm run indexnow` nach einem Deploy mit neuen oder geänderten Seiten. Meldet
+alle Adressen aus der Sitemap an Bing, Yandex, Seznam und Naver. Bing ist der
+Grund: sein Index speist Copilot und die Websuche in ChatGPT. Der Schlüssel
+liegt öffentlich als `public/04d4fb9e41d78f4a59ab9b98002d3fab.txt`, das ist
+bei IndexNow so gewollt. Genaueres im Kopf von `werkzeug/indexnow.mjs`.
+
+### Was nur von Hand geht
+
+Die grössten Hebel stehen nicht im Code, sie brauchen ein Konto:
+
+1. Google Search Console, Domain-Property per DNS, Sitemap einreichen
+2. Bing Webmaster Tools, Import aus der Search Console
+3. Google Unternehmensprofil als Dienstleistungsgebiet
+4. local.ch und search.ch mit zeichengleichen Angaben
 
 ## Was noch kommt
 

@@ -20,8 +20,21 @@
      stehen. Zwei Angaben, die sich widersprechen, sind schlechter als
      eine. Gepruefte Regel fuer diese Domain: /leistungen ohne .html
      ist 404, die Endung gehoert also dazu; /referenzen/ dagegen
-     funktioniert und ist die kuerzere der beiden Formen. -->
+     funktioniert und ist die kuerzere der beiden Formen.
+
+     Seit dem 25.09.2026 leiten /index.html, /referenzen/index.html und
+     die Adressen ohne .html per vercel.json auf diese Formen weiter
+     (Begruendung im README unter "Suche und KI-Suche"). Das Canonical
+     bleibt trotzdem noetig: /referenzen ohne Schraegstrich liefert
+     Vercel weiterhin aus, und jede Adresse mit angehaengtem Parameter,
+     etwa ?utm_source=linkedin, ist fuer eine Suchmaschine sonst eine
+     eigene Seite. -->
 <link rel="canonical" href="https://kazuvate.ch/referenzen/">
+
+<!-- Grosse Vorschaubilder, etwa in Google Discover oder neben einer
+     KI-Antwort, zeigt Google nur mit dieser ausdruecklichen Erlaubnis.
+     Sie sagt nichts ueber das Indexieren selbst, das bleibt erlaubt. -->
+<meta name="robots" content="max-image-preview:large">
 
 <!-- Link-Vorschau in WhatsApp, LinkedIn, Slack, Signal und iMessage.
      Ohne diese Zeilen zeigt jeder geteilte Link auf kazuvate.ch nur
@@ -54,23 +67,94 @@
      war erlaubt, aber strukturierte Daten, denen auf der Seite
      selbst nichts entspricht, sind der Fall, den Googles Richtlinie
      als Grund zum Ignorieren nennt. Im Suchtreffer steht damit der
-     Pfad statt der nackten URL. -->
+     Pfad statt der nackten URL.
+
+     Seit dem 25.09.2026 steht der Pfad zusammen mit einem Knoten fuer
+     die Seite selbst in einem @graph. Der Knoten sagt, zu welcher
+     Website die Seite gehoert (#website) und von wem sie handelt
+     (#firma), beides ist auf der Startseite vollstaendig beschrieben.
+     Fuer eine Maschine ist die Unterseite damit kein loses Dokument
+     mehr, sondern ein Teil derselben Firma. Name und Beschreibung des
+     Knotens sind zeichengleich mit og:title und description oben. -->
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
+    "@graph": [
       {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Startseite",
-        "item": "https://kazuvate.ch/"
+        "@type": "CollectionPage",
+        "@id": "https://kazuvate.ch/referenzen/#seite",
+        "url": "https://kazuvate.ch/referenzen/",
+        "name": "Webdesign-Referenzen aus der Schweiz",
+        "description": "Gebaute und live laufende Websites von kazuvate. Handgebautes Frontend für Schweizer KMU, jede Referenz direkt zum Anschauen verlinkt.",
+        "inLanguage": "de-CH",
+        "isPartOf": {
+          "@id": "https://kazuvate.ch/#website"
+        },
+        "about": {
+          "@id": "https://kazuvate.ch/#firma"
+        },
+        "breadcrumb": {
+          "@id": "https://kazuvate.ch/referenzen/#krumen"
+        },
+        "mainEntity": {
+          "@type": "ItemList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@type": "WebSite",
+                "name": "ProMeti Facility Services",
+                "url": "https://www.prometizekiri.com/",
+                "creator": {
+                  "@id": "https://kazuvate.ch/#firma"
+                }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "item": {
+                "@type": "WebSite",
+                "name": "PromptPrinter",
+                "url": "https://promptprinter.app/",
+                "creator": {
+                  "@id": "https://kazuvate.ch/#firma"
+                }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "item": {
+                "@type": "WebSite",
+                "name": "Herzumschlag-Challenge",
+                "url": "https://herzumschlag.artemishebammen.ch/",
+                "creator": {
+                  "@id": "https://kazuvate.ch/#firma"
+                }
+              }
+            }
+          ]
+        }
       },
       {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "Referenzen",
-        "item": "https://kazuvate.ch/referenzen/"
+        "@type": "BreadcrumbList",
+        "@id": "https://kazuvate.ch/referenzen/#krumen",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Startseite",
+            "item": "https://kazuvate.ch/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Referenzen",
+            "item": "https://kazuvate.ch/referenzen/"
+          }
+        ]
       }
     ]
   }
@@ -155,7 +239,7 @@
 <header class="kopf">
   <div class="wrap kopf-innen">
 
-    <a class="marke" href="../index.html">
+    <a class="marke" href="/">
       <svg viewBox="0 0 585.51 442.90" role="img" aria-label="kazuvate"><use href="#marke"></use></svg>
       <span>kazuvate</span>
     </a>
@@ -171,9 +255,9 @@
 
     <nav class="navigation" id="hauptmenue" aria-label="Hauptnavigation">
       <div class="navigation-innen">
-        <a href="../index.html#ueber-uns">Über uns</a>
+        <a href="/#ueber-uns">Über uns</a>
         <a href="../leistungen.html">Leistungen</a>
-        <a href="index.html" aria-current="page">Referenzen</a>
+        <a href="/referenzen/" aria-current="page">Referenzen</a>
         <a href="../ablauf.html">Ablauf</a>
         <a href="../kontakt.html">Kontakt</a>
       </div>
@@ -216,7 +300,7 @@
 <nav class="krumen" aria-label="Brotkrumen">
   <div class="wrap">
     <ol>
-      <li><a href="../index.html">Startseite</a></li>
+      <li><a href="/">Startseite</a></li>
       <li aria-current="page">Referenzen</li>
     </ol>
   </div>
@@ -228,12 +312,20 @@
 
     <div class="referenz-galerie">
 
+      <!-- Das erste Bild laedt sofort und mit Vorrang, die anderen
+           beiden bleiben lazy. Seit dem 25.09.2026, vorher waren alle
+           drei lazy. Die erste Reihe steht beim Laden schon im Bild
+           (oberer Rand bei rund 464px in einem 900px hohen Fenster,
+           siehe src/bewegung.ts), und auf dem Handy ist dieses Bild
+           das groesste Element im ersten Bildschirm, also das, woran
+           Google den LCP misst. loading="lazy" haette es erst nach dem
+           Layout angefordert, statt gleich beim Lesen des HTML. -->
       <a class="referenz-kachel" href="https://www.prometizekiri.com/" target="_blank" rel="noopener">
         <img src="../medien/referenzen/prometi-startseite.webp"
              srcset="../medien/referenzen/prometi-startseite-760.webp 760w,
                      ../medien/referenzen/prometi-startseite.webp 1280w"
              sizes="(min-width: 640px) 500px, 100vw"
-             width="1280" height="860" loading="lazy" decoding="async"
+             width="1280" height="860" fetchpriority="high" decoding="async"
              alt="Bildschirmfoto der Startseite: dunkler Kopfbereich mit der Überschrift Unterhaltsreinigung, Hauswartung, Transportdienste, daneben das Foto einer Mitarbeiterin vor dem Firmenfahrzeug">
         <span class="name">ProMeti Facility Services<span class="nur-fuer-screenreader">, öffnet prometizekiri.com in einem neuen Tab</span></span>
       </a>
@@ -300,7 +392,7 @@
              scharf. -->
         <div class="fuss-draehte">
 
-          <a class="draht-knopf" href="https://kasumbajrami.dev/index.html"
+          <a class="draht-knopf" href="https://kasumbajrami.dev/"
              target="_blank" rel="noopener"
              aria-label="Persönliche Website von Kasum Bajrami, öffnet in einem neuen Tab">
             <span class="monogramm" aria-hidden="true">KB</span>
@@ -321,9 +413,9 @@
 
       <nav class="fuss-spalte" aria-labelledby="fuss-seiten">
         <h2 id="fuss-seiten">Seiten</h2>
-        <a href="../index.html#ueber-uns">Über uns</a>
+        <a href="/#ueber-uns">Über uns</a>
         <a href="../leistungen.html">Leistungen</a>
-        <a href="index.html">Referenzen</a>
+        <a href="/referenzen/">Referenzen</a>
         <a href="../ablauf.html">Ablauf</a>
         <a href="../kontakt.html">Kontakt</a>
       </nav>

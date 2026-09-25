@@ -1,0 +1,22 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/referenzen/index.html", "destination": "/referenzen/", "permanent": true },
+    { "source": "/leistungen", "destination": "/leistungen.html", "permanent": true },
+    { "source": "/ablauf", "destination": "/ablauf.html", "permanent": true },
+    { "source": "/kontakt", "destination": "/kontakt.html", "permanent": true },
+    { "source": "/impressum", "destination": "/impressum.html", "permanent": true },
+    { "source": "/datenschutz", "destination": "/datenschutz.html", "permanent": true }
+  ],
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "source": "/schriften/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    }
+  ]
+}
