@@ -28,7 +28,8 @@
  * zwischen Laden und Absenden schafft kein Mensch, der vier Felder ausfuellt
  * und eine Nachricht schreibt (siehe skript/haupt.js fuer den Zeitstempel).
  * Beide Treffer bekommen dieselbe Antwort wie ein echter Erfolg: eine
- * Weiterleitung auf /danke.html ohne Fehlermeldung. Das kostet nichts (es
+ * Weiterleitung auf die Danke-Seite der jeweiligen Sprache, ohne
+ * Fehlermeldung. Das kostet nichts (es
  * wird ja nichts verschickt) und verraet einem Bot nicht, dass er
  * aufgeflogen ist -- ein Bot, der eine Fehlermeldung sieht, passt seinen
  * naechsten Versuch an, einer, der eine Erfolgsseite sieht, nicht.
@@ -38,6 +39,18 @@ const EMPFAENGER = "kasumbajrami7@gmail.com";
 const ABSENDER = "Kazuvate Website <onboarding@resend.dev>";
 const PFLICHTFELDER = ["vorname", "name", "email", "nachricht"];
 
+/** Seit 25.09.2026 gibt es das Formular auf Deutsch, Englisch und
+ *  Franzoesisch. Jede Fassung schickt ihre Sprache im versteckten Feld
+ *  "sprache" mit, damit Erfolg und Fehler auf der Seite in derselben
+ *  Sprache landen. Fehlt das Feld oder steht etwas Unbekanntes drin,
+ *  gilt Deutsch -- so bleibt eine alte, noch zwischengespeicherte
+ *  Kontaktseite ohne das Feld weiterhin funktionsfaehig. */
+const ZIELE = {
+  de: { danke: "/danke.html", kontakt: "/kontakt.html", name: "Deutsch" },
+  en: { danke: "/en/thank-you.html", kontakt: "/en/contact.html", name: "Englisch" },
+  fr: { danke: "/fr/merci.html", kontakt: "/fr/contact.html", name: "Franzoesisch" },
+};
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     res.statusCode = 405;
@@ -46,23 +59,24 @@ export default async function handler(req, res) {
   }
 
   const daten = await formularDaten(req);
+  const ziel = ZIELE[daten.sprache] ?? ZIELE.de;
 
   if (istSpam(daten)) {
-    weiterleiten(res, "/danke.html");
+    weiterleiten(res, ziel.danke);
     return;
   }
 
   if (PFLICHTFELDER.some((feld) => !String(daten[feld] ?? "").trim())) {
-    weiterleiten(res, "/kontakt.html?fehler=eingabe#anfrage");
+    weiterleiten(res, `${ziel.kontakt}?fehler=eingabe#anfrage`);
     return;
   }
 
   try {
-    await mailSenden(daten);
-    weiterleiten(res, "/danke.html");
+    await mailSenden(daten, ziel);
+    weiterleiten(res, ziel.danke);
   } catch (fehler) {
     console.error("Resend-Versand fehlgeschlagen:", fehler);
-    weiterleiten(res, "/kontakt.html?fehler=versand#anfrage");
+    weiterleiten(res, `${ziel.kontakt}?fehler=versand#anfrage`);
   }
 }
 
@@ -88,8 +102,12 @@ function istSpam(daten) {
   return false;
 }
 
-async function mailSenden(daten) {
+/** Nicht-deutsche Anfragen tragen die Sprache schon im Betreff, damit
+ *  in der Mailbox sofort sichtbar ist, in welcher Sprache zu antworten
+ *  ist. */
+async function mailSenden(daten, ziel) {
   const betreff =
+    (ziel === ZIELE.de ? "" : `[${ziel.name}] `) +
     `Anfrage von ${daten.vorname} ${daten.name}` +
     (daten.organisation ? ` (${daten.organisation})` : "");
 
@@ -98,6 +116,7 @@ async function mailSenden(daten) {
     `Name: ${daten.name}`,
     daten.organisation ? `Organisation: ${daten.organisation}` : null,
     `E-Mail: ${daten.email}`,
+    `Sprache der Seite: ${ziel.name}`,
     "",
     "Nachricht:",
     daten.nachricht,

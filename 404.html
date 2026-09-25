@@ -143,6 +143,16 @@
       </div>
     </nav>
 
+    <!-- Sprachen wie auf allen Seiten, hier aber auf die drei
+         Startseiten: diese Seite steht unter jeder Adresse, die es
+         nicht gibt, und hat deshalb kein Gegenstueck in einer anderen
+         Sprache. -->
+    <nav class="sprachen" aria-label="Sprache">
+      <a href="/" hreflang="de" lang="de-CH" aria-label="Deutsch" aria-current="page">DE</a>
+      <a href="/en/" hreflang="en" lang="en" aria-label="English">EN</a>
+      <a href="/fr/" hreflang="fr" lang="fr-CH" aria-label="Français">FR</a>
+    </nav>
+
     <a class="kopf-knopf" href="/kontakt.html">Unverbindlich anfragen</a>
 
   </div>
@@ -158,6 +168,13 @@
     <p class="oben">Fehler 404</p>
     <h1>Diese Seite gibt es nicht</h1>
     <p class="unter">Die Adresse führt ins Leere. Meistens liegt es an einem Tippfehler oder an einem alten Link. Unten stehen die Seiten, die es gibt.</p>
+    <!-- Seit 25.09.2026 gibt es die Website auch auf Englisch und
+         Franzoesisch, und Vercel liefert diese eine Fehlerseite auch
+         unter /en/... und /fr/... aus. Je eine Zeile pro Sprache statt
+         dreier Fehlerseiten: Vercel kennt ohne Umleitungsregeln nur
+         eine 404.html. lang sorgt fuer die richtige Aussprache. -->
+    <p class="unter" lang="en">This page does not exist. Continue on the <a href="/en/">English home page</a>.</p>
+    <p class="unter" lang="fr-CH">Cette page n’existe pas. Continuer vers la <a href="/fr/">page d’accueil en français</a>.</p>
   </div>
 </div>
 

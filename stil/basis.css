@@ -519,6 +519,84 @@ dd, dt{ overflow-wrap: anywhere; }
    ein Klick an, als haette die Seite ihn nicht gehoert. */
 .kopf-knopf:active{ transform: scale(.97); }
 
+/* --- Sprachen ---------------------------------------------------
+   Seit 25.09.2026 gibt es die Website auf Deutsch, Englisch und
+   Franzoesisch. Drei Kuerzel im Kopf, auf dem Desktop durch eine
+   helle Haarlinie von der Navigation getrennt -- dieselbe Linie wie
+   ueber .fuss-unten. Die aktuelle Sprache steht im vollen hellen Ton,
+   die anderen im gedaempften, wie der Firmenname im Fuss neben den
+   Links. Kein Unterstrich wie in der Navigation: das hier ist eine
+   Einstellung, kein Ort, an den man geht.
+
+   Auf dem Handy in der ersten Zeile neben dem Menueknopf statt in
+   der Schublade. Wer die Seite in der falschen Sprache vor sich hat,
+   soll den Ausweg sehen, ohne erst ein Menue zu oeffnen, das er
+   nicht lesen kann. */
+.sprachen{
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.sprachen a{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  min-height: 34px;
+  font-size: .8rem;
+  font-weight: 650;
+  letter-spacing: .06em;
+  color: var(--auf-flaeche-still);
+  text-decoration: none;
+  border-radius: 6px;
+  transition: color var(--kurz) var(--kurve);
+}
+.sprachen a[aria-current="page"]{ color: var(--auf-flaeche); }
+@media (hover: hover) and (pointer: fine){
+  .sprachen a:hover{ color: var(--auf-flaeche); }
+}
+@media (min-width: 860px){
+  .sprachen{
+    margin-left: var(--s4);
+    padding-left: var(--s3);
+    border-left: 1px solid rgb(247 247 241 / .18);
+  }
+}
+/* Zwischen 860 und 1099px reicht die Zeile nicht fuer Marke, fuenf
+   Menuepunkte, Sprachen und Anfrage-Knopf. Gemessen am 25.09.2026:
+   die Menuepunkte brachen dort zweizeilig um, auf Deutsch schon vor
+   den Sprachen zwischen 860 und 959px, mit ihnen bis 1099px, auf
+   Franzoesisch am laengsten. Der Knopf faellt in diesem Bereich weg,
+   aus demselben Grund wie auf dem Handy (siehe oben bei
+   .kopf-knopf{display:none}): derselbe Aufruf steht im Menuepunkt
+   Kontakt und zweimal im Fliesstext jeder Seite. Dazu ein Drittel
+   weniger Abstand zwischen den Punkten. Danach einzeilig in allen
+   drei Sprachen, ab 1100px steht der Knopf wieder da. */
+@media (min-width: 860px) and (max-width: 1099px){
+  .kopf-knopf{ display: none; }
+  .navigation-innen{ gap: var(--s5); }
+}
+/* Die Sprachen tragen hier das margin-left:auto, das sonst der
+   Menueknopf hat, und stehen per order zwischen Marke und Knopf. Der
+   Knopf rueckt dafuer direkt an sie heran. :has() statt einer Regel
+   fuer den Knopf allein, damit eine Seite ohne Sprachen (es gibt
+   keine, aber eine kaeme dazu) den Knopf trotzdem rechts behaelt.
+   44px Hoehe fuer die Trefferflaeche, wie in der Schublade. */
+@media (max-width: 859px){
+  .sprachen{
+    order: 1;
+    margin-left: auto;
+  }
+  .sprachen a{ min-height: 44px; min-width: 36px; }
+  .js .kopf-innen:has(.sprachen) .menue-knopf{ margin-left: 0; }
+}
+
+/* Links im Titelband, bisher nur auf der Fehlerseite (die Zeilen auf
+   Englisch und Franzoesisch). Das Oliv der uebrigen Links waere auf
+   dieser Flaeche kaum zu sehen, deshalb der Ton der Zeile selbst,
+   unterstrichen, damit sie als Link erkennbar bleiben. */
+.titel .unter a{ color: inherit; }
+
 /* --- Menueknopf und Schublade -------------------------------
    Ab fuenf Punkten passt die Navigation auf dem Handy nicht mehr
    in eine Zeile. Statt sie wegzuwischen, liegt sie unter dem Kopf

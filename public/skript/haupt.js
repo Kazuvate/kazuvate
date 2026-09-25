@@ -93,9 +93,18 @@
   var kopf = document.querySelector('.kopf');
   if (!knopf || !kopf) return;
 
+  // Beschriftung in der Sprache der Seite, seit 25.09.2026. Das
+  // Startlabel steht ohnehin im HTML; hier kommt nur der Wechsel
+  // dazu. Unbekannte Sprache faellt auf Deutsch zurueck.
+  var texte = {
+    de: ['Menü öffnen', 'Menü schliessen'],
+    en: ['Open menu', 'Close menu'],
+    fr: ['Ouvrir le menu', 'Fermer le menu']
+  }[document.documentElement.lang.slice(0, 2)] || ['Menü öffnen', 'Menü schliessen'];
+
   function setzen(offen) {
     knopf.setAttribute('aria-expanded', offen ? 'true' : 'false');
-    knopf.setAttribute('aria-label', offen ? 'Menü schliessen' : 'Menü öffnen');
+    knopf.setAttribute('aria-label', offen ? texte[1] : texte[0]);
     kopf.classList.toggle('menue-offen', offen);
   }
 
