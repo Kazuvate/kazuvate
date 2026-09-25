@@ -719,10 +719,11 @@ sammelt fremde Links auf der richtigen Adresse. Dazu `/leistungen`,
 404. Menschen tippen sie so, und KI-Assistenten raten Adressen gern ohne
 `.html`. Alle permanent (308).
 
-Bewusst **keine** Weiterleitung von `/referenzen` auf `/referenzen/`. Vercel
-liefert beide aus, und ob eine Regel mit Quelle `/referenzen` auch
-`/referenzen/` trifft, hängt an der Mustererkennung. Trifft sie, dreht sich
-die Seite im Kreis. Das Canonical reicht dort.
+Dazu `/referenzen` ohne Schrägstrich auf `/referenzen/`. Die Regel kam erst
+nach dem ersten Deploy dazu: träfe die Quelle `/referenzen` auch
+`/referenzen/`, würde sich die Seite im Kreis drehen. Live nachgeprüft, dass
+Vercel den Schrägstrich strikt vergleicht: `/leistungen/` blieb nach dem
+Deploy 404, obwohl es eine Regel für `/leistungen` gibt.
 
 **Cache.** Vercel schickte für jede Datei `max-age=0, must-revalidate`, auch
 für die Dateien unter `/assets/`, deren Name einen Inhalts-Hash trägt. Jeder

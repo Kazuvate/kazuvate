@@ -3,6 +3,7 @@
   "redirects": [
     { "source": "/index.html", "destination": "/", "permanent": true },
     { "source": "/referenzen/index.html", "destination": "/referenzen/", "permanent": true },
+    { "source": "/referenzen", "destination": "/referenzen/", "permanent": true },
     { "source": "/leistungen", "destination": "/leistungen.html", "permanent": true },
     { "source": "/ablauf", "destination": "/ablauf.html", "permanent": true },
     { "source": "/kontakt", "destination": "/kontakt.html", "permanent": true },
