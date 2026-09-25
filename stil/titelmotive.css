@@ -165,7 +165,15 @@
 .titel--datenschutz h1{
   white-space: normal;
   text-wrap: wrap;
-  max-width: 13ch;
+  /* min() seit 25.09.2026: 13ch sind bei 320px Breite 307px, der
+     Platz zwischen den Raendern nur 276px -- die Seite liess sich
+     dort 24px seitwaerts schieben. Aufgefallen beim Pruefen von
+     "Protection des données", betraf aber schon die deutsche Seite.
+     100vw statt 100%: .titel-wort richtet seine Breite nach dem Titel
+     selbst, 100% davon waere ein Zirkelschluss, und der Browser loest
+     ihn, indem er die Grenze ganz fallen laesst (gemessen: dann eine
+     einzige Zeile, 386px breit). */
+  max-width: min(13ch, calc(100vw - 2 * var(--rand)));
   line-height: .95;
 }
 

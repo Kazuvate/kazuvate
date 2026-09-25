@@ -35,6 +35,16 @@
      Sie sagt nichts ueber das Indexieren selbst, das bleibt erlaubt. -->
 <meta name="robots" content="max-image-preview:large">
 
+<!-- Dieselbe Seite in den anderen Sprachen, seit 25.09.2026. Jede
+     Fassung nennt alle drei plus x-default, sich selbst eingeschlossen:
+     einen Verweis, den die Gegenseite nicht erwidert, ignoriert Google.
+     x-default zeigt auf Deutsch, die Fassung, die zuerst da war.
+     Dieselbe Zuordnung steht als xhtml:link in der Sitemap. -->
+<link rel="alternate" hreflang="de" href="https://kazuvate.ch/">
+<link rel="alternate" hreflang="en" href="https://kazuvate.ch/en/">
+<link rel="alternate" hreflang="fr" href="https://kazuvate.ch/fr/">
+<link rel="alternate" hreflang="x-default" href="https://kazuvate.ch/">
+
 <!-- Link-Vorschau in WhatsApp, LinkedIn, Slack, Signal und iMessage.
      Ohne diese Zeilen zeigt jeder geteilte Link auf kazuvate.ch nur
      die nackte Adresse -- markenlogo/og.png liegt seit dem 19.08.2026
@@ -51,6 +61,8 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="kazuvate">
 <meta property="og:locale" content="de_CH">
+<meta property="og:locale:alternate" content="en_GB">
+<meta property="og:locale:alternate" content="fr_CH">
 <meta property="og:url" content="https://kazuvate.ch/">
 <meta property="og:title" content="Webdesign für KMU in der Schweiz">
 <meta property="og:description" content="Handgebaute Websites für kleine und mittlere Unternehmen in der Schweiz. Kein WordPress, kein Baukasten.">
@@ -120,7 +132,9 @@
         "email": "kasumbajrami7@gmail.com",
         "knowsLanguage": [
           "de-CH",
-          "de"
+          "de",
+          "en",
+          "fr"
         ],
         "knowsAbout": [
           "Webdesign",
@@ -137,7 +151,11 @@
           "contactType": "customer service",
           "telephone": "+41786707973",
           "email": "kasumbajrami7@gmail.com",
-          "availableLanguage": "de",
+          "availableLanguage": [
+            "de",
+            "en",
+            "fr"
+          ],
           "areaServed": "CH"
         },
         "sameAs": [
@@ -211,7 +229,11 @@
         "@id": "https://kazuvate.ch/#website",
         "url": "https://kazuvate.ch/",
         "name": "kazuvate",
-        "inLanguage": "de-CH",
+        "inLanguage": [
+          "de-CH",
+          "en",
+          "fr-CH"
+        ],
         "publisher": {
           "@id": "https://kazuvate.ch/#firma"
         }
@@ -334,6 +356,18 @@
         <a href="ablauf.html">Ablauf</a>
         <a href="kontakt.html">Kontakt</a>
       </div>
+    </nav>
+
+    <!-- Sprachen, seit 25.09.2026. Jeder Link fuehrt auf dieselbe Seite
+         in der anderen Sprache, nicht auf deren Startseite. Kuerzel statt
+         ausgeschriebener Namen, damit der Kopf auf dem Handy einzeilig
+         bleibt; den vollen Namen liest ein Screenreader aus aria-label,
+         in der jeweiligen Sprache ausgesprochen (lang). Stil in
+         stil/basis.css unter "Sprachen". -->
+    <nav class="sprachen" aria-label="Sprache">
+      <a href="/" hreflang="de" lang="de-CH" aria-label="Deutsch" aria-current="page">DE</a>
+      <a href="/en/" hreflang="en" lang="en" aria-label="English">EN</a>
+      <a href="/fr/" hreflang="fr" lang="fr-CH" aria-label="Français">FR</a>
     </nav>
 
     <a class="kopf-knopf" href="kontakt.html">Unverbindlich anfragen</a>
