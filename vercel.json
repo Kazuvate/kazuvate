@@ -8,7 +8,30 @@
     { "source": "/ablauf", "destination": "/ablauf.html", "permanent": true },
     { "source": "/kontakt", "destination": "/kontakt.html", "permanent": true },
     { "source": "/impressum", "destination": "/impressum.html", "permanent": true },
-    { "source": "/datenschutz", "destination": "/datenschutz.html", "permanent": true }
+    { "source": "/datenschutz", "destination": "/datenschutz.html", "permanent": true },
+
+    { "source": "/de", "destination": "/", "permanent": true },
+    { "source": "/de/", "destination": "/", "permanent": true },
+
+    { "source": "/en", "destination": "/en/", "permanent": true },
+    { "source": "/en/index.html", "destination": "/en/", "permanent": true },
+    { "source": "/en/portfolio", "destination": "/en/portfolio/", "permanent": true },
+    { "source": "/en/portfolio/index.html", "destination": "/en/portfolio/", "permanent": true },
+    { "source": "/en/services", "destination": "/en/services.html", "permanent": true },
+    { "source": "/en/process", "destination": "/en/process.html", "permanent": true },
+    { "source": "/en/contact", "destination": "/en/contact.html", "permanent": true },
+    { "source": "/en/legal-notice", "destination": "/en/legal-notice.html", "permanent": true },
+    { "source": "/en/privacy", "destination": "/en/privacy.html", "permanent": true },
+
+    { "source": "/fr", "destination": "/fr/", "permanent": true },
+    { "source": "/fr/index.html", "destination": "/fr/", "permanent": true },
+    { "source": "/fr/references", "destination": "/fr/references/", "permanent": true },
+    { "source": "/fr/references/index.html", "destination": "/fr/references/", "permanent": true },
+    { "source": "/fr/prestations", "destination": "/fr/prestations.html", "permanent": true },
+    { "source": "/fr/deroulement", "destination": "/fr/deroulement.html", "permanent": true },
+    { "source": "/fr/contact", "destination": "/fr/contact.html", "permanent": true },
+    { "source": "/fr/mentions-legales", "destination": "/fr/mentions-legales.html", "permanent": true },
+    { "source": "/fr/protection-des-donnees", "destination": "/fr/protection-des-donnees.html", "permanent": true }
   ],
   "headers": [
     {

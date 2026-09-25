@@ -64,6 +64,27 @@ export default defineConfig({
         datenschutz: path.resolve(__dirname, "datenschutz.html"),
         referenzen: path.resolve(__dirname, "referenzen/index.html"),
 
+        // Englisch und Franzoesisch, seit 25.09.2026. Dieselben acht
+        // Seiten wie oben, je in en/ und fr/ mit uebersetzten
+        // Dateinamen. Welche Datei zu welcher gehoert, steht in
+        // werkzeug/sitemap-bauen.mjs.
+        en_start: path.resolve(__dirname, "en/index.html"),
+        en_leistungen: path.resolve(__dirname, "en/services.html"),
+        en_ablauf: path.resolve(__dirname, "en/process.html"),
+        en_kontakt: path.resolve(__dirname, "en/contact.html"),
+        en_danke: path.resolve(__dirname, "en/thank-you.html"),
+        en_impressum: path.resolve(__dirname, "en/legal-notice.html"),
+        en_datenschutz: path.resolve(__dirname, "en/privacy.html"),
+        en_referenzen: path.resolve(__dirname, "en/portfolio/index.html"),
+        fr_start: path.resolve(__dirname, "fr/index.html"),
+        fr_leistungen: path.resolve(__dirname, "fr/prestations.html"),
+        fr_ablauf: path.resolve(__dirname, "fr/deroulement.html"),
+        fr_kontakt: path.resolve(__dirname, "fr/contact.html"),
+        fr_danke: path.resolve(__dirname, "fr/merci.html"),
+        fr_impressum: path.resolve(__dirname, "fr/mentions-legales.html"),
+        fr_datenschutz: path.resolve(__dirname, "fr/protection-des-donnees.html"),
+        fr_referenzen: path.resolve(__dirname, "fr/references/index.html"),
+
         // Die Fehlerseite. Der Schluessel heisst absichtlich "fehler"
         // und nicht "404": Rollup benutzt den Schluessel als Namen des
         // erzeugten Bundles, und ein Dateiname, der mit einer Ziffer
