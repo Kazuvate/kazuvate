@@ -148,9 +148,14 @@
          nicht gibt, und hat deshalb kein Gegenstueck in einer anderen
          Sprache. -->
     <nav class="sprachen" aria-label="Sprache">
-      <a href="/" hreflang="de" lang="de-CH" aria-label="Deutsch" aria-current="page">DE</a>
-      <a href="/en/" hreflang="en" lang="en" aria-label="English">EN</a>
-      <a href="/fr/" hreflang="fr" lang="fr-CH" aria-label="Français">FR</a>
+      <details>
+        <summary aria-label="Sprache wählen, aktuell Deutsch">DE<svg class="sprachen-pfeil" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 4.5 6 7.5 9 4.5"/></svg></summary>
+        <ul class="sprachen-liste">
+          <li><a href="/" hreflang="de" lang="de-CH" aria-label="Deutsch" aria-current="page">DE</a></li>
+          <li><a href="/en/" hreflang="en" lang="en" aria-label="English">EN</a></li>
+          <li><a href="/fr/" hreflang="fr" lang="fr-CH" aria-label="Français">FR</a></li>
+        </ul>
+      </details>
     </nav>
 
     <a class="kopf-knopf" href="/kontakt.html">Unverbindlich anfragen</a>

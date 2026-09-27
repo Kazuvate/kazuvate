@@ -732,10 +732,13 @@ funktioniert.
 
 Was dazugehört:
 
-- **Umschalter im Kopf**, `.sprachen` in `stil/basis.css`. Jeder Link führt
-  auf dieselbe Seite in der anderen Sprache. Auf dem Handy in der ersten Zeile
-  neben dem Menüknopf. Zwischen 860 und 1099px fällt dafür der Anfrage-Knopf
-  im Kopf weg, sonst brechen die Menüpunkte zweizeilig um.
+- **Sprachauswahl im Kopf**, `.sprachen` in `stil/basis.css`: ein Knopf mit
+  der aktuellen Sprache, der eine Liste mit DE, EN und FR aufklappt. Gebaut
+  aus `<details>`, klappt also auch ohne JavaScript; `haupt.js` schliesst sie
+  beim Klick daneben und mit Escape. Jeder Link führt auf dieselbe Seite in
+  der anderen Sprache. Auf dem Handy in der ersten Zeile neben dem
+  Menüknopf. Zwischen 860 und 1023px fällt dafür der Anfrage-Knopf im Kopf
+  weg, sonst brechen die Menüpunkte zweizeilig um.
 - **`hreflang`** im Kopf jeder Seite und als `xhtml:link` in der Sitemap, je
   alle drei Sprachen plus `x-default` auf Deutsch.
 - **Formular:** Jede Fassung schickt ihre Sprache im versteckten Feld
