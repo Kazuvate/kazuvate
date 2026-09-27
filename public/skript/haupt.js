@@ -11,6 +11,8 @@
    4. Kacheln: den Umfang des Rahmens messen.
    5. Formular: Zeitstempel gegen Spam setzen, Fehlermeldung nach
       einem gescheiterten Versand einblenden. Nur auf kontakt.html.
+   6. Sprachen: die Auswahl im Kopf beim Klick daneben und mit
+      Escape zuklappen. Seit 27.09.2026.
 
    Bis zum 20.08.2026 gab es an dieser Stelle einen fuenften Block:
    Bloecke, die beim Scrollen ins Bild kommen, blendeten sich
@@ -134,6 +136,29 @@
   // zurueck.
   window.addEventListener('resize', function () {
     if (window.innerWidth >= 860) setzen(false);
+  });
+})();
+
+/* 6. Sprachen ---------------------------------------------------
+   Die Auswahl ist ein <details> und klappt ohne dieses Skript auf
+   und zu. Was <details> von sich aus nicht kann: sich schliessen,
+   wenn man daneben klickt oder Escape drueckt. Beides erwartet man
+   von einer Auswahlliste, und ohne das bliebe sie ueber dem Inhalt
+   offen stehen, bis man den Knopf ein zweites Mal trifft.
+   ------------------------------------------------------------ */
+(function () {
+  'use strict';
+  var auswahl = document.querySelector('.sprachen details');
+  if (!auswahl) return;
+
+  document.addEventListener('click', function (ereignis) {
+    if (auswahl.open && !auswahl.contains(ereignis.target)) auswahl.open = false;
+  });
+
+  document.addEventListener('keydown', function (ereignis) {
+    if (ereignis.key !== 'Escape' || !auswahl.open) return;
+    auswahl.open = false;
+    auswahl.querySelector('summary').focus();
   });
 })();
 

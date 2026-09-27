@@ -358,16 +358,22 @@
       </div>
     </nav>
 
-    <!-- Sprachen, seit 25.09.2026. Jeder Link fuehrt auf dieselbe Seite
-         in der anderen Sprache, nicht auf deren Startseite. Kuerzel statt
-         ausgeschriebener Namen, damit der Kopf auf dem Handy einzeilig
-         bleibt; den vollen Namen liest ein Screenreader aus aria-label,
-         in der jeweiligen Sprache ausgesprochen (lang). Stil in
+    <!-- Sprachen, seit 25.09.2026, als Auswahl seit 27.09.2026. Jeder
+         Link fuehrt auf dieselbe Seite in der anderen Sprache, nicht auf
+         deren Startseite. Kuerzel statt ausgeschriebener Namen, den vollen
+         Namen liest ein Screenreader aus aria-label, in der jeweiligen
+         Sprache ausgesprochen (lang). <details> klappt ohne Skript auf,
+         haupt.js schliesst es beim Klick daneben und mit Escape. Stil in
          stil/basis.css unter "Sprachen". -->
     <nav class="sprachen" aria-label="Sprache">
-      <a href="/" hreflang="de" lang="de-CH" aria-label="Deutsch" aria-current="page">DE</a>
-      <a href="/en/" hreflang="en" lang="en" aria-label="English">EN</a>
-      <a href="/fr/" hreflang="fr" lang="fr-CH" aria-label="Français">FR</a>
+      <details>
+        <summary aria-label="Sprache wählen, aktuell Deutsch">DE<svg class="sprachen-pfeil" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 4.5 6 7.5 9 4.5"/></svg></summary>
+        <ul class="sprachen-liste">
+          <li><a href="/" hreflang="de" lang="de-CH" aria-label="Deutsch" aria-current="page">DE</a></li>
+          <li><a href="/en/" hreflang="en" lang="en" aria-label="English">EN</a></li>
+          <li><a href="/fr/" hreflang="fr" lang="fr-CH" aria-label="Français">FR</a></li>
+        </ul>
+      </details>
     </nav>
 
     <a class="kopf-knopf" href="kontakt.html">Unverbindlich anfragen</a>

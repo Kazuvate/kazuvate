@@ -521,46 +521,110 @@ dd, dt{ overflow-wrap: anywhere; }
 
 /* --- Sprachen ---------------------------------------------------
    Seit 25.09.2026 gibt es die Website auf Deutsch, Englisch und
-   Franzoesisch. Drei Kuerzel im Kopf, auf dem Desktop durch eine
-   helle Haarlinie von der Navigation getrennt -- dieselbe Linie wie
-   ueber .fuss-unten. Die aktuelle Sprache steht im vollen hellen Ton,
-   die anderen im gedaempften, wie der Firmenname im Fuss neben den
-   Links. Kein Unterstrich wie in der Navigation: das hier ist eine
-   Einstellung, kein Ort, an den man geht.
+   Franzoesisch. Seit 27.09.2026 eine Auswahl statt drei Kuerzeln
+   nebeneinander, nach Kasums Vorlage (Bildschirmfoto einer fremden
+   Seite): ein umrandeter Knopf mit der aktuellen Sprache und einem
+   Pfeil, darunter eine kleine helle Liste mit allen drei, die
+   aktuelle im Markenton.
+
+   Gebaut aus <details> und <summary> statt aus einem Knopf mit
+   Skript: das klappt auch ohne JavaScript auf und zu, die Tastatur
+   bedient es von selbst, und ein Screenreader sagt den Zustand an.
+   haupt.js ergaenzt nur, was <details> nicht kann: zuklappen beim
+   Klick daneben und mit Escape.
 
    Auf dem Handy in der ersten Zeile neben dem Menueknopf statt in
    der Schublade. Wer die Seite in der falschen Sprache vor sich hat,
    soll den Ausweg sehen, ohne erst ein Menue zu oeffnen, das er
    nicht lesen kann. */
-.sprachen{
+.sprachen{ position: relative; }
+.sprachen summary{
   display: flex;
   align-items: center;
-  gap: 2px;
-}
-.sprachen a{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 34px;
+  gap: 6px;
   min-height: 34px;
+  padding: 0 10px 0 12px;
   font-size: .8rem;
   font-weight: 650;
   letter-spacing: .06em;
-  color: var(--auf-flaeche-still);
+  color: var(--auf-flaeche);
+  border: 1px solid rgb(247 247 241 / .28);
+  border-radius: 8px;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  transition: border-color var(--kurz) var(--kurve);
+}
+/* Das Dreieck, das Safari jedem <summary> voranstellt. Die anderen
+   Browser nehmen es ueber list-style:none oben weg. */
+.sprachen summary::-webkit-details-marker{ display: none; }
+@media (hover: hover) and (pointer: fine){
+  .sprachen summary:hover{ border-color: rgb(247 247 241 / .6); }
+}
+.sprachen-pfeil{
+  width: 12px;
+  height: 12px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform var(--kurz) var(--kurve);
+}
+.sprachen details[open] .sprachen-pfeil{ transform: rotate(180deg); }
+
+/* Die Liste liegt ueber dem Inhalt, rechtsbuendig unter dem Knopf.
+   Hell auf dem dunklen Kopf wie in der Vorlage. Darin gilt deshalb
+   wieder der olive Fokusring statt des hellen aus .kopf, der auf
+   Weiss nicht zu sehen waere. Beim Aufklappen nur Deckkraft, keine
+   Verschiebung dazu: nie zwei Eigenschaften gleichzeitig. */
+.sprachen-liste{
+  --fokus: var(--olive);
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 100%;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: var(--karte);
+  border: 1px solid var(--linie);
+  border-radius: var(--radius-knopf);
+  box-shadow: 0 16px 32px -16px rgb(22 25 15 / .45);
+  animation: sprachen-auf var(--kurz) var(--kurve);
+}
+@keyframes sprachen-auf{
+  from{ opacity: 0; }
+}
+.sprachen-liste a{
+  display: flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 12px;
+  font-size: .82rem;
+  font-weight: 650;
+  letter-spacing: .06em;
+  color: var(--tinte-2);
   text-decoration: none;
   border-radius: 6px;
-  transition: color var(--kurz) var(--kurve);
 }
-.sprachen a[aria-current="page"]{ color: var(--auf-flaeche); }
+/* Die aktuelle Sprache im Markenton und leicht oliv hinterlegt. Die
+   Farbe allein reichte nicht: Oliv und --tinte-2 der anderen Eintraege
+   liegen so nah beieinander, dass man sie am Bildschirm kaum
+   auseinanderhaelt. */
+.sprachen-liste a[aria-current="page"]{
+  color: var(--olive);
+  background: rgb(63 80 25 / .1);
+}
 @media (hover: hover) and (pointer: fine){
-  .sprachen a:hover{ color: var(--auf-flaeche); }
+  .sprachen-liste a:hover{ background: var(--karte-2); color: var(--tinte); }
+  .sprachen-liste a[aria-current="page"]:hover{
+    background: rgb(63 80 25 / .1);
+    color: var(--olive);
+  }
 }
 @media (min-width: 860px){
-  .sprachen{
-    margin-left: var(--s4);
-    padding-left: var(--s3);
-    border-left: 1px solid rgb(247 247 241 / .18);
-  }
+  .sprachen{ margin-left: var(--s4); }
 }
 /* Zwischen 860 und 1099px reicht die Zeile nicht fuer Marke, fuenf
    Menuepunkte, Sprachen und Anfrage-Knopf. Gemessen am 25.09.2026:
@@ -571,8 +635,13 @@ dd, dt{ overflow-wrap: anywhere; }
    .kopf-knopf{display:none}): derselbe Aufruf steht im Menuepunkt
    Kontakt und zweimal im Fliesstext jeder Seite. Dazu ein Drittel
    weniger Abstand zwischen den Punkten. Danach einzeilig in allen
-   drei Sprachen, ab 1100px steht der Knopf wieder da. */
-@media (min-width: 860px) and (max-width: 1099px){
+   drei Sprachen.
+
+   Seit 27.09.2026 bis 1023px statt 1099px: die Sprachauswahl ist
+   als ein Knopf schmaler als die drei Kuerzel vorher. Nachgemessen,
+   mit Knopf und vollem Abstand passt die Zeile ab 1024px in allen
+   drei Sprachen, darunter bricht sie noch um. */
+@media (min-width: 860px) and (max-width: 1023px){
   .kopf-knopf{ display: none; }
   .navigation-innen{ gap: var(--s5); }
 }
@@ -581,14 +650,17 @@ dd, dt{ overflow-wrap: anywhere; }
    Knopf rueckt dafuer direkt an sie heran. :has() statt einer Regel
    fuer den Knopf allein, damit eine Seite ohne Sprachen (es gibt
    keine, aber eine kaeme dazu) den Knopf trotzdem rechts behaelt.
-   44px Hoehe fuer die Trefferflaeche, wie in der Schublade. */
+   Die Eintraege der Liste bekommen 44px Trefferflaeche wie die
+   Schublade, der Knopf selbst 40px, damit er in der 60px hohen
+   Kopfzeile nicht wuchtiger wirkt als der Menueknopf daneben. */
 @media (max-width: 859px){
   .sprachen{
     order: 1;
     margin-left: auto;
   }
-  .sprachen a{ min-height: 44px; min-width: 36px; }
-  .js .kopf-innen:has(.sprachen) .menue-knopf{ margin-left: 0; }
+  .sprachen summary{ min-height: 40px; }
+  .sprachen-liste a{ min-height: 44px; }
+  .js .kopf-innen:has(.sprachen) .menue-knopf{ margin-left: var(--s1); }
 }
 
 /* Links im Titelband, bisher nur auf der Fehlerseite (die Zeilen auf
