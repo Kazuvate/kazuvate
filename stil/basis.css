@@ -1889,6 +1889,12 @@ dd, dt{ overflow-wrap: anywhere; }
   border: 1px solid var(--linie);
   border-radius: var(--radius);
   background: var(--karte-2);
+  /* Kein Antipp-Highlight. Die Regel fuer alle Links oben faerbt jeden
+     Tipp zwoelf Prozent oliv. Auf einer Kachel blitzt das beim Tippen
+     als gruener Schleier ueber dem Bild auf und ist weg, sobald die
+     Kundenseite im neuen Tab aufgeht. Die Kachel ist selbst ein Bild,
+     das Antippen braucht hier keine zweite Rueckmeldung. 02.10.2026 */
+  -webkit-tap-highlight-color: transparent;
 }
 .referenz-kachel img{
   display: block;
