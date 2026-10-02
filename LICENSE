@@ -1,0 +1,73 @@
+Copyright (c) 2026 Kazuvate Bajrami, Basel, Schweiz. Alle Rechte vorbehalten.
+
+Dieses Repository ist öffentlich, damit man sich ansehen kann, wie die
+Website von kazuvate gebaut ist. Es steht nicht unter einer
+Open-Source-Lizenz.
+
+Erlaubt ist:
+
+  - den Quelltext ansehen und lesen,
+  - das Repository im Rahmen der Nutzungsbedingungen von GitHub forken,
+    um es anzusehen.
+
+Ohne vorherige schriftliche Zustimmung ist nicht erlaubt:
+
+  - Quelltext, Gestaltung, Texte, Bilder oder Logo ganz oder teilweise zu
+    kopieren, zu verändern, zu veröffentlichen, weiterzugeben, zu
+    verkaufen oder als Vorlage für eigene oder fremde Websites zu
+    verwenden,
+  - den Namen "kazuvate" und das Logo zu verwenden.
+
+Nicht von dieser Lizenz erfasst sind Teile, die nicht von kazuvate
+stammen. Für sie gelten die Bedingungen ihrer Urheber:
+
+  - die Abhängigkeiten aus package.json, jeweils mit ihrer eigenen Lizenz,
+  - die Schrift General Sans (Indian Type Foundry),
+  - Bauteile aus Komponentenbibliotheken,
+  - die Bildschirmfotos in medien/referenzen/ und die Websites, die sie
+    zeigen. Die Rechte daran liegen bei den jeweiligen Inhabern.
+
+Die Software wird ohne jede Gewähr bereitgestellt, soweit das Gesetz es
+zulässt. Es gilt Schweizer Recht, Gerichtsstand ist Basel-Stadt.
+
+Anfragen zur Nutzung: kasumbajrami7@gmail.com oder https://kazuvate.ch/kontakt.html
+
+
+------------------------------------------------------------------------
+English
+------------------------------------------------------------------------
+
+Copyright (c) 2026 Kazuvate Bajrami, Basel, Switzerland. All rights
+reserved.
+
+This repository is public so that anyone can see how the kazuvate website
+is built. It is not released under an open-source licence.
+
+Permitted:
+
+  - viewing and reading the source code,
+  - forking the repository on GitHub, within GitHub's terms of service, in
+    order to view it.
+
+Not permitted without prior written consent:
+
+  - copying, modifying, publishing, distributing or selling the source
+    code, design, texts, images or logo, in whole or in part, or using
+    them as a template for your own or anyone else's website,
+  - using the name "kazuvate" and the logo.
+
+This licence does not cover material that does not originate from
+kazuvate. Its own authors' terms apply to it:
+
+  - the dependencies listed in package.json, each under its own licence,
+  - the typeface General Sans (Indian Type Foundry),
+  - components taken from component libraries,
+  - the screenshots in medien/referenzen/ and the websites they show. The
+    rights to these belong to their respective owners.
+
+The software is provided without warranty of any kind, to the extent
+permitted by law. Swiss law applies; the place of jurisdiction is
+Basel-Stadt.
+
+Requests for permission: kasumbajrami7@gmail.com or
+https://kazuvate.ch/en/contact.html
