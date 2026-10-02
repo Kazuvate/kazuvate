@@ -1805,13 +1805,43 @@ dd, dt{ overflow-wrap: anywhere; }
 }
 
 /* --- Referenz-Kachel ---------------------------------------
-   Screenshot plus Name, der erst beim Hover oder Fokus erscheint.
-   Ein Bild, ein Link, mehr nicht. Die ganze Kachel fuehrt direkt
-   auf die echte Kundenseite, keine Zwischenseite mit Text.
+   Screenshot plus Name. Ein Bild, ein Link, mehr nicht. Die ganze
+   Kachel fuehrt direkt auf die echte Kundenseite, keine
+   Zwischenseite mit Text.
    Gebraucht auf der Startseite und auf referenzen/index.html,
    deshalb hier statt in seiten.css: die Startseite laedt
    seiten.css nicht.
+
+   Beim Zeigen oder Fokussieren wird die untere Bildhaelfte nach
+   unten hin immer unschaerfer, ein gruener Schleier legt sich
+   darueber, und der Name erscheint. Seit 02.10.2026.
+
+   Die Unschaerfe ist ein Verlauf aus vier Ebenen. Jede Ebene ist ein
+   backdrop-filter mit eigener Maske: die erste setzt frueh und
+   schwach ein, die letzte spaet und stark. Weil jede Ebene schon das
+   Ergebnis der darunterliegenden sieht, addiert sich die Unschaerfe
+   nach unten, und die Uebergaenge zwischen den Ebenen bleiben
+   unsichtbar. Ein einziger backdrop-filter mit Maske wuerde nur
+   zwischen scharf und unscharf ueberblenden, das sieht aus wie ein
+   Geisterbild. Vier Ebenen ohne zusaetzliches Markup: die zwei
+   Pseudoelemente der Kachel und die zwei des Namens.
+
+   --zeige (0 bis 1) schaltet alles auf einmal: Ebenen, Schleier und
+   Schrift. Als @property angemeldet, sonst liesse sich ein
+   Wert nicht ueberblenden, der in Farben und Deckkraft steckt.
+   Einmal ueberblenden statt vier Einzelregeln.
+
+   Die Ebenen duerfen nicht in ein Element mit opacity, filter oder
+   mask: das macht es zur Wurzel des Hintergrunds, und der
+   backdrop-filter darin saehe das Bild nicht mehr, sondern nichts.
+   Deshalb hat .name selbst keine Deckkraft, sondern blendet nur
+   seine Schriftfarbe und seinen Schleier ein.
    ---------------------------------------------------------- */
+@property --zeige{
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
 .referenz-bereich{ padding: var(--s8) 0; }
 
 /* Schlussblock der Referenzen-Seite. Die Haarlinie sitzt auf der
@@ -1865,25 +1895,75 @@ dd, dt{ overflow-wrap: anywhere; }
   width: 100%;
   height: auto;
 }
+/* Ohne echten Zeiger gibt es kein Hover, sonst bliebe der Name auf
+   dem Handy fuer immer unsichtbar. Dort steht er immer da, auf einem
+   schmalen Schleier und ohne Unschaerfe: wer das Bild nur antippen
+   kann, soll es auch sehen koennen. */
 .referenz-kachel .name{
   position: absolute;
   inset: auto 0 0 0;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
   padding: var(--s5) var(--s4) var(--s3);
-  background: linear-gradient(to top, rgb(27 33 16 / .85), rgb(27 33 16 / 0) 85%);
+  background: linear-gradient(to top, color-mix(in srgb, var(--flaeche) 85%, transparent), transparent 85%);
   color: var(--auf-flaeche);
   font-weight: 650;
   font-size: 1rem;
-  opacity: 0;
-  transition: opacity var(--kurz) var(--kurve);
 }
+
 @media (hover: hover) and (pointer: fine){
-  .referenz-kachel:hover .name{ opacity: 1; }
+  .referenz-kachel{ transition: --zeige var(--kurz) var(--kurve); }
+  .referenz-kachel:hover,
+  .referenz-kachel:focus-visible{ --zeige: 1; }
+
+  /* Der Name ist jetzt die ganze untere Zone: drei Viertel der
+     Kachel, die Schrift unten links darin. */
+  .referenz-kachel .name{
+    height: 75%;
+    padding: 0 var(--s4) var(--s4);
+    background: linear-gradient(to top, color-mix(in srgb, var(--flaeche) calc(var(--zeige) * 82%), transparent), transparent 75%);
+    color: color-mix(in srgb, var(--auf-flaeche) calc(var(--zeige) * 100%), transparent);
+  }
+
+  .referenz-kachel::before,
+  .referenz-kachel::after,
+  .referenz-kachel .name::before,
+  .referenz-kachel .name::after{
+    content: "";
+    position: absolute;
+    opacity: var(--zeige);
+    pointer-events: none;
+    -webkit-backdrop-filter: blur(var(--unschaerfe));
+    backdrop-filter: blur(var(--unschaerfe));
+    -webkit-mask-image: linear-gradient(to bottom, transparent var(--ab), black var(--bis));
+    mask-image: linear-gradient(to bottom, transparent var(--ab), black var(--bis));
+  }
+
+  /* Die zwei Ebenen der Kachel liegen ueber dem Bild und unter dem
+     Namen (z-index 1), die zwei des Namens in dessen eigener Ebene. */
+  .referenz-kachel::before,
+  .referenz-kachel::after{ inset: 25% 0 0 0; z-index: 0; }
+  .referenz-kachel .name::before,
+  .referenz-kachel .name::after{ inset: 0; z-index: -1; }
+
+  /* Vier Stufen, jede setzt spaeter ein und blurt staerker. --ab und
+     --bis sind Anteile der Zone von oben nach unten. Unten addiert sich
+     alles zu rund 6px. */
+  .referenz-kachel::before{       --unschaerfe: 1.5px; --ab:  0%; --bis: 45%; }
+  .referenz-kachel::after{        --unschaerfe: 2.5px; --ab: 15%; --bis: 60%; }
+  .referenz-kachel .name::before{ --unschaerfe: 3.5px; --ab: 35%; --bis: 80%; }
+  .referenz-kachel .name::after{  --unschaerfe:   5px; --ab: 55%; --bis: 100%; }
 }
-.referenz-kachel:focus-visible .name{ opacity: 1; }
-/* Ohne echten Zeiger gibt es kein Hover, sonst bliebe der Name
-   auf dem Handy fuer immer unsichtbar. */
-@media (hover: none){
-  .referenz-kachel .name{ opacity: 1; }
+
+/* Wer weniger Transparenz eingestellt hat, bekommt den Schleier und
+   die Schrift, aber kein Unscharfstellen des Bildes. Der Schleier
+   traegt den Namen auch allein. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-transparency: reduce){
+  .referenz-kachel::before,
+  .referenz-kachel::after,
+  .referenz-kachel .name::before,
+  .referenz-kachel .name::after{ display: none; }
 }
 
 /* Hier stand bis zum 31.08.2026 der gemeinsame Teil der

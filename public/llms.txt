@@ -18,7 +18,7 @@ Dateien von fremden Servern.
 Nicht verwechseln mit PromptPrinter (promptprinter.app), dem eigenen
 SaaS-Produkt desselben Inhabers. kazuvate ist die Webdesign-Firma.
 
-Stand dieser Datei: 25.09.2026.
+Stand dieser Datei: 02.10.2026.
 
 ## Seiten
 
@@ -33,7 +33,7 @@ Stand dieser Datei: 25.09.2026.
 - [Referenzen](https://kazuvate.ch/referenzen/): Gebaute Websites und
   Anwendungen, jeweils als Bildschirmfoto mit Link auf das laufende
   Ergebnis. Derzeit ProMeti Facility Services, PromptPrinter und die
-  Herzumschlag-Challenge.
+  Artemis.
 - [Ablauf](https://kazuvate.ch/ablauf.html): Die vier Schritte eines
   Projekts. Gespräch, Offerte, Entwurf mit Freigabe, Umsetzung. Dazu, wie
   lange jeder Schritt dauert und was wir dafür vom Kunden brauchen.
