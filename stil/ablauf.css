@@ -190,18 +190,15 @@ main#inhalt{ padding: var(--s8) 0 0; }
     gap: var(--s5);
   }
 }
+/* Gleicher Wert wie .augenbraue in basis.css, seit dem 03.10.2026 auf
+   allen Geraeten: .72rem waren 11.5px und zu klein. Acht Stellen auf
+   dieser Seite -- die Beschriftungen "Dauer", "Ergebnis" und so weiter. */
 .schritt-fakten dt{
-  font-size: .72rem;
+  font-size: .8rem;
   letter-spacing: .18em;
   text-transform: uppercase;
   font-weight: 600;
   color: var(--still);
-}
-/* Gleiche Anhebung wie bei .augenbraue und .nr in basis.css: .72rem
-   sind 11.5px und auf dem Handy zu klein. Acht Stellen auf dieser
-   Seite -- die Beschriftungen "Dauer", "Ergebnis" und so weiter. */
-@media (max-width: 859px){
-  .schritt-fakten dt{ font-size: .8rem; }
 }
 .schritt-fakten dd{
   margin: var(--s2) 0 0;

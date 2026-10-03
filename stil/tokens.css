@@ -80,7 +80,7 @@
      andere klein und exakt, nichts dazwischen. Ein Zwischengrad
      waere die Versuchung, die Spanne zu fuellen, und genau das
      nimmt ihr die Wirkung. */
-  --satz-1:  .72rem;    /* Label, Versalien */
+  --satz-1:  .8rem;     /* Label, Versalien */
   --satz-2:  .82rem;    /* Legende, Fussnote */
   --satz-3:  .94rem;    /* Navigation, Nebentext */
   --satz-4:  1.0625rem; /* Fliesstext, 17px */
