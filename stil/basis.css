@@ -802,7 +802,7 @@ dd, dt{ overflow-wrap: anywhere; }
   border-top: 1px solid rgb(247 247 241 / .1);
 }
 .titel .oben{
-  font-size: .72rem;
+  font-size: .8rem;
   letter-spacing: .18em;
   text-transform: uppercase;
   font-weight: 600;
@@ -836,13 +836,10 @@ dd, dt{ overflow-wrap: anywhere; }
 .titel .stand{
   margin-top: var(--s5);
   color: var(--auf-flaeche-still);
-  font-size: .74rem;
+  font-size: .82rem;
   letter-spacing: .18em;
   text-transform: uppercase;
   font-weight: 600;
-}
-@media (max-width: 859px){
-  .titel .stand{ font-size: .82rem; }
 }
 
 /* --- Brotkrumen --------------------------------------------
@@ -1197,22 +1194,19 @@ dd, dt{ overflow-wrap: anywhere; }
 .sektion{ padding: var(--s9) 0; }
 .sektion + .sektion{ border-top: 1px solid var(--linie); }
 
+/* .8rem sind 12.8px. Bis zum 03.10.2026 stand der Desktop bei .72rem
+   (11.5px) und nur das Handy bei .8rem. Das war zu klein: gemessen am
+   21.08.2026 lagen dreizehn Stellen unter der 12px-Grenze, und Versalien
+   mit weiter Laufweite retten das nur zum Teil. Jetzt gilt der Wert
+   ueberall, damit er den Charakter der Augenbraue haelt, ohne sie in
+   die Naehe des Fliesstextes zu ruecken. */
 .augenbraue{
-  font-size: .72rem;
+  font-size: .8rem;
   letter-spacing: .18em;
   text-transform: uppercase;
   font-weight: 600;
   color: var(--olive);
   margin: 0 0 var(--s4);
-}
-/* .72rem sind 11.5px. Am Bildschirm mit Abstand gelesen geht das,
-   auf dem Handy in der Hand ist es zu klein -- gemessen am 21.08.2026
-   an dreizehn Stellen, die alle unter der 12px-Grenze lagen. Versalien
-   und die weite Laufweite retten das nur zum Teil.
-   .8rem sind 12.8px und halten den Charakter der Augenbraue, ohne sie
-   in die Naehe des Fliesstextes zu ruecken. Der Desktop bleibt bei .72. */
-@media (max-width: 859px){
-  .augenbraue{ font-size: .8rem; }
 }
 
 /* Der zweite der beiden grossen Grade, siehe tokens.css. Bis zum
@@ -1375,9 +1369,10 @@ dd, dt{ overflow-wrap: anywhere; }
    drei einzeilig haelt, waere 230px breit und naehme dem Text die
    Zeilenlaenge, ohne dass man den Gewinn saehe.
 
-   Die sechs Pixel Polster gleichen die Grundlinien an: das Label
-   ist 11.5px bei Zeilenhoehe 1.7, der Text 17px bei derselben --
-   ohne Ausgleich sitzt das Label sichtbar zu hoch. */
+   Die fuenf Pixel Polster gleichen die Grundlinien an: das Label
+   ist 12.8px bei Zeilenhoehe 1.7, der Text 17px bei derselben --
+   ohne Ausgleich sitzt das Label sichtbar zu hoch. Bis zum 03.10.2026
+   waren es sechs Pixel bei 11.5px. */
 @media (min-width: 900px){
   .hero-abschnitt{
     display: grid;
@@ -1387,7 +1382,7 @@ dd, dt{ overflow-wrap: anywhere; }
   }
   .hero-abschnitt .augenbraue{
     margin: 0;
-    padding-top: 6px;
+    padding-top: 5px;
   }
 }
 
@@ -1627,16 +1622,13 @@ dd, dt{ overflow-wrap: anywhere; }
   max-width: 60ch;
 }
 
+/* .82rem sind 13px. Bis zum 03.10.2026 .74rem auf dem Desktop, siehe
+   .augenbraue weiter oben. */
 .nr{
-  font-size: .74rem;
+  font-size: .82rem;
   font-weight: 600;
   letter-spacing: .1em;
   color: var(--olive);
-}
-/* .74rem sind 11.8px, dieselbe Groessenordnung wie die Augenbraue und
-   auf dem Handy aus demselben Grund zu klein. */
-@media (max-width: 859px){
-  .nr{ font-size: .82rem; }
 }
 
 .nachsatz{
