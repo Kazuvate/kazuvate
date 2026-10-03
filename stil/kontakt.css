@@ -211,7 +211,10 @@
   font: inherit;
   font-size: 1rem;
   padding: 11px 14px;
-  border: 1px solid var(--linie-kraeftig);
+  /* --still statt --linie-kraeftig: der Rand ist das Einzige, was ein
+     leeres Feld auf der weissen Karte sichtbar macht, und WCAG 1.4.11
+     verlangt dafuer 3:1. --linie-kraeftig trug 1.86:1, --still 6.0:1. */
+  border: 1px solid var(--still);
   border-radius: var(--radius-knopf);
   background: var(--karte);
   color: var(--tinte);
