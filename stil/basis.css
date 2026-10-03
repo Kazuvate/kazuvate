@@ -1349,8 +1349,15 @@ dd, dt{ overflow-wrap: anywhere; }
   border-bottom: 1px solid var(--linie-marke);
 }
 
-/* Die Augenbraue traegt hier die Ueberschrift des Abschnitts. */
-.hero-abschnitt .augenbraue{ margin-bottom: var(--s4); }
+/* Die Augenbraue traegt hier die Ueberschrift des Abschnitts und ist
+   deshalb seit 03.10.2026 auch eine: ein <h2>, damit man per
+   Ueberschriftennavigation von der H1 nicht gleich zu "Was wir fuer
+   Sie bauen" springt. line-height: inherit, weil h1, h2, h3 oben 1.2
+   setzen und das Label sonst enger sitzt als vorher als <p>. */
+.hero-abschnitt .augenbraue{
+  margin-bottom: var(--s4);
+  line-height: inherit;
+}
 
 /* Zwei Register statt eines, seit 02.09.2026: das Label steht links
    in einer eigenen schmalen Spalte, der Text rechts daneben. Bis
