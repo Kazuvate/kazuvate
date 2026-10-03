@@ -259,6 +259,13 @@
 
   fehler.hidden = false;
 
+  // Die Meldung erscheint erst nach dem Laden. Ein Screenreader liest
+  // eine Seite danach nicht noch einmal von oben und wuerde sie
+  // ueberhoeren, deshalb bekommt sie den Fokus. tabindex -1 erlaubt das
+  // per Skript, ohne sie in die Tabulatorreihenfolge zu setzen.
+  fehler.setAttribute('tabindex', '-1');
+  fehler.focus();
+
   // Die Adresse wieder sauber machen: ohne das bliebe ?fehler=...
   // in der URL stehen, und ein Neuladen der Seite wuerde die
   // Meldung erneut zeigen, obwohl langst nichts mehr fehlgeschlagen
