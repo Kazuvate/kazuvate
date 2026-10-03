@@ -35,7 +35,13 @@
  * Die Pfaddaten sind unveraendert aus der Vorlage.
  */
 
-import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+  type MotionValue,
+} from "framer-motion";
 import { useRef } from "react";
 
 /**
@@ -131,6 +137,13 @@ const LinePath = ({
     [0.02, 0.56, 0.72, 0.88, 1],
   );
 
+  // Wer in den Systemeinstellungen weniger Bewegung gewaehlt hat, sieht
+  // den Faden nicht mehr mitwachsen, sondern vollstaendig gezeichnet. Er
+  // bleibt also da und bleibt Teil der Seite, er bewegt sich nur nicht.
+  // Dieselbe Regel wie beim Strang auf ablauf.html: Endzustand statt
+  // Zwischenschritt.
+  const wenigerBewegung = useReducedMotion();
+
   return (
     <svg
       // Vorlage: "0 0 1278 2319". Der Pfad selbst reicht aber bis y=2669
@@ -170,7 +183,7 @@ const LinePath = ({
         // 0px). Die Zeile war wirkungslos -- und mit der Kennlinie oben
         // waere `1 - pathLength` ohnehin nicht mehr der passende Versatz.
         // Deshalb raus statt mitgeschleppt.
-        style={{ pathLength }}
+        style={{ pathLength: wenigerBewegung ? 1 : pathLength }}
       />
     </svg>
   );
