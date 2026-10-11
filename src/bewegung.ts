@@ -109,6 +109,17 @@ gsap.registerPlugin(ScrollTrigger);
 }
 
 /**
+ * Die Kundenseite laeuft in der Referenz-Kachel, seit 11.10.2026
+ * (src/ideen/kachel-lauf.ts). Nur mit Maus und ohne reduzierte Bewegung;
+ * sonst bleibt es beim Bildschirmfoto der Startseite.
+ */
+{
+  const kacheln = document.querySelectorAll<HTMLAnchorElement>(".referenz-kachel");
+  const passt = matchMedia("(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)");
+  if (kacheln.length && passt.matches) import("./ideen/kachel-lauf").then((m) => m.starte(kacheln));
+}
+
+/**
  * Die Marken-Kurve, deckungsgleich mit --kurve in stil/tokens.css:
  * cubic-bezier(.22, 1, .36, 1). Eine einzige Kurve fuer CSS und GSAP,
  * damit sich keine Bewegung auf der Seite anders anfuehlt als der Rest.
