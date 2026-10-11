@@ -472,6 +472,87 @@
     </div>
   </section>
 
+  <!-- ====================== Wege zur Website ======================
+       Seit 11.10.2026. Baukasten, WordPress und wir nebeneinander,
+       als echte Tabelle mit Spalten- und Zeilenkoepfen. Jede Zelle
+       sagt Ja, Nein oder Teils als Wort und begruendet es in einem
+       Satz; keine Haken und Kreuze als einzige Information, keine
+       Zahlen.
+
+       Ehrlich auch dort, wo wir verlieren: Texte selbst aendern kann
+       man bei uns nicht, daneben steht die 24-Stunden-Textpflege.
+       WordPress wird nicht schlechtgeredet (Kazuvate Angebot,
+       "WordPress nie frontal angreifen"); jede Aussage ueber die
+       anderen beiden Wege ist eine, die deren Anbieter selbst so
+       stehen lassen wuerden. Eine Agentur-Spalte gibt es bewusst
+       nicht: Agenturen arbeiten zu verschieden, als dass sich eine
+       Zeile fuer alle belegen liesse.
+
+       Auf schmalen Schirmen scrollt die Tabelle seitlich in ihrem
+       Kasten, nach dem Muster .tab aus stil/seiten.css. tabindex,
+       damit sich der Kasten auch mit der Tastatur verschieben laesst. -->
+  <section class="sektion wege" aria-labelledby="wege-titel">
+    <div class="wrap">
+
+      <h2 id="wege-titel">Wege zur Website</h2>
+      <p class="sektion-vor">Baukasten, WordPress oder von Hand gebaut: Jeder Weg hat Stärken. Hier steht, wo welcher gewinnt, auch dort, wo es nicht unserer ist.</p>
+
+      <p class="wege-hinweis">Die Tabelle lässt sich seitlich verschieben.</p>
+      <div class="wege-tab" role="region" aria-labelledby="wege-titel" tabindex="0">
+        <table>
+          <caption class="nur-fuer-screenreader">Baukasten, WordPress und kazuvate im Vergleich</caption>
+          <thead>
+            <tr>
+              <th scope="col"><span class="nur-fuer-screenreader">Frage</span></th>
+              <th scope="col">Baukasten</th>
+              <th scope="col">WordPress</th>
+              <th scope="col" class="wege-wir">kazuvate</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Texte selbst ändern</th>
+              <td><strong>Ja.</strong> Im Editor des Anbieters.</td>
+              <td><strong>Ja.</strong> Im eigenen Verwaltungsbereich.</td>
+              <td class="wege-wir"><strong>Nein.</strong> Sie schicken uns eine Mail, wir haben die Änderung innert 24 Stunden drin.</td>
+            </tr>
+            <tr>
+              <th scope="row">Eigenes Design statt Vorlage</th>
+              <td><strong>Teils.</strong> Eine Vorlage, die sich anpassen lässt.</td>
+              <td><strong>Teils.</strong> Ein Theme, das sich anpassen lässt.</td>
+              <td class="wege-wir"><strong>Ja.</strong> Von Hand für Ihren Betrieb gebaut.</td>
+            </tr>
+            <tr>
+              <th scope="row">Selbst zusammenstellen</th>
+              <td><strong>Ja.</strong> Dafür ist er gemacht.</td>
+              <td><strong>Teils.</strong> Mit etwas Einarbeitung.</td>
+              <td class="wege-wir"><strong>Nein.</strong> Wir bauen die Seite, Sie geben den Entwurf frei.</td>
+            </tr>
+            <tr>
+              <th scope="row">Updates, um die sich jemand kümmern muss</th>
+              <td><strong>Nein.</strong> Das erledigt der Anbieter.</td>
+              <td><strong>Ja.</strong> System, Theme und Plugins brauchen regelmässig Updates.</td>
+              <td class="wege-wir"><strong>Nein.</strong> Es gibt kein System im Hintergrund, das Updates braucht.</td>
+            </tr>
+            <tr>
+              <th scope="row">Mit einer anderen Firma weiterführen</th>
+              <td><strong>Nein.</strong> Die Seite läuft beim Anbieter und lässt sich in der Regel nicht mitnehmen.</td>
+              <td><strong>Ja.</strong> Das System ist offen, jede WordPress-Agentur kann übernehmen.</td>
+              <td class="wege-wir"><strong>Ja.</strong> Alle Dateien, die Domain und die Zugänge stehen auf Ihren Namen.</td>
+            </tr>
+            <tr>
+              <th scope="row">Shop, Buchung oder Mitgliederbereich</th>
+              <td><strong>Ja.</strong> Als Erweiterung des Anbieters.</td>
+              <td><strong>Ja.</strong> Über Plugins.</td>
+              <td class="wege-wir"><strong>Nein.</strong> Dafür empfehlen wir Ihnen etwas anderes.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
   <!-- Abschluss. Ohne ihn endet die Seite nach der letzten Zeile
        im Nichts und der Besucher hat keinen naechsten Schritt. -->
   <section class="abschluss">
