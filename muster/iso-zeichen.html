@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Muster: isometrische Zeichen | kazuvate</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#2C3616">
+
+<!-- ====================== Muster C4 ======================
+     Ideen-Runde vom 11.10.2026, Idee C4: die drei Leistungs-Zeichen
+     der Startseite (Fenster, zwei Fenster, Uhr) groesser und als
+     isometrische Zeichnung im Fadenstrich.
+
+     Warum eine eigene Seite statt einer Stelle auf der Website: die
+     Zeichen gehoeren zu "Was wir fuer Sie bauen" auf der Startseite
+     (One-Pager, Mehrseitige Website, Wartung). Die Startseite fasst in
+     dieser Runde Session 1 an, nicht Session 2. Auf leistungen.html
+     stehen andere drei Punkte (Schnelligkeit, Sichtbarkeit, Rundum),
+     neben denen ein Fenster oder eine Uhr etwas behaupten wuerde, das
+     der Text daneben nicht sagt -- und deren rechte Spalte traegt seit
+     derselben Runde die grossen Ziffern.
+
+     Diese Datei steht NICHT in vite.config.ts und wird deshalb nicht
+     gebaut und nicht ausgeliefert. Der Dev-Server zeigt sie unter
+     /muster/iso-zeichen.html. Wird das Muster genommen, wandern
+     Zeichnungen, stil/iso-zeichen.css und public/skript/iso-zeichen.js
+     in die Startseite, und diese Datei wird geloescht.
+
+     Die Titel sind hier Links, damit sich der Tastaturfokus zeigen
+     laesst. Auf der Startseite sind sie es heute nicht; ohne Link gibt
+     es dort keinen Fokus und also auch keine Fokusreaktion.
+
+     Die Zeichnungen sind gerechnet, nicht von Hand gesetzt: eine
+     isometrische Projektion (30 Grad) aus denselben Massen fuer alle
+     drei, deshalb dieselbe viewBox-Groesse und derselbe Massstab. -->
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/schriften/GeneralSans-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/stil/tokens.css">
+<link rel="stylesheet" href="/stil/basis.css">
+<link rel="stylesheet" href="/stil/iso-zeichen.css">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+
+<main id="inhalt">
+  <section class="sektion">
+    <div class="wrap">
+
+      <p class="augenbraue">Muster C4, wird nicht ausgeliefert</p>
+      <h1 class="iso-titel">Was wir für Sie bauen</h1>
+      <p class="sektion-vor">Mit der Maus über ein Zeichen fahren: die helle Platte läuft dem Zeiger nach. Mit der Tab-Taste auf einen Titel: der Strich wechselt die Farbe. Auf dem Handy folgt die Platte dem Finger, solange er liegt.</p>
+
+      <ul class="leistungen iso-leistungen" role="list">
+
+        <li>
+          <svg class="iso-zeichen" viewBox="-149.4 -56 330 214" aria-hidden="true" focusable="false">
+              <path class="iso-platte" d="M0 -22 L142 60 L31.2 124 L-110.9 42 Z"/>
+              <g class="iso-ding">
+              <path class="iso-seite" d="M103.9 60 L31.2 102 L31.2 95 L103.9 53 Z"/>
+              <path class="iso-seite" d="M-72.7 42 L31.2 102 L31.2 95 L-72.7 35 Z"/>
+              <path class="iso-flaeche" d="M0 -7 L103.9 53 L31.2 95 L-72.7 35 Z"/>
+              <path class="iso-strich" d="M-15.6 2 L88.3 62"/>
+              <path class="iso-strich" d="M-20.8 21 L36.4 54"/>
+              <path class="iso-strich" d="M-34.6 29 L5.2 52"/>
+              <ellipse class="iso-punkt" cx="0" cy="2" rx="3.9" ry="2.3"/>
+              </g>
+            </svg>
+          <h3><a href="/#leistungen">One-Pager</a></h3>
+          <p>Eine einzelne Seite mit allem, was zählt: Leistungen, Kontakt und Anfahrt. Für Betriebe, die gefunden werden wollen, ohne eine grosse Website zu pflegen.</p>
+        </li>
+
+        <li>
+          <svg class="iso-zeichen" viewBox="-149.4 -51.5 330 214" aria-hidden="true" focusable="false">
+              <path class="iso-platte" d="M0 -22 L157.6 69 L31.2 142 L-126.4 51 Z"/>
+              <g class="iso-ding">
+              <path class="iso-seite" d="M103.9 78 L31.2 120 L31.2 113 L103.9 71 Z"/>
+              <path class="iso-seite" d="M-72.7 60 L31.2 120 L31.2 113 L-72.7 53 Z"/>
+              <path class="iso-flaeche" d="M0 11 L103.9 71 L31.2 113 L-72.7 53 Z"/>
+              <path class="iso-strich" d="M-15.6 20 L88.3 80"/>
+              <path class="iso-strich" d="M-20.8 39 L36.4 72"/>
+              <path class="iso-strich" d="M-34.6 47 L5.2 70"/>
+              <path class="iso-seite" d="M103.9 36 L31.2 78 L31.2 71 L103.9 29 Z"/>
+              <path class="iso-seite" d="M-72.7 18 L31.2 78 L31.2 71 L-72.7 11 Z"/>
+              <path class="iso-flaeche" d="M0 -31 L103.9 29 L31.2 71 L-72.7 11 Z"/>
+              <path class="iso-strich" d="M-15.6 -22 L88.3 38"/>
+              </g>
+            </svg>
+          <h3><a href="/#leistungen">Mehrseitige Website</a></h3>
+          <p>Fünf bis acht Unterseiten mit eigener Struktur für Leistungen, Team und Referenzen. Die übliche Wahl, wenn mehrere Angebote je ihren eigenen Platz brauchen.</p>
+        </li>
+
+        <li>
+          <svg class="iso-zeichen" viewBox="-165 -107 330 214" aria-hidden="true" focusable="false">
+              <path class="iso-platte" d="M0 -74 L128.2 0 L0 74 L-128.2 0 Z"/>
+              <g class="iso-ding">
+              <path class="iso-seite" d="M-63.7 -7 L-63.7 0 A63.7 36.8 0 0 0 63.7 0 L63.7 -7 Z"/>
+              <path class="iso-flaeche" d="M-63.7 -7 A63.7 36.8 0 0 1 63.7 -7 A63.7 36.8 0 0 1 -63.7 -7 Z"/>
+              <path class="iso-strich" d="M27.9 -23.1 L0 -7 L7.2 9.6"/>
+              </g>
+            </svg>
+          <h3><a href="/#leistungen">Wartung und Textpflege</a></h3>
+          <p>Sie schicken uns eine Mail, wir haben die Änderung innert 24 Stunden drin. Dazu Hosting, Sicherungen und ein Auge auf die Ladezeit.</p>
+        </li>
+
+      </ul>
+
+    </div>
+  </section>
+
+  <script src="/skript/iso-zeichen.js" defer></script>
+
+</main>
+
+</body>
+</html>
