@@ -98,3 +98,8 @@ main#inhalt{
   from{ color: var(--linie-kraeftig); }
   to{ color: var(--olive); }
 }
+
+/* Die Nummer bricht nicht mitten in den Ziffern um. Bei 46ch Satzbreite
+   stand "+41 78 670 79" auf der einen Zeile und "73." auf der naechsten,
+   gemessen am 11.10.2026 bei 1280px. Wer anruft, liest sie als Ganzes. */
+.danke-inhalt a[href^="tel:"]{ white-space: nowrap; }
