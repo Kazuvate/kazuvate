@@ -307,18 +307,22 @@ dd, dt{ overflow-wrap: anywhere; }
    3. Browser ohne Anker-Positionierung: die @supports-Abfrage greift
       nicht, und es gilt die Regel oben.
 
+   Die Referenz-Kacheln zeichnen ihre Winkel selbst, etwas weiter
+   aussen und beim Zeigen ebenso (siehe "Schnittmarken"); sie sind
+   hier ausgenommen, sonst stuenden zwei Paare uebereinander.
+
    Farbe: --fokus wie bisher. body::after erbt sie aber vom body und
    nicht vom fokussierten Element, deshalb stellt die :has-Regel den
    hellen Ton fuer Kopf, Titelband und Fuss hier noch einmal ein.
    Kontrast: Oliv auf Papier 8.0:1, hell auf --flaeche 11.9:1. */
 @supports (anchor-name: --a) and selector(:has(a)){
   @media not (forced-colors: active){
-    :focus-visible:not(:where(p, dd, td, th, figcaption, blockquote, address) a){
+    :focus-visible:not(:where(p, dd, td, th, figcaption, blockquote, address) a, .referenz-kachel){
       outline-color: transparent;
       anchor-name: --fokus;
     }
 
-    body:has(:focus-visible:not(:where(p, dd, td, th, figcaption, blockquote, address) a))::after{
+    body:has(:focus-visible:not(:where(p, dd, td, th, figcaption, blockquote, address) a, .referenz-kachel))::after{
       --ecke: min(10px, 33%);
       --abstand: 5px;
       content: "";
@@ -2591,6 +2595,60 @@ dd, dt{ overflow-wrap: anywhere; }
 }
 @media (hover: hover) and (pointer: fine){
   .frei-feld:hover{ border-color: var(--olive); }
+}
+
+/* --- Schnittmarken ----------------------------------------------
+   Seit 11.10.2026. Beim Zeigen oder Fokussieren zeichnen sich um die
+   Kachel vier Eckwinkel, die Schnittmarken eines Druckbogens -- dasselbe
+   Zeichen wie der Tastaturfokus der ganzen Seite. Sie kommen zur
+   Unschaerfe und zum Namen dazu, sie ersetzen sie nicht.
+
+   Die Kachel selbst kann sie nicht tragen: ihre beiden Pseudoelemente
+   sind Ebenen der Unschaerfe, und overflow: hidden schnitte alles ab,
+   was ueber ihren Rand ragt. Deshalb zeichnet die Figur drumherum. Sie
+   ist ein Raster, und ihr ::before liegt in derselben Zelle wie die
+   Kachel, mit 7px Uebermass nach aussen: so hat es immer genau die
+   Groesse der Kachel, ohne dass etwas gemessen werden muss.
+
+   Gezeichnet wird mit einer einzigen animierten Eigenschaft, der
+   Schenkellaenge --schnitt (0 bis 16px), in derselben clip-path-Form
+   wie beim Fokus. Fuer die Tastatur ersetzen die Winkel den Fokusring
+   der Kachel; im Kontrastmodus von Windows bleibt der Ring. */
+@property --schnitt{
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+.filmbild{ display: grid; }
+.filmbild > .referenz-kachel,
+.filmbild > .frei-feld{ grid-area: 1 / 1; }
+.filmbild > figcaption{ grid-area: 2 / 1; }
+.filmbild:not(.filmbild--frei)::before{
+  content: "";
+  grid-area: 1 / 1;
+  margin: -7px;
+  z-index: 2;
+  pointer-events: none;
+  border: 2px solid var(--olive);
+  clip-path: polygon(evenodd,
+    0 0, 100% 0, 100% 100%, 0 100%, 0 0,
+    var(--schnitt) 0, calc(100% - var(--schnitt)) 0,
+    calc(100% - var(--schnitt)) var(--schnitt), 100% var(--schnitt),
+    100% calc(100% - var(--schnitt)), calc(100% - var(--schnitt)) calc(100% - var(--schnitt)),
+    calc(100% - var(--schnitt)) 100%, var(--schnitt) 100%,
+    var(--schnitt) calc(100% - var(--schnitt)), 0 calc(100% - var(--schnitt)),
+    0 var(--schnitt), var(--schnitt) var(--schnitt), var(--schnitt) 0, 0 0);
+  transition: --schnitt var(--kurz) var(--kurve);
+}
+@media (hover: hover) and (pointer: fine){
+  .filmbild:has(.referenz-kachel:hover)::before{ --schnitt: 16px; }
+}
+.filmbild:has(.referenz-kachel:focus-visible)::before{ --schnitt: 16px; }
+@media not (forced-colors: active){
+  .referenz-kachel:focus-visible{ outline-color: transparent; }
+}
+@media (forced-colors: active){
+  .filmbild::before{ display: none; }
 }
 @media (min-width: 640px){
   .referenz-galerie{ grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
