@@ -1366,7 +1366,28 @@ dd, dt{ overflow-wrap: anywhere; }
   font-size: .95rem;
   color: var(--fuss-ton);
 }
-.fuss-unten span{ margin-right: auto; }
+/* Seit 11.10.2026 steht hinter dem Urheberhinweis "Kein Cookie-Banner.
+   Absichtlich." als Link auf den Abschnitt im Datenschutz, der es
+   begruendet. Die Zeile gehoert links zum Hinweis und nicht rechts zu
+   den Rechtstexten: sie ist eine Aussage, kein Menuepunkt. Deshalb
+   schiebt jetzt sie die Links nach rechts und nicht mehr der Hinweis.
+   Belegt am 11.10.2026 auf acht Seiten im Browser: document.cookie
+   leer, Local und Session Storage leer, keine Anfrage an eine fremde
+   Adresse; live liefert kazuvate.ch kein Set-Cookie. Wer der Seite je
+   ein Analysewerkzeug oder eine Karte einbaut, muss diese Zeile mit
+   entfernen. */
+.fuss-unten .fuss-cookie{ margin-right: auto; }
+/* Impressum und Datenschutz stehen seitdem in einer eigenen Gruppe.
+   Ohne sie blieb bei 800px "Impressum" oben neben dem Satz stehen,
+   waehrend "Datenschutz" allein in die naechste Zeile rutschte. Als
+   Gruppe wandern beide zusammen, und innen duerfen sie trotzdem noch
+   einmal umbrechen, wenn "Protection des données" bei 320px nicht mehr
+   neben "Mentions légales" passt. */
+.fuss-recht{
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s2) var(--s6);
+}
 /* inline-block muss sein: auf einem reinen Inline-Element vergroessert
    padding-block die Zeilenhoehe nicht mit, die Flaeche waere zwar da,
    wuerde aber in die Nachbarzeile ragen statt Platz zu schaffen. */
