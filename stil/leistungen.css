@@ -140,3 +140,114 @@
    siehe leistungen.html. Mit ihm sind drei Quelldateien und drei
    npm-Pakete (three, three-globe, @react-three/fiber) aus dem Projekt
    verschwunden, zusammen der schwerste einzelne Baustein der Seite. */
+
+/* --- Passt es zu Ihnen? -------------------------------------
+   Seit 11.10.2026. Drei Fragen nebeneinander, getrennt durch
+   senkrechte Haarlinien wie die Leistungen-Spalten der Startseite,
+   darunter das Ergebnis. Auswertung in public/skript/passt.js.
+
+   Die Radioknoepfe bleiben die des Browsers, nur in der Markenfarbe
+   (accent-color). Ein nachgebauter Knopf muesste Fokus, Pfeiltasten
+   und den Zustand fuer Screenreader selbst liefern; der echte kann
+   das alles schon.
+   ------------------------------------------------------------ */
+.passt-fragen{
+  margin-top: var(--s7);
+  display: grid;
+  border-top: 1px solid var(--linie-marke);
+  border-bottom: 1px solid var(--linie-marke);
+}
+@media (min-width: 900px){
+  .passt-fragen{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* fieldset bringt Rahmen, Innenabstand und eine Mindestbreite mit,
+   die ein Raster sprengt (min-inline-size: min-content). */
+.passt-frage{
+  margin: 0;
+  padding: var(--s6) 0;
+  border: 0;
+  min-inline-size: 0;
+}
+@media (min-width: 900px){
+  .passt-frage{ padding: var(--s6) var(--s6) var(--s6) 0; }
+  .passt-frage + .passt-frage{
+    border-left: 1px solid var(--linie-marke);
+    padding-left: var(--s6);
+  }
+  .passt-frage:last-child{ padding-right: 0; }
+}
+@media (max-width: 899px){
+  .passt-frage + .passt-frage{ border-top: 1px solid var(--linie-marke); }
+}
+
+/* legend laesst sich nicht in ein Raster stellen und ignoriert
+   Breitenangaben je nach Browser. float holt sie in den normalen
+   Fluss des fieldset, die Wahl darunter raeumt mit clear auf. */
+.passt-frage legend{
+  float: left;
+  width: 100%;
+  padding: 0;
+  font-size: var(--satz-5);
+  font-weight: 650;
+  line-height: 1.35;
+  letter-spacing: -.01em;
+  color: var(--tinte);
+  text-wrap: balance;
+}
+
+.passt-wahl{
+  clear: both;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s2) var(--s6);
+  padding-top: var(--s4);
+}
+/* Das ganze Wort ist Trefferflaeche, mindestens 44px hoch. */
+.passt-wahl label{
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s3);
+  min-height: 44px;
+  padding-right: var(--s3);
+  cursor: pointer;
+  color: var(--tinte-2);
+}
+.passt-wahl input{
+  width: 1.15rem;
+  height: 1.15rem;
+  margin: 0;
+  accent-color: var(--olive);
+  cursor: pointer;
+}
+.passt-wahl label:has(input:checked){
+  color: var(--tinte);
+  font-weight: 650;
+}
+
+/* --- Ergebnis ------------------------------------------------ */
+.passt-ergebnis{
+  margin-top: var(--s6);
+  max-width: 62ch;
+}
+.passt-ergebnis p{ color: var(--tinte-2); }
+.passt-ergebnis p + p{ margin-top: var(--s3); }
+.passt-leer{ color: var(--still); }
+.passt-ergebnis .passt-urteil{
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -.02em;
+  color: var(--tinte);
+}
+.passt-ergebnis .knopf{ margin-top: var(--s5); }
+
+/* Ohne Skript gibt es keine Auswertung, also auch kein Feld, das
+   auf eine wartet. Dafuer steht die Regel als Satz da. */
+.passt-regel{
+  margin-top: var(--s6);
+  max-width: 62ch;
+  color: var(--tinte-2);
+}
+html:not(.js) .passt-ergebnis{ display: none; }
+.js .passt-regel{ display: none; }

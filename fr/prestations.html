@@ -216,12 +216,71 @@
 
   </div>
 
+  <section class="sektion passt" aria-labelledby="passt-titel">
+    <div class="wrap">
+
+      <h2 id="passt-titel">Est-ce adapté à votre projet&nbsp;?</h2>
+      <p class="sektion-vor">Trois questions que nous posons avant chaque offre. Vos réponses restent dans cette fenêtre&nbsp;: rien n’est enregistré ni envoyé.</p>
+
+      <div class="passt-fragen">
+        <fieldset class="passt-frage">
+          <legend>Votre contenu change-t-il plus d’une fois par mois&nbsp;?</legend>
+          <div class="passt-wahl">
+            <label><input type="radio" name="passt-inhalt" value="ja"> Oui</label>
+            <label><input type="radio" name="passt-inhalt" value="nein"> Non</label>
+          </div>
+        </fieldset>
+        <fieldset class="passt-frage">
+          <legend>Quelqu’un doit-il se connecter, ou des données sont-elles enregistrées&nbsp;?</legend>
+          <div class="passt-wahl">
+            <label><input type="radio" name="passt-login" value="ja"> Oui</label>
+            <label><input type="radio" name="passt-login" value="nein"> Non</label>
+          </div>
+        </fieldset>
+        <fieldset class="passt-frage">
+          <legend>Avez-vous besoin de paiements ou d’une gestion de stock&nbsp;?</legend>
+          <div class="passt-wahl">
+            <label><input type="radio" name="passt-shop" value="ja"> Oui</label>
+            <label><input type="radio" name="passt-shop" value="nein"> Non</label>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="passt-ergebnis" role="status">
+        <p class="passt-leer">Votre résultat s’affiche ici dès que les trois questions ont une réponse.</p>
+      </div>
+      <p class="passt-regel">Trois fois non&nbsp;: alors cela convient, et nous en parlons volontiers. Un oui à la première question indique un CMS, un oui à la deuxième ou à la troisième une application ou une boutique en ligne.</p>
+
+      <template data-ergebnis="reden">
+        <p class="passt-urteil">Alors parlons-en.</p>
+        <p>Trois fois non&nbsp;: votre projet est un site web comme ceux que nous construisons.</p>
+        <a class="knopf" href="/fr/contact.html">Nous contacter</a>
+      </template>
+      <template data-ergebnis="cms">
+        <p class="passt-urteil">Alors nous vous recommandons un CMS.</p>
+        <p>Si vous avez du nouveau contenu chaque mois, vous devez pouvoir le publier vous-même, sans attendre personne. C’est à cela que sert un CMS comme WordPress, et nous préférons vous le dire maintenant plutôt qu’après l’offre.</p>
+        <p>S’il s’agit seulement de modifier de temps en temps un texte ou des horaires, notre service de textes suffit&nbsp;: vous nous envoyez un e-mail, la modification est en ligne dans les 24&nbsp;heures.</p>
+      </template>
+      <template data-ergebnis="anwendung">
+        <p class="passt-urteil">Alors nous ne sommes pas les bons interlocuteurs.</p>
+        <p>Une connexion ou des données enregistrées demandent une application avec serveur et base de données. C’est un autre projet qu’un site web, et nous ne construisons volontairement que des sites web. Lors d’un premier échange, nous vous indiquons volontiers ce qui convient à la place.</p>
+      </template>
+      <template data-ergebnis="shop">
+        <p class="passt-urteil">Alors nous vous recommandons une boutique en ligne.</p>
+        <p>Les paiements et le stock relèvent d’un système de boutique prêt à l’emploi, conçu et éprouvé pour cela. Un site codé à la main n’est pas le bon outil.</p>
+      </template>
+
+    </div>
+  </section>
+
   <section class="abschluss">
     <div class="wrap">
       <p class="abschluss-zeile">Parlons de votre projet.</p>
       <a class="knopf" href="/fr/contact.html">Nous contacter</a>
     </div>
   </section>
+
+  <script src="/skript/passt.js" defer></script>
 
 </main>
 
