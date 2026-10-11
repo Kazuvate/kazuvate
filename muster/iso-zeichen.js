@@ -7,7 +7,7 @@
    Verhaeltnis der isometrischen Flaeche. Mit der Maus beim Bewegen
    ueber das Feld, mit dem Finger, solange er liegt. Losgelassen oder
    verlassen, kehrt sie in die Mitte zurueck; die Bewegung selbst
-   zeichnet stil/iso-zeichen.css.
+   zeichnet iso-zeichen.css daneben.
 
    Bei reduzierter Bewegung tut dieses Skript nichts.
    ============================================================ */

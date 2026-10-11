@@ -23,9 +23,13 @@
 
      Diese Datei steht NICHT in vite.config.ts und wird deshalb nicht
      gebaut und nicht ausgeliefert. Der Dev-Server zeigt sie unter
-     /muster/iso-zeichen.html. Wird das Muster genommen, wandern
-     Zeichnungen, stil/iso-zeichen.css und public/skript/iso-zeichen.js
-     in die Startseite, und diese Datei wird geloescht.
+     /muster/iso-zeichen.html. Stil und Skript liegen daneben im selben
+     Ordner und nicht in stil/ und public/skript/: was in public/ liegt,
+     kopiert Vite ungefragt in jeden Build, das Skript lief bis zum
+     11.10.2026 deshalb ungenutzt mit auf kazuvate.ch. Wird das Muster
+     genommen, wandern Zeichnungen, iso-zeichen.css und iso-zeichen.js
+     in die Startseite, und der Ordner muster/ wird geloescht. Wird es
+     verworfen, genuegt dasselbe Loeschen.
 
      Die Titel sind hier Links, damit sich der Tastaturfokus zeigen
      laesst. Auf der Startseite sind sie es heute nicht; ohne Link gibt
@@ -39,7 +43,7 @@
 <link rel="preload" href="/schriften/GeneralSans-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/stil/tokens.css">
 <link rel="stylesheet" href="/stil/basis.css">
-<link rel="stylesheet" href="/stil/iso-zeichen.css">
+<link rel="stylesheet" href="iso-zeichen.css">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -109,7 +113,7 @@
     </div>
   </section>
 
-  <script src="/skript/iso-zeichen.js" defer></script>
+  <script src="iso-zeichen.js" defer></script>
 
 </main>
 
