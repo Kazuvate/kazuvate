@@ -2306,7 +2306,11 @@ dd, dt{ overflow-wrap: anywhere; }
   inherits: true;
   initial-value: 0;
 }
-.referenz-bereich{ padding: var(--s8) 0; }
+/* padding-block statt padding: die Kurzform setzte bis zum 11.10.2026 auch
+   den seitlichen Rand von .wrap auf 0. Die Galerie lief dadurch auf dem
+   Handy randlos bis an den Bildschirmrand und stand am Rechner 40px links
+   neben dem Seitentitel. */
+.referenz-bereich{ padding-block: var(--s8); }
 
 /* Schlussblock der Referenzen-Seite. Die Haarlinie sitzt auf der
    Sektion, nicht im wrap, damit sie wie auf der Startseite ueber
@@ -2619,9 +2623,21 @@ dd, dt{ overflow-wrap: anywhere; }
   inherits: false;
   initial-value: 0px;
 }
-.filmbild{ display: grid; }
+/* min-width und align-self beim freien Feld: es hat ein festes
+   Seitenverhaeltnis, und gestreckt auf die Hoehe einer Rasterzeile mit
+   zweizeiliger Bildunterschrift rechnete der Browser daraus eine
+   Mindestbreite von 393 statt 302px -- die Seite lief waagrecht ueber
+   (gemessen auf fr/references/ bei 1440px). */
+.filmbild{
+  display: grid;
+  min-width: 0;
+}
 .filmbild > .referenz-kachel,
 .filmbild > .frei-feld{ grid-area: 1 / 1; }
+.filmbild > .frei-feld{
+  align-self: start;
+  min-width: 0;
+}
 .filmbild > figcaption{ grid-area: 2 / 1; }
 .filmbild:not(.filmbild--frei)::before{
   content: "";
