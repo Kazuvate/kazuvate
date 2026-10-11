@@ -1212,6 +1212,90 @@ dd, dt{ overflow-wrap: anywhere; }
   .fuss-spalte a{ padding-block: 10px; }
 }
 
+/* --- Bauplan ------------------------------------------------
+   Seit 11.10.2026. Der Fuss zeigt sein Raster wie ein Bauplan:
+   gestrichelte Linien mittig in den Spaltenabstaenden, eine
+   gestrichelte Linie ueber der untersten Zeile, und wo sich beide
+   treffen ein kleines Kreuz, das Zeichen fuer einen Messpunkt. Rein
+   dekorativ, nur Pseudoelemente, nichts davon liest ein Screenreader.
+
+   Die Senkrechten haengen an den Spalten selbst (::before) und reichen
+   um --s8 nach unten, genau den Abstand bis zur Linie von .fuss-unten.
+   Das Kreuz (::after) sitzt an ihrem unteren Ende. Es ist ein Pluszeichen
+   aus clip-path, neun Pixel gross, der Mittelbalken genau auf der
+   Haarlinie: 4px links und 5px unter der Kante, damit Kreuz und Linie
+   auf demselben Pixel liegen.
+
+   Unter 600px gibt es nur eine Spalte und damit keine Kreuzung, dort
+   bleibt allein die gestrichelte Linie unten. Zwischen 600 und 1039px
+   steht nur eine Senkrechte, zwischen den beiden Spalten; "Seiten"
+   reicht dafuer ueber zwei Zeilen, damit die Linie bis unten laeuft.
+
+   Linien mit 24 Prozent Deckkraft, das Kreuz mit 55: es soll als
+   Markierung lesbar sein, ohne neben den Links laut zu werden. Die
+   Links selbst behalten ihre Farbe. */
+.fuss{ --fuss-plan: rgb(247 247 241 / .24); }
+
+@media (min-width: 600px){
+  .fuss-spalte{ position: relative; }
+
+  .fuss-spalte:nth-child(3){ grid-row: span 2; }
+
+  .fuss-spalte:nth-child(3)::before,
+  .fuss-spalte:nth-child(3)::after{
+    content: "";
+    position: absolute;
+    pointer-events: none;
+  }
+  .fuss-spalte:nth-child(3)::before{
+    top: 0;
+    bottom: calc(-1 * var(--s8));
+    left: calc(var(--s6) / -2);
+    border-left: 1px dashed var(--fuss-plan);
+  }
+  .fuss-spalte:nth-child(3)::after{
+    width: 9px;
+    height: 9px;
+    left: calc(var(--s6) / -2 - 4px);
+    bottom: calc(-1 * var(--s8) - 5px);
+    background: rgb(247 247 241 / .55);
+    clip-path: polygon(4px 0, 5px 0, 5px 4px, 9px 4px, 9px 5px, 5px 5px,
+                       5px 9px, 4px 9px, 4px 5px, 0 5px, 0 4px, 4px 4px);
+  }
+}
+
+@media (min-width: 1040px){
+  .fuss-spalte:nth-child(3){ grid-row: auto; }
+
+  .fuss-spalte::before,
+  .fuss-spalte::after{
+    content: "";
+    position: absolute;
+    pointer-events: none;
+  }
+  .fuss-spalte::before{
+    top: 0;
+    bottom: calc(-1 * var(--s8));
+    left: calc(var(--s6) / -2);
+    border-left: 1px dashed var(--fuss-plan);
+  }
+  .fuss-spalte::after{
+    width: 9px;
+    height: 9px;
+    left: calc(var(--s6) / -2 - 4px);
+    bottom: calc(-1 * var(--s8) - 5px);
+    background: rgb(247 247 241 / .55);
+    clip-path: polygon(4px 0, 5px 0, 5px 4px, 9px 4px, 9px 5px, 5px 5px,
+                       5px 9px, 4px 9px, 4px 5px, 0 5px, 0 4px, 4px 4px);
+  }
+}
+/* Ab 1200px ist der Spaltenabstand --s7 statt --s6, die Linie wandert
+   mit in die Mitte. */
+@media (min-width: 1200px){
+  .fuss-spalte::before{ left: calc(var(--s7) / -2); }
+  .fuss-spalte::after{ left: calc(var(--s7) / -2 - 4px); }
+}
+
 /* --- Kontakt: Zeichen vor Telefon, Mail und Ort ------------
    Gezeichnet aus Rechteck, Linie, Kreis und einem Pfad, gleiche
    Bauart und gleiche Linienstaerke wie die Zeichen bei den drei
@@ -1272,7 +1356,9 @@ dd, dt{ overflow-wrap: anywhere; }
 .fuss-unten{
   margin-top: var(--s8);
   padding-top: var(--s5);
-  border-top: 1px solid rgb(247 247 241 / .18);
+  /* Gestrichelt seit 11.10.2026, siehe "Bauplan". Vorher durchgezogen
+     mit 18 Prozent. */
+  border-top: 1px dashed var(--fuss-plan);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
