@@ -59,9 +59,9 @@
   transition: fill var(--kurz) var(--kurve);
 }
 
-/* Tastatur: der Titel ist der Link, das Zeichen antwortet mit der
-   Farbe der grossen Flaechen statt mit Bewegung. Der Fokusring selbst
-   bleibt der aus basis.css. */
+/* Tastatur: der Titel ist der Link, das Zeichen antwortet mit dem
+   Tintenton statt mit Bewegung. Der Fokusring selbst bleibt der aus
+   basis.css. */
 .iso-leistungen li:focus-within .iso-seite,
 .iso-leistungen li:focus-within .iso-flaeche,
 .iso-leistungen li:focus-within .iso-strich{ stroke: var(--tinte); }
