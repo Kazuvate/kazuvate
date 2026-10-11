@@ -448,16 +448,22 @@
 
     </div>
 
-    <!-- Ohne Nummer: die Zaehlung 01 bis 04 soll deckungsgleich mit
-         der Startseite bleiben. Inhaltlich gehoert der Abschnitt
-         trotzdem hierher, weil "und was passiert danach" die Frage
-         ist, die im Gespraech als naechstes kommt. -->
-    <section class="ablauf-danach" aria-labelledby="danach-titel">
-      <p class="augenbraue">Danach</p>
-      <h2 id="danach-titel">Der Livegang ist kein Schlussstrich.</h2>
-      <p>Änderungen an Texten, Preisen oder Öffnungszeiten schicken Sie uns per Mail, wir haben sie innert 24 Stunden drin. Hosting, Sicherungen und ein Auge auf die Ladezeit laufen mit, dazu ein monatlicher Bericht zur Sichtbarkeit.</p>
-      <p>Sie können das auch lassen. Die Seite gehört Ihnen mit allen Dateien, und jede Firma, die HTML und CSS lesen kann, führt sie weiter. Wir bauen nichts, das Sie an uns bindet.</p>
-    </section>
+    <!-- Huelle um "Danach", seit 11.10.2026. Sie traegt ab 1000px die
+         Fortsetzung des Strangs: vom letzten Knoten an der Box vorbei
+         bis in das KV-Zeichen im Abschluss darunter. Siehe "Ende des
+         Strangs" in stil/ablauf.css. -->
+    <div class="ablauf-danach-bereich">
+      <!-- Ohne Nummer: die Zaehlung 01 bis 04 soll deckungsgleich mit
+           der Startseite bleiben. Inhaltlich gehoert der Abschnitt
+           trotzdem hierher, weil "und was passiert danach" die Frage
+           ist, die im Gespraech als naechstes kommt. -->
+      <section class="ablauf-danach" aria-labelledby="danach-titel">
+        <p class="augenbraue">Danach</p>
+        <h2 id="danach-titel">Der Livegang ist kein Schlussstrich.</h2>
+        <p>Änderungen an Texten, Preisen oder Öffnungszeiten schicken Sie uns per Mail, wir haben sie innert 24 Stunden drin. Hosting, Sicherungen und ein Auge auf die Ladezeit laufen mit, dazu ein monatlicher Bericht zur Sichtbarkeit.</p>
+        <p>Sie können das auch lassen. Die Seite gehört Ihnen mit allen Dateien, und jede Firma, die HTML und CSS lesen kann, führt sie weiter. Wir bauen nichts, das Sie an uns bindet.</p>
+      </section>
+    </div>
 
   </div>
 
@@ -466,6 +472,10 @@
        Gleiche Bauart wie auf leistungen.html und der Startseite. -->
   <section class="abschluss">
     <div class="wrap">
+      <!-- Das Ende des Strangs, seit 11.10.2026: ab 1000px laeuft die
+           Linie vom Knoten 04 hierher aus. Reine Zierde, deshalb
+           aria-hidden; darunter unsichtbar (stil/ablauf.css). -->
+      <svg class="abschluss-zeichen" viewBox="0 0 585.51 442.90" aria-hidden="true" focusable="false"><use href="#marke"></use></svg>
       <p class="abschluss-zeile">Reden wir über Ihr Projekt.</p>
       <a class="knopf" href="kontakt.html">Unverbindlich anfragen</a>
     </div>
