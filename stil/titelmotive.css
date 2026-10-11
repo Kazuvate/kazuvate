@@ -255,10 +255,26 @@
    und fertig gezeichnet da, eine reine Ausblendmaske deckt ihn zu
    Beginn komplett zu und faehrt beim Laden von links nach rechts weg.
    Sieht identisch aus wie das Zeichnen vorher, ohne SVG-Innenleben,
-   das bei extremer Streckung falsch rendern kann. */
-.titel-linie{
-  clip-path: inset(0 100% 0 0);
-}
+   das bei extremer Streckung falsch rendern kann.
+
+   Bis zum 11.10.2026 stand hier `.titel-linie{ clip-path: inset(0 100%
+   0 0) }` ausserhalb jeder Medienabfrage, und nur die Animation in
+   no-preference hat die Linie freigelegt. Bei reduzierter Bewegung
+   lief keine Animation, die Linie blieb also ganz verdeckt -- das
+   Gegenteil dessen, was der Absatz oben verspricht. Jetzt verdeckt nur
+   noch die Animation selbst (fill-mode both, also auch waehrend der
+   550ms Wartezeit), der Grundzustand ist die fertige Linie.
+
+   Seitenwechsel (basis.css): die Linie traegt einen Namen und wandert
+   damit von ihrem Platz auf der alten Seite an ihren Platz auf der
+   neuen. Danach soll sie sich dort nicht ein zweites Mal zeichnen.
+   Das verhindert html.linie-da, gesetzt von src/bewegung.ts, sobald
+   die Seite ueber einen solchen Wechsel kommt. Erster Versuch war ein
+   Uebergang mit @starting-style, der sich ohne Skript fuer die Dauer
+   des Wechsels haette abschalten lassen. Nachgemessen in Chromium 153:
+   @starting-style greift beim ersten Aufbau einer Seite nicht, die
+   Linie haette sich beim Direktaufruf gar nicht mehr eingezeichnet. */
+.titel-linie{ view-transition-name: titel-linie; }
 
 @media (prefers-reduced-motion: no-preference){
   .titel--gross h1{
@@ -269,9 +285,12 @@
     /* Start bei 550ms: die h1-Animation braucht bis 740ms (680+60),
        die Linie faengt schon an, bevor der Titel ganz zur Ruhe kommt
        -- liest sich als eine zusammenhaengende Bewegung statt zweier
-       Schritte hintereinander. */
-    animation: titel-linie-ein 900ms var(--kurve) 550ms both;
+       Schritte hintereinander. 900ms sind --zeichen-dauer. */
+    animation: titel-linie-ein var(--zeichen-dauer) var(--kurve) 550ms both;
   }
+
+  /* Die Linie ist gerade von der alten Seite herueber gewandert. */
+  html.linie-da .titel-linie{ animation: none; }
 }
 
 @keyframes titel-linie-ein{
