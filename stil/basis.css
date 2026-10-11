@@ -1103,6 +1103,29 @@ dd, dt{ overflow-wrap: anywhere; }
   display: block;
   margin-bottom: var(--s5);
 }
+/* KV aus Punkten, seit 11.10.2026. Beim Zeigen legt src/ideen/kv-punkte.ts
+   ein Canvas ueber das Zeichen: dieselbe Form als Punkte auf einem
+   3-Pixel-Raster, die der Mauszeiger wegstoesst. Das SVG bleibt im
+   Dokument und wird nur ausgeblendet, der Screenreader liest weiter
+   "kazuvate". Beide blenden nur die Deckkraft, in --kurz. Das Canvas
+   ragt um die Reichweite des Zeigers ueber das Zeichen hinaus, damit
+   weggestossene Punkte nicht am Rand abgeschnitten werden; es nimmt
+   keine Klicks an. Im Kontrastmodus von Windows bleibt es beim SVG. */
+.fuss-marke{ position: relative; }
+.fuss-zeichen,
+.kv-punkte{ transition: opacity var(--kurz) var(--kurve); }
+.kv-punkte{
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+}
+.fuss-marke.kv-aktiv .fuss-zeichen{ opacity: 0; }
+.fuss-marke.kv-aktiv .kv-punkte{ opacity: 1; }
+@media (forced-colors: active){
+  .kv-punkte{ display: none; }
+  .fuss-marke.kv-aktiv .fuss-zeichen{ opacity: 1; }
+}
+
 .fuss-marke p{
   max-width: 30ch;
   font-size: 1.05rem;

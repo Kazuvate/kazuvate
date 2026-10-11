@@ -69,6 +69,26 @@ gsap.registerPlugin(ScrollTrigger);
 }
 
 /**
+ * KV aus Punkten im Fuss, seit 11.10.2026 (src/ideen/kv-punkte.ts).
+ * Geladen erst, wenn der Zeiger den Fuss betritt -- wer nie bis unten
+ * kommt, laedt die Datei nie. Nur mit Maus und ohne reduzierte Bewegung;
+ * sonst bleibt das KV-Zeichen das SVG, das es ohnehin ist.
+ */
+{
+  const fuss = document.querySelector<HTMLElement>(".fuss");
+  const zeichen = document.querySelector<SVGSVGElement>(".fuss-zeichen");
+  const pfad = document.querySelector("#marke path")?.getAttribute("d");
+  const passt = matchMedia("(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)");
+  if (fuss && zeichen && pfad && passt.matches) {
+    fuss.addEventListener(
+      "pointerenter",
+      () => { import("./ideen/kv-punkte").then((m) => m.starte(fuss, zeichen, pfad)); },
+      { once: true },
+    );
+  }
+}
+
+/**
  * Die Marken-Kurve, deckungsgleich mit --kurve in stil/tokens.css:
  * cubic-bezier(.22, 1, .36, 1). Eine einzige Kurve fuer CSS und GSAP,
  * damit sich keine Bewegung auf der Seite anders anfuehlt als der Rest.
