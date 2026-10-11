@@ -788,6 +788,16 @@ dd, dt{ overflow-wrap: anywhere; }
   .sprachen-liste a{ min-height: 44px; }
   .js .kopf-innen:has(.sprachen) .menue-knopf{ margin-left: var(--s1); }
 }
+/* Unter 360px reichen 24px Abstand nicht. Schriftzug (124px), Sprachen
+   (61px) und Menueknopf (44px) brauchen mit zweimal 24px und den 4px vor
+   dem Knopf 281px, bei 320px Fensterbreite sind 276px da. Der Menueknopf
+   rutschte deshalb auf allen Unterseiten in eine zweite Zeile und der
+   Kopf wurde 100 statt 60px hoch, gemessen am 12.10.2026. Die Startseite
+   hatte die 12px schon ueber die Frageleiste (siehe .kopf-frage), hier
+   gelten sie fuer alle Seiten: 257px, 19px Reserve. */
+@media (max-width: 359px){
+  .kopf-innen{ column-gap: var(--s3); }
+}
 
 /* Links im Titelband, bisher nur auf der Fehlerseite (die Zeilen auf
    Englisch und Franzoesisch). Das Oliv der uebrigen Links waere auf
