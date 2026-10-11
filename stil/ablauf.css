@@ -344,3 +344,83 @@ main#inhalt .abschluss{ margin-top: var(--s8); }
   transform: translate(-50%, -50%);
   z-index: 2;
 }
+
+/* --- Skizze-zu-Seite-Regler (Schritt 03) ---------------------
+   Seit 11.10.2026 gebaut, wartet auf Material: im HTML mit hidden,
+   Begruendung dort. Kein display auf .regler selbst, sonst gewinnt
+   die Klasse gegen das hidden-Attribut und ein leerer Kasten stuende
+   auf der Seite.
+
+   Die Skizze liegt ueber der gebauten Seite und wird von rechts her
+   abgeschnitten, die Grenze ist --teilung. Der Griff ist ein Faden
+   im Markenton mit einem Knoten in der Mitte, dieselbe Form wie die
+   Knoten des Strangs links. Keine Transition auf --teilung: der Griff
+   folgt der Hand direkt, alles andere fuehlt sich nach Gummi an.
+
+   touch-action: pan-y laesst den Finger senkrecht weiter die Seite
+   scrollen, nur waagrechtes Ziehen bewegt den Griff.
+   ------------------------------------------------------------ */
+.regler{
+  margin: var(--s6) 0 0;
+}
+.regler-buehne{
+  --teilung: 50%;
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  border: 1px solid var(--linie);
+  border-radius: var(--radius);
+  background: var(--karte);
+  touch-action: pan-y;
+  cursor: ew-resize;
+  user-select: none;
+}
+.regler-buehne img{
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  pointer-events: none;
+}
+.regler-skizze{
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 calc(100% - var(--teilung)) 0 0);
+}
+/* 44px breit fuer Finger, sichtbar ist davon nur der Faden. */
+.regler-griff{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--teilung);
+  width: 44px;
+  margin-left: -22px;
+  display: grid;
+  place-items: center;
+}
+.regler-griff::before{
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--olive);
+}
+.regler-griff::after{
+  content: "";
+  position: relative;
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--olive);
+  border-radius: 50%;
+  background: var(--karte);
+}
+.regler figcaption{
+  margin-top: var(--s3);
+  font-size: var(--satz-2);
+  color: var(--still);
+  max-width: 58ch;
+}

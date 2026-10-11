@@ -38,3 +38,15 @@ if (liste && mountElement) {
     </StrictMode>,
   );
 }
+
+/**
+ * Der Skizze-zu-Seite-Regler in Schritt 03, seit 11.10.2026. Er steht
+ * fertig im HTML, traegt aber `hidden`, bis es echtes Material gibt.
+ * Dynamischer Import, damit Vite ihn in eine eigene Datei legt: solange
+ * der Regler versteckt ist, wird sie nie geladen und kostet die Seite
+ * kein Byte.
+ */
+const regler = document.querySelector<HTMLElement>(".regler:not([hidden])");
+if (regler) {
+  import("@/regler").then(({ reglerStarten }) => reglerStarten(regler));
+}
