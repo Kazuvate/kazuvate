@@ -293,7 +293,15 @@
 <!-- ====================== Inhalt ====================== -->
 <main id="inhalt" class="rechtstext">
   <div class="wrap">
-    <div class="lauf">
+    <!-- Raster um Vorspann, Uebersicht und Text, seit 11.10.2026. Bis
+         dahin stand alles in .lauf. Vorspann und Uebersicht stehen jetzt
+         daneben statt darin, damit die Uebersicht ab 1000px als eigene
+         Spalte rechts mitlaufen kann; darunter bleibt die Reihenfolge
+         dieselbe wie vorher. Den aktuellen Abschnitt markiert
+         public/skript/uebersicht.js, siehe stil/seiten.css unter
+         "Mitlaufende Uebersicht". Der Text in .lauf ist unveraendert
+         und deshalb auch nicht neu eingerueckt. -->
+    <div class="lauf-raster">
 
       <div class="vorab">
         <p>Diese Website setzt keine Cookies, bindet keine fremden Skripte ein und misst kein Besucherverhalten. Personendaten entstehen nur, wenn Sie uns über das Formular, per E-Mail oder per Telefon schreiben. Alles Weitere steht ausführlich unten.</p>
@@ -317,6 +325,8 @@
           <li><a href="#aenderungen">Änderungen dieser Erklärung</a></li>
         </ol>
       </nav>
+
+      <div class="lauf">
 
       <h2 id="verantwortlich">Verantwortliche Stelle</h2>
 
@@ -458,8 +468,12 @@
 
       <p>Angaben zum Betreiber, zur Rechtsform und zum Gerichtsstand stehen im <a href="impressum.html">Impressum</a>.</p>
 
+      </div>
     </div>
   </div>
+
+  <script src="/skript/uebersicht.js" defer></script>
+
 </main>
 
 <!-- ====================== Fuss ====================== -->

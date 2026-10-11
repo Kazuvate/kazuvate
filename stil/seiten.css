@@ -349,3 +349,86 @@
 }
 .js .riss-hinweis{ display: block; }
 html:not(.js) .riss{ margin-bottom: var(--s7); }
+
+/* --- Mitlaufende Uebersicht (Datenschutz) --------------------
+   Seit 11.10.2026, nur auf den drei Datenschutz-Seiten: dort steht
+   .lauf-raster um Vorspann, Uebersicht und Text. Das Impressum hat
+   kein solches Raster und ist von allem hier unberuehrt.
+
+   Unter 1000px bleibt die Reihenfolge wie vorher: Vorspann,
+   Uebersicht, Text. Weil die Uebersicht nicht mehr in .lauf steht,
+   ist die erste Ueberschrift dort jetzt :first-child und verloere
+   Linie und Abstand; die Zeile darunter gibt ihr beides zurueck,
+   sodass der Abschnitt aussieht wie zuvor.
+
+   Ab 1000px eine zweite Spalte: die Uebersicht klebt unter dem
+   mitlaufenden Kopf (86px wie scroll-padding-top in basis.css) und
+   ist fuer niedrige Fenster selbst scrollbar, statt unten
+   abgeschnitten zu werden.
+   ------------------------------------------------------------ */
+.lauf-raster .lauf h2:first-child{
+  padding-top: var(--s5);
+  border-top: 1px solid var(--linie);
+}
+.lauf-raster > .vorab,
+.lauf-raster > .uebersicht{ max-width: 760px; }
+
+@media (min-width: 1000px){
+  .lauf-raster{
+    display: grid;
+    grid-template-columns: minmax(0, 760px) minmax(13rem, 16rem);
+    grid-template-areas:
+      "vorab uebersicht"
+      "lauf  uebersicht";
+    column-gap: var(--s8);
+    align-items: start;
+  }
+  .lauf-raster > .vorab{ grid-area: vorab; }
+  .lauf-raster > .lauf{ grid-area: lauf; }
+  .lauf-raster > .uebersicht{
+    grid-area: uebersicht;
+    position: sticky;
+    top: 86px;
+    max-height: calc(100vh - 86px - var(--s5));
+    overflow-y: auto;
+    margin-bottom: 0;
+  }
+  .lauf-raster .uebersicht ol{ grid-template-columns: 1fr; }
+  .lauf-raster .uebersicht a{
+    position: relative;
+    z-index: 0;
+    padding: 4px var(--s2);
+    margin-inline: calc(-1 * var(--s2));
+    border-radius: 4px;
+  }
+
+  /* Der Textmarker: ein Balken im Markenton hinter dem aktuellen
+     Abschnitt, Schrift darauf hell (8.9:1). Er faehrt von links ein,
+     mit genau einer bewegten Eigenschaft (transform); die Schrift
+     wechselt nur die Farbe. Bei reduzierter Bewegung steht er sofort
+     da, die Dauer setzt basis.css auf null. */
+  .lauf-raster .uebersicht a::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: var(--olive);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--kurz) var(--kurve);
+  }
+  .lauf-raster .uebersicht a[aria-current]{ color: var(--auf-flaeche); }
+  .lauf-raster .uebersicht a[aria-current]::before{ color: var(--auf-flaeche); }
+  .lauf-raster .uebersicht a[aria-current]::after{ transform: scaleX(1); }
+  /* Die Zeigerregel weiter oben faerbt Links oliv -- auf dem
+     olivfarbenen Balken waere die Schrift dann weg. */
+  .lauf-raster .uebersicht a[aria-current]:hover{ color: var(--auf-flaeche); }
+}
+
+/* Im Kontrastmodus und bei erzwungenen Farben traegt die Schrift den
+   Zustand allein: fett statt nur heller auf dem Balken, den das
+   System womoeglich gar nicht zeichnet. */
+@media (forced-colors: active){
+  .lauf-raster .uebersicht a[aria-current]{ font-weight: 700; text-decoration: underline; }
+}
