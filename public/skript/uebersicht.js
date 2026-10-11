@@ -8,11 +8,11 @@
    aria-current und damit den Textmarker-Balken. Reiner Zustand,
    nichts blendet ein, nichts scrollt von selbst.
 
-   Ermittelt ueber IntersectionObserver: er meldet sich, sobald eine
-   Abschnittsueberschrift die Leselinie kreuzt, ein schmales Band
-   unter dem mitlaufenden Kopf. Erst dann wird nachgesehen, welche
-   Ueberschrift zuletzt darueber liegt. Kein scroll-Ereignis, keine
-   Rechnung pro Bildschirmbild.
+   Ermittelt ueber IntersectionObserver: er meldet sich, sobald ein
+   Block des Texts das Leseband unter dem mitlaufenden Kopf betritt
+   oder verlaesst. Erst dann wird nachgesehen, welche
+   Abschnittsueberschrift zuletzt ueber der Leselinie liegt. Kein
+   scroll-Ereignis, keine Rechnung pro Bildschirmbild.
 
    Unter 1000px steht die Uebersicht im Fluss oben im Text, dort ist
    sie beim Lesen nicht zu sehen. Das Skript haengt sich dann ab und
@@ -70,7 +70,18 @@
     beobachter = new IntersectionObserver(bestimmen, {
       rootMargin: '-' + KOPF + 'px 0px -60% 0px'
     });
-    paare.forEach(function (p) { beobachter.observe(p.ziel); });
+    // Beobachtet wird jeder Block des Texts, nicht nur die
+    // Ueberschriften. Springt die Seite, statt zu gleiten -- bei
+    // reduzierter Bewegung, ueber einen Anker, mit Ende oder Bild ab --,
+    // landet eine Ueberschrift von unterhalb der Leselinie direkt
+    // darueber, ohne je darin gewesen zu sein, und der Beobachter
+    // schweigt. Irgendein Absatz liegt nach dem Sprung aber immer neu
+    // auf der Linie und meldet sich. Nachgemessen am 11.10.2026 in
+    // Chromium mit emulierter reduzierter Bewegung: vorher blieb die
+    // Markierung nach einem Sprung auf 2000px leer.
+    Array.prototype.forEach.call(lauf.children, function (block) {
+      beobachter.observe(block);
+    });
     // Das Textende meldet ueber das ganze Fenster, nicht ueber die
     // Leselinie, wann der Boden erreicht ist.
     if (lauf.lastElementChild) {
