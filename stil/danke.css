@@ -31,3 +31,70 @@ main#inhalt{
 .danke-inhalt p a{ color: var(--olive); }
 
 .danke-inhalt .knopf{ margin-top: var(--s5); }
+
+
+/* --- Danke-Faden ---------------------------------------------
+   Seit 11.10.2026. Ueber der Ueberschrift steht das KV-Zeichen, von
+   links laeuft eine Linie heran. Sie beginnt am Seitenrand, nicht am
+   Rand des schmalen Textblocks: die Seite ist fast leer, und die
+   Linie soll ueber sie hinweg kommen. Auf grossen Schirmen gedeckelt,
+   sonst begaenne sie bei 2560px weit draussen im Leeren.
+
+   Gezeichnet wird mit clip-path wie die Titellinie in
+   stil/titelmotive.css, nicht mit stroke-dasharray: die Kurve ist
+   ueber preserveAspectRatio="none" auf die Breite gestreckt, und
+   genau diese Kombination mit non-scaling-stroke hat dort am
+   23.08.2026 eine sichtbare Luecke mitten in der Linie erzeugt.
+
+   Der Grundzustand ist fertig gezeichnet. Nur wer keine reduzierte
+   Bewegung eingestellt hat, sieht das einmalige Einzeichnen beim
+   Laden und danach den Farbwechsel des Zeichens, nacheinander, nie
+   zwei Eigenschaften gleichzeitig.
+   ------------------------------------------------------------ */
+.danke-faden{
+  position: relative;
+  width: 3.5rem;
+  margin: 0 auto var(--s6);
+}
+.danke-zeichen{
+  display: block;
+  width: 100%;
+  height: auto;
+  color: var(--olive);
+}
+.danke-linie{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: calc(100% + var(--s3));
+  width: min(calc(50vw - 1.75rem - var(--s3) - var(--rand) - 8px), 34rem);
+  /* basis.css deckelt jedes svg auf die Breite seines Behaelters, hier
+     waeren das die 3.5rem des Zeichens. */
+  max-width: none;
+  height: 100%;
+  overflow: visible;
+}
+.danke-linie path{
+  fill: none;
+  stroke: var(--olive);
+  stroke-width: 3px;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+@media (prefers-reduced-motion: no-preference){
+  .danke-linie{
+    animation: danke-linie-ein var(--zeichen-dauer) var(--kurve) 200ms both;
+  }
+  .danke-zeichen{
+    animation: danke-zeichen-an var(--kurz) var(--kurve) calc(200ms + var(--zeichen-dauer)) both;
+  }
+}
+@keyframes danke-linie-ein{
+  from{ clip-path: inset(-4px 100% -4px 0); }
+  to{ clip-path: inset(-4px 0 -4px 0); }
+}
+@keyframes danke-zeichen-an{
+  from{ color: var(--linie-kraeftig); }
+  to{ color: var(--olive); }
+}
