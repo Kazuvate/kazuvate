@@ -216,12 +216,71 @@
 
   </div>
 
+  <section class="sektion passt" aria-labelledby="passt-titel">
+    <div class="wrap">
+
+      <h2 id="passt-titel">Is it the right fit?</h2>
+      <p class="sektion-vor">Three questions we ask before every quote. Your answers stay in this window; nothing is stored or sent.</p>
+
+      <div class="passt-fragen">
+        <fieldset class="passt-frage">
+          <legend>Does your content change more than once a month?</legend>
+          <div class="passt-wahl">
+            <label><input type="radio" name="passt-inhalt" value="ja"> Yes</label>
+            <label><input type="radio" name="passt-inhalt" value="nein"> No</label>
+          </div>
+        </fieldset>
+        <fieldset class="passt-frage">
+          <legend>Does anyone need to log in, or is data stored?</legend>
+          <div class="passt-wahl">
+            <label><input type="radio" name="passt-login" value="ja"> Yes</label>
+            <label><input type="radio" name="passt-login" value="nein"> No</label>
+          </div>
+        </fieldset>
+        <fieldset class="passt-frage">
+          <legend>Do you need payments or stock management?</legend>
+          <div class="passt-wahl">
+            <label><input type="radio" name="passt-shop" value="ja"> Yes</label>
+            <label><input type="radio" name="passt-shop" value="nein"> No</label>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="passt-ergebnis" role="status">
+        <p class="passt-leer">Your result appears here once all three questions are answered.</p>
+      </div>
+      <p class="passt-regel">Three times no: then it is a fit, and we are happy to talk. A yes to the first question points to a CMS, a yes to the second or third to an application or an online shop.</p>
+
+      <template data-ergebnis="reden">
+        <p class="passt-urteil">Then let’s talk.</p>
+        <p>Three times no means your project is a website of the kind we build.</p>
+        <a class="knopf" href="/en/contact.html">Get in touch</a>
+      </template>
+      <template data-ergebnis="cms">
+        <p class="passt-urteil">Then we recommend a CMS.</p>
+        <p>If you have new content every month, you should be able to publish it yourself without waiting for anyone. That is what a CMS such as WordPress is built for, and we would rather tell you now than after the quote.</p>
+        <p>If it is only the odd change to texts or opening hours, our content service is enough: you send us an email, we have the change live within 24 hours.</p>
+      </template>
+      <template data-ergebnis="anwendung">
+        <p class="passt-urteil">Then we are not the right people.</p>
+        <p>A login or stored data needs an application with a server and a database. That is a different project from a website, and we deliberately build websites only. In a first conversation we are happy to tell you what fits instead.</p>
+      </template>
+      <template data-ergebnis="shop">
+        <p class="passt-urteil">Then we recommend an online shop.</p>
+        <p>Payments and stock belong in a ready-made shop system that is built and tested for exactly that. A hand-built website is the wrong tool for it.</p>
+      </template>
+
+    </div>
+  </section>
+
   <section class="abschluss">
     <div class="wrap">
       <p class="abschluss-zeile">Let’s talk about your project.</p>
       <a class="knopf" href="/en/contact.html">Get in touch</a>
     </div>
   </section>
+
+  <script src="/skript/passt.js" defer></script>
 
 </main>
 

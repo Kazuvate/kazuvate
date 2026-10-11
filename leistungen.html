@@ -393,6 +393,85 @@
 
   </div>
 
+  <!-- ====================== Passt es zu Ihnen? ======================
+       Seit 11.10.2026. Die drei Fragen, die vor jeder Offerte stehen
+       (Kazuvate Angebot, "Wann ein Projekt passt"), als kleiner
+       Selbsttest. Das Ergebnis ist ehrlich in beide Richtungen: wer
+       dreimal Nein sagt, bekommt den Weg zur Anfrage, wer einmal Ja
+       sagt, bekommt die Empfehlung, die wir auch im Gespraech geben
+       wuerden.
+
+       Rein im Browser. Kein <form>, kein Absenden, nichts wird
+       gespeichert -- auch nicht im Local Storage, die
+       Datenschutzerklaerung schliesst das ausdruecklich aus. Die
+       Auswertung macht public/skript/passt.js, das nur diese Seite
+       laedt. Ohne Skript bleiben die Fragen stehen, das Ergebnisfeld
+       verschwindet und die Regel steht als Satz darunter.
+
+       Native Radiogruppen mit Legende: Pfeiltasten innerhalb der
+       Gruppe und der Fokusring kommen vom Browser, nichts davon ist
+       nachgebaut. -->
+  <section class="sektion passt" aria-labelledby="passt-titel">
+    <div class="wrap">
+
+      <h2 id="passt-titel">Passt es zu Ihnen?</h2>
+      <p class="sektion-vor">Drei Fragen, die wir vor jeder Offerte stellen. Ihre Antworten bleiben in diesem Fenster, gespeichert oder gesendet wird nichts.</p>
+
+      <div class="passt-fragen">
+        <fieldset class="passt-frage">
+          <legend>Ändert sich der Inhalt öfter als einmal im Monat?</legend>
+          <div class="passt-wahl">
+            <label><input type="radio" name="passt-inhalt" value="ja"> Ja</label>
+            <label><input type="radio" name="passt-inhalt" value="nein"> Nein</label>
+          </div>
+        </fieldset>
+        <fieldset class="passt-frage">
+          <legend>Muss sich jemand einloggen, oder werden Daten gespeichert?</legend>
+          <div class="passt-wahl">
+            <label><input type="radio" name="passt-login" value="ja"> Ja</label>
+            <label><input type="radio" name="passt-login" value="nein"> Nein</label>
+          </div>
+        </fieldset>
+        <fieldset class="passt-frage">
+          <legend>Braucht es Zahlungen oder einen Lagerbestand?</legend>
+          <div class="passt-wahl">
+            <label><input type="radio" name="passt-shop" value="ja"> Ja</label>
+            <label><input type="radio" name="passt-shop" value="nein"> Nein</label>
+          </div>
+        </fieldset>
+      </div>
+
+      <!-- role="status" ist eine hoefliche Live-Region: ein
+           Screenreader liest das Ergebnis vor, sobald es wechselt, ohne
+           den Besucher zu unterbrechen. Der Platzhalter steht von
+           Anfang an im HTML und wird deshalb nicht angesagt. -->
+      <div class="passt-ergebnis" role="status">
+        <p class="passt-leer">Ihr Ergebnis steht hier, sobald alle drei Fragen beantwortet sind.</p>
+      </div>
+      <p class="passt-regel">Dreimal Nein: Dann passt es, und wir reden gern. Ein Ja bei der ersten Frage spricht für ein CMS, ein Ja bei der zweiten oder dritten für eine Anwendung oder einen Onlineshop.</p>
+
+      <template data-ergebnis="reden">
+        <p class="passt-urteil">Dann reden wir.</p>
+        <p>Dreimal Nein heisst: Ihr Vorhaben ist eine Website, wie wir sie bauen.</p>
+        <a class="knopf" href="kontakt.html">Unverbindlich anfragen</a>
+      </template>
+      <template data-ergebnis="cms">
+        <p class="passt-urteil">Dann empfehlen wir ein CMS.</p>
+        <p>Wer jeden Monat neue Inhalte hat, sollte sie selbst einstellen können, ohne auf jemanden zu warten. Dafür ist ein CMS wie WordPress gebaut, und das sagen wir Ihnen lieber jetzt als nach der Offerte.</p>
+        <p>Geht es nur um einzelne Änderungen an Texten oder Öffnungszeiten, reicht unsere Textpflege: Sie schicken uns eine Mail, wir haben die Änderung innert 24 Stunden drin.</p>
+      </template>
+      <template data-ergebnis="anwendung">
+        <p class="passt-urteil">Dann sind wir nicht die Richtigen.</p>
+        <p>Ein Login oder gespeicherte Daten brauchen eine Anwendung mit Server und Datenbank. Das ist ein anderes Projekt als eine Website, und wir bauen bewusst nur Websites. Im ersten Gespräch nennen wir Ihnen gern, was stattdessen passt.</p>
+      </template>
+      <template data-ergebnis="shop">
+        <p class="passt-urteil">Dann empfehlen wir einen Onlineshop.</p>
+        <p>Zahlungen und Lagerbestand gehören in ein fertiges Shopsystem, das genau dafür gebaut und geprüft ist. Eine handgebaute Website ist dafür das falsche Werkzeug.</p>
+      </template>
+
+    </div>
+  </section>
+
   <!-- Abschluss. Ohne ihn endet die Seite nach der letzten Zeile
        im Nichts und der Besucher hat keinen naechsten Schritt. -->
   <section class="abschluss">
@@ -401,6 +480,8 @@
       <a class="knopf" href="kontakt.html">Unverbindlich anfragen</a>
     </div>
   </section>
+
+  <script src="/skript/passt.js" defer></script>
 
 </main>
 
