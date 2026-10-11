@@ -251,3 +251,119 @@
 }
 html:not(.js) .passt-ergebnis{ display: none; }
 .js .passt-regel{ display: none; }
+
+/* --- Wege zur Website ---------------------------------------
+   Seit 11.10.2026. Begruendung der Inhalte im Markup. Hier nur die
+   Form: Haarlinien zwischen den Zeilen wie ueberall auf der Seite,
+   unsere Spalte als weisses Band mit vier Eckwinkeln -- den
+   Schnittmarken, an denen ein Druckbogen beschnitten wird.
+
+   Die Spaltenkoepfe stehen bewusst nicht in Versalien wie bei .tab
+   in stil/seiten.css: "kazuvate" wird im Auftritt immer klein
+   geschrieben, auch in einer Tabelle.
+   ------------------------------------------------------------ */
+.wege-tab{
+  margin-top: var(--s7);
+  overflow-x: auto;
+}
+.wege-tab table{
+  width: 100%;
+  min-width: 720px;
+  /* separate statt collapse: nur so bleiben die Raender an der
+     klebenden ersten Spalte (siehe unten) beim Verschieben stehen. */
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+}
+.wege-tab th,
+.wege-tab td{
+  text-align: left;
+  vertical-align: top;
+  padding: var(--s5) var(--s5) var(--s5) 0;
+  border-bottom: 1px solid var(--linie-marke);
+}
+.wege-tab thead th{
+  width: 26%;
+  padding-top: var(--s4);
+  font-size: var(--satz-5);
+  font-weight: 650;
+  line-height: 1.3;
+  color: var(--tinte);
+  border-bottom-color: var(--olive);
+}
+.wege-tab thead th:first-child{ width: 22%; }
+.wege-tab tbody th{
+  font-weight: 650;
+  line-height: 1.45;
+  color: var(--tinte);
+}
+.wege-tab td{
+  font-size: .94rem;
+  line-height: 1.55;
+  color: var(--tinte-2);
+}
+.wege-tab td strong{
+  display: block;
+  margin-bottom: var(--s1);
+  font-weight: 650;
+  color: var(--tinte);
+}
+
+/* Unsere Spalte. Das Band ist Information, nicht Zierde: es sagt,
+   welche der drei Spalten die Firma ist, deren Seite man liest. */
+.wege-tab .wege-wir{
+  position: relative;
+  background: var(--karte);
+  padding-left: var(--s5);
+}
+.wege-tab th.wege-wir::before,
+.wege-tab th.wege-wir::after,
+.wege-tab tr:last-child .wege-wir::before,
+.wege-tab tr:last-child .wege-wir::after{
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 0 solid var(--olive);
+  pointer-events: none;
+}
+.wege-tab th.wege-wir::before{ top: 0; left: 0; border-top-width: 2px; border-left-width: 2px; }
+.wege-tab th.wege-wir::after{ top: 0; right: 0; border-top-width: 2px; border-right-width: 2px; }
+.wege-tab tr:last-child .wege-wir::before{ bottom: 0; left: 0; border-bottom-width: 2px; border-left-width: 2px; }
+.wege-tab tr:last-child .wege-wir::after{ bottom: 0; right: 0; border-bottom-width: 2px; border-right-width: 2px; }
+.wege-tab tr:last-child th,
+.wege-tab tr:last-child td{ border-bottom: 0; }
+
+/* Der Hinweis steht nur dort, wo die Tabelle wirklich breiter ist
+   als der Platz: unter 764px Fensterbreite (720px Tabelle plus die
+   beiden Seitenraender). Darueber waere er eine Anleitung fuer
+   etwas, das nicht passiert. */
+.wege-hinweis{
+  display: none;
+  margin-top: var(--s5);
+  font-size: var(--satz-2);
+  color: var(--still);
+}
+@media (max-width: 767px){
+  .wege-hinweis{ display: block; }
+  .wege-tab{ margin-top: var(--s3); }
+
+  /* Beim Verschieben bleibt die Frage links stehen, sonst liest man
+     nach dem ersten Wischen Antworten ohne die Zeile, zu der sie
+     gehoeren. Der Papierton deckt, was darunter durchlaeuft. */
+  .wege-tab th:first-child{
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background: var(--grund);
+    border-right: 1px solid var(--linie-marke);
+    padding-right: var(--s4);
+  }
+  .wege-tab th:first-child + *{ padding-left: var(--s4); }
+
+  /* Die stehende Spalte schmal halten: bei 375px blieben mit den
+     22 Prozent vom Desktop nur 173px fuer alles, was sich verschiebt. */
+  .wege-tab table{ min-width: 640px; }
+  .wege-tab thead th:first-child{ width: 7.5rem; }
+  .wege-tab tbody th{ font-size: var(--satz-3); }
+}
