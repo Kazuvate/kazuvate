@@ -89,6 +89,16 @@ gsap.registerPlugin(ScrollTrigger);
 }
 
 /**
+ * Textmarker-Zeilen auf der Startseite, seit 11.10.2026
+ * (src/ideen/zeilen.ts). Ohne das Skript funktionieren sie per Klick;
+ * es fuegt nur das Oeffnen beim Zeigen und beim Fokussieren hinzu.
+ */
+{
+  const feld = document.querySelector<HTMLElement>(".anders-zeilen");
+  if (feld) import("./ideen/zeilen").then((m) => m.starte(feld));
+}
+
+/**
  * Die Marken-Kurve, deckungsgleich mit --kurve in stil/tokens.css:
  * cubic-bezier(.22, 1, .36, 1). Eine einzige Kurve fuer CSS und GSAP,
  * damit sich keine Bewegung auf der Seite anders anfuehlt als der Rest.
@@ -249,8 +259,10 @@ gsap.matchMedia().add("(prefers-reduced-motion: no-preference)", () => {
   // "Was wir fuer Sie bauen": drei Zeichen-Titel-Text-Bloecke.
   eintritt("#leistungen .leistungen > li");
 
-  // "Warum kazuvate": die drei Bento-Kacheln.
-  eintritt("#anders .kachel");
+  // "Warum kazuvate" stand hier bis zum 11.10.2026 mit
+  // eintritt("#anders .kachel"). Die Kacheln sind seitdem drei Zeilen
+  // mit Textmarker (src/ideen/zeilen.ts), und die blenden nicht ein:
+  // sie reagieren auf Zeigen, Fokus und Tippen, nicht aufs Scrollen.
 
   // Referenz-Kacheln auf der Startseite.
   eintritt("#referenz .referenz-kachel");

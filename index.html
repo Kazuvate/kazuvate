@@ -514,36 +514,46 @@
         <h2>Drei Dinge machen wir anders.</h2>
       </div>
 
-      <!-- Drei Register je Zeile: Label, Aussage, Erklaerung. Bis zum
-           02.09.2026 waren das drei weisse Karten mit gezeichnetem
-           Rahmen und einer Anhebung beim Zeigen. Begruendung fuer den
-           Umbau steht ausfuehrlich in stil/basis.css bei .bento --
-           kurz: die Anhebung stand als offener Anti-Slop-Punkt im
-           Befund vom 31.08.2026, und drei Kaesten umschliessen hier
-           drei Argumente, keine anklickbare Einheit.
+      <!-- Drei Zeilen wie mit dem Textmarker, seit 11.10.2026. Jede
+           Aussage ist ein <details>, alle drei teilen sich einen Namen:
+           es ist immer genau eine offen, die erste beim Laden. Die
+           offene traegt den Balken und zeigt ihre Erklaerung, die
+           anderen stehen gedaempft. Ohne Skript per Klick, Tippen oder
+           Enter; src/ideen/zeilen.ts oeffnet zusaetzlich beim Zeigen
+           und beim Fokussieren. Begruendung in stil/basis.css bei
+           .anders-zeilen.
 
-           Das <br> in den Ueberschriften bleibt: es setzt den Umbruch
+           Bis zum 02.09.2026 waren das drei weisse Karten, danach drei
+           Register (Label, Aussage, Erklaerung) nebeneinander.
+
+           Das <br> in den Aussagen bleibt: es setzt den Umbruch
            dorthin, wo der Satz eine Zaesur hat, statt dorthin, wo die
            Spalte zufaellig endet. -->
-      <div class="bento">
+      <div class="anders-zeilen">
 
-        <article class="kachel">
-          <p class="augenbraue">Schnelligkeit</p>
-          <h3>Wochen statt Monate.<br>Ohne Abstriche.</h3>
-          <p>Andere Agenturen rechnen in Monaten, weil Ihr Projekt durch mehrere Abteilungen läuft. Bei uns reden Sie direkt mit denen, die bauen. Handgebaut statt Vorlage, ohne Ballast, der die Seite langsam macht.</p>
-        </article>
+        <details class="zeile" name="anders" open>
+          <summary>
+            <span class="augenbraue">Schnelligkeit</span>
+            <h3><span class="marker">Wochen statt Monate.<br>Ohne Abstriche.</span></h3>
+          </summary>
+          <p class="zeile-text">Andere Agenturen rechnen in Monaten, weil Ihr Projekt durch mehrere Abteilungen läuft. Bei uns reden Sie direkt mit denen, die bauen. Handgebaut statt Vorlage, ohne Ballast, der die Seite langsam macht.</p>
+        </details>
 
-        <article class="kachel">
-          <p class="augenbraue">Sichtbarkeit</p>
-          <h3>Gefunden werden.<br>Dort, wo gesucht wird.</h3>
-          <p>Google-Unternehmensprofil, strukturierte Firmendaten und überall dieselben Angaben. Das ist die Grundlage dafür, dass Sie in der Google-Suche, auf Google Maps und zunehmend auch in KI-Assistenten auftauchen.</p>
-        </article>
+        <details class="zeile" name="anders">
+          <summary>
+            <span class="augenbraue">Sichtbarkeit</span>
+            <h3><span class="marker">Gefunden werden.<br>Dort, wo gesucht wird.</span></h3>
+          </summary>
+          <p class="zeile-text">Google-Unternehmensprofil, strukturierte Firmendaten und überall dieselben Angaben. Das ist die Grundlage dafür, dass Sie in der Google-Suche, auf Google Maps und zunehmend auch in KI-Assistenten auftauchen.</p>
+        </details>
 
-        <article class="kachel">
-          <p class="augenbraue">Rundum</p>
-          <h3>Alles aus einer Hand.<br>Von der Domain bis zur Wartung.</h3>
-          <p>Domain, Hosting, Kontaktformular, Textänderungen und ein System für echte Kundenbewertungen, dazu ein monatlicher Bericht zur Sichtbarkeit. Sie haben einen Ansprechpartner statt fünf Rechnungen.</p>
-        </article>
+        <details class="zeile" name="anders">
+          <summary>
+            <span class="augenbraue">Rundum</span>
+            <h3><span class="marker">Alles aus einer Hand.<br>Von der Domain bis zur Wartung.</span></h3>
+          </summary>
+          <p class="zeile-text">Domain, Hosting, Kontaktformular, Textänderungen und ein System für echte Kundenbewertungen, dazu ein monatlicher Bericht zur Sichtbarkeit. Sie haben einen Ansprechpartner statt fünf Rechnungen.</p>
+        </details>
 
       </div>
 
