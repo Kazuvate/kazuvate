@@ -42,6 +42,33 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 /**
+ * Seitenwechsel, seit 11.10.2026. Der Wechsel selbst ist reines CSS
+ * (@view-transition in stil/basis.css): die Linie unter dem Seitentitel
+ * wandert von der alten Seite an ihren Platz auf der neuen. Kommt die
+ * Seite so an, darf sich die Linie danach nicht noch einmal von vorne
+ * einzeichnen -- html.linie-da schaltet das ab (stil/titelmotive.css).
+ *
+ * Zwei Wege, weil dieses Modul je nach Ladezeit vor oder nach dem
+ * ersten Bild laeuft: davor meldet pagereveal den Wechsel, danach steht
+ * er noch als :active-view-transition am Wurzelelement (er dauert
+ * 400ms). Browser, die beides nicht kennen, machen keinen Wechsel und
+ * zeichnen die Linie wie bisher.
+ */
+{
+  const wurzel = document.documentElement;
+  const linieDa = () => wurzel.classList.add("linie-da");
+  if (CSS.supports("selector(:active-view-transition)") && wurzel.matches(":active-view-transition")) {
+    linieDa();
+  } else {
+    window.addEventListener(
+      "pagereveal",
+      (e) => { if ((e as Event & { viewTransition?: unknown }).viewTransition) linieDa(); },
+      { once: true },
+    );
+  }
+}
+
+/**
  * Die Marken-Kurve, deckungsgleich mit --kurve in stil/tokens.css:
  * cubic-bezier(.22, 1, .36, 1). Eine einzige Kurve fuer CSS und GSAP,
  * damit sich keine Bewegung auf der Seite anders anfuehlt als der Rest.
