@@ -187,6 +187,30 @@
 <main id="inhalt" class="fehler">
   <div class="wrap">
 
+    <!-- Der gerissene Faden, seit 11.10.2026. Dieselbe Linie wie der
+         Faden auf der Startseite und der Strang auf ablauf.html, hier
+         abgerissen: diese Adresse fuehrt nirgends hin. Das lose Ende
+         laesst sich mit Maus oder Finger greifen und zum Ring "Zur
+         Startseite" ziehen; dort knuepft es an, und die Startseite
+         oeffnet sich.
+
+         Das ist ein Spiel neben den Wegen, keiner davon. "Zur
+         Startseite" ist ein gewoehnlicher Link und mit Tastatur,
+         Screenreader und ohne Skript bedienbar, die Liste darunter
+         bleibt vollstaendig. Mit der Tastatur auf dem Link knuepft sich
+         der Faden an, ohne zu springen -- das Pendant zum Ziehen.
+         Faden, Griff und Hinweis sind aria-hidden, das Ziehen steuert
+         public/skript/riss.js. -->
+    <div class="riss">
+      <svg class="riss-faden" viewBox="0 0 1000 144" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <path class="riss-linie" d="M0 72 C 189 72 294 89 420 89"/>
+        <path class="riss-fasern" d="M420 89 l11 -4 M420 89 l13 1 M420 89 l9 6"/>
+        <circle class="riss-griff" cx="420" cy="89" r="22"/>
+      </svg>
+      <a class="riss-ziel" href="/"><span class="riss-ring" aria-hidden="true"></span>Zur Startseite</a>
+    </div>
+    <p class="riss-hinweis" aria-hidden="true">Der Faden ist gerissen. Ziehen Sie das lose Ende zur Startseite.</p>
+
     <h2 class="fehler-titel">Weiter geht es hier</h2>
 
     <ul class="fehler-wege" role="list">
@@ -223,6 +247,8 @@
       <a class="knopf" href="/kontakt.html">Unverbindlich anfragen</a>
     </div>
   </section>
+
+  <script src="/skript/riss.js" defer></script>
 
 </main>
 

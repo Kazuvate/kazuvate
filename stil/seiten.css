@@ -251,3 +251,101 @@
   color: var(--tinte-2);
   max-width: 60ch;
 }
+
+/* --- Der gerissene Faden (404.html) --------------------------
+   Seit 11.10.2026. Der Faden kommt von links und endet ausgefranst,
+   rechts steht der Ring "Zur Startseite". Das Ziehen steuert
+   public/skript/riss.js, Begruendung im Markup.
+
+   Strich wie beim Faden auf der Startseite: Markenton, runde Enden,
+   in jeder Breite gleich dick. Der Ring hat die Masse der Knoten auf
+   ablauf.html und fuellt sich beim Anknuepfen wie ein erreichter
+   Schritt dort.
+   ------------------------------------------------------------ */
+.riss{
+  position: relative;
+  height: 9rem;
+  max-width: 760px;
+}
+.riss-faden{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  overflow: visible;
+}
+.riss-linie,
+.riss-fasern{
+  fill: none;
+  stroke: var(--olive);
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+.riss-linie{ stroke-width: 3px; }
+.riss-fasern{ stroke-width: 1.5px; }
+
+/* Die Trefferflaeche um das lose Ende, 44px. Unsichtbar, und ohne
+   Skript gar nicht da: dort gaebe es nichts zu greifen. touch-action
+   none nur hier, der Rest des Bands laesst den Finger scrollen. */
+.riss-griff{
+  fill: transparent;
+  display: none;
+}
+.riss.ist-bereit .riss-griff{
+  display: inline;
+  cursor: grab;
+  touch-action: none;
+}
+.riss.ist-gezogen .riss-griff{ cursor: grabbing; }
+
+.riss-ziel{
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s3);
+  min-height: 44px;
+  font-weight: 650;
+  color: var(--tinte);
+  text-decoration: none;
+  transition: color var(--kurz) var(--kurve);
+}
+.riss-ring{
+  flex: none;
+  width: 3.5rem;
+  height: 3.5rem;
+  box-sizing: border-box;
+  border: 1.5px solid var(--olive);
+  border-radius: 50%;
+  background: var(--karte);
+  transition: background-color var(--kurz) var(--kurve);
+}
+.riss-ziel.ist-nah .riss-ring{ background: var(--linie-marke); }
+.riss-ziel.ist-verbunden .riss-ring{ background: var(--olive); }
+@media (hover: hover) and (pointer: fine){
+  .riss-ziel:hover{ color: var(--olive); }
+}
+
+/* Auf schmalen Schirmen steht die Beschriftung unter dem Ring, sonst
+   bliebe fuer den Faden davor kaum Platz. */
+@media (max-width: 599px){
+  .riss-ziel{
+    flex-direction: column;
+    gap: var(--s2);
+    font-size: var(--satz-3);
+    text-align: center;
+  }
+  .riss-ring{ width: 3rem; height: 3rem; }
+}
+
+.riss-hinweis{
+  display: none;
+  margin: var(--s2) 0 var(--s7);
+  font-size: var(--satz-2);
+  color: var(--still);
+}
+.js .riss-hinweis{ display: block; }
+html:not(.js) .riss{ margin-bottom: var(--s7); }
