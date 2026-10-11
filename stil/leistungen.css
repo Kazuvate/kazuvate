@@ -34,10 +34,6 @@
     align-items: start;
   }
 }
-@media (min-width: 1100px){
-  .leistung-gross{ grid-template-columns: 10rem minmax(0, 62ch); }
-}
-
 /* Ab 1140px kam hier bis zum 31.08.2026 eine dritte Spalte fuer
    das Seitenmotiv dazu, die zweite schrumpfte dafuer von 62ch auf
    58ch. Mit dem Motiv ist beides weg: das Raster bleibt ab 1100px
@@ -68,6 +64,48 @@
   margin-top: var(--s4);
   color: var(--tinte-2);
   max-width: 58ch;
+}
+
+/* Plakat-Massstab, seit 11.10.2026. Ab 1100px wechselt die Nummer
+   von links nach rechts und wird zur eigentlichen Flaeche der Zeile:
+   ein Grad, der nicht zur Textleiter gehoert, daneben der Text klein
+   und exakt -- dieselbe Bauart wie die zwei Welten in tokens.css.
+   Die Ziffer steht auf der Haarlinie und wird an ihr abgeschnitten,
+   rechts dort, wo die Linie endet. Beides ist der Rand des Blatts,
+   nicht der des Fensters: so sitzt der Anschnitt bei 1100px an
+   derselben Stelle wie bei 2560px.
+
+   overflow: clip schneidet, ohne einen Scrollbereich anzulegen. Die
+   Zeile enthaelt nichts Fokussierbares, es kann also kein Fokusring
+   mit abgeschnitten werden. */
+@media (min-width: 1100px){
+  .leistung-gross{
+    grid-template-columns: minmax(0, 62ch) minmax(0, 1fr);
+    overflow: hidden;
+    overflow: clip;
+  }
+  .leistung-inhalt{ grid-column: 1; grid-row: 1; }
+  .leistung-nr{
+    grid-column: 2;
+    grid-row: 1;
+    /* safe: wird die Spalte bei reinem Textzoom schmaler als die
+       Ziffer, laeuft sie nach rechts ins Abgeschnittene statt nach
+       links ueber den Text. */
+    justify-self: end;
+    justify-self: safe end;
+    align-self: end;
+    /* 20vw sind bei 1100px 220px, gedeckelt bei 19rem (304px) ab
+       rund 1520px. Groesser wuerde die Ziffer in der rechten Spalte
+       nicht mehr Flaeche fuellen, sondern sie sprengen. */
+    font-size: min(20vw, 19rem);
+    line-height: .8;
+    letter-spacing: -.05em;
+    /* Unten durch das Polster der Zeile bis unter die Haarlinie,
+       rechts ueber das Ende der Linie hinaus. Die Werte in em
+       schneiden bei jeder Groesse denselben Anteil ab. */
+    margin-bottom: calc(-1 * var(--s8) - .1em);
+    margin-right: -.07em;
+  }
 }
 
 /* Die einzige Bewegung auf der Seite: beim Zeigen wird die Nummer
