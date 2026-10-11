@@ -1,0 +1,83 @@
+/* ============================================================
+   kazuvate | Isometrische Zeichen (Muster C4)
+   Seit 11.10.2026, geladen nur von muster/iso-zeichen.html. Begruendung
+   dort im Kopf der Datei.
+
+   Dieselben drei Zeichen wie auf der Startseite, aber als Gegenstand
+   statt als Symbol: ein Fenster, das auf dem Tisch liegt, zwei
+   gestapelte, eine flach liegende Uhr. Strich im Markenton wie der
+   Faden, Flaechen in Papier und Weiss, damit hintere Kanten von
+   vorderen verdeckt werden statt durchzuscheinen.
+
+   Darunter eine helle Platte. Beim Zeigen laeuft sie dem Zeiger ein
+   Stueck nach (public/skript/iso-zeichen.js setzt --px und --py), eine
+   einzige bewegte Eigenschaft, transform. Mit der Tastatur bewegt sich
+   nichts, dort wechselt der Strich die Farbe. Bei reduzierter Bewegung
+   bleibt die Platte, wo sie ist.
+   ============================================================ */
+
+.iso-titel{
+  font-size: var(--gross);
+  line-height: 1.02;
+  letter-spacing: -.03em;
+  max-width: 18ch;
+}
+
+.iso-zeichen{
+  display: block;
+  width: 100%;
+  max-width: 16rem;
+  height: auto;
+  margin: 0 0 var(--s5) calc(-1 * var(--s3));
+  overflow: visible;
+}
+
+.iso-platte{
+  fill: var(--karte);
+  stroke: var(--linie);
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
+  transform: translate(var(--px, 0px), var(--py, 0px));
+  transition: transform var(--kurz) var(--kurve);
+}
+
+.iso-seite{ fill: var(--karte-2); }
+.iso-flaeche{ fill: var(--karte); }
+.iso-strich{ fill: none; }
+.iso-seite,
+.iso-flaeche,
+.iso-strich{
+  stroke: var(--olive);
+  stroke-width: 2.5px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  transition: stroke var(--kurz) var(--kurve);
+}
+.iso-punkt{
+  fill: var(--olive);
+  transition: fill var(--kurz) var(--kurve);
+}
+
+/* Tastatur: der Titel ist der Link, das Zeichen antwortet mit der
+   Farbe der grossen Flaechen statt mit Bewegung. Der Fokusring selbst
+   bleibt der aus basis.css. */
+.iso-leistungen li:focus-within .iso-seite,
+.iso-leistungen li:focus-within .iso-flaeche,
+.iso-leistungen li:focus-within .iso-strich{ stroke: var(--tinte); }
+.iso-leistungen li:focus-within .iso-punkt{ fill: var(--tinte); }
+
+.iso-leistungen h3 a{
+  color: inherit;
+  text-decoration: none;
+}
+@media (hover: hover) and (pointer: fine){
+  .iso-leistungen h3 a:hover{
+    color: var(--olive);
+    text-decoration: underline;
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .iso-platte{ transform: none; }
+}
