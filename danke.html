@@ -173,6 +173,16 @@
 <main id="inhalt">
   <div class="wrap danke-inhalt">
 
+    <!-- Der Danke-Faden, seit 11.10.2026. Eine Linie zeichnet sich
+         einmal vom linken Seitenrand her und landet im KV-Zeichen --
+         die Antwort der Seite auf das Absenden. Danach steht sie still.
+         Reine Zierde, deshalb aria-hidden; bei reduzierter Bewegung
+         steht sie von Anfang an fertig da (stil/danke.css). -->
+    <div class="danke-faden" aria-hidden="true">
+      <svg class="danke-linie" viewBox="0 0 300 40" preserveAspectRatio="none" focusable="false"><path d="M0 30 C 50 34 80 8 140 16 S 240 30 300 20"/></svg>
+      <svg class="danke-zeichen" viewBox="0 0 585.51 442.90" focusable="false"><use href="#marke"></use></svg>
+    </div>
+
     <!-- Augenbraue "DANKE" ueber "Ihre Anfrage ist angekommen."
          entfernt am 31.08.2026: dasselbe Wort wie im Seitentitel,
          und die Ueberschrift darunter sagt es ohnehin. -->
