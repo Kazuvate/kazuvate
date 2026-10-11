@@ -390,6 +390,37 @@
                 <dd>Logo, Bilder und vorhandene Texte. Fehlt etwas, schreiben wir es.</dd>
               </div>
             </dl>
+            <!-- Skizze-zu-Seite-Regler, gebaut am 11.10.2026. WARTET AUF
+                 MATERIAL und ist deshalb hidden.
+
+                 Gedacht ist: links die echte Skizze oder Maske eines echten
+                 Projekts, rechts dieselbe Seite gebaut, dazwischen ein Griff.
+                 Das zeigt, was dieser Schritt verspricht -- aus der
+                 freigegebenen Maske wird die Seite, nichts kommt dazwischen.
+                 Am 11.10.2026 gibt es keine solche Skizze: gesucht im Repo,
+                 unter INFORMATIK/KASUM (ProMeti,
+                 herzumschlag_challenge_mit_wissensbriefen) und in den
+                 Anhaengen des Vaults, gefunden nur fertige Bildschirmfotos.
+                 Eine Maske aus einem Bildschirmfoto abzuleiten waere
+                 erfunden, deshalb steht hier kein Bild.
+
+                 Freischalten: beide Bilder als webp mit denselben Massen
+                 eintragen (src, width, height), beide Alt-Texte schreiben,
+                 hidden entfernen. src/ablauf.tsx laedt das Skript
+                 src/regler.ts nur, wenn der Regler sichtbar ist. Ohne
+                 Skript steht der Griff fest in der Mitte. -->
+            <figure class="regler" hidden>
+              <div class="regler-buehne">
+                <img class="regler-seite" alt="" width="1440" height="900" loading="lazy" decoding="async">
+                <div class="regler-skizze">
+                  <img alt="" width="1440" height="900" loading="lazy" decoding="async">
+                </div>
+                <div class="regler-griff" role="slider" tabindex="0" aria-orientation="horizontal"
+                     aria-label="Skizze und gebaute Seite vergleichen" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"
+                     aria-valuetext="50 Prozent Skizze" data-wert-text="{wert} Prozent Skizze"></div>
+              </div>
+              <figcaption>Links die Skizze aus dem Entwurf, rechts die gebaute Seite. Ziehen Sie den Griff oder verschieben Sie ihn mit den Pfeiltasten.</figcaption>
+            </figure>
           </div>
         </li>
 
