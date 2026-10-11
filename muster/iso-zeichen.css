@@ -10,7 +10,7 @@
    vorderen verdeckt werden statt durchzuscheinen.
 
    Darunter eine helle Platte. Beim Zeigen laeuft sie dem Zeiger ein
-   Stueck nach (public/skript/iso-zeichen.js setzt --px und --py), eine
+   Stueck nach (iso-zeichen.js daneben setzt --px und --py), eine
    einzige bewegte Eigenschaft, transform. Mit der Tastatur bewegt sich
    nichts, dort wechselt der Strich die Farbe. Bei reduzierter Bewegung
    bleibt die Platte, wo sie ist.
