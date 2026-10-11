@@ -670,7 +670,11 @@ dd, dt{ overflow-wrap: anywhere; }
   font-weight: 650;
   letter-spacing: .06em;
   color: var(--auf-flaeche);
-  border: 1px solid rgb(247 247 241 / .28);
+  /* 40 statt 28 Prozent seit 11.10.2026: der Rand ist das, woran man den
+     Knopf erkennt, und Raender brauchen 3:1. Mit 28 Prozent waren es
+     2.3:1, mit 40 sind es 3.25:1 (gerechnet). Gleicher Wert beim Knopf
+     "?" daneben und in der Frageleiste. */
+  border: 1px solid rgb(247 247 241 / .4);
   border-radius: 8px;
   cursor: pointer;
   list-style: none;
@@ -2045,7 +2049,7 @@ dd, dt{ overflow-wrap: anywhere; }
 
 /* Gedaempft sind die beiden anderen, aber nur solange eine offen ist --
    wer die offene per Klick schliesst, sieht alle drei wieder gleich.
-   --still auf Papier traegt 5.7:1, also auch als Fliesstext lesbar.
+   --still auf Papier traegt 5.5:1 (gerechnet), also auch als Fliesstext lesbar.
    Der Farbwechsel ist sofort, nicht animiert: bewegt wird nur der
    Balken. */
 .anders-zeilen:has(.zeile[open]) .zeile:not([open]){
@@ -2400,7 +2404,7 @@ dd, dt{ overflow-wrap: anywhere; }
   font-weight: 650;
   color: var(--auf-flaeche);
   background: transparent;
-  border: 1px solid rgb(247 247 241 / .28);
+  border: 1px solid rgb(247 247 241 / .4);
   border-radius: 8px;
   cursor: pointer;
   transition: background-color var(--kurz) var(--kurve);
@@ -2439,7 +2443,7 @@ dd, dt{ overflow-wrap: anywhere; }
     line-height: 1;
     color: var(--auf-flaeche);
     background: none;
-    border: 1px solid rgb(247 247 241 / .28);
+    border: 1px solid rgb(247 247 241 / .4);
     border-radius: 8px;
     cursor: pointer;
   }
