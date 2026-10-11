@@ -67,12 +67,20 @@
 .iso-leistungen li:focus-within .iso-strich{ stroke: var(--tinte); }
 .iso-leistungen li:focus-within .iso-punkt{ fill: var(--tinte); }
 
-.iso-leistungen h3 a{
+/* Auf der Musterseite ist die Seitenueberschrift die h1, die drei
+   Titel sind deshalb h2 statt h3 wie auf der Startseite. Gleiche
+   Groesse wie .leistungen h3 in basis.css. */
+.iso-leistungen h2{
+  font-size: var(--satz-5);
+  line-height: 1.25;
+  margin-bottom: var(--s4);
+}
+.iso-leistungen h2 a{
   color: inherit;
   text-decoration: none;
 }
 @media (hover: hover) and (pointer: fine){
-  .iso-leistungen h3 a:hover{
+  .iso-leistungen h2 a:hover{
     color: var(--olive);
     text-decoration: underline;
   }
