@@ -2541,6 +2541,57 @@ dd, dt{ overflow-wrap: anywhere; }
   gap: var(--s5);
   grid-template-columns: 1fr;
 }
+
+/* --- Kontaktbogen -----------------------------------------------
+   Seit 11.10.2026. Die Referenzen stehen wie Bilder auf einem
+   Kontaktbogen: jedes mit seiner Nummer und darunter, klein, was es
+   ist -- Branche, Seitenzahl, Jahr. Keine Dauer: Kunden lesen eine
+   Zeitangabe als Liefertermin (Entscheidung vom 19.08.2026).
+
+   Belegt ist jede Angabe: ProMeti hat sechs HTML-Seiten und den ersten
+   Commit am 14.06.2026, Herzumschlag (Artemis) ist eine einzige Seite
+   von 2026, PromptPrinter ist ein eigenes Produkt seit Juli 2026. Fuer
+   PromptPrinter fehlt die Seitenzahl, weil eine Anwendung mit Hilfe-
+   und Vergleichsseiten keine feste hat -- fehlt ein Fakt, fehlt das
+   Feld.
+
+   Auf der Referenzenseite folgt ein viertes, leeres Bild: "Nr. 4:
+   frei", als Link zum Kontakt. Auf der Startseite stehen nur zwei der
+   drei Bilder, dort ohne Nummer. */
+.filmbild{ margin: 0; }
+.filmbild figcaption{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--s1) var(--s4);
+  margin-top: var(--s3);
+  font-size: var(--satz-2);
+  color: var(--still);
+}
+.filmbild-nr{
+  min-width: 1.4em;
+  font-weight: 700;
+  color: var(--olive);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Das freie Bild: gleiche Groesse wie die anderen, gestrichelter Rand
+   wie der Bauplan im Fuss. Seitenverhaeltnis der Bildschirmfotos. */
+.frei-feld{
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1280 / 860;
+  border: 1.5px dashed var(--linie-kraeftig);
+  border-radius: var(--radius);
+  font-weight: 650;
+  color: var(--still);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: border-color var(--kurz) var(--kurve);
+}
+@media (hover: hover) and (pointer: fine){
+  .frei-feld:hover{ border-color: var(--olive); }
+}
 @media (min-width: 640px){
   .referenz-galerie{ grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
 }

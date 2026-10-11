@@ -275,7 +275,7 @@ gsap.matchMedia().add("(prefers-reduced-motion: no-preference)", () => {
   // sie reagieren auf Zeigen, Fokus und Tippen, nicht aufs Scrollen.
 
   // Referenz-Kacheln auf der Startseite.
-  eintritt("#referenz .referenz-kachel");
+  eintritt("#referenz .filmbild");
 
   // Die vier Ablauf-Schritte der Kurzfassung.
   eintritt("#ablauf .ablauf > li");
@@ -295,7 +295,7 @@ gsap.matchMedia().add("(prefers-reduced-motion: no-preference)", () => {
      Die Galerie beginnt unter dem Titelband, die erste Reihe steht
      beim Laden also schon halb im Bild. `top 95%` statt 85%, damit
      sie nicht kuenstlich lange leer bleibt. */
-  eintritt(".referenz-galerie .referenz-kachel", "top 95%");
+  eintritt(".referenz-galerie .filmbild", "top 95%");
 
   /* kontakt.html und danke.html haben keinen Eintritt mehr. Beide
      Seiten passen praktisch in einen Bildschirm; was dort eingeblendet
