@@ -99,6 +99,16 @@ gsap.registerPlugin(ScrollTrigger);
 }
 
 /**
+ * Frageleiste auf der Startseite, seit 11.10.2026 (src/ideen/fragen.ts).
+ * Ohne das Skript oeffnet der Knopf das Blatt trotzdem; es kommt nur der
+ * Wechsel der Frage nach Abschnitt und der Fokus dazu.
+ */
+{
+  const blatt = document.getElementById("fragen");
+  if (blatt) import("./ideen/fragen").then((m) => m.starte(blatt));
+}
+
+/**
  * Die Marken-Kurve, deckungsgleich mit --kurve in stil/tokens.css:
  * cubic-bezier(.22, 1, .36, 1). Eine einzige Kurve fuer CSS und GSAP,
  * damit sich keine Bewegung auf der Seite anders anfuehlt als der Rest.

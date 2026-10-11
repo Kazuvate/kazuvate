@@ -210,6 +210,8 @@
       </div>
     </nav>
 
+    <button class="kopf-frage" type="button" popovertarget="fragen" aria-label="What would you like to know?">?</button>
+
     <nav class="sprachen" aria-label="Language">
       <details>
         <summary aria-label="Choose language, current: English">EN<svg class="sprachen-pfeil" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 4.5 6 7.5 9 4.5"/></svg></summary>
@@ -228,7 +230,7 @@
 
 <main id="inhalt">
 
-  <section class="hero">
+  <section class="hero" data-frage="kosten">
     <div class="wrap">
 
       <div class="hero-faden-bereich" id="hero-faden-bereich">
@@ -271,7 +273,7 @@
     </div>
   </section>
 
-  <section class="sektion" id="leistungen">
+  <section class="sektion" id="leistungen" data-frage="texte">
     <div class="wrap">
 
       <h2>What we build for you</h2>
@@ -314,7 +316,7 @@
     </div>
   </section>
 
-  <section class="sektion" id="anders">
+  <section class="sektion" id="anders" data-frage="eigentum">
     <div class="wrap">
 
       <div class="anders-kopf">
@@ -354,7 +356,7 @@
     </div>
   </section>
 
-  <section class="sektion" id="referenz">
+  <section class="sektion" id="referenz" data-frage="cookies">
     <div class="wrap">
 
       <h2>Built and live</h2>
@@ -388,7 +390,7 @@
     </div>
   </section>
 
-  <section class="sektion" id="ablauf">
+  <section class="sektion" id="ablauf" data-frage="danach">
     <div class="wrap">
 
       <h2>From first call to launch</h2>
@@ -421,12 +423,50 @@
     </div>
   </section>
 
-  <section class="abschluss">
+  <section class="abschluss" data-frage="kosten">
     <div class="wrap">
       <p class="abschluss-zeile">Let’s talk about your project.</p>
       <a class="knopf" href="/en/contact.html">Get in touch</a>
     </div>
   </section>
+
+  <!-- ====================== Frageleiste ======================
+       ==================================================== -->
+  <div class="frageleiste">
+    <div class="wrap">
+      <p class="frageleiste-zeile">
+        <span class="frageleiste-titel" id="frageleiste-titel">What would you like to know?</span>
+        <button class="frageleiste-knopf" type="button" popovertarget="fragen" aria-describedby="frageleiste-titel">What does it cost?</button>
+      </p>
+    </div>
+    <div class="fragen-blatt" id="fragen" popover role="dialog" aria-labelledby="fragen-titel">
+      <div class="fragen-kopf">
+        <h2 id="fragen-titel">What would you like to know?</h2>
+        <button class="fragen-zu" type="button" popovertarget="fragen" popovertargetaction="hide">Close</button>
+      </div>
+      <details class="frage" name="frage" id="frage-kosten" open>
+        <summary>What does it cost?</summary>
+        <p>You get a fixed price, not an estimate of hours. It sets out page by page what will be built. What it says is binding, and the final invoice contains no item you have not seen beforehand. The first conversation is non-binding and free of charge.</p>
+      </details>
+      <details class="frage" name="frage" id="frage-texte">
+        <summary>Can I change the texts myself?</summary>
+        <p>You don’t have to: you send us an email, we have the change live within 24 hours. If your content changes more than once a month, a system you can edit yourself is the better fit. We tell you so in the first conversation.</p>
+      </details>
+      <details class="frage" name="frage" id="frage-eigentum">
+        <summary>Who owns the site?</summary>
+        <p>You do. After launch, you receive all files, the domain and every access in your name. Any company that can read HTML and CSS can take the site over. We build nothing that ties you to us.</p>
+      </details>
+      <details class="frage" name="frage" id="frage-cookies">
+        <summary>Do we need a cookie banner?</summary>
+        <p>This website has none: it sets no cookies, stores nothing on your device and loads nothing from third-party servers. Whether your site needs one depends on what runs on it, such as an analytics tool or an embedded map. We clarify that before we build.</p>
+        <p><a class="weiter" href="/en/privacy.html#no-tracking">More in the privacy policy</a></p>
+      </details>
+      <details class="frage" name="frage" id="frage-danach">
+        <summary>What happens after launch?</summary>
+        <p>Send us changes to texts, prices or opening hours by email and we have them live within 24 hours. Hosting, backups and an eye on loading speed come with it, plus a monthly visibility report. You can also do without: the site is yours with all its files.</p>
+      </details>
+    </div>
+  </div>
 
 </main>
 

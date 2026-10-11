@@ -358,6 +358,11 @@
       </div>
     </nav>
 
+    <!-- Die Frageleiste, auf dem Handy auf diesen Knopf eingeklappt.
+         Er steht im Kopf, damit er beim Scrollen keinen Inhalt
+         verdeckt. Stil in stil/basis.css unter "Frageleiste". -->
+    <button class="kopf-frage" type="button" popovertarget="fragen" aria-label="Was möchten Sie wissen?">?</button>
+
     <!-- Sprachen, seit 25.09.2026, als Auswahl seit 27.09.2026. Jeder
          Link fuehrt auf dieselbe Seite in der anderen Sprache, nicht auf
          deren Startseite. Kuerzel statt ausgeschriebener Namen, den vollen
@@ -384,7 +389,7 @@
 <main id="inhalt">
 
   <!-- ====================== Kopfbereich ====================== -->
-  <section class="hero">
+  <section class="hero" data-frage="kosten">
     <div class="wrap">
 
       <!-- ---------- React-Insel: Faden ----------
@@ -452,7 +457,7 @@
            das eine Seite nach Baukasten aussehen laesst. Die
            Augenbrauen, die eine eigene Aussage tragen (die drei
            Kacheln, die drei Bloecke im Kopfbereich), stehen weiterhin. -->
-  <section class="sektion" id="leistungen">
+  <section class="sektion" id="leistungen" data-frage="texte">
     <div class="wrap">
 
       <h2>Was wir für Sie bauen</h2>
@@ -507,7 +512,7 @@
   </section>
 
   <!-- ====================== Warum kazuvate ====================== -->
-  <section class="sektion" id="anders">
+  <section class="sektion" id="anders" data-frage="eigentum">
     <div class="wrap">
 
       <div class="anders-kopf">
@@ -571,7 +576,7 @@
 
 
   <!-- ====================== Referenzen ====================== -->
-  <section class="sektion" id="referenz">
+  <section class="sektion" id="referenz" data-frage="cookies">
     <div class="wrap">
 
       <h2>Gebaut und live</h2>
@@ -615,7 +620,7 @@
   </section>
 
   <!-- ====================== Ablauf ====================== -->
-  <section class="sektion" id="ablauf">
+  <section class="sektion" id="ablauf" data-frage="danach">
     <div class="wrap">
 
       <h2>Vom ersten Anruf bis live</h2>
@@ -657,12 +662,56 @@
        eine Zeile, ein Knopf, weiter geht es auf kontakt.html.
        Das Formular steht seit dem 19.08.2026 nur noch dort.
        ==================================================== -->
-  <section class="abschluss">
+  <section class="abschluss" data-frage="kosten">
     <div class="wrap">
       <p class="abschluss-zeile">Reden wir über Ihr Projekt.</p>
       <a class="knopf" href="kontakt.html">Unverbindlich anfragen</a>
     </div>
   </section>
+
+  <!-- ====================== Frageleiste ======================
+       Seit 11.10.2026. Unten am Rand die Frage, die zum Abschnitt im
+       Bild passt; ein Klick oeffnet die Antwort in einem kleinen
+       Blatt. Das Blatt ist ein Popover: Esc und ein Klick daneben
+       schliessen es ohne Skript. src/ideen/fragen.ts wechselt die
+       Frage nach Abschnitt (still, ohne Animation) und setzt den Fokus.
+       Alle Antworten sind Saetze, die schon auf der Seite stehen
+       (Ablauf, Kontakt, Datenschutz); Stil in stil/basis.css. -->
+  <div class="frageleiste">
+    <div class="wrap">
+      <p class="frageleiste-zeile">
+        <span class="frageleiste-titel" id="frageleiste-titel">Was möchten Sie wissen?</span>
+        <button class="frageleiste-knopf" type="button" popovertarget="fragen" aria-describedby="frageleiste-titel">Was kostet das?</button>
+      </p>
+    </div>
+    <div class="fragen-blatt" id="fragen" popover role="dialog" aria-labelledby="fragen-titel">
+      <div class="fragen-kopf">
+        <h2 id="fragen-titel">Was möchten Sie wissen?</h2>
+        <button class="fragen-zu" type="button" popovertarget="fragen" popovertargetaction="hide">Schliessen</button>
+      </div>
+      <details class="frage" name="frage" id="frage-kosten" open>
+        <summary>Was kostet das?</summary>
+        <p>Sie bekommen einen Fixpreis, keine Stundenschätzung. Darin steht Seite für Seite, was gebaut wird. Was drinsteht, gilt, und auf der Schlussrechnung steht keine Position, die Sie nicht vorher gesehen haben. Das erste Gespräch ist unverbindlich und kostet nichts.</p>
+      </details>
+      <details class="frage" name="frage" id="frage-texte">
+        <summary>Kann ich die Texte selbst ändern?</summary>
+        <p>Sie müssen nicht: Sie schicken uns eine Mail, wir haben die Änderung innert 24 Stunden drin. Ändert sich Ihr Inhalt öfter als einmal im Monat, passt ein System zum Selbstpflegen besser. Das sagen wir Ihnen im ersten Gespräch.</p>
+      </details>
+      <details class="frage" name="frage" id="frage-eigentum">
+        <summary>Wem gehört die Seite?</summary>
+        <p>Ihnen. Nach dem Livegang bekommen Sie alle Dateien, die Domain und sämtliche Zugänge auf Ihren Namen. Jede Firma, die HTML und CSS lesen kann, führt die Seite weiter. Wir bauen nichts, das Sie an uns bindet.</p>
+      </details>
+      <details class="frage" name="frage" id="frage-cookies">
+        <summary>Brauchen wir ein Cookie-Banner?</summary>
+        <p>Diese Website hat keins: Sie setzt keine Cookies, speichert nichts auf Ihrem Gerät und lädt nichts von fremden Servern. Ob Ihre Seite eins braucht, hängt davon ab, was darauf laufen soll, etwa ein Analysewerkzeug oder eine eingebettete Karte. Das klären wir, bevor wir bauen.</p>
+        <p><a class="weiter" href="datenschutz.html#kein-tracking">Mehr dazu im Datenschutz</a></p>
+      </details>
+      <details class="frage" name="frage" id="frage-danach">
+        <summary>Was passiert nach dem Livegang?</summary>
+        <p>Änderungen an Texten, Preisen oder Öffnungszeiten schicken Sie uns per Mail, wir haben sie innert 24 Stunden drin. Hosting, Sicherungen und ein Auge auf die Ladezeit laufen mit, dazu ein monatlicher Bericht zur Sichtbarkeit. Sie können das auch lassen: Die Seite gehört Ihnen mit allen Dateien.</p>
+      </details>
+    </div>
+  </div>
 
 </main>
 

@@ -210,6 +210,8 @@
       </div>
     </nav>
 
+    <button class="kopf-frage" type="button" popovertarget="fragen" aria-label="Que souhaitez-vous savoir ?">?</button>
+
     <nav class="sprachen" aria-label="Langue">
       <details>
         <summary aria-label="Choisir la langue, actuellement français">FR<svg class="sprachen-pfeil" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 4.5 6 7.5 9 4.5"/></svg></summary>
@@ -228,7 +230,7 @@
 
 <main id="inhalt">
 
-  <section class="hero">
+  <section class="hero" data-frage="kosten">
     <div class="wrap">
 
       <div class="hero-faden-bereich" id="hero-faden-bereich">
@@ -271,7 +273,7 @@
     </div>
   </section>
 
-  <section class="sektion" id="leistungen">
+  <section class="sektion" id="leistungen" data-frage="texte">
     <div class="wrap">
 
       <h2>Ce que nous créons pour vous</h2>
@@ -314,7 +316,7 @@
     </div>
   </section>
 
-  <section class="sektion" id="anders">
+  <section class="sektion" id="anders" data-frage="eigentum">
     <div class="wrap">
 
       <div class="anders-kopf">
@@ -354,7 +356,7 @@
     </div>
   </section>
 
-  <section class="sektion" id="referenz">
+  <section class="sektion" id="referenz" data-frage="cookies">
     <div class="wrap">
 
       <h2>Réalisés et en ligne</h2>
@@ -388,7 +390,7 @@
     </div>
   </section>
 
-  <section class="sektion" id="ablauf">
+  <section class="sektion" id="ablauf" data-frage="danach">
     <div class="wrap">
 
       <h2>Du premier appel à la mise en ligne</h2>
@@ -421,12 +423,50 @@
     </div>
   </section>
 
-  <section class="abschluss">
+  <section class="abschluss" data-frage="kosten">
     <div class="wrap">
       <p class="abschluss-zeile">Parlons de votre projet.</p>
       <a class="knopf" href="/fr/contact.html">Nous contacter</a>
     </div>
   </section>
+
+  <!-- ====================== Frageleiste ======================
+       ==================================================== -->
+  <div class="frageleiste">
+    <div class="wrap">
+      <p class="frageleiste-zeile">
+        <span class="frageleiste-titel" id="frageleiste-titel">Que souhaitez-vous savoir&nbsp;?</span>
+        <button class="frageleiste-knopf" type="button" popovertarget="fragen" aria-describedby="frageleiste-titel">Combien ça coûte&nbsp;?</button>
+      </p>
+    </div>
+    <div class="fragen-blatt" id="fragen" popover role="dialog" aria-labelledby="fragen-titel">
+      <div class="fragen-kopf">
+        <h2 id="fragen-titel">Que souhaitez-vous savoir&nbsp;?</h2>
+        <button class="fragen-zu" type="button" popovertarget="fragen" popovertargetaction="hide">Fermer</button>
+      </div>
+      <details class="frage" name="frage" id="frage-kosten" open>
+        <summary>Combien ça coûte&nbsp;?</summary>
+        <p>Vous recevez un prix fixe, pas une estimation d’heures. L’offre précise page par page ce qui sera construit. Ce qui y figure fait foi, et la facture finale ne contient aucun poste que vous n’avez pas vu auparavant. Le premier entretien est sans engagement et gratuit.</p>
+      </details>
+      <details class="frage" name="frage" id="frage-texte">
+        <summary>Puis-je modifier les textes moi-même&nbsp;?</summary>
+        <p>Ce n’est pas nécessaire&nbsp;: vous nous envoyez un e-mail, la modification est en ligne dans les 24&nbsp;heures. Si votre contenu change plus d’une fois par mois, un système que vous gérez vous-même convient mieux. Nous vous le disons lors du premier entretien.</p>
+      </details>
+      <details class="frage" name="frage" id="frage-eigentum">
+        <summary>À qui appartient le site&nbsp;?</summary>
+        <p>À vous. Après la mise en ligne, vous recevez tous les fichiers, le domaine et l’ensemble des accès à votre nom. Toute entreprise qui sait lire le HTML et le CSS peut reprendre le site. Nous ne construisons rien qui vous lie à nous.</p>
+      </details>
+      <details class="frage" name="frage" id="frage-cookies">
+        <summary>Faut-il un bandeau cookies&nbsp;?</summary>
+        <p>Ce site n’en a pas&nbsp;: il ne dépose aucun cookie, n’enregistre rien sur votre appareil et ne charge rien depuis des serveurs tiers. Que votre site en ait besoin dépend de ce qui y tourne, par exemple un outil de statistiques ou une carte intégrée. Nous le clarifions avant de construire.</p>
+        <p><a class="weiter" href="/fr/protection-des-donnees.html#pas-de-suivi">Plus de détails dans la protection des données</a></p>
+      </details>
+      <details class="frage" name="frage" id="frage-danach">
+        <summary>Que se passe-t-il après la mise en ligne&nbsp;?</summary>
+        <p>Envoyez-nous par e-mail vos modifications de textes, de prix ou d’horaires, elles sont en ligne dans les 24&nbsp;heures. L’hébergement, les sauvegardes et un œil sur le temps de chargement sont compris, avec un rapport mensuel sur votre visibilité. Vous pouvez aussi vous en passer&nbsp;: le site vous appartient avec tous ses fichiers.</p>
+      </details>
+    </div>
+  </div>
 
 </main>
 
