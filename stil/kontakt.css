@@ -249,3 +249,61 @@
 /* Der Pfeil in Knoepfen stand bis zum 21.08.2026 hier, weil es ihn
    nur auf der Kontaktseite gab. Seit die Abschluss-Knoepfe aller
    Seiten einen tragen, steht die Regel in stil/basis.css. */
+
+/* --- Faden im Formular ---------------------------------------
+   Seit 11.10.2026. Das Element legt public/skript/formular-faden.js
+   an, Hoehe und Lage misst es dort. Hier steht nur die Form: eine
+   blasse Grundspur im Innenabstand der Karte, darauf die Fuellung
+   im Markenton, unten ein Knoten auf Hoehe des Knopfs. Dieselben
+   Masse wie der Strang auf ablauf.html: Grundspur 1px, Fuellung 2px,
+   Knoten 10px.
+
+   Bewegt wird genau eine Eigenschaft, transform, mit der Kurve und
+   der kurzen Zeit aus tokens.css. Bei reduzierter Bewegung setzt
+   basis.css die Dauer auf null, die Linie springt dann auf ihren
+   Stand. Der Knoten wechselt nur die Farbe.
+   ------------------------------------------------------------ */
+.anfrage-karte{ position: relative; }
+
+.formular-faden{
+  position: absolute;
+  /* Mitte des seitlichen Innenabstands der Karte. */
+  left: calc(var(--s5) / 2 - 1px);
+  width: 2px;
+  pointer-events: none;
+}
+@media (min-width: 940px){
+  .formular-faden{ left: calc(var(--s6) / 2 - 1px); }
+}
+.formular-faden::before{
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: .5px;
+  width: 1px;
+  background: var(--linie-marke);
+}
+.formular-faden-fuellung{
+  position: absolute;
+  inset: 0;
+  background: var(--olive);
+  transform-origin: top;
+  transform: scaleY(var(--anteil, 0));
+  transition: transform var(--kurz) var(--kurve);
+}
+.formular-faden::after{
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  width: 10px;
+  height: 10px;
+  margin-left: -5px;
+  box-sizing: border-box;
+  border: 1.5px solid var(--olive);
+  border-radius: 50%;
+  background: var(--karte);
+  transition: background-color var(--kurz) var(--kurve);
+}
+.formular-faden.ist-fertig::after{ background: var(--olive); }
