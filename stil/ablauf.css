@@ -424,3 +424,90 @@ main#inhalt .abschluss{ margin-top: var(--s8); }
   color: var(--still);
   max-width: 58ch;
 }
+
+/* --- Ende des Strangs ----------------------------------------
+   Seit 11.10.2026. Bis dahin hoerte die Linie am Knoten 04 auf
+   (.ablauf-schritt:last-child::before war leer), und die Seite
+   endete mit demselben zentrierten Abschluss wie jede andere. Jetzt
+   laeuft die blasse Grundspur weiter: an der Danach-Box vorbei,
+   ueber die Trennlinie des Abschlusses, und endet im KV-Zeichen. Dort
+   steht, wohin der ganze Ablauf fuehrt: das Gespraech.
+
+   Nur Grundspur, keine Fuellung. Die Fuellung von
+   src/components/ui/ablauf-strang.tsx haengt am Lesen und endet am
+   letzten Schritt; was danach kommt, ist der Weg, den der Besucher
+   noch gehen kann. Statisch, nur CSS und das Zeichen als SVG -- es
+   bewegt sich nichts, auch nicht bei reduzierter Bewegung.
+
+   Erst ab 1000px. Darunter ist die zentrierte Danach-Box breiter als
+   der Platz neben dem Strang, die Linie liefe mitten durch sie
+   hindurch. Dort bleibt alles, wie es war.
+   ------------------------------------------------------------ */
+.abschluss-zeichen{ display: none; }
+
+@media (min-width: 1000px){
+  .ablauf-schritt:last-child::before{ content: ""; }
+
+  .ablauf-danach-bereich{
+    position: relative;
+    padding: var(--s7) 0 var(--s8);
+  }
+  .ablauf-danach-bereich::before{
+    content: "";
+    position: absolute;
+    left: calc(1.75rem - .5px);
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--linie-marke);
+  }
+  .ablauf-danach-bereich .ablauf-danach{ margin-top: 0; }
+
+  /* Der Abschluss dieser Seite steht im Raster des Strangs: Zeichen
+     in der Knotenspalte, Satz und Knopf in der Textspalte. Die Masse
+     sind dieselben wie bei .ablauf-schritt, damit Linie, Knoten und
+     Zeichen auf einer Senkrechten liegen. */
+  main#inhalt .abschluss{
+    margin-top: 0;
+    text-align: left;
+  }
+  main#inhalt .abschluss .wrap{
+    position: relative;
+    display: grid;
+    grid-template-columns: 3.5rem minmax(0, 1fr);
+    column-gap: var(--s7);
+    align-items: start;
+  }
+  /* Von der Oberkante der Sektion bis an das Zeichen. Die 6px sind der
+     Abstand, um den das Zeichen unter der Oberkante der Zeile sitzt
+     (margin-top unten), damit es mit den Grossbuchstaben abschliesst
+     statt mit der Zeilenbox. */
+  main#inhalt .abschluss .wrap::before{
+    content: "";
+    position: absolute;
+    left: calc(var(--rand-gross) + 1.75rem - .5px);
+    top: calc(-1 * var(--s8));
+    height: calc(var(--s8) + 6px);
+    width: 1px;
+    background: var(--linie-marke);
+  }
+  .abschluss-zeichen{
+    display: block;
+    grid-column: 1;
+    grid-row: 1;
+    width: 3.5rem;
+    height: auto;
+    margin-top: 6px;
+    color: var(--olive);
+  }
+  main#inhalt .abschluss-zeile{
+    grid-column: 2;
+    grid-row: 1;
+    margin-inline: 0;
+  }
+  main#inhalt .abschluss .knopf{
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: start;
+  }
+}
