@@ -2734,6 +2734,44 @@ dd, dt{ overflow-wrap: anywhere; }
   .referenz-kachel .name::after{  --unschaerfe:   5px; --ab: 55%; --bis: 100%; }
 }
 
+/* --- Die Seite laeuft --------------------------------------------
+   Seit 11.10.2026. Beim Zeigen oder Fokussieren laeuft die echte
+   Kundenseite als Langaufnahme durch die Kachel, von oben bis zum
+   Ende. src/ideen/kachel-lauf.ts laedt das Bild beim ersten Zeigen und
+   setzt .lauf-bereit, sobald es da ist.
+
+   Die Aufnahme liegt unter den Unschaerfe-Ebenen und dem Namen: die
+   Kachel bildet dafuer einen eigenen Stapel (isolation), das Bild steht
+   darin auf -1. Damit es nicht hinter dem Bildschirmfoto verschwindet,
+   wird das Foto fuer die Dauer des Zeigens unsichtbar -- beide zeigen
+   oben dieselbe Startseite, der Wechsel faellt nicht auf.
+
+   Bewegt wird nur transform. Das Ziel ist das Seitenende: minus die
+   eigene Hoehe, plus die Hoehe der Kachel (100cqw ist ihre Innenbreite,
+   mal 860/1280 das Seitenverhaeltnis der Fotos). Hin in fuenfmal
+   --zeichen-dauer, weil eine ganze Seite Weg ist; zurueck ohne
+   Bewegung, das Bild ist dann ohnehin ausgeblendet. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference){
+  .referenz-kachel{
+    isolation: isolate;
+    container-type: inline-size;
+  }
+  .referenz-kachel .lauf{
+    position: absolute;
+    inset: 0 0 auto 0;
+    z-index: -1;
+    width: 100%;
+    height: auto;
+    visibility: hidden;
+  }
+  .lauf-bereit:is(:hover, :focus-visible) > img:not(.lauf){ visibility: hidden; }
+  .lauf-bereit:is(:hover, :focus-visible) .lauf{
+    visibility: visible;
+    transform: translateY(calc(-100% + 100cqw * 860 / 1280));
+    transition: transform calc(var(--zeichen-dauer) * 5) var(--kurve);
+  }
+}
+
 /* Wer weniger Transparenz eingestellt hat, bekommt den Schleier und
    die Schrift, aber kein Unscharfstellen des Bildes. Der Schleier
    traegt den Namen auch allein. */
