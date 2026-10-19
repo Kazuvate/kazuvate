@@ -49,7 +49,7 @@ import { useRef } from "react";
  * shadcn-Helfer, und damit `clsx` plus `tailwind-merge` im Bundle der
  * Startseite. Gebraucht wurde davon eine einzige Zeile:
  * `cn("h-full w-full", className)` -- zwei feste Klassen und ein
- * className, das nie gesetzt wird, weil src/main.tsx die Komponente
+ * className, das nie gesetzt wird, weil src/startseite.tsx die Komponente
  * ohne aufruft. Fuer diese eine Zeile lagen rund 8 kB gzip auf jeder
  * Startseite, mehr als das gesamte handgeschriebene skript/haupt.js.
  *

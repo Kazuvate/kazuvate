@@ -437,7 +437,7 @@
 
         </div>
 
-        <!-- React haengt sich hier ein, siehe src/main.tsx. Ohne
+        <!-- React haengt sich hier ein, siehe src/startseite.tsx. Ohne
              JavaScript bleibt dieser Knoten leer -- die Seite braucht
              ihn nicht, um lesbar und bedienbar zu sein. -->
         <div id="faden-root" aria-hidden="true"></div>
@@ -524,7 +524,7 @@
            es ist immer genau eine offen, die erste beim Laden. Die
            offene traegt den Balken und zeigt ihre Erklaerung, die
            anderen stehen gedaempft. Ohne Skript per Klick, Tippen oder
-           Enter; src/ideen/zeilen.ts oeffnet zusaetzlich beim Zeigen
+           Enter; src/module/zeilen.ts oeffnet zusaetzlich beim Zeigen
            und beim Fokussieren. Begruendung in stil/basis.css bei
            .anders-zeilen.
 
@@ -679,7 +679,7 @@
        Seit 11.10.2026. Unten am Rand die Frage, die zum Abschnitt im
        Bild passt; ein Klick oeffnet die Antwort in einem kleinen
        Blatt. Das Blatt ist ein Popover: Esc und ein Klick daneben
-       schliessen es ohne Skript. src/ideen/fragen.ts wechselt die
+       schliessen es ohne Skript. src/module/fragen.ts wechselt die
        Frage nach Abschnitt (still, ohne Animation) und setzt den Fokus.
        Alle Antworten sind Saetze, die schon auf der Seite stehen
        (Ablauf, Kontakt, Datenschutz); Stil in stil/basis.css. -->
@@ -815,7 +815,7 @@
      Aenderungen live aus; beim npm run build wird daraus eine fertige
      JS-Datei in dist/. Sucht sich beim Start #hero-faden-bereich und
      #faden-root; findet es die nicht, passiert nichts. -->
-<script type="module" src="/src/main.tsx"></script>
+<script type="module" src="/src/startseite.tsx"></script>
 
 </body>
 </html>
