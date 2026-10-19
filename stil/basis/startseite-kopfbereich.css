@@ -1,0 +1,170 @@
+/* --- Kopfbereich -------------------------------------------
+   Umgebaut am 02.09.2026 auf die Bauart des Schweizer Plakats.
+
+   Warum diese Referenz und keine andere: die offene Frage aus dem
+   Positivseiten-Durchgang vom 31.08.2026 lautete, dass alle
+   Vorbilder dieser Seite andere Websites sind (portdigitalco.com,
+   notemage.app) und dass eine Referenzwelt ausserhalb des Webs der
+   groesste einzelne Hebel fuer Eigenheit waere. Basel ist der Ort,
+   an dem diese Referenzwelt entstanden ist, und es ist der Markt,
+   in dem diese Firma verkauft. Eine Agentur in Hamburg kann das
+   Layout kopieren, aber nicht den Grund dafuer.
+
+   Was sich konkret aendert: die H1 verlaesst die Leiter der
+   uebrigen Grade (siehe --riesig in tokens.css) und wird zum Bild
+   der Seite. Sie bricht bewusst auf drei Zeilen -- ein Satzblock,
+   keine Zeile. Zeilenabstand .94 statt 1.2: bei 120px ist 1.2 eine
+   Luecke, durch die man hindurchsieht, der Block faellt auseinander.
+   Laufweite -.04em statt -.02em, weil grosse Grade optisch weiter
+   laufen als kleine; ohne die Korrektur wirkt derselbe Wert oben
+   loser als unten. */
+.hero{ padding: var(--s8) 0 var(--s10); }
+.hero h1{
+  font-size: var(--riesig);
+  line-height: .94;
+  letter-spacing: -.04em;
+  max-width: 13ch;
+}
+.hero .knopf{ margin-top: var(--s7); }
+
+/* Drei kurze Abschnitte unter dem Titel, Aufbau wie auf
+   portdigitalco.com/about: alles linksbuendig untereinander,
+   getrennt nur durch Haarlinien. Bei kazuvate laufen die Linien im
+   Markenton statt in Grau.
+
+   Bis zum 20.08.2026 stand die Ueberschrift in einer eigenen Spalte
+   links neben dem Text. Jetzt steht sie darueber und der Text bleibt
+   in der linken Haelfte.
+
+   Die Linien liefen zuerst ueber die volle Breite bis an den rechten
+   Rand. Sie enden jetzt dort, wo der Text endet: 56ch ist dieselbe
+   Begrenzung wie bei `.hero-text p` darunter, bei gleicher Schriftgroesse
+   also exakt dieselbe Kante. Eine Linie, die weit ueber ihren Text
+   hinausschiesst, trennt nichts mehr, sie zeigt nur ins Leere -- und die
+   freie Flaeche rechts gehoert seit dem Faden ohnehin ihm. */
+.hero-abschnitte{
+  margin-top: var(--s9);
+  max-width: 56ch;
+  border-top: 1px solid var(--linie-marke);
+}
+/* Ab hier traegt der Block zwei Spalten (siehe .hero-abschnitt
+   weiter unten), die Begrenzung muss die Randspalte und den Spalt
+   mitrechnen. Sonst endet die Haarlinie mitten im Text statt an
+   seiner rechten Kante. */
+@media (min-width: 900px){
+  .hero-abschnitte{ max-width: calc(150px + var(--spalt) + 56ch); }
+}
+
+/* --- Faden-Bereich ----------------------------------------------
+   Umschliesst H1 und die drei Ueber-uns-Bloecke, damit die
+   React-Insel (#faden-root, siehe src/startseite.tsx) genau von der
+   Ueberschrift bis zum Ende von "Mit wem wir arbeiten" reicht --
+   Kasums Vorgabe. position:relative haelt #faden-root im rechten
+   Rand dieses Bereichs, nicht der ganzen Seite.
+
+   Nur ab 1150px sichtbar: der Text ist auf 56ch begrenzt (~513px),
+   darunter bleibt nicht genug Platz fuer eine eigene Spalte, ohne
+   dass die Linie den Text beruehrt. Unter der Grenze bleibt
+   #faden-root leer, React haengt trotzdem ein (kein Schaden,
+   nur unsichtbar), damit es beim Vergroessern des Fensters sofort
+   erscheint statt einen Neuladen zu brauchen.
+
+   Breite: 460px statt der ersten 220px. Ab 1150px ist `.wrap` innen
+   immer 1200px breit (1280px minus 2x40px Rand; bis zum 02.09.2026
+   waren es 1060 aus 1140) -- ein groesserer Bildschirm macht die
+   Spalte also nicht breiter, ein fester Wert reicht.
+   Der Text nimmt davon seit demselben Tag 687px statt 513 (Randspalte
+   150px, Spalt 24px, Textspalte 56ch), die H1 darueber laut ihrer
+   13ch-Grenze bis zu 790px. 1200 minus 460 lassen der Textspalte
+   740px, also weiterhin Luft. 220px waren zu schmal: das
+   SVG ist 1278:2690 proportioniert und wurde in einem 220x1084-Kasten quer
+   um Faktor 2.7 zusammengedrueckt -- daher der gequetschte Eindruck. Mit
+   460px und `preserveAspectRatio="meet"` (siehe
+   src/components/ui/svg-follow-scroll.tsx) sitzt der Faden unverzerrt
+   drin und ist mehr als doppelt so breit wie vorher. */
+.hero-faden-bereich{ position: relative; }
+
+#faden-root{ display: none; pointer-events: none; }
+@media (min-width: 1150px){
+  #faden-root{
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 460px;
+  }
+}
+/* Diese drei Zeilen kamen bis zum 31.08.2026 als Tailwind-Klassen
+   `h-full w-full` aus der React-Komponente. Sie stehen jetzt hier,
+   weil dafuer clsx und tailwind-merge (zusammen rund 8 kB gzip) im
+   Bundle der Startseite lagen -- fuer zwei Klassen. `display: block`
+   kommt dazu: ein inline dargestelltes SVG bekommt von der
+   Zeilenhoehe unten ein paar Pixel Luft, die niemand bestellt hat.
+   Begruendung ausfuehrlich in src/components/ui/svg-follow-scroll.tsx. */
+#faden-root svg{
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-abschnitt{
+  padding: var(--s6) 0;
+  border-bottom: 1px solid var(--linie-marke);
+}
+
+/* Die Augenbraue traegt hier die Ueberschrift des Abschnitts und ist
+   deshalb seit 03.10.2026 auch eine: ein <h2>, damit man per
+   Ueberschriftennavigation von der H1 nicht gleich zu "Was wir fuer
+   Sie bauen" springt. line-height: inherit, weil h1, h2, h3 oben 1.2
+   setzen und das Label sonst enger sitzt als vorher als <p>. */
+.hero-abschnitt .augenbraue{
+  margin-bottom: var(--s4);
+  line-height: inherit;
+}
+
+/* Zwei Register statt eines, seit 02.09.2026: das Label steht links
+   in einer eigenen schmalen Spalte, der Text rechts daneben. Bis
+   dahin stand beides untereinander an derselben Kante, und die
+   Haarlinie dazwischen musste die ganze Gliederung allein tragen.
+
+   Das ist die Anordnung von Museumsbeschilderung und technischem
+   Handbuch: eine Randspalte fuehrt, eine Textspalte erklaert. Der
+   Aufbau ist nicht erfunden, er stand schon im Markup -- Label und
+   Text waren immer zwei Dinge, sie sahen nur aus wie eines.
+
+   Die 150px sind nicht rund gewaehlt: "Mit wem wir arbeiten" ist
+   das laengste der drei Labels und bricht hier auf zwei Zeilen,
+   waehrend "Wer wir sind" einzeilig bleibt. Eine Spalte, die alle
+   drei einzeilig haelt, waere 230px breit und naehme dem Text die
+   Zeilenlaenge, ohne dass man den Gewinn saehe.
+
+   Die fuenf Pixel Polster gleichen die Grundlinien an: das Label
+   ist 12.8px bei Zeilenhoehe 1.7, der Text 17px bei derselben --
+   ohne Ausgleich sitzt das Label sichtbar zu hoch. Bis zum 03.10.2026
+   waren es sechs Pixel bei 11.5px. */
+@media (min-width: 900px){
+  .hero-abschnitt{
+    display: grid;
+    grid-template-columns: 150px minmax(0, 56ch);
+    gap: var(--spalt);
+    align-items: start;
+  }
+  .hero-abschnitt .augenbraue{
+    margin: 0;
+    padding-top: 5px;
+  }
+}
+
+/* 56ch statt 62: die Zeile soll sichtbar vor der Mitte enden,
+   damit die rechte Haelfte als freie Flaeche lesbar bleibt und
+   nicht wie ein Umbruchunfall wirkt. */
+.hero-text p{
+  color: var(--tinte-2);
+  max-width: 56ch;
+}
+.hero-text p + p{ margin-top: var(--s4); }
+
+/* Der erste Satz traegt die Aussage, der zweite begruendet sie.
+   Deshalb steht er eine Spur dunkler da, ohne eigene Ueberschrift. */
+.hero-text p:first-child{ color: var(--tinte); }

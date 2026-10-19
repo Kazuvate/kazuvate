@@ -1,0 +1,78 @@
+/* --- Grundlagen ------------------------------------------- */
+*, *::before, *::after{ box-sizing: border-box; }
+
+/* Selbst gehostet, eine einzige Variable-Datei deckt 400 bis 700 ab --
+   zaehlt als eine der zwei erlaubten Schriftdateien im Performance-Budget,
+   nicht zwei. Liegt in public/schriften/, Vite reicht public/ unveraendert
+   unter der Wurzel durch, deshalb der Pfad ab "/" statt relativ zur Datei.
+   font-display: optional statt swap: die Seite darf beim ersten Besuch
+   kurz im Systemfont stehenbleiben, tauscht aber nie mitten im Lesen um --
+   das waere eine Verschiebung (CLS), und das Budget dafuer ist 0.05. */
+@font-face{
+  font-family: "General Sans";
+  src: url("/schriften/GeneralSans-Variable.woff2") format("woff2-variations"),
+       url("/schriften/GeneralSans-Variable.woff2") format("woff2");
+  font-weight: 200 700;
+  font-style: normal;
+  font-display: optional;
+}
+
+/* Der Kopf laeuft mit und liegt beim Sprung auf einen Anker sonst
+   ueber der Ueberschrift. scroll-padding-top haelt den Zielpunkt
+   um Kopfhoehe tiefer. Ohne JavaScript bleibt der mobile Kopf
+   zweizeilig; mit JavaScript ist die Navigation eingeklappt und
+   braucht nur die kompakte Kopfhoehe. */
+html{
+  scroll-behavior: smooth;
+  scroll-padding-top: 108px;
+}
+@media (min-width: 860px){
+  html{ scroll-padding-top: 86px; }
+}
+@media (max-width: 859px){
+  html.js{ scroll-padding-top: 72px; }
+}
+
+body{
+  margin: 0;
+  background: var(--grund);
+  color: var(--tinte);
+  font-family: "General Sans", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* text-wrap: balance seit 02.09.2026, und erst seit diesem Tag
+   wirklich noetig. Bei 34px H2 war eine Schlusszeile mit einem
+   einzelnen Wort eine Unschoenheit; bei 53px und 120px ist sie ein
+   Loch in der Flaeche, das man vor dem Text sieht. Der Browser
+   verteilt die Zeilen jetzt gleichmaessig, statt jede Zeile bis zum
+   Anschlag zu fuellen und den Rest haengen zu lassen.
+
+   Nur auf Ueberschriften, nicht auf Fliesstext: balance rechnet den
+   Umbruch mehrfach durch und ist ab etwa sechs Zeilen bewusst
+   wirkungslos. Fuer Absaetze waere pretty das richtige Mittel, aber
+   die Zeilenlaenge ist hier ohnehin ueberall auf 56 bis 62 Zeichen
+   begrenzt, und damit entstehen die Fehler gar nicht erst. */
+h1, h2, h3{
+  line-height: 1.2;
+  letter-spacing: -.02em;
+  font-weight: 700;
+  margin: 0;
+  text-wrap: balance;
+}
+/* Bis zum 21.08.2026 stand hier zusaetzlich max-width: 66ch. Als
+   globale Regel traf sie jedes <p> der Website: auch Labels, kurze
+   Zeilen und zentrierte Texte, die keine Zeilenlaenge haben, an der
+   man etwas begrenzen koennte. Sichtbar wurde das an der Ausnahme, die
+   sie erzwang -- `.anders-kopf .augenbraue{max-width:none}`, weil das
+   zentrierte Label sonst in einer zu schmalen Box zentrierte statt auf
+   der Seite. Nachgemessen haengt echter Fliesstext nur an zwei Stellen
+   daran, `.lauf p` und `.vorab p` auf Impressum und Datenschutz; beide
+   haben die Grenze jetzt selbst, siehe stil/seiten.css. Zeilenlaenge
+   gehoert an den Fliesstext, nicht an das Element. */
+p{ margin: 0; }
+img, svg{ max-width: 100%; }
+
+a{ color: var(--olive); }

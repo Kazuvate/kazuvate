@@ -1,0 +1,75 @@
+/* --- Ablauf ------------------------------------------------ */
+.ablauf{
+  list-style: none;
+  margin: var(--s6) 0 0;
+  padding: 0;
+  display: grid;
+  gap: var(--s5);
+}
+@media (min-width: 760px){
+  .ablauf{ grid-template-columns: repeat(4, 1fr); }
+}
+.ablauf li{
+  border-top: 1px solid var(--linie-marke);
+  padding-top: var(--s4);
+}
+/* Die Schrittzahl traegt seit dem 02.09.2026 die Spalte, statt als
+   11.8px-Label darueber zu sitzen.
+
+   Der Aufbau ist nicht neu erfunden: genau so steht die Nummer seit
+   dem 20.08.2026 auf leistungen.html -- gross, in --linie-kraeftig,
+   und der Text daneben. Hier ist es dieselbe Behandlung an der
+   Kurzfassung derselben Sache. Ein zweites Muster fuer dieselbe
+   Aufgabe waere Doppelarbeit gewesen.
+
+   Grau und nicht oliv: eine Zahl in Markenfarbe in dieser Groesse
+   zieht mehr Aufmerksamkeit als der Schritt, den sie zaehlt. Die
+   Zahl ordnet, sie ist nicht die Aussage. */
+.ablauf .nr{
+  display: block;
+  margin-bottom: var(--s3);
+  font-size: clamp(1.7rem, 2.8vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  line-height: 1;
+  color: var(--linie-kraeftig);
+  /* Vier Zahlen nebeneinander in einer Reihe, jede am Anfang ihrer
+     Spalte. In der Grundeinstellung ist die 1 in den meisten
+     Groteskschriften schmaler als die 0 -- "01" und "04" sind damit
+     verschieden breit und die vier Zahlen stehen sichtbar nicht auf
+     derselben Achse. Bei 11.8px fiel das nicht auf, bei 38px schon. */
+  font-variant-numeric: tabular-nums;
+}
+.ablauf h3{
+  font-size: var(--satz-5);
+  line-height: 1.25;
+}
+.ablauf p{
+  margin-top: var(--s3);
+  color: var(--tinte-2);
+  font-size: var(--satz-3);
+}
+
+/* --- Kontakt ----------------------------------------------- */
+.draht{
+  display: grid;
+  gap: var(--s4);
+  margin-top: var(--s6);
+}
+.draht a{
+  justify-self: start;
+  font-size: clamp(1.3rem, 3.4vw, 1.9rem);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  color: var(--tinte);
+  text-decoration: none;
+  transition: color var(--kurz) var(--kurve);
+}
+@media (hover: hover) and (pointer: fine){
+  .draht a:hover{ color: var(--olive); }
+}
+.draht-ort{
+  margin-top: var(--s5);
+  color: var(--still);
+  font-size: .96rem;
+}

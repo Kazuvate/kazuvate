@@ -1,0 +1,213 @@
+/* --- Warum kazuvate ----------------------------------------
+   Bis zum 02.09.2026 stand hier die Beschreibung der drei
+   Textkarten nach dem Vorbild von portdigitalco.com, samt dem
+   gezeichneten Rahmen beim Zeigen und der Umfangsmessung durch
+   skript/haupt.js. Karten, Rahmen und Messung sind an diesem Tag
+   weg, die Begruendung steht bei .bento weiter unten.
+   ------------------------------------------------------------ */
+/* Bis zum 02.09.2026 stand diese Ueberschrift als einzige der Seite
+   zentriert. Jetzt linksbuendig wie alle anderen. Der Grund ist
+   nicht Geschmack: zentrierter Satz hat keine gemeinsame Kante mit
+   dem, was darunter steht, und die ganze Gliederung dieser Seite
+   besteht aus Kanten und Haarlinien. Eine mittige Ueberschrift ueber
+   linksbuendigen Zeilen ist die eine Stelle, an der das Raster
+   ausgesetzt wurde. */
+.anders-kopf .augenbraue{ color: var(--still); }
+.anders-kopf h2{ max-width: 24ch; }
+
+/* --- Warum kazuvate: drei Register --------------------------
+   Umgebaut am 02.09.2026. Vorher drei weisse Karten mit Rand,
+   Radius, gezeichnetem Rahmen beim Zeigen und drei Pixel Anhebung.
+
+   Was daran weg musste und warum:
+
+   1. **Die Anhebung.** Sie stand seit dem 31.08.2026 als offener
+      Punkt im Anti-Slop-Befund -- "Card hebt sich beim Hover an",
+      und der Einwand daneben war, dass eine schwebende Karte
+      Klickbarkeit verspricht, die es hier nicht gibt. Mit der Karte
+      selbst faellt der Punkt weg, statt weiter offen zu bleiben.
+
+   2. **Die Karte.** Der Positivseiten-Durchgang hat als Richtung
+      radikale Zurueckhaltung notiert und ausdruecklich festgehalten,
+      dass sie nicht durchgezogen ist: "Karten gibt es". Drei weisse
+      Kaesten auf dem Papierton sind die einzige Stelle der Startseite,
+      an der ein Kasten etwas umschliesst, das gar keine Einheit ist --
+      es sind drei Argumente, kein anklickbarer Gegenstand.
+
+   3. **Das dreispaltige Raster.** Die Sektion darueber ist bereits
+      dreispaltig. Zweimal dieselbe Reihe untereinander liest sich als
+      Rhythmus, nicht als Gliederung.
+
+   Was stattdessen dasteht, ist die Anordnung aus dem Kopfbereich ein
+   zweites Mal: Randspalte links, Inhalt rechts. Hier mit drei
+   Registern statt zwei -- Label, Aussage, Erklaerung -- also der
+   Aufbau eines Datenblatts. Dieselbe Idee an einer weiteren Stelle
+   statt eines zweiten Musters daneben.
+
+   Der gezeichnete Rahmen faellt damit auch. Er war eine der drei
+   Stellen, an denen die eigene Bildsprache "eine Linie, die entsteht"
+   auftrat; die anderen beiden (Faden, Titellinie) bleiben, und die
+   Haarlinien dieses Rasters sind dieselbe Familie in ruhig.
+
+   **Seit 11.10.2026 drei Zeilen wie mit dem Textmarker.** Die drei
+   Aussagen stehen gross untereinander, eine davon ist aktiv: hinter
+   ihr liegt ein oliver Balken, ihre Schrift steht hell darauf, und
+   rechts daneben steht ihre Erklaerung. Die beiden anderen stehen
+   gedaempft. So liest man eine Aussage nach der anderen statt drei
+   Spalten Fliesstext auf einmal.
+
+   Gebaut aus drei <details> mit demselben Namen: der Browser haelt
+   genau eine offen, ohne Skript, mit Klick, Tippen und Enter.
+   src/module/zeilen.ts oeffnet zusaetzlich beim Zeigen und beim
+   Fokussieren. Nicht ans Scrollen gebunden.
+
+   Der Balken faehrt mit einer einzigen animierten Eigenschaft ein:
+   background-size. Drei Ebenen liegen hinter der Aussage, von oben:
+   helle Schrift (auf die Buchstaben beschnitten), der Balken (auf die
+   Zeile beschnitten), dunkle Schrift (auf die Buchstaben beschnitten).
+   Die oberen beiden wachsen gemeinsam von 0 auf 100 Prozent Breite.
+   Wo der Balken schon liegt, ist die Schrift damit hell, daneben noch
+   dunkel -- die Schrift wechselt genau mit dem Balken und muss nicht
+   eigens umgefaerbt werden. Die Ebenen sind einfarbige Flaechen
+   (linear-gradient mit zweimal derselben Farbe), kein Verlauf.
+   box-decoration-break: clone gibt jeder Zeile ihren eigenen Balken.
+   ------------------------------------------------------------ */
+.anders-zeilen{
+  margin-top: var(--s7);
+  border-top: 1px solid var(--linie-marke);
+}
+
+.zeile{
+  position: relative;
+  border-bottom: 1px solid var(--linie-marke);
+}
+.zeile summary{
+  position: relative;
+  display: block;
+  padding: var(--s5) var(--s7) var(--s5) 0;
+  cursor: pointer;
+  list-style: none;
+}
+.zeile summary::-webkit-details-marker{ display: none; }
+
+/* Ein Pluszeichen rechts an den geschlossenen Zeilen: dort steht noch
+   eine Erklaerung. Dasselbe Kreuz wie im Fuss, nur groesser. */
+.zeile summary::after{
+  content: "";
+  position: absolute;
+  right: 0;
+  top: calc(var(--s5) + 10px);
+  width: 14px;
+  height: 14px;
+  background: var(--olive);
+  clip-path: polygon(6px 0, 8px 0, 8px 6px, 14px 6px, 14px 8px, 8px 8px,
+                     8px 14px, 6px 14px, 6px 8px, 0 8px, 0 6px, 6px 6px);
+}
+.zeile[open] summary::after{ display: none; }
+
+.zeile .augenbraue{
+  display: block;
+  margin: 0 0 var(--s3);
+}
+.zeile h3{
+  font-size: clamp(1.6rem, 2.9vw, 2.4rem);
+  line-height: 1.12;
+  letter-spacing: -.03em;
+}
+.zeile-text{
+  margin: 0;
+  padding-bottom: var(--s6);
+  color: var(--tinte-2);
+  max-width: 60ch;
+}
+
+/* Der Balken. Ohne background-clip: text bliebe die Schrift
+   durchsichtig, deshalb nur, wo der Browser es kann; sonst steht die
+   aktive Aussage ohne Uebergang hell auf Oliv (Block weiter unten). */
+.zeile{ --zeilen-ton: var(--tinte); }
+@supports (background-clip: text) or (-webkit-background-clip: text){
+  .zeile .marker{
+    padding: .02em .14em .06em;
+    margin-inline: -.14em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    color: transparent;
+    background-image:
+      linear-gradient(var(--auf-flaeche), var(--auf-flaeche)),
+      linear-gradient(var(--flaeche), var(--flaeche)),
+      linear-gradient(var(--zeilen-ton), var(--zeilen-ton));
+    background-repeat: no-repeat;
+    background-size: 0% 100%, 0% 100%, 100% 100%;
+    -webkit-background-clip: text, padding-box, text;
+    background-clip: text, padding-box, text;
+    transition: background-size var(--kurz) var(--kurve);
+  }
+  .zeile[open] .marker{ background-size: 100% 100%, 100% 100%, 100% 100%; }
+}
+@supports not ((background-clip: text) or (-webkit-background-clip: text)){
+  .zeile[open] .marker{
+    background: var(--flaeche);
+    color: var(--auf-flaeche);
+  }
+}
+
+/* Gedaempft sind die beiden anderen, aber nur solange eine offen ist --
+   wer die offene per Klick schliesst, sieht alle drei wieder gleich.
+   --still auf Papier traegt 5.5:1 (gerechnet), also auch als Fliesstext lesbar.
+   Der Farbwechsel ist sofort, nicht animiert: bewegt wird nur der
+   Balken. */
+.anders-zeilen:has(.zeile[open]) .zeile:not([open]){
+  --zeilen-ton: var(--still);
+}
+.anders-zeilen:has(.zeile[open]) .zeile:not([open]) .marker{ color: var(--still); }
+@supports (background-clip: text) or (-webkit-background-clip: text){
+  .anders-zeilen:has(.zeile[open]) .zeile:not([open]) .marker{ color: transparent; }
+}
+.anders-zeilen:has(.zeile[open]) .zeile:not([open]) .augenbraue{ color: var(--still); }
+
+/* Im Kontrastmodus von Windows zeichnet der Browser keine eigenen
+   Farbflaechen; die Schrift muss deshalb wieder Schrift sein. Die
+   aktive Aussage traegt dort einen Unterstrich. */
+@media (forced-colors: active){
+  .zeile .marker{
+    background-image: none;
+    color: CanvasText;
+  }
+  .zeile[open] .marker{ text-decoration: underline; }
+}
+
+/* Ab 1000px steht die Erklaerung rechts neben ihrer Aussage statt
+   darunter: die Zeilen werden dafuer schmaler, und die Erklaerung
+   liegt ausserhalb des Flusses an der Oberkante der offenen Zeile.
+   Damit aendert sich beim Wechsel keine Zeilenhoehe, und nichts
+   springt unter dem Mauszeiger weg -- sonst wuerde das Oeffnen beim
+   Zeigen die naechste Zeile unter den Zeiger schieben. Label links in
+   der Randspalte wie im Kopfbereich. */
+@media (min-width: 1000px){
+  .anders-zeilen{ margin-right: calc(44ch + var(--s7)); }
+  .zeile summary{ padding-block: var(--s6); }
+  .zeile summary::after{ top: calc(var(--s6) + 2px); }
+  .zeile-text{
+    position: absolute;
+    top: var(--s6);
+    left: calc(100% + var(--s7));
+    width: 44ch;
+    padding: 0;
+  }
+}
+/* Die Randspalte fuer das Label erst ab 1200px. Bei 1000px blieben der
+   Aussage neben Label und Erklaerung nur rund 220px, und "Wochen statt
+   Monate. Ohne Abstriche." brach in vier Zeilen. */
+@media (min-width: 1200px){
+  .zeile summary{
+    display: grid;
+    grid-template-columns: 150px minmax(0, 1fr);
+    gap: var(--spalt);
+    align-items: start;
+  }
+  .zeile summary::after{ top: calc(var(--s6) + 12px); }
+  .zeile .augenbraue{
+    margin: 0;
+    padding-top: 14px;
+  }
+}

@@ -1,0 +1,40 @@
+/* --- Sektionen der Startseite -----------------------------
+   Getrennt durch Haarlinien statt durch Kaesten. Ein Kasten um
+   jede Sektion macht aus einer Seite eine Liste von Kaesten.
+   ---------------------------------------------------------- */
+.sektion{ padding: var(--s9) 0; }
+.sektion + .sektion{ border-top: 1px solid var(--linie); }
+
+/* .8rem sind 12.8px. Bis zum 03.10.2026 stand der Desktop bei .72rem
+   (11.5px) und nur das Handy bei .8rem. Das war zu klein: gemessen am
+   21.08.2026 lagen dreizehn Stellen unter der 12px-Grenze, und Versalien
+   mit weiter Laufweite retten das nur zum Teil. Jetzt gilt der Wert
+   ueberall, damit er den Charakter der Augenbraue haelt, ohne sie in
+   die Naehe des Fliesstextes zu ruecken. */
+.augenbraue{
+  font-size: .8rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--olive);
+  margin: 0 0 var(--s4);
+}
+
+/* Der zweite der beiden grossen Grade, siehe tokens.css. Bis zum
+   02.09.2026 lag die H2 bei maximal 34px und damit nur zwei
+   Schritte ueber dem Fliesstext -- eine Ueberschrift, die man
+   suchen muss, weil sie fast so gross ist wie das, was sie
+   ueberschreibt. Jetzt 53px, mit demselben Zeilen- und
+   Laufweitenausgleich wie die H1: grosse Grade brauchen beides. */
+.sektion h2{
+  font-size: var(--gross);
+  line-height: 1.02;
+  letter-spacing: -.03em;
+  max-width: 18ch;
+}
+/* Erklaerender Satz direkt unter der H2 */
+.sektion-vor{
+  margin-top: var(--s4);
+  color: var(--tinte-2);
+  max-width: 58ch;
+}

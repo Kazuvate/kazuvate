@@ -1,0 +1,77 @@
+/* --- Druck ------------------------------------------------------
+   Impressum und Datenschutz sind Dokumente, die Leute ausdrucken
+   oder als PDF ablegen, und die Kontaktseite landet auch mal auf
+   Papier. Ohne diese Regeln kaeme auf jedem Blatt der olivgruene
+   Kopfbalken mit, die Navigation, der Fuss und der Anfragen-Knopf --
+   vier Dinge, die auf Papier nichts tun.
+
+   Die Adressen der Links stehen im Druck hinter dem Linktext, sonst
+   ist ein Verweis auf Papier eine Sackgasse. Nur externe: interne
+   Adressen ausschreiben wuerde jeden Absatz mit "kazuvate.ch/..."
+   verstopfen.
+   ---------------------------------------------------------------- */
+@media print{
+  /* Die Krumenleiste steht bewusst mit auf dieser Liste: "Startseite /
+     Impressum" beantwortet auf Papier keine Frage, dort gibt es nichts
+     zu navigieren. Am Bildschirm dagegen bleibt sie. */
+  .kopf,
+  .fuss,
+  .sprung,
+  .kopf-knopf,
+  .krumen,
+  .abschluss,
+  .titel-linie{ display: none; }
+
+  html{ scroll-padding-top: 0; }
+
+  body{
+    background: #fff;
+    color: #000;
+    font-size: 11pt;
+  }
+
+  .titel{
+    background: none;
+    color: #000;
+    border: 0;
+    padding: 0 0 var(--s5);
+  }
+  /* Die Stand-Zeile traegt --auf-flaeche-still, einen hellen Gruenton
+     fuer die dunkle Flaeche. Auf weissem Papier war sie damit kaum zu
+     lesen -- im ersten Probedruck nachgesehen. Das Datum ist bei einem
+     Rechtstext aber genau die Angabe, wegen der man ihn ausdruckt. */
+  .titel .stand{ color: #000; }
+
+  .wrap{ max-width: none; padding-inline: 0; }
+
+  a{ color: #000; text-decoration: underline; }
+  a[href^="http"]::after{
+    content: " (" attr(href) ")";
+    font-size: .85em;
+    word-break: break-all;
+  }
+
+  /* Ein Abschnitt soll nicht zwischen Ueberschrift und erstem Satz
+     umbrechen, und eine Tabelle nicht mitten in einer Zeile. */
+  h1, h2, h3{ break-after: avoid; }
+  .tab, .adresse, .zeile{ break-inside: avoid; }
+}
+
+:focus-visible{
+  outline: 2px solid var(--fokus);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+/* Kopf, Titelband und Fuss stehen auf --flaeche. Der olive Ring traegt
+   dort 1.44:1 und war praktisch unsichtbar -- ausgerechnet im Kopf, wo
+   der erste Tabulatorsprung landet. Diese Zeile stellt --fokus fuer
+   alles darin auf den hellen Ton um (11.4:1). Custom Properties
+   vererben, es braucht also keine Regel je Element und der
+   :focus-visible-Block oben bleibt der einzige.
+
+   .sprung steht im Quelltext vor dem Kopf und ist damit kein Kind von
+   ihm -- er liegt beim Fokussieren aber darueber, also gilt dasselbe. */
+.kopf,
+.titel,
+.fuss,
+.sprung{ --fokus: var(--auf-flaeche); }

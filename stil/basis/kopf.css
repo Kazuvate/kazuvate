@@ -1,0 +1,397 @@
+/* Sprungmarke fuer Tastatur und Screenreader */
+.sprung{
+  position: absolute;
+  left: -9999px;
+  top: var(--s2);
+  background: var(--karte);
+  color: var(--tinte);
+  padding: var(--s3) var(--s5);
+  border-radius: var(--radius-knopf);
+  z-index: 30;   /* ueber dem mitlaufenden Kopf, sonst liegt er darunter */
+}
+.sprung:focus{ left: var(--s5); }
+
+/* Hier stand bis zum 31.08.2026 der Scroll-Fortschrittsbalken:
+   ein 3px hoher Strich am oberen Bildrand, dessen scaleX GSAP am
+   Scrollfortschritt haengte. Ersatzlos raus.
+
+   Grund: er hat nichts angezeigt, was der Besucher nicht ohnehin
+   wusste. Eine Fortschrittsanzeige beantwortet die Frage "wie lange
+   noch" -- die stellt sich in einem langen Artikel, nicht auf einer
+   Marketingseite mit fuenf Abschnitten, die man in einer Minute
+   durchscrollt. Damit war er reine Bewegung ohne Aufgabe, und genau
+   das ist das Muster, an dem man generisch gebaute Seiten erkennt.
+
+   Mit ihm faellt auch der einzige Grund weg, ScrollTrigger ohne
+   trigger-Element zu benutzen. */
+
+.nur-fuer-screenreader{
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* --- Kopf --------------------------------------------------
+   Laeuft beim Scrollen mit. Sobald die Seite ein Stueck weit
+   gescrollt ist, setzt skript/haupt.js die Klasse .gescrollt:
+   der Schriftzug faehrt zur Seite weg und nur das Zeichen bleibt
+   stehen, der Balken wird flacher und bekommt einen Schatten.
+
+   Ohne JavaScript bleibt der Kopf mitlaufend und der Schriftzug
+   dauerhaft sichtbar. Das ist der Zustand, mit dem die Seite
+   ohnehin laedt, es geht also nichts kaputt.
+   ------------------------------------------------------------ */
+.kopf{
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--flaeche);
+  color: var(--auf-flaeche);
+  transition: box-shadow var(--kurz) var(--kurve);
+}
+.kopf.gescrollt{
+  box-shadow: 0 8px 24px -16px rgb(0 0 0 / .55);
+}
+.kopf-innen{
+  display: flex;
+  align-items: center;
+  gap: var(--s5);
+  min-height: 74px;
+  transition: min-height var(--kurz) var(--kurve);
+}
+.kopf.gescrollt .kopf-innen{ min-height: 60px; }
+
+/* gap: 0 und stattdessen ein Aussenabstand am Schriftzug. Beim
+   gap bliebe die Luecke stehen, wenn der Schriftzug auf Breite
+   null geht, und das Zeichen ruckte trotzdem zur Seite. */
+.marke{
+  display: flex;
+  align-items: center;
+  gap: 0;
+  text-decoration: none;
+  color: inherit;
+  transition: opacity var(--kurz) var(--kurve);
+}
+@media (hover: hover) and (pointer: fine){
+  .marke:hover{ opacity: .8; }
+}
+.marke svg{
+  height: 30px;
+  width: auto;
+  display: block;
+  flex-shrink: 0;
+}
+.marke span{
+  margin-left: var(--s3);
+  max-width: 9em;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 1.06rem;
+  font-weight: 650;
+  letter-spacing: -.01em;
+  transition: max-width var(--kurz) var(--kurve),
+              margin-left var(--kurz) var(--kurve),
+              opacity var(--kurz) var(--kurve),
+              transform var(--kurz) var(--kurve);
+}
+/* max-width statt width, weil width bei einem Inline-Element im
+   Flexcontainer erst greift, wenn die Breite auch berechnet
+   werden kann. max-width laeuft sauber von 9em auf 0. */
+.kopf.gescrollt .marke span{
+  max-width: 0;
+  margin-left: 0;
+  opacity: 0;
+  transform: translateX(-8px);
+}
+
+.navigation{ display: flex; }
+/* Die Punkte sitzen in einem eigenen Container: die Schublade auf
+   dem Handy animiert die Hoehe der .navigation, und Abstaende auf
+   demselben Element blieben dabei auch im geschlossenen Zustand
+   stehen. */
+.navigation-innen{
+  display: flex;
+  gap: var(--s6);
+}
+@media (min-width: 860px){
+  .navigation{ margin-left: auto; }
+}
+/* Unter 860px war die Navigation frueher ersatzlos ausgeblendet, damit
+   kam man auf dem Handy aus dem Kopf nirgendwo hin. Jetzt rutscht sie
+   in eine eigene Zeile darunter. Kein Klappmenue, weil vier kurze
+   Punkte kein Menue brauchen, das man erst oeffnen muss. */
+@media (max-width: 859px){
+  .kopf-innen{
+    flex-wrap: wrap;
+    min-height: 0;
+    padding-block: var(--s2);
+    row-gap: var(--s3);
+  }
+  /* Mit JavaScript ist die Navigation geschlossen kein zweiter
+     sichtbarer Kopfbereich. Ohne den eigenen Wert bliebe der row-gap
+     trotzdem stehen und machte den Balken hoeher als sein Inhalt. */
+  .js .kopf-innen{ row-gap: 0; }
+  .js .menue-offen .kopf-innen{ row-gap: var(--s2); }
+  /* Der Anfrage-Knopf stand bis zum 21.08.2026 auch auf dem Handy in
+     der Kopfzeile. Er ist dort das breiteste Element und hat die Zeile
+     so weit gefuellt, dass Marke, Knopf und Menueknopf zusammen 146px
+     Kopfhoehe ergaben -- 18 Prozent eines iPhone-Bildschirms, bevor
+     der erste Inhalt beginnt. Kasums Ansage: oben gehoert die
+     Navigation hin, nicht der Knopf.
+
+     Verloren geht dabei nichts: derselbe Aufruf steht auf jeder Seite
+     noch zweimal im Fliesstext, im Kopfbereich und am Seitenende. Auf
+     dem Desktop bleibt der Knopf unveraendert stehen, dort ist die
+     Zeile breit genug fuer beides. */
+  .kopf-knopf{ display: none; }
+
+  /* Ohne JavaScript bleibt es bei der alten Zeile unter dem Kopf:
+     fuenf Punkte mit engem Abstand, notfalls wischbar. Laeuft das
+     Skript, uebernimmt die Schublade weiter unten. */
+  .navigation{
+    order: 3;
+    flex-basis: 100%;
+  }
+  .navigation-innen{
+    gap: var(--s3);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .navigation-innen::-webkit-scrollbar{ display: none; }
+  .navigation a{ white-space: nowrap; font-size: .88rem; }
+
+  /* Gescrollt rueckt der Kopf enger zusammen, damit vom Bildschirm
+     mehr Inhalt uebrig bleibt. Seit der Knopf weg ist, traegt die
+     erste Zeile nur noch Marke und Menueknopf. */
+  .kopf.gescrollt .kopf-innen{
+    padding-block: var(--s2);
+  }
+  .js .kopf.gescrollt .kopf-innen{
+    row-gap: 0;
+  }
+  .js .kopf.gescrollt.menue-offen .kopf-innen{
+    row-gap: var(--s2);
+  }
+}
+.navigation a{
+  position: relative;
+  padding: var(--s1) 0;
+  font-size: .94rem;
+  color: inherit;
+  text-decoration: none;
+  opacity: .88;
+  transition: opacity var(--kurz) var(--kurve);
+}
+/* scaleX statt right, weil right jedes Bild neu berechnen laesst
+   (Layout und Paint). transform laeuft auf der Grafikkarte. */
+.navigation a::after{
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1.5px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--kurz) var(--kurve);
+}
+/* Auf Touchgeraeten loest eine Beruehrung Hover aus und der Zustand
+   bleibt danach haengen. Deshalb nur fuer echte Zeiger. */
+@media (hover: hover) and (pointer: fine){
+  .navigation a:hover{ opacity: 1; }
+  .navigation a:hover::after{ transform: scaleX(1); }
+}
+.navigation a:focus-visible::after{ transform: scaleX(1); }
+.navigation a[aria-current="page"]{
+  opacity: 1;
+  font-weight: 650;
+}
+.navigation a[aria-current="page"]::after{ transform: scaleX(1); }
+
+.kopf-knopf{
+  margin-left: auto;
+  background: var(--auf-flaeche);
+  color: var(--flaeche);
+  font-size: .88rem;
+  font-weight: 650;
+  padding: 10px 18px;
+  border-radius: var(--radius-knopf);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform var(--sofort) var(--kurve);
+}
+@media (min-width: 860px){
+  .kopf-knopf{ margin-left: var(--s2); }
+}
+@media (hover: hover) and (pointer: fine){
+  .kopf-knopf:hover{ transform: translateY(-1px); }
+}
+/* Gedrueckt geht der Knopf leicht zusammen. Ohne das fuehlt sich
+   ein Klick an, als haette die Seite ihn nicht gehoert. */
+.kopf-knopf:active{ transform: scale(.97); }
+
+/* --- Sprachen ---------------------------------------------------
+   Seit 25.09.2026 gibt es die Website auf Deutsch, Englisch und
+   Franzoesisch. Seit 27.09.2026 eine Auswahl statt drei Kuerzeln
+   nebeneinander, nach Kasums Vorlage (Bildschirmfoto einer fremden
+   Seite): ein umrandeter Knopf mit der aktuellen Sprache und einem
+   Pfeil, darunter eine kleine helle Liste mit allen drei, die
+   aktuelle im Markenton.
+
+   Gebaut aus <details> und <summary> statt aus einem Knopf mit
+   Skript: das klappt auch ohne JavaScript auf und zu, die Tastatur
+   bedient es von selbst, und ein Screenreader sagt den Zustand an.
+   haupt.js ergaenzt nur, was <details> nicht kann: zuklappen beim
+   Klick daneben und mit Escape.
+
+   Auf dem Handy in der ersten Zeile neben dem Menueknopf statt in
+   der Schublade. Wer die Seite in der falschen Sprache vor sich hat,
+   soll den Ausweg sehen, ohne erst ein Menue zu oeffnen, das er
+   nicht lesen kann. */
+.sprachen{ position: relative; }
+.sprachen summary{
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 0 10px 0 12px;
+  font-size: .8rem;
+  font-weight: 650;
+  letter-spacing: .06em;
+  color: var(--auf-flaeche);
+  /* 40 statt 28 Prozent seit 11.10.2026: der Rand ist das, woran man den
+     Knopf erkennt, und Raender brauchen 3:1. Mit 28 Prozent waren es
+     2.3:1, mit 40 sind es 3.25:1 (gerechnet). Gleicher Wert beim Knopf
+     "?" daneben und in der Frageleiste. */
+  border: 1px solid rgb(247 247 241 / .4);
+  border-radius: 8px;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  transition: border-color var(--kurz) var(--kurve);
+}
+/* Das Dreieck, das Safari jedem <summary> voranstellt. Die anderen
+   Browser nehmen es ueber list-style:none oben weg. */
+.sprachen summary::-webkit-details-marker{ display: none; }
+@media (hover: hover) and (pointer: fine){
+  .sprachen summary:hover{ border-color: rgb(247 247 241 / .6); }
+}
+.sprachen-pfeil{
+  width: 12px;
+  height: 12px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform var(--kurz) var(--kurve);
+}
+.sprachen details[open] .sprachen-pfeil{ transform: rotate(180deg); }
+
+/* Die Liste liegt ueber dem Inhalt, rechtsbuendig unter dem Knopf.
+   Hell auf dem dunklen Kopf wie in der Vorlage. Darin gilt deshalb
+   wieder der olive Fokusring statt des hellen aus .kopf, der auf
+   Weiss nicht zu sehen waere. Beim Aufklappen nur Deckkraft, keine
+   Verschiebung dazu: nie zwei Eigenschaften gleichzeitig. */
+.sprachen-liste{
+  --fokus: var(--olive);
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 100%;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: var(--karte);
+  border: 1px solid var(--linie);
+  border-radius: var(--radius-knopf);
+  box-shadow: 0 16px 32px -16px rgb(22 25 15 / .45);
+  animation: sprachen-auf var(--kurz) var(--kurve);
+}
+@keyframes sprachen-auf{
+  from{ opacity: 0; }
+}
+.sprachen-liste a{
+  display: flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 12px;
+  font-size: .82rem;
+  font-weight: 650;
+  letter-spacing: .06em;
+  color: var(--tinte-2);
+  text-decoration: none;
+  border-radius: 6px;
+}
+/* Die aktuelle Sprache im Markenton und leicht oliv hinterlegt. Die
+   Farbe allein reichte nicht: Oliv und --tinte-2 der anderen Eintraege
+   liegen so nah beieinander, dass man sie am Bildschirm kaum
+   auseinanderhaelt. */
+.sprachen-liste a[aria-current="page"]{
+  color: var(--olive);
+  background: rgb(63 80 25 / .1);
+}
+@media (hover: hover) and (pointer: fine){
+  .sprachen-liste a:hover{ background: var(--karte-2); color: var(--tinte); }
+  .sprachen-liste a[aria-current="page"]:hover{
+    background: rgb(63 80 25 / .1);
+    color: var(--olive);
+  }
+}
+@media (min-width: 860px){
+  .sprachen{ margin-left: var(--s4); }
+}
+/* Zwischen 860 und 1099px reicht die Zeile nicht fuer Marke, fuenf
+   Menuepunkte, Sprachen und Anfrage-Knopf. Gemessen am 25.09.2026:
+   die Menuepunkte brachen dort zweizeilig um, auf Deutsch schon vor
+   den Sprachen zwischen 860 und 959px, mit ihnen bis 1099px, auf
+   Franzoesisch am laengsten. Der Knopf faellt in diesem Bereich weg,
+   aus demselben Grund wie auf dem Handy (siehe oben bei
+   .kopf-knopf{display:none}): derselbe Aufruf steht im Menuepunkt
+   Kontakt und zweimal im Fliesstext jeder Seite. Dazu ein Drittel
+   weniger Abstand zwischen den Punkten. Danach einzeilig in allen
+   drei Sprachen.
+
+   Seit 27.09.2026 bis 1023px statt 1099px: die Sprachauswahl ist
+   als ein Knopf schmaler als die drei Kuerzel vorher. Nachgemessen,
+   mit Knopf und vollem Abstand passt die Zeile ab 1024px in allen
+   drei Sprachen, darunter bricht sie noch um. */
+@media (min-width: 860px) and (max-width: 1023px){
+  .kopf-knopf{ display: none; }
+  .navigation-innen{ gap: var(--s5); }
+}
+/* Die Sprachen tragen hier das margin-left:auto, das sonst der
+   Menueknopf hat, und stehen per order zwischen Marke und Knopf. Der
+   Knopf rueckt dafuer direkt an sie heran. :has() statt einer Regel
+   fuer den Knopf allein, damit eine Seite ohne Sprachen (es gibt
+   keine, aber eine kaeme dazu) den Knopf trotzdem rechts behaelt.
+   Die Eintraege der Liste bekommen 44px Trefferflaeche wie die
+   Schublade, der Knopf selbst 40px, damit er in der 60px hohen
+   Kopfzeile nicht wuchtiger wirkt als der Menueknopf daneben. */
+@media (max-width: 859px){
+  .sprachen{
+    order: 1;
+    margin-left: auto;
+  }
+  .sprachen summary{ min-height: 40px; }
+  .sprachen-liste a{ min-height: 44px; }
+  .js .kopf-innen:has(.sprachen) .menue-knopf{ margin-left: var(--s1); }
+}
+/* Unter 360px reichen 24px Abstand nicht. Schriftzug (124px), Sprachen
+   (61px) und Menueknopf (44px) brauchen mit zweimal 24px und den 4px vor
+   dem Knopf 281px, bei 320px Fensterbreite sind 276px da. Der Menueknopf
+   rutschte deshalb auf allen Unterseiten in eine zweite Zeile und der
+   Kopf wurde 100 statt 60px hoch, gemessen am 12.10.2026. Die Startseite
+   hatte die 12px schon ueber die Frageleiste (siehe .kopf-frage), hier
+   gelten sie fuer alle Seiten: 257px, 19px Reserve. */
+@media (max-width: 359px){
+  .kopf-innen{ column-gap: var(--s3); }
+}
+
+/* Links im Titelband, bisher nur auf der Fehlerseite (die Zeilen auf
+   Englisch und Franzoesisch). Das Oliv der uebrigen Links waere auf
+   dieser Flaeche kaum zu sehen, deshalb der Ton der Zeile selbst,
+   unterstrichen, damit sie als Link erkennbar bleiben. */
+.titel .unter a{ color: inherit; }

@@ -1,0 +1,186 @@
+/* --- Leistungen -------------------------------------------
+   Drei Spalten nebeneinander, getrennt durch senkrechte
+   Haarlinien im Markenton, Aufbau wie bei portdigitalco.com:
+   Nummer, Zeichen, Titel, Text.
+
+   Bis zum 20.08.2026 waren das dreispaltige Zeilen untereinander,
+   mit der Begruendung, dass Karten gleich lange Texte erzwingen.
+   Das gilt weiterhin: die drei Texte hier sind bewusst aehnlich
+   lang gehalten. Kommt eine vierte Leistung dazu, bricht das
+   Raster auf zwei Zeilen um, dann muessen die Texte nochmal
+   angeglichen werden.
+   ---------------------------------------------------------- */
+.leistungen{
+  list-style: none;
+  margin: var(--s7) 0 0;
+  padding: 0;
+  display: grid;
+  border-top: 1px solid var(--linie-marke);
+  border-bottom: 1px solid var(--linie-marke);
+}
+/* Dreispaltig erst ab 1100px, bis zum 21.08.2026 waren es 860px.
+   Nachgemessen bei 1000px Fensterbreite: eine Spalte war 270px breit
+   und trug 35 Zeichen pro Zeile -- der Umbruch zerhackte jeden Satz in
+   vier Fetzen. Einspaltig sind es dort jetzt 60.
+
+   Was das nur zum Teil loest: ab 1100px waren es wieder 39 Zeichen.
+   Der .wrap war auf 1140px gedeckelt, eine Spalte also nie breiter
+   als rund 320px, und hier stand deshalb: "Wer echte 45 bis 75
+   Zeichen will, muss die Sektion aus dem 1140er-Raster nehmen."
+
+   Genau das ist am 02.09.2026 passiert, nur eine Ebene hoeher: mit
+   --breite auf 1280px ist eine Spalte rund 373px breit und traegt 44
+   Zeichen. Damit ist die Einschraenkung nicht weg, aber sie liegt
+   jetzt am unteren Rand des Zeitungsmasses statt darunter. Fuer drei
+   kurze Spaltentexte von zwei Saetzen reicht das. */
+@media (min-width: 1100px){
+  .leistungen{ grid-template-columns: repeat(3, 1fr); }
+  /* Die Trennlinie sitzt links am zweiten und dritten Feld, nicht
+     rechts am ersten und zweiten: sonst haengt aussen eine Linie,
+     wenn eine Leistung dazukommt oder wegfaellt. */
+  .leistungen li + li{
+    border-left: 1px solid var(--linie-marke);
+    padding-left: var(--s6);
+    transition: border-color var(--kurz) var(--kurve);
+  }
+}
+@media (max-width: 1099px){
+  .leistungen li + li{ border-top: 1px solid var(--linie-marke); }
+}
+.leistungen li{
+  padding: var(--s7) var(--s6) var(--s7) 0;
+}
+/* Die letzte Spalte bekommt rechts keinen Innenabstand, damit der
+   Block genauso breit endet wie die Ueberschrift darueber. */
+.leistungen li:last-child{ padding-right: 0; }
+
+/* Zeichen aus Rechtecken, Linien und Kreisen, keine Bibliothek.
+   Nur Kontur, kein Fuellton: gefuellte Symbole wirken neben der
+   duennen Haarlinie wie Fremdkoerper. */
+/* 32 statt 28 Pixel, seit die Nummer darueber weg ist: das Zeichen
+   ist jetzt das Erste im Feld und darf den Platz nehmen, den die
+   Zahl hatte. */
+.leistung-zeichen{
+  display: block;
+  width: 32px;
+  height: 32px;
+  margin-bottom: var(--s5);
+  fill: none;
+  stroke: var(--tinte);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke var(--kurz) var(--kurve);
+}
+/* Der Punkt im Fensterbalken ist gefuellt statt umrandet, bei
+   knapp zwei Pixel Durchmesser wuerde eine Kontur nur schmieren.
+   Er hat keine Kontur, also zeichnet er sich auch nicht, sondern
+   blendet am Ende der Strichzeichnung ein. */
+.leistung-zeichen .punkt{
+  fill: currentColor;
+  stroke: none;
+}
+.js .leistung-zeichen.bereit .punkt{
+  opacity: 0;
+  transition: opacity var(--kurz) var(--kurve) var(--zeichen-dauer);
+}
+.js .leistung-zeichen.gezeichnet .punkt{ opacity: 1; }
+
+/* Die Symbole zeichnen sich einmal selbst, kurz nachdem die Seite
+   geladen ist: dieselbe Technik wie beim Kachelrahmen. haupt.js
+   setzt Strichmuster und Versatz auf die Laenge jeder Form, hier
+   wandert der Versatz auf null.
+
+   Bewusst an das Laden gebunden, nicht ans Scrollen: ein Symbol,
+   das erst beim Vorbeiscrollen auftaucht, ist genau der Effekt,
+   den Kasum am 20.08.2026 als Vibe-Coding-Zeichen abgelehnt hat.
+   Die Klasse .bereit kommt erst nach dem Messen dazu, .gezeichnet
+   erst einen Wimpernschlag spaeter. Ohne .bereit gilt keine
+   Transition, sonst zeichnete sich das Symbol beim Laden einmal
+   sichtbar rueckwaerts weg. */
+.js .leistung-zeichen.bereit > *:not(.punkt){
+  /* --laenge setzt skript/haupt.js je Form, CSS kennt die Masse
+     eines Pfades nicht. Strichmuster und Versatz stehen jetzt hier
+     statt als Inline-Stil im Skript -- siehe Begruendung dort. */
+  stroke-dasharray: var(--laenge);
+  stroke-dashoffset: var(--laenge);
+  transition: stroke-dashoffset var(--zeichen-dauer) var(--kurve);
+}
+.js .leistung-zeichen.gezeichnet > *:not(.punkt){ stroke-dashoffset: 0; }
+
+/* Die Formen laufen nacheinander los statt alle zugleich: erst
+   der Rahmen, dann was darin steht. */
+.js .leistung-zeichen.bereit > *:nth-child(2){ transition-delay: 120ms; }
+.js .leistung-zeichen.bereit > *:nth-child(3){ transition-delay: 200ms; }
+.js .leistung-zeichen.bereit > *:nth-child(4){ transition-delay: 280ms; }
+.js .leistung-zeichen.bereit > *:nth-child(5){ transition-delay: 360ms; }
+
+/* --- Die Zeichen beim Zeigen ---------------------------------
+   Bis zum 21.08.2026 stand ueber jedem Feld eine Nummer und sonst
+   passierte hier nichts. Die Nummer ist weg (siehe index.html),
+   dafuer schreibt sich das Zeichen unter dem Zeiger ein zweites
+   Mal -- dieselbe Technik wie beim Laden, nur als Animation statt
+   als Transition, damit sie erneut von vorne laufen kann. Dazu
+   nimmt es die Markenfarbe an und die Trennlinie rechts wird eine
+   Spur kraeftiger.
+
+   Kein Scroll-Bezug, auch hier nicht: was beim Runterscrollen von
+   selbst auftaucht, hat Kasum am 20.08.2026 abgelehnt. Bewegung
+   gibt es nur, wenn jemand sie ausloest.
+
+   Auf Touch passiert nichts -- dort steht das fertig gezeichnete
+   Zeichen, wie bisher auch. */
+@keyframes zeichen-nochmal{
+  from{ stroke-dashoffset: var(--laenge); }
+  to{ stroke-dashoffset: 0; }
+}
+@media (hover: hover) and (pointer: fine){
+  .js .leistungen li:hover .leistung-zeichen.gezeichnet > *:not(.punkt){
+    animation: zeichen-nochmal var(--zeichen-dauer) var(--kurve) both;
+  }
+  /* Die Formen laufen nacheinander los, gleiche Staffelung wie beim
+     Laden: erst der Rahmen, dann was darin steht. */
+  .js .leistungen li:hover .leistung-zeichen > *:nth-child(2){ animation-delay: 120ms; }
+  .js .leistungen li:hover .leistung-zeichen > *:nth-child(3){ animation-delay: 200ms; }
+  .js .leistungen li:hover .leistung-zeichen > *:nth-child(4){ animation-delay: 280ms; }
+  .js .leistungen li:hover .leistung-zeichen > *:nth-child(5){ animation-delay: 360ms; }
+
+  .leistungen li:hover .leistung-zeichen{ stroke: var(--olive); }
+  .leistungen li:hover{ border-left-color: var(--olive); }
+}
+
+/* 1.28 statt 1.14rem seit 02.09.2026. Nicht um der Groesse willen:
+   die H2 darueber ist am selben Tag von 34 auf 53px gegangen, und
+   ein Spaltentitel, der sich gegenueber einer 53px-Ueberschrift
+   nicht behauptet, faellt in den Fliesstext zurueck. Der Abstand
+   zwischen Ueberschrift und Titel soll gross sein, der zwischen
+   Titel und Text auch -- dazwischen darf nichts verschwimmen. */
+.leistungen h3{
+  font-size: var(--satz-5);
+  line-height: 1.25;
+  margin-bottom: var(--s4);
+}
+.leistungen p{
+  color: var(--tinte-2);
+  font-size: .96rem;
+  /* Greift nur einspaltig, unter 1100px: dreispaltig ist die Spalte
+     schon schmaler als 60 Zeichen. Ersetzt die globale p-Regel, die
+     bis zum 21.08.2026 hier die Zeilenlaenge hielt. */
+  max-width: 60ch;
+}
+
+/* .82rem sind 13px. Bis zum 03.10.2026 .74rem auf dem Desktop, siehe
+   .augenbraue weiter oben. */
+.nr{
+  font-size: .82rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  color: var(--olive);
+}
+
+.nachsatz{
+  margin-top: var(--s5);
+  color: var(--still);
+  font-size: .96rem;
+  max-width: 62ch;
+}
