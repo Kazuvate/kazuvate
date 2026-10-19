@@ -1,0 +1,81 @@
+/* --- Eckwinkel statt Ring ---------------------------------------
+   Seit 11.10.2026. Der Tastaturfokus zeigt vier Eckwinkel, die
+   Schnittmarken einer Druckvorlage: dort, wo nach dem Druck
+   geschnitten wird. Dasselbe Zeichen kehrt bei den Referenz-Kacheln
+   wieder (beim Zeigen) und im Fuss als Kreuz an den Kreuzungen.
+
+   Gezeichnet wird nicht am fokussierten Element selbst. Dessen
+   ::before und ::after sind an zu vielen Stellen schon belegt (die
+   Linie vor .weiter, der Unterstrich der Navigation, die vier
+   Unschaerfe-Ebenen der Kachel), und ein Formularfeld hat gar keine.
+   Stattdessen haengt ein einziges body::after per CSS-Anker an dem
+   Element, das gerade den Fokus traegt. Kein Skript, kein Markup,
+   und es gilt ohne weiteres Zutun auch fuer jedes Bauteil, das
+   spaeter dazukommt.
+
+   Die vier Winkel sind ein Rahmen mit 2px Rand, aus dem clip-path die
+   Mitte jeder Seite herausschneidet: evenodd zieht ein Kreuz vom
+   Rechteck ab, uebrig bleiben die Ecken. --ecke ist die Schenkel-
+   laenge, bei kleinen Elementen hoechstens ein Drittel der Seite,
+   damit sich die Winkel nicht beruehren.
+
+   Drei Faelle behalten den bisherigen Ring:
+   1. Links im Fliesstext. Ein Link, der umbricht, hat als Rechteck
+      die Breite beider Zeilen -- die Winkel stuenden um eine Flaeche,
+      die es nicht gibt.
+   2. forced-colors: Windows zeichnet mit Systemfarben, der Ring ist
+      dort die verlaessliche Anzeige. Er bleibt ohnehin sichtbar,
+      weil transparent in diesem Modus ersetzt wird.
+   3. Browser ohne Anker-Positionierung: die @supports-Abfrage greift
+      nicht, und es gilt die Regel oben.
+
+   Die Referenz-Kacheln zeichnen ihre Winkel selbst, etwas weiter
+   aussen und beim Zeigen ebenso (siehe "Schnittmarken"); sie sind
+   hier ausgenommen, sonst stuenden zwei Paare uebereinander.
+
+   Farbe: --fokus wie bisher. body::after erbt sie aber vom body und
+   nicht vom fokussierten Element, deshalb stellt die :has-Regel den
+   hellen Ton fuer Kopf, Titelband und Fuss hier noch einmal ein.
+   Kontrast: Oliv auf Papier 8.0:1, hell auf --flaeche 11.9:1. */
+@supports (anchor-name: --a) and selector(:has(a)){
+  @media not (forced-colors: active){
+    :focus-visible:not(:where(p, dd, td, th, figcaption, blockquote, address) a, .referenz-kachel){
+      outline-color: transparent;
+      anchor-name: --fokus;
+    }
+
+    body:has(:focus-visible:not(:where(p, dd, td, th, figcaption, blockquote, address) a, .referenz-kachel))::after{
+      --ecke: min(10px, 33%);
+      --abstand: 5px;
+      content: "";
+      position: absolute;
+      position-anchor: --fokus;
+      top: calc(anchor(top) - var(--abstand));
+      left: calc(anchor(left) - var(--abstand));
+      right: calc(anchor(right) - var(--abstand));
+      bottom: calc(anchor(bottom) - var(--abstand));
+      border: 2px solid var(--fokus);
+      clip-path: polygon(evenodd,
+        0 0, 100% 0, 100% 100%, 0 100%, 0 0,
+        var(--ecke) 0, calc(100% - var(--ecke)) 0,
+        calc(100% - var(--ecke)) var(--ecke), 100% var(--ecke),
+        100% calc(100% - var(--ecke)), calc(100% - var(--ecke)) calc(100% - var(--ecke)),
+        calc(100% - var(--ecke)) 100%, var(--ecke) 100%,
+        var(--ecke) calc(100% - var(--ecke)), 0 calc(100% - var(--ecke)),
+        0 var(--ecke), var(--ecke) var(--ecke), var(--ecke) 0, 0 0);
+      pointer-events: none;
+      z-index: 40;   /* ueber dem mitlaufenden Kopf (20) und .sprung (30) */
+    }
+
+    body:has(:is(.kopf, .titel, .fuss, .frageleiste-zeile) :focus-visible, .sprung:focus-visible)::after{
+      --fokus: var(--auf-flaeche);
+    }
+    /* Die Sprachliste ist ein heller Kasten im dunklen Kopf und stellt
+       --fokus deshalb selbst wieder auf Oliv (siehe .sprachen-liste).
+       Die Winkel liegen 5px ausserhalb des Eintrags und damit noch im
+       Kasten, also gilt dort dasselbe. */
+    body:has(.sprachen-liste :focus-visible)::after{
+      --fokus: var(--olive);
+    }
+  }
+}
