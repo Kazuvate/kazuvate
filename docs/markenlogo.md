@@ -1,15 +1,14 @@
 # Markenlogo kazuvate
 
-Die Dateien selbst liegen weiterhin in `public/markenlogo/`. Diese
-Beschreibung lag bis zum 31.08.2026 als `README.md` dazwischen und wurde
-damit mitausgeliefert: sie war unter `https://kazuvate.ch/markenlogo/README.md`
-oeffentlich abrufbar. Vite reicht alles aus `public/` unveraendert durch, es
-gibt dort keine Ausnahmeliste. Deshalb steht der Text jetzt hier bei den
-anderen Werkzeugen und nicht mehr bei den Bildern.
+Die Dateien selbst liegen in `public/markenlogo/` und werden mit der Website
+ausgeliefert. Diese Beschreibung liegt bewusst nicht dort: bis zum 31.08.2026
+stand sie als `README.md` zwischen den Bildern und war damit unter
+`https://kazuvate.ch/markenlogo/README.md` oeffentlich abrufbar. Vite reicht
+alles aus `public/` unveraendert durch, es gibt dort keine Ausnahmeliste.
 
-Vektorisiert aus `../kazuvate_Logo.jpg` am 19.08.2026. Ab jetzt ist **`logo.svg` das
-Master-Asset**. Die JPG wird nicht mehr ausgeliefert und nur noch als Herkunftsnachweis
-aufbewahrt.
+Vektorisiert aus [`kazuvate_Logo.jpg`](kazuvate_Logo.jpg) am 19.08.2026. Ab
+jetzt ist **`logo.svg` das Master-Asset**. Die JPG wird nicht ausgeliefert und
+liegt hier nur als Herkunftsnachweis.
 
 ## Markenton
 
@@ -22,13 +21,13 @@ Kontrast Oliv auf Weiss: 9.0:1. Reicht auch fuer Fliesstext, nicht nur fuer Flae
 
 ## Dateien
 
+In `public/markenlogo/`:
+
 | Datei | Groesse | Wofuer |
 |---|---|---|
 | `logo.svg` | 411 B | Standard. Ueberall im hellen Umfeld |
 | `logo-weiss.svg` | 411 B | Auf dunklem Grund und auf Fotos |
 | `logo-currentcolor.svg` | 416 B | Inline im HTML, erbt die Textfarbe |
-| `favicon.svg` | 482 B | Browser-Tab, schaltet bei Dunkelmodus auf helles Oliv |
-| `favicon.ico` | 5.6 kB | 16/32/48 in einer Datei, fuer alte Browser |
 | `favicon-16/32/48.png` | < 2.2 kB | Einzelgroessen, falls gebraucht |
 | `apple-touch-icon.png` | 4.8 kB | 180x180, iOS-Startbildschirm |
 | `icon-192.png` `icon-512.png` | 5 / 15 kB | Android, Web-App-Manifest |
@@ -36,18 +35,31 @@ Kontrast Oliv auf Weiss: 9.0:1. Reicht auch fuer Fliesstext, nicht nur fuer Flae
 | `og.png` | 19 kB | 1200x630, Vorschaubild fuer Link-Freigaben |
 | `site.webmanifest` | | Manifest, Pfade ggf. anpassen |
 
+Direkt in `public/`, nicht in `markenlogo/`:
+
+| Datei | Groesse | Wofuer |
+|---|---|---|
+| `favicon.svg` | 482 B | Browser-Tab, schaltet bei Dunkelmodus auf helles Oliv |
+| `favicon.ico` | 5.6 kB | 16/32/48 in einer Datei, fuer alte Browser |
+
+Die zwei Favicons liegen an der Wurzel, weil Browser `/favicon.ico` von sich aus
+anfragen und alle Seiten auf diese Adressen verweisen. Bis zum 19.10.2026 gab es
+beide Dateien zusaetzlich unveraendert in `markenlogo/`, ohne dass jemand darauf
+zeigte. Die Kopien sind entfernt.
+
 Das Zeichen steht auf hellen Icons **oliv auf transparent**, auf Startbildschirm-Icons
 **hell auf oliv**. Grund: Tabs sind meist hell, Startbildschirme liegen auf einem
 beliebigen Hintergrundbild und brauchen eine eigene Kante.
 
 ## Einbindung
 
+So steht es im Kopf jeder Seite:
+
 ```html
-<link rel="icon" href="/markenlogo/favicon.ico" sizes="32x32">
-<link rel="icon" href="/markenlogo/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/markenlogo/apple-touch-icon.png">
 <link rel="manifest" href="/markenlogo/site.webmanifest">
-<meta name="theme-color" content="#3F5019">
 <meta property="og:image" content="https://kazuvate.ch/markenlogo/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">

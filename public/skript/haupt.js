@@ -24,11 +24,10 @@
    **Der Faden neben "Wer wir sind" ist seit dem 20.08.2026 kein
    Vanilla-Block mehr.** Erste Fassung war Vanilla-CSS/JS wie der
    Rest dieser Datei, Kasum wollte danach ausdruecklich die echte
-   React-Komponente aus seiner Vorlage. Er lebt jetzt als eigene
-   React-Insel in `faden/`, kompiliert nach `skript/faden/faden.js`
-   und `.css`, in `index.html` per eigenem `<script type="module">`
-   eingebunden. Siehe `faden/README.md` und den README-Abschnitt
-   "Faden" fuer Aufbau und Begruendung.
+   React-Komponente aus seiner Vorlage. Er lebt jetzt als React-Insel
+   in src/components/ui/svg-follow-scroll.tsx, eingehaengt von
+   src/startseite.tsx und von Vite zusammen mit der Startseite
+   gebaut. Siehe docs/aufbau.md, Abschnitt "JavaScript".
 
    Alles hier ist Zugabe. Faellt das Skript aus, bleibt die Seite
    vollstaendig lesbar und bedienbar: die Klasse `js` am
