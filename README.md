@@ -32,6 +32,10 @@
 - Kontaktformular mit Antwort innert 24 Stunden.
 - Keine Cookies, kein Tracking, keine Dateien von fremden Servern.
 
+## Entwicklung
+
+Befehle, Ordnerkarte und wie die Seiten zusammenhängen stehen in [docs/aufbau.md](docs/aufbau.md).
+
 ## Lizenz
 
 Alle Rechte vorbehalten, siehe [LICENSE](LICENSE).
