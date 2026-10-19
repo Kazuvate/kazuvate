@@ -69,7 +69,7 @@ gsap.registerPlugin(ScrollTrigger);
 }
 
 /**
- * KV aus Punkten im Fuss, seit 11.10.2026 (src/ideen/kv-punkte.ts).
+ * KV aus Punkten im Fuss, seit 11.10.2026 (src/module/kv-punkte.ts).
  * Geladen erst, wenn der Zeiger den Fuss betritt -- wer nie bis unten
  * kommt, laedt die Datei nie. Nur mit Maus und ohne reduzierte Bewegung;
  * sonst bleibt das KV-Zeichen das SVG, das es ohnehin ist.
@@ -82,7 +82,7 @@ gsap.registerPlugin(ScrollTrigger);
   if (fuss && zeichen && pfad && passt.matches) {
     fuss.addEventListener(
       "pointerenter",
-      () => { import("./ideen/kv-punkte").then((m) => m.starte(fuss, zeichen, pfad)); },
+      () => { import("./module/kv-punkte").then((m) => m.starte(fuss, zeichen, pfad)); },
       { once: true },
     );
   }
@@ -90,33 +90,33 @@ gsap.registerPlugin(ScrollTrigger);
 
 /**
  * Textmarker-Zeilen auf der Startseite, seit 11.10.2026
- * (src/ideen/zeilen.ts). Ohne das Skript funktionieren sie per Klick;
+ * (src/module/zeilen.ts). Ohne das Skript funktionieren sie per Klick;
  * es fuegt nur das Oeffnen beim Zeigen und beim Fokussieren hinzu.
  */
 {
   const feld = document.querySelector<HTMLElement>(".anders-zeilen");
-  if (feld) import("./ideen/zeilen").then((m) => m.starte(feld));
+  if (feld) import("./module/zeilen").then((m) => m.starte(feld));
 }
 
 /**
- * Frageleiste auf der Startseite, seit 11.10.2026 (src/ideen/fragen.ts).
+ * Frageleiste auf der Startseite, seit 11.10.2026 (src/module/fragen.ts).
  * Ohne das Skript oeffnet der Knopf das Blatt trotzdem; es kommt nur der
  * Wechsel der Frage nach Abschnitt und der Fokus dazu.
  */
 {
   const blatt = document.getElementById("fragen");
-  if (blatt) import("./ideen/fragen").then((m) => m.starte(blatt));
+  if (blatt) import("./module/fragen").then((m) => m.starte(blatt));
 }
 
 /**
  * Die Kundenseite laeuft in der Referenz-Kachel, seit 11.10.2026
- * (src/ideen/kachel-lauf.ts). Nur mit Maus und ohne reduzierte Bewegung;
+ * (src/module/kachel-lauf.ts). Nur mit Maus und ohne reduzierte Bewegung;
  * sonst bleibt es beim Bildschirmfoto der Startseite.
  */
 {
   const kacheln = document.querySelectorAll<HTMLAnchorElement>(".referenz-kachel");
   const passt = matchMedia("(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)");
-  if (kacheln.length && passt.matches) import("./ideen/kachel-lauf").then((m) => m.starte(kacheln));
+  if (kacheln.length && passt.matches) import("./module/kachel-lauf").then((m) => m.starte(kacheln));
 }
 
 /**
@@ -282,7 +282,7 @@ gsap.matchMedia().add("(prefers-reduced-motion: no-preference)", () => {
 
   // "Warum kazuvate" stand hier bis zum 11.10.2026 mit
   // eintritt("#anders .kachel"). Die Kacheln sind seitdem drei Zeilen
-  // mit Textmarker (src/ideen/zeilen.ts), und die blenden nicht ein:
+  // mit Textmarker (src/module/zeilen.ts), und die blenden nicht ein:
   // sie reagieren auf Zeigen, Fokus und Tippen, nicht aufs Scrollen.
 
   // Referenz-Kacheln auf der Startseite.

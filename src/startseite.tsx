@@ -15,8 +15,8 @@ import { Faden } from "@/components/ui/svg-follow-scroll";
 
 /**
  * Einhaenge-Punkt fuer die React-Insel. Kein Router, keine App-Struktur
- * mit mehreren Seiten -- die restliche kazuvate-Website bleibt fuenf
- * statische HTML-Dateien. Dieses Skript sucht sich in index.html zwei
+ * mit mehreren Seiten -- die restliche kazuvate-Website bleibt
+ * statisches, handgeschriebenes HTML. Dieses Skript sucht sich in index.html zwei
  * bestehende Elemente:
  *
  * - #hero-faden-bereich: der Inhaltsbereich von der H1 bis zum Ende von
