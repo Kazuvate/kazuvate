@@ -1,6 +1,6 @@
 # Markenlogo kazuvate
 
-Die Dateien selbst liegen in `public/markenlogo/` und werden mit der Website
+Die Dateien selbst liegen in `website/public/markenlogo/` und werden mit der Website
 ausgeliefert. Diese Beschreibung liegt bewusst nicht dort: bis zum 31.08.2026
 stand sie als `README.md` zwischen den Bildern und war damit unter
 `https://kazuvate.ch/markenlogo/README.md` oeffentlich abrufbar. Vite reicht
@@ -21,7 +21,7 @@ Kontrast Oliv auf Weiss: 9.0:1. Reicht auch fuer Fliesstext, nicht nur fuer Flae
 
 ## Dateien
 
-In `public/markenlogo/`:
+In `website/public/markenlogo/`:
 
 | Datei | Groesse | Wofuer |
 |---|---|---|
@@ -35,7 +35,7 @@ In `public/markenlogo/`:
 | `og.png` | 19 kB | 1200x630, Vorschaubild fuer Link-Freigaben |
 | `site.webmanifest` | | Manifest, Pfade ggf. anpassen |
 
-Direkt in `public/`, nicht in `markenlogo/`:
+Direkt in `website/public/`, nicht in `markenlogo/`:
 
 | Datei | Groesse | Wofuer |
 |---|---|---|
