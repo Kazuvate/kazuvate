@@ -27,7 +27,7 @@
    React-Komponente aus seiner Vorlage. Er lebt jetzt als React-Insel
    in src/components/ui/svg-follow-scroll.tsx, eingehaengt von
    src/startseite.tsx und von Vite zusammen mit der Startseite
-   gebaut. Siehe docs/aufbau.md, Abschnitt "JavaScript".
+   gebaut. Siehe dokumente/aufbau.md, Abschnitt "JavaScript".
 
    Alles hier ist Zugabe. Faellt das Skript aus, bleibt die Seite
    vollstaendig lesbar und bedienbar: die Klasse `js` am

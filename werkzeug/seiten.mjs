@@ -27,7 +27,7 @@
  *               Suchmaschinen, die Rangfolge innerhalb der eigenen
  *               Domain, kein Ranking-Faktor. Fehlt sie, steht die
  *               Seite nicht in der Sitemap.
- *   de/en/fr    [Quelldatei im Repo, Adresse auf der Website]. Die Datei
+ *   de/en/fr    [Quelldatei in website/, Adresse auf der Website]. Die Datei
  *               liefert das Aenderungsdatum, die Adresse muss
  *               zeichengleich mit dem <link rel="canonical"> der Seite
  *               sein.
@@ -110,6 +110,15 @@ export const SEITEN = [
 export const FEHLERSEITE = { schluessel: "fehler", datei: "404.html" };
 
 export const SPRACHEN = ["de", "en", "fr"];
+
+/**
+ * Der Ordner mit allem, was der Browser sieht: Seiten, stil/, src/,
+ * medien/ und public/. Er ist die Wurzel von Vite (vite.config.ts), und
+ * alle Dateipfade in dieser Datei sind relativ zu ihm. Die Adresse einer
+ * Seite bleibt dadurch, was sie war: website/kontakt.html ist
+ * kazuvate.ch/kontakt.html.
+ */
+export const QUELLORDNER = "website";
 
 /**
  * Die Eingangsliste fuer Vite: Schluessel -> Quelldatei. Erst alle

@@ -20,8 +20,8 @@
 
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./website/src/*"]
     }
   },
-  "include": ["src"]
+  "include": ["website/src"]
 }

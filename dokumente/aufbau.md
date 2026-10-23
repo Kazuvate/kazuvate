@@ -15,68 +15,89 @@ npm run typecheck   # TypeScript prüfen, ohne etwas zu bauen
 npm run indexnow    # nach einem Deploy: Adressen an Bing und Co. melden
 ```
 
-`npm run build` schreibt vorher `public/sitemap.xml` neu (`prebuild`). Die Datei
-ist eingecheckt. Wer nur lokal gebaut hat, setzt sie vor dem Commit mit
-`git checkout -- public/sitemap.xml` zurück, sonst landet ein zufälliges
-`lastmod`-Datum im Commit.
+`npm run build` schreibt vorher `website/public/sitemap.xml` neu (`prebuild`).
+Die Datei ist eingecheckt. Wer nur lokal gebaut hat, setzt sie vor dem Commit
+mit `git checkout -- website/public/sitemap.xml` zurück, sonst landet ein
+zufälliges `lastmod`-Datum im Commit.
 
 ## Ordnerkarte
+
+Im obersten Ordner liegt nur, was Werkzeuge dort erwarten (Konfiguration), und
+vier Ordner. Alles, was der Browser sieht, liegt in **`website/`**.
 
 ```
 kazuvate/
 │
-├─ index.html  leistungen.html  ablauf.html  kontakt.html  danke.html
-│  impressum.html  datenschutz.html  404.html  referenzen/index.html
-│                       Die deutschen Seiten. Deutsch ist die Wurzel der Website.
-├─ en/   fr/            Dieselben Seiten auf Englisch und Französisch
+├─ website/             Die Website. Wurzel von Vite, alles darin wird gebaut
+│  ├─ index.html  leistungen.html  ablauf.html  kontakt.html  danke.html
+│  │  impressum.html  datenschutz.html  404.html  referenzen/index.html
+│  │                       Die deutschen Seiten. Deutsch ist die Wurzel der Website.
+│  ├─ en/   fr/            Dieselben Seiten auf Englisch und Französisch
+│  │
+│  ├─ stil/                CSS
+│  │  ├─ tokens.css           Farben, Abstände, Zeiten: die einzige Quelle
+│  │  ├─ basis.css            Inhaltsverzeichnis des Basis-CSS (nur @import)
+│  │  ├─ basis/               Das Basis-CSS, ein Abschnitt je Datei
+│  │  └─ kontakt.css  leistungen.css  ablauf.css  seiten.css  danke.css
+│  │     titelmotive.css      CSS, das nur einzelne Seiten laden
+│  │
+│  ├─ src/                 TypeScript und React, von Vite gebündelt
+│  │  ├─ bewegung.ts          Einstieg für alle Seiten (GSAP, Seitenwechsel)
+│  │  ├─ startseite.tsx       Einstieg nur Startseite: React-Insel "Faden"
+│  │  ├─ ablauf.tsx           Einstieg nur Ablauf: React-Insel "Strang"
+│  │  ├─ module/              Kleine Module, die bewegung.ts und ablauf.tsx bei Bedarf nachladen
+│  │  ├─ components/ui/       React-Bauteile
+│  │  ├─ lib/utils.ts         cn() für eingefügte shadcn-Bauteile
+│  │  └─ index.css            Tailwind-Utilities, zurzeit von keiner Seite geladen
+│  │
+│  ├─ public/              Wird unverändert nach dist/ kopiert und ausgeliefert
+│  │  ├─ skript/              Handgeschriebenes JavaScript ohne Build
+│  │  ├─ schriften/           General Sans
+│  │  ├─ markenlogo/          Logo, Icons, Vorschaubild
+│  │  ├─ favicon.ico  favicon.svg  robots.txt  llms.txt
+│  │  ├─ sitemap.xml          Wird von werkzeug/sitemap-bauen.mjs erzeugt
+│  │  └─ <32 Zeichen>.txt     Schlüssel für IndexNow
+│  │
+│  ├─ medien/referenzen/   Bilder der Referenz-Kacheln (webp)
+│  └─ muster/              Entwürfe zum Ansehen, werden nicht gebaut
 │
-├─ stil/                CSS
-│  ├─ tokens.css           Farben, Abstände, Zeiten: die einzige Quelle
-│  ├─ basis.css            Inhaltsverzeichnis des Basis-CSS (nur @import)
-│  ├─ basis/               Das Basis-CSS, ein Abschnitt je Datei
-│  └─ kontakt.css  leistungen.css  ablauf.css  seiten.css  danke.css
-│     titelmotive.css      CSS, das nur einzelne Seiten laden
-│
-├─ src/                 TypeScript und React, von Vite gebündelt
-│  ├─ bewegung.ts          Einstieg für alle Seiten (GSAP, Seitenwechsel)
-│  ├─ startseite.tsx       Einstieg nur Startseite: React-Insel "Faden"
-│  ├─ ablauf.tsx           Einstieg nur Ablauf: React-Insel "Strang"
-│  ├─ module/              Kleine Module, die bewegung.ts und ablauf.tsx bei Bedarf nachladen
-│  ├─ components/ui/       React-Bauteile
-│  ├─ lib/utils.ts         cn() für eingefügte shadcn-Bauteile
-│  └─ index.css            Tailwind-Utilities, zurzeit von keiner Seite geladen
-│
-├─ public/              Wird unverändert nach dist/ kopiert und ausgeliefert
-│  ├─ skript/              Handgeschriebenes JavaScript ohne Build
-│  ├─ schriften/           General Sans
-│  ├─ markenlogo/          Logo, Icons, Vorschaubild
-│  ├─ favicon.ico  favicon.svg  robots.txt  llms.txt
-│  ├─ sitemap.xml          Wird von werkzeug/sitemap-bauen.mjs erzeugt
-│  └─ <32 Zeichen>.txt     Schlüssel für IndexNow
-│
-├─ medien/referenzen/   Bilder der Referenz-Kacheln (webp)
 ├─ api/kontakt.js       Vercel Function des Kontaktformulars
 ├─ werkzeug/            Skripte für Build und Veröffentlichung
-├─ muster/              Entwürfe zum Ansehen, werden nicht ausgeliefert
-├─ docs/                Diese Doku und die Herkunft des Logos
+├─ dokumente/           Diese Doku, die Herkunft des Logos, das SEO-Handbuch (nicht im Repo)
 │
 └─ package.json  vite.config.ts  vercel.json  tsconfig.json  components.json
    .env.example  PRODUCT.md  README.md  LICENSE
 ```
 
-**Warum liegen die deutschen Seiten im Wurzelordner?** Die Adressen der Website
-folgen den Dateipfaden eins zu eins (`kazuvate.ch/kontakt.html`), und sie sind
-indexiert und verlinkt. Eine verschobene Datei ist eine andere Adresse.
+**Pfade in Kommentaren und in dieser Doku** (`stil/…`, `src/…`, `public/…`,
+`skript/…`) sind, wenn nichts anderes dabeisteht, relativ zu `website/`.
+`api/`, `werkzeug/`, `dokumente/` und die Konfigurationsdateien liegen im
+obersten Ordner.
 
-**Warum gibt es zwei Orte für JavaScript?** `public/skript/` ist Code, den
-niemand bündeln soll: klein, handgeschrieben, pro Seite eine Datei. `src/` ist
-alles, was Vite braucht, also TypeScript, React und Bibliotheken.
+**Warum ist `website/` der ganze Ordner und nicht nur die Seiten?** Die Seiten
+verweisen auf `/stil/basis.css`, `/src/bewegung.ts`, `/medien/…`: Adressen ab
+der Wurzel von Vite. Läge nur das HTML im Unterordner, müssten alle diese Ordner
+mit, sonst findet der Entwicklungsserver sie nicht.
+
+**Warum bleiben die Adressen gleich?** Vite gibt eine Datei unter ihrem Pfad
+relativ zu `website/` aus: `website/kontakt.html` wird `dist/kontakt.html` und
+damit `kazuvate.ch/kontakt.html`. Das ist wichtig, weil die Adressen indexiert
+und verlinkt sind.
+
+**Warum gibt es zwei Orte für JavaScript?** `website/public/skript/` ist Code,
+den niemand bündeln soll: klein, handgeschrieben, pro Seite eine Datei.
+`website/src/` ist alles, was Vite braucht, also TypeScript, React und
+Bibliotheken.
+
+**`dokumente/` ist teils privat.** `SEO-Handbuch-kazuvate.docx` und `.pdf`
+liegen dort, stehen aber in der `.gitignore` und gehören nicht ins Repository:
+sie enthalten Preisspannen und Nischenstrategie, das Repo ist öffentlich.
 
 ## Die Seiten
 
 Jede Seite gibt es dreimal. Die Zuordnung steht in **`werkzeug/seiten.mjs`**, und
 nur dort: `vite.config.ts` baut daraus die Eingangsliste, das Sitemap-Skript die
-Sitemap.
+Sitemap. Die Dateipfade in der Tabelle liegen in `website/`.
 
 | Deutsch | Englisch | Französisch |
 |---|---|---|
@@ -97,7 +118,7 @@ einzeln. Eine Änderung daran gilt für alle 25 Dateien.
 
 **Eine neue Seite braucht:**
 
-1. die drei HTML-Dateien (Deutsch, Englisch, Französisch)
+1. die drei HTML-Dateien (Deutsch, Englisch, Französisch) in `website/`
 2. einen Eintrag in `werkzeug/seiten.mjs`
 3. die `hreflang`-Zeilen und das `canonical` im Kopf jeder Fassung. Die Adresse
    muss zeichengleich mit der in `seiten.mjs` sein.
@@ -158,10 +179,10 @@ ein neues, aus einer Bibliothek kopiertes shadcn-Bauteil einfügt. Ohne
 `kontakt.html` schickt per POST an `/api/kontakt`, die Vercel Function
 `api/kontakt.js`. Sie verschickt die Anfrage über Resend. Dafür braucht sie
 `RESEND_API_KEY`: in Vercel unter *Project Settings, Environment Variables*,
-lokal in `.env.local` (Vorlage: `.env.example`). Den Schlüssel nie in den Code
-schreiben, auch nicht als Rückfallwert. Spamschutz ohne Captcha (verstecktes
-Feld und Zeitprüfung) und die Antworten bei Fehlern sind im Kopfkommentar von
-`api/kontakt.js` beschrieben.
+lokal in `.env.local` im obersten Ordner (Vorlage: `.env.example`). Den
+Schlüssel nie in den Code schreiben, auch nicht als Rückfallwert. Spamschutz
+ohne Captcha (verstecktes Feld und Zeitprüfung) und die Antworten bei Fehlern
+sind im Kopfkommentar von `api/kontakt.js` beschrieben.
 
 ## Adressen und Weiterleitungen
 
@@ -186,21 +207,22 @@ Feld und Zeitprüfung) und die Antworten bei Fehlern sind im Kopfkommentar von
   widersprechen, sind schlechter als eine. Beide stammen aus
   `werkzeug/seiten.mjs`, das Canonical in den HTML-Dateien steht von Hand.
 - **IndexNow.** `npm run indexnow` nach einem Deploy mit neuen oder geänderten
-  Seiten. Der Schlüssel liegt öffentlich in `public/`, das ist bei IndexNow so
-  gewollt. Genaueres im Kopf von `werkzeug/indexnow.mjs`.
+  Seiten. Der Schlüssel liegt öffentlich in `website/public/`, das ist bei
+  IndexNow so gewollt. Genaueres im Kopf von `werkzeug/indexnow.mjs`.
 
 ## Nicht ausgeliefert
 
-- **`muster/`**: Entwürfe zum Ansehen (zurzeit die isometrischen Leistungs-Zeichen).
-  Die Dateien stehen nicht in der Eingangsliste und kommen deshalb nicht nach
-  `dist/`. Im Entwicklungsserver sind sie unter `/muster/iso-zeichen.html` offen.
-- **`docs/`**, **`werkzeug/`**, **`.claude/`**: Doku, Skripte und Vorschau-Konfiguration.
-  Aus `public/` dagegen wird alles ausgeliefert. Was nicht öffentlich sein darf,
-  gehört nie dorthin.
+- **`website/muster/`**: Entwürfe zum Ansehen (zurzeit die isometrischen
+  Leistungs-Zeichen). Die Dateien stehen nicht in der Eingangsliste und kommen
+  deshalb nicht nach `dist/`. Im Entwicklungsserver sind sie unter
+  `/muster/iso-zeichen.html` offen.
+- **`dokumente/`**, **`werkzeug/`**, **`.claude/`**: Doku, Skripte und
+  Vorschau-Konfiguration. Aus `website/public/` dagegen wird alles ausgeliefert.
+  Was nicht öffentlich sein darf, gehört nie dorthin.
 
 ## Weiter lesen
 
 - `PRODUCT.md`: für wen die Seite ist und welche Gestaltungsprinzipien gelten
-- `docs/markenlogo.md`: Logo, Markenton, Dateien, Regeln
+- `dokumente/markenlogo.md`: Logo, Markenton, Dateien, Regeln
 - `git show f329556:README.md`: die ausführliche Fassung dieser Doku bis zum
   02.10.2026, mit der Geschichte der einzelnen Bauteile

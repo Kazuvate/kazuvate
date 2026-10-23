@@ -1,7 +1,7 @@
 /**
  * sitemap-bauen.mjs
  *
- * Schreibt public/sitemap.xml. Laeuft automatisch als `prebuild`, also
+ * Schreibt website/public/sitemap.xml. Laeuft automatisch als `prebuild`, also
  * bei jedem `npm run build` -- eine Sitemap, die man von Hand pflegen
  * muss, ist nach der dritten Aenderung falsch.
  *
@@ -14,6 +14,11 @@
  * sobald es ihm einmal unglaubwuerdig vorkam. Fuer noch nicht
  * eingecheckte Dateien gibt es kein Commit-Datum, dort steht das
  * heutige.
+ *
+ * `--follow --diff-filter=AM`: eine Datei, die nur verschoben wurde (am
+ * 23.10.2026 mit dem Umzug nach website/), hat unter ihrem neuen Pfad sonst
+ * nur den Umzug als Geschichte, und alle Seiten stuenden mit dem Datum des
+ * Umzugs in der Sitemap. So zaehlt ein reiner Umzug nicht als Aenderung.
  *
  * Welche Seiten es gibt, steht in werkzeug/seiten.mjs, derselben Liste,
  * aus der auch vite.config.ts seine Eingangsliste baut. Seiten ohne
@@ -35,7 +40,7 @@ import { writeFileSync, existsSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { SEITEN, SPRACHEN } from "./seiten.mjs";
+import { SEITEN, SPRACHEN, QUELLORDNER } from "./seiten.mjs";
 
 const wurzel = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const HERKUNFT = "https://kazuvate.ch";
@@ -44,7 +49,7 @@ const heute = new Date().toISOString().slice(0, 10);
 
 function letzteAenderung(datei) {
   try {
-    const aus = execFileSync("git", ["log", "-1", "--format=%cs", "--", datei], {
+    const aus = execFileSync("git", ["log", "--follow", "--diff-filter=AM", "-1", "--format=%cs", "--", `${QUELLORDNER}/${datei}`], {
       cwd: wurzel,
       encoding: "utf8",
       stdio: ["ignore", "pipe", "ignore"],
@@ -57,7 +62,7 @@ function letzteAenderung(datei) {
 }
 
 const eintraege = SEITEN.filter((seite) => seite.rang).flatMap((seite) => {
-  const fehlt = SPRACHEN.filter((s) => !existsSync(path.join(wurzel, seite[s][0])));
+  const fehlt = SPRACHEN.filter((s) => !existsSync(path.join(wurzel, QUELLORDNER, seite[s][0])));
   if (fehlt.length) {
     console.warn(`  Achtung: ${fehlt.map((s) => seite[s][0]).join(", ")} gibt es nicht, Seite nicht in der Sitemap`);
     return [];
@@ -86,6 +91,6 @@ ${eintraege.join("\n")}
 </urlset>
 `;
 
-const ziel = path.join(wurzel, "public", "sitemap.xml");
+const ziel = path.join(wurzel, QUELLORDNER, "public", "sitemap.xml");
 writeFileSync(ziel, xml);
 console.log(`sitemap.xml: ${eintraege.length} Adressen -> ${path.relative(wurzel, ziel)}`);

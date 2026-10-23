@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="public/markenlogo/logo-weiss.svg">
-    <img src="public/markenlogo/logo.svg" alt="kazuvate" width="140">
+    <source media="(prefers-color-scheme: dark)" srcset="website/public/markenlogo/logo-weiss.svg">
+    <img src="website/public/markenlogo/logo.svg" alt="kazuvate" width="140">
   </picture>
 </p>
 
@@ -34,7 +34,7 @@
 
 ## Entwicklung
 
-Befehle, Ordnerkarte und wie die Seiten zusammenhängen stehen in [docs/aufbau.md](docs/aufbau.md).
+Befehle, Ordnerkarte und wie die Seiten zusammenhängen stehen in [dokumente/aufbau.md](dokumente/aufbau.md).
 
 ## Lizenz
 
