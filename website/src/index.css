@@ -1,8 +1,3 @@
-/* Absichtlich NICHT `@import "tailwindcss";` -- das zieht Preflight mit,
-   Tailwinds globalen Reset (Margins, Ueberschriften, Links, ...). Dieses
-   CSS wird in eine bereits fertig gestaltete Seite eingehaengt
-   (stil/tokens.css + stil/basis.css), ein globaler Reset wuerde die ganze
-   restliche Website zerlegen. Nur die Utility-Klassen, kein Preflight,
-   keine Basis-Layer. */
+/* Bewusst kein @import "tailwindcss": dessen Preflight-Reset wuerde die ganze Seite zerlegen. Nur Utilities. */
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities);

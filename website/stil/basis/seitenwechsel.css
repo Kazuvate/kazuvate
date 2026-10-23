@@ -1,20 +1,3 @@
-/* --- Seitenwechsel ----------------------------------------------
-   Seit 11.10.2026. Beim Wechsel zwischen zwei Seiten dieser Website
-   blendet der Browser die alte in die neue ueber, und die Linie unter
-   dem Seitentitel wandert von ihrem Platz auf der alten Seite an ihren
-   Platz auf der neuen: von der vollen Breite unter "Leistungen" auf die
-   Wortbreite unter "Ablauf", oder um die paar Pixel, die "Referenzen"
-   kleiner gesetzt ist. Den Namen traegt die Linie in titelmotive.css.
-
-   Kein Skript. @view-transition muss auf beiden Seiten stehen, deshalb
-   hier in der Datei, die jede Seite laedt. Sprunglinks auf derselben
-   Seite (Anker, "Zum Inhalt springen") sind kein Seitenwechsel und
-   bleiben unberuehrt. Browser ohne die Funktion wechseln die Seite wie
-   bisher.
-
-   Bei reduzierter Bewegung gar nicht: dann steht die neue Seite sofort
-   da. Dauer und Kurve aus den Tokens; die Linie bekommt die doppelte
-   Zeit, weil sie eine Strecke zuruecklegt und nicht nur ueberblendet. */
 @media (prefers-reduced-motion: no-preference){
   @view-transition{ navigation: auto; }
 
@@ -25,12 +8,7 @@
   ::view-transition-group(titel-linie){
     animation-duration: calc(var(--kurz) * 2);
   }
-  /* Der Browser skaliert die beiden Bilder der Linie sonst mit festem
-     Seitenverhaeltnis: das schmale Bild unter "Ablauf", auf die volle
-     Breite unter "Leistungen" gezogen, wurde dabei um dasselbe
-     Vielfache hoeher und lief als dicker, unscharfer Balken durchs Bild
-     (nachgesehen in Chromium 153). Gestreckt statt vergroessert bleibt
-     der Strich so duenn wie auf beiden Seiten. */
+  /* Bild gestreckt statt vergroessert, sonst wird die duenne Linie beim Seitenwechsel zum dicken Balken. */
   ::view-transition-old(titel-linie),
   ::view-transition-new(titel-linie){
     height: 100%;

@@ -1,39 +1,10 @@
-/* --- Fuss --------------------------------------------------
-   Neu gebaut am 02.10.2026 nach dem Fuss einer anderen Agenturseite
-   (Infyze), den Kasum als Vorbild geschickt hat: vier Spalten, grosse
-   fette Ueberschriften, Links in normaler Schrift, unten eine Zeile
-   mit Urheberhinweis links und den Rechtstexten rechts.
-
-   Vorher standen die Ueberschriften als kleine graue Versalien da, die
-   Links unten in halbfett (650). Kasum: "sieht so alt aus, so gar
-   nicht softwareergonomisch". Der Fehler lag im Grau und in der
-   Groesse: Spaltenueberschriften sind der Wegweiser im Fuss und
-   gehoeren in die volle helle Farbe und in eine Stufe, die man
-   ueberfliegt. Die Hierarchie kommt jetzt aus Groesse und Gewicht,
-   nicht mehr aus abgedunkelter Farbe.
-
-   Die Flaeche bleibt --flaeche, wie der Kopf (Kazuvate Marke:
-   "Header und Footer beide vollflaechig"). Das helle Vorbild wurde
-   nur in der Bauart uebernommen, nicht in der Farbe.
-   ---------------------------------------------------------- */
 .fuss{
-  /* Fliesstext im Fuss: die helle Schriftfarbe mit 86 Prozent
-     Deckkraft statt eines eigenen Grautons. Gerechnet auf --flaeche:
-     voll 11.9:1, mit 86 Prozent 9.2:1, das Grau --auf-flaeche-still
-     7.8:1. Alle drei bestehen AA und AAA; der Grund fuer 86 statt
-     des Grautons ist nicht der Kontrast, sondern dass die Spalten
-     neben den grossen Ueberschriften nicht matt wirken sollen. */
   --fuss-ton: rgb(247 247 241 / .86);
   background: var(--flaeche);
   color: var(--auf-flaeche);
   padding: var(--s9) 0 var(--s6);
 }
 
-/* Einspaltig auf dem Handy, zweispaltig ab 600px mit der Marke
-   ueber beide Spalten, vierspaltig erst ab 1040px. Die vierte Spalte
-   hat mindestens 240px: die Mailadresse ist 200px breit, dazu kommen
-   Zeichen (22px) und Abstand (12px). Mit blossen fr-Anteilen war die
-   Spalte bei 1060px nur 222px breit und die Adresse brach um. */
 .fuss-raster{
   display: grid;
   gap: var(--s7) var(--s6);
@@ -53,21 +24,12 @@
   .fuss-raster{ column-gap: var(--s7); }
 }
 
-/* --- Marke und Zeile -------------------------------------- */
 .fuss-zeichen{
   height: 48px;
   width: auto;
   display: block;
   margin-bottom: var(--s5);
 }
-/* KV aus Punkten, seit 11.10.2026. Beim Zeigen legt src/module/kv-punkte.ts
-   ein Canvas ueber das Zeichen: dieselbe Form als Punkte auf einem
-   3-Pixel-Raster, die der Mauszeiger wegstoesst. Das SVG bleibt im
-   Dokument und wird nur ausgeblendet, der Screenreader liest weiter
-   "kazuvate". Beide blenden nur die Deckkraft, in --kurz. Das Canvas
-   ragt um die Reichweite des Zeigers ueber das Zeichen hinaus, damit
-   weggestossene Punkte nicht am Rand abgeschnitten werden; es nimmt
-   keine Klicks an. Im Kontrastmodus von Windows bleibt es beim SVG. */
 .fuss-marke{ position: relative; }
 .fuss-zeichen,
 .kv-punkte{ transition: opacity var(--kurz) var(--kurve); }
@@ -90,15 +52,6 @@
   color: var(--fuss-ton);
 }
 
-/* --- Draehte im Fuss ---------------------------------------
-   Zwei runde Knoepfe unter der Zeile im Fuss: das Monogramm KB
-   fuehrt auf kasumbajrami.dev, das zweite auf LinkedIn. Bauart
-   wie die Kreise im Fuss von prometizekiri.com.
-
-   Der Rand ist die Schriftfarbe mit wenig Deckkraft statt eines
-   eigenen Grautons. So passt er sich der Flaeche an und es kommt
-   kein Wert dazu, der in tokens.css fehlt.
-   ------------------------------------------------------------ */
 .fuss-draehte{
   display: flex;
   gap: var(--s3);
@@ -107,20 +60,12 @@
 .draht-knopf{
   display: grid;
   place-items: center;
-  /* 50 statt 46 Pixel, Rand 1.5 statt 1 und deutlich weniger
-     durchsichtig: mit 30 Prozent Deckkraft war der Kreis auf der
-     dunklen Flaeche kaum zu sehen, die beiden Knoepfe wirkten wie
-     ein Versehen statt wie zwei Links. Das Zeichen darin steht
-     jetzt im vollen hellen Ton, nicht mehr im gedaempften. */
   width: 50px;
   height: 50px;
   border: 1.5px solid rgb(247 247 241 / .45);
   border-radius: 50%;
   color: var(--auf-flaeche);
   text-decoration: none;
-  /* Ohne das sitzt der Inhalt sieben statt vierzehn Pixel unter der
-     Oberkante: die geerbte Zeilenhoehe von 1.7 macht die Box im
-     Kreis hoeher als das Zeichen selbst und schiebt sie nach oben. */
   line-height: 1;
   transition: color var(--kurz) var(--kurve),
               border-color var(--kurz) var(--kurve),
@@ -131,8 +76,6 @@
   height: 19px;
   display: block;
 }
-/* Das Monogramm sitzt optisch etwas hoch, weil Grossbuchstaben
-   keine Unterlaenge haben. Ein Pixel nach unten gleicht das aus. */
 .monogramm{
   font-size: .9rem;
   font-weight: 700;
@@ -148,16 +91,6 @@
 }
 .draht-knopf:active{ transform: scale(.95); }
 
-/* --- Spalten ------------------------------------------------
-   Ueberschrift 22px im Gewicht 650, Links 16px im normalen
-   Gewicht. Das Verhaeltnis liegt nahe an dem des Vorbilds (19 zu
-   14) und ist gross genug, dass man die Spalten beim Scrollen
-   erkennt, ohne dass der Fuss lauter wird als die Seite darueber.
-
-   Die globale H2-Regel setzt Gewicht 700 und -.02em Laufweite.
-   Beides bleibt hier absichtlich nicht stehen: 650 ist eine Spur
-   ruhiger, und bei 22px braucht es nur -.01em.
-   ---------------------------------------------------------- */
 .fuss-spalte h2{
   font-size: 1.375rem;
   font-weight: 650;
@@ -166,11 +99,6 @@
   color: var(--auf-flaeche);
   margin: 0 0 var(--s5);
 }
-/* padding-block statt margin-bottom: die Trefferflaeche waechst
-   mit, der sichtbare Abstand bleibt. 7px oben und unten bei
-   Zeilenhoehe 24px sind 38px je Zeile am Rechner (WCAG 2.2 AA
-   2.5.8 verlangt 24px), auf dem Handy 10px und damit 44px, das Mass,
-   das Apple als Minimum nennt. */
 .fuss-spalte a{
   display: block;
   padding-block: 7px;
@@ -192,28 +120,6 @@
   .fuss-spalte a{ padding-block: 10px; }
 }
 
-/* --- Bauplan ------------------------------------------------
-   Seit 11.10.2026. Der Fuss zeigt sein Raster wie ein Bauplan:
-   gestrichelte Linien mittig in den Spaltenabstaenden, eine
-   gestrichelte Linie ueber der untersten Zeile, und wo sich beide
-   treffen ein kleines Kreuz, das Zeichen fuer einen Messpunkt. Rein
-   dekorativ, nur Pseudoelemente, nichts davon liest ein Screenreader.
-
-   Die Senkrechten haengen an den Spalten selbst (::before) und reichen
-   um --s8 nach unten, genau den Abstand bis zur Linie von .fuss-unten.
-   Das Kreuz (::after) sitzt an ihrem unteren Ende. Es ist ein Pluszeichen
-   aus clip-path, neun Pixel gross, der Mittelbalken genau auf der
-   Haarlinie: 4px links und 5px unter der Kante, damit Kreuz und Linie
-   auf demselben Pixel liegen.
-
-   Unter 600px gibt es nur eine Spalte und damit keine Kreuzung, dort
-   bleibt allein die gestrichelte Linie unten. Zwischen 600 und 1039px
-   steht nur eine Senkrechte, zwischen den beiden Spalten; "Seiten"
-   reicht dafuer ueber zwei Zeilen, damit die Linie bis unten laeuft.
-
-   Linien mit 24 Prozent Deckkraft, das Kreuz mit 55: es soll als
-   Markierung lesbar sein, ohne neben den Links laut zu werden. Die
-   Links selbst behalten ihre Farbe. */
 .fuss{ --fuss-plan: rgb(247 247 241 / .24); }
 
 @media (min-width: 600px){
@@ -269,25 +175,11 @@
                        5px 9px, 4px 9px, 4px 5px, 0 5px, 0 4px, 4px 4px);
   }
 }
-/* Ab 1200px ist der Spaltenabstand --s7 statt --s6, die Linie wandert
-   mit in die Mitte. */
 @media (min-width: 1200px){
   .fuss-spalte::before{ left: calc(var(--s7) / -2); }
   .fuss-spalte::after{ left: calc(var(--s7) / -2 - 4px); }
 }
 
-/* --- Kontakt: Zeichen vor Telefon, Mail und Ort ------------
-   Gezeichnet aus Rechteck, Linie, Kreis und einem Pfad, gleiche
-   Bauart und gleiche Linienstaerke wie die Zeichen bei den drei
-   Leistungen. Der Strich steht im gedaempften hellen Gruen
-   (--auf-flaeche-still): das ist die einzige zweite Farbe im Fuss
-   und trennt Zeichen von Text, ohne eine neue Farbe einzufuehren.
-   Die Zeichen sind aria-hidden, der Text daneben sagt dasselbe.
-   ---------------------------------------------------------- */
-/* .fuss-spalte davor ist noetig: .fuss-spalte a setzt display: block und
-   ist mit einem Element im Selektor staerker als .fuss-zeile allein. Ohne
-   die Zeile blieben die Links Bloecke, das Zeichen sass auf der
-   Grundlinie des Textes und damit sichtbar zu hoch. */
 .fuss-spalte .fuss-zeile{
   display: flex;
   align-items: center;
@@ -313,31 +205,9 @@
   .fuss-ort{ padding-block: 10px; }
 }
 
-/* --- Unterste Zeile ----------------------------------------
-   Links der Urheberhinweis, rechts Impressum und Datenschutz.
-   margin-right: auto auf dem Hinweis schiebt die Links an den
-   rechten Rand, ohne dass sie einen eigenen Behaelter brauchen;
-   wenn es eng wird, brechen sie unter den Hinweis um.
-
-   align-items ist der Punkt: ohne die Zeile gilt stretch, alle
-   Kinder werden also auf die Zeilenhoehe gedehnt und ihr Text sitzt
-   oben in der Box. Die beiden Links tragen aber Innenabstand fuer
-   die Klickflaeche -- ihr Text sass damit tiefer als der Hinweis
-   daneben, und die Zeile lief sichtbar schief. center stellt alle
-   auf dieselbe Mitte.
-
-   Bis zum 02.10.2026 standen Impressum und Datenschutz hier im
-   Gewicht 650 und im vollen hellen Ton, damit man sie findet. Kasum:
-   "das fett geschriebene sieht so komisch aus". Sie stehen jetzt im
-   normalen Gewicht in derselben Farbe wie die Links in den Spalten.
-   Gefunden werden sie ueber die Lage, nicht ueber das Gewicht: es
-   sind die einzigen Links in der untersten Zeile.
-   ---------------------------------------------------------- */
 .fuss-unten{
   margin-top: var(--s8);
   padding-top: var(--s5);
-  /* Gestrichelt seit 11.10.2026, siehe "Bauplan". Vorher durchgezogen
-     mit 18 Prozent. */
   border-top: 1px dashed var(--fuss-plan);
   display: flex;
   flex-wrap: wrap;
@@ -346,31 +216,12 @@
   font-size: .95rem;
   color: var(--fuss-ton);
 }
-/* Seit 11.10.2026 steht hinter dem Urheberhinweis "Kein Cookie-Banner.
-   Absichtlich." als Link auf den Abschnitt im Datenschutz, der es
-   begruendet. Die Zeile gehoert links zum Hinweis und nicht rechts zu
-   den Rechtstexten: sie ist eine Aussage, kein Menuepunkt. Deshalb
-   schiebt jetzt sie die Links nach rechts und nicht mehr der Hinweis.
-   Belegt am 11.10.2026 auf acht Seiten im Browser: document.cookie
-   leer, Local und Session Storage leer, keine Anfrage an eine fremde
-   Adresse; live liefert kazuvate.ch kein Set-Cookie. Wer der Seite je
-   ein Analysewerkzeug oder eine Karte einbaut, muss diese Zeile mit
-   entfernen. */
 .fuss-unten .fuss-cookie{ margin-right: auto; }
-/* Impressum und Datenschutz stehen seitdem in einer eigenen Gruppe.
-   Ohne sie blieb bei 800px "Impressum" oben neben dem Satz stehen,
-   waehrend "Datenschutz" allein in die naechste Zeile rutschte. Als
-   Gruppe wandern beide zusammen, und innen duerfen sie trotzdem noch
-   einmal umbrechen, wenn "Protection des données" bei 320px nicht mehr
-   neben "Mentions légales" passt. */
 .fuss-recht{
   display: flex;
   flex-wrap: wrap;
   gap: var(--s2) var(--s6);
 }
-/* inline-block muss sein: auf einem reinen Inline-Element vergroessert
-   padding-block die Zeilenhoehe nicht mit, die Flaeche waere zwar da,
-   wuerde aber in die Nachbarzeile ragen statt Platz zu schaffen. */
 .fuss-unten a{
   display: inline-block;
   padding-block: 4px;
@@ -387,7 +238,6 @@
   }
 }
 .fuss-unten a[aria-current]{ opacity: .6; }
-/* Auf dem Handy 44px Trefferhoehe, wie bei den Spaltenlinks. */
 @media (max-width: 859px){
   .fuss-unten a{ padding-block: 10px; }
 }

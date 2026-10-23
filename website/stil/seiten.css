@@ -1,25 +1,7 @@
-/* ============================================================
-   kazuvate | Rechtsseiten und Fehlerseite
-   Fliesstext und Tabellen fuer impressum.html und datenschutz.html,
-   dazu seit 31.08.2026 die Wegweiserliste auf 404.html.
-   Bewusst eine eigene Datei, damit andere Seiten kein CSS laden,
-   das sie nie brauchen. Die Datei hiess bis zum 19.08.2026
-   rechtliches.css und wurde umbenannt, weil sie ab da nicht mehr
-   nur Rechtstexte traegt -- die Fehlerseite ist der dritte Fall.
-   Das Titelband steht in basis.css, weil es der Kopf jeder
-   Unterseite ist. Farben ausschliesslich aus tokens.css.
-   ============================================================ */
+/* Impressum, Datenschutz und 404: Fliesstext, Tabellen, Wegweiserliste. */
 
-/* --- Fliesstext -------------------------------------------- */
 .rechtstext{ padding: var(--s8) 0 var(--s9); }
 
-/* 760px statt 66ch, damit Tabellen Luft haben. Die Zeilenlaenge im
-   Fliesstext haelt `.lauf p` weiter unten -- bis zum 21.08.2026 kam
-   sie von der globalen Regel p{max-width:66ch} in basis.css. Die ist
-   weg, weil sie jedes <p> der Website traf, auch Labels und zentrierte
-   Zeilen. Nachgemessen sind Impressum und Datenschutz die einzigen
-   Seiten, auf denen echter Fliesstext daran hing: 42 Absaetze, die
-   ohne Ersatz von 605 auf 760 Pixel gewachsen waeren. */
 .lauf{
   max-width: 760px;
   counter-reset: abschnitt;
@@ -62,10 +44,6 @@
 .lauf li:last-child{ margin-bottom: 0; }
 .lauf strong{ color: var(--tinte); font-weight: 650; }
 
-/* --- Vorspann ----------------------------------------------
-   Die Kurzfassung ganz oben. Wer nur das liest, weiss das
-   Wesentliche.
-   ----------------------------------------------------------- */
 .vorab{
   border-left: 3px solid var(--olive);
   padding-left: var(--s5);
@@ -75,16 +53,10 @@
   font-size: 1.1rem;
   color: var(--tinte);
   margin: 0;
-  /* Derselbe Wert, den vorher die globale Regel gab: bei 1.1rem sind
-     66ch rund 626px, der Vorspann bleibt damit unveraendert breit. */
   max-width: 66ch;
 }
-/* Ein zweiter Absatz im Vorspann, seit 25.09.2026 der Hinweis auf
-   den englischen und franzoesischen Rechtsseiten, dass die deutsche
-   Fassung gilt. Ohne Abstand klebte er als Fortsetzung am ersten. */
 .vorab p + p{ margin-top: var(--s3); }
 
-/* --- Adressblock -------------------------------------------- */
 .adresse{
   background: var(--karte);
   border: 1px solid var(--linie);
@@ -104,7 +76,6 @@
   gap: 2px;
 }
 
-/* --- Inhaltsuebersicht -------------------------------------- */
 .uebersicht{
   background: var(--karte-2);
   border-radius: var(--radius);
@@ -151,18 +122,10 @@
 }
 .uebersicht a:hover{ color: var(--olive); text-decoration: underline; }
 
-/* Die Rechtsseiten waren bis zum 21.08.2026 die einzigen ohne eigene
-   Handy-Anpassung -- diese Datei kannte genau eine Media Query, und die
-   war fuer den Desktop. Auf dem Handy waren die dreizehn Sprungmarken
-   der Uebersicht 25px hohe Ziele, die dicht untereinander liegen.
-   Genau die Kombination, bei der man daneben tippt und im falschen
-   Abschnitt landet. Die Schrift der Beschriftungen steht seit dem
-   03.10.2026 auf allen Geraeten bei .8rem. */
 @media (max-width: 859px){
   .uebersicht a{ padding: 10px 0; }
 }
 
-/* --- Tabelle ------------------------------------------------ */
 .tab{
   overflow-x: auto;
   margin: 0 0 var(--s4);
@@ -192,14 +155,6 @@
 .tab tbody td:first-child{ color: var(--tinte); font-weight: 650; }
 .tab tr:last-child td{ border-bottom: 0; }
 
-/* --- Fehlerseite (404.html) --------------------------------
-   Eine Liste von Wegen statt eines Sackgassen-Satzes. Wer hier
-   landet, hat ein Ziel gehabt und es nicht erreicht; die naechste
-   Zeile muss ihm eines anbieten, das es wirklich gibt.
-
-   Bewusst keine Suche und kein "zurueck"-Knopf: eine Suche gibt es
-   auf dieser Website nicht, und der Zurueck-Knopf des Browsers ist
-   der einzige, der zuverlaessig weiss, wo der Besucher herkommt. */
 .fehler{ padding: var(--s8) 0 var(--s9); }
 
 .fehler-titel{
@@ -222,11 +177,7 @@
   padding: var(--s5) 0;
   border-bottom: 1px solid var(--linie-marke);
 }
-/* Der Name steht als Block, damit die ganze Zeilenbreite anklickbar
-   ist und nicht nur das Wort selbst. Die Beschreibung darunter
-   gehoert bewusst NICHT in den Link: sie beschreibt das Ziel, sie
-   ist nicht sein Name -- vorgelesen wuerde der Link sonst zwei
-   Saetze lang. */
+/* Der Name ist ein Block (ganze Zeile klickbar). Die Beschreibung gehoert nicht in den Link, sonst liest ihn der Screenreader zwei Saetze lang. */
 .fehler-wege a{
   display: block;
   font-size: clamp(1.3rem, 3.2vw, 1.7rem);
@@ -240,9 +191,6 @@
 @media (hover: hover) and (pointer: fine){
   .fehler-wege a:hover{
     color: var(--olive);
-    /* Sechs Pixel nach rechts, dieselbe Bewegung wie die Nummern auf
-       leistungen.html. Eine Eigenschaft, nicht zwei -- color zaehlt
-       hier als Farbwechsel, nicht als zweite Bewegung. */
     transform: translateX(6px);
   }
 }
@@ -252,16 +200,6 @@
   max-width: 60ch;
 }
 
-/* --- Der gerissene Faden (404.html) --------------------------
-   Seit 11.10.2026. Der Faden kommt von links und endet ausgefranst,
-   rechts steht der Ring "Zur Startseite". Das Ziehen steuert
-   public/skript/riss.js, Begruendung im Markup.
-
-   Strich wie beim Faden auf der Startseite: Markenton, runde Enden,
-   in jeder Breite gleich dick. Der Ring hat die Masse der Knoten auf
-   ablauf.html und fuellt sich beim Anknuepfen wie ein erreichter
-   Schritt dort.
-   ------------------------------------------------------------ */
 .riss{
   position: relative;
   height: 9rem;
@@ -285,9 +223,6 @@
 .riss-linie{ stroke-width: 3px; }
 .riss-fasern{ stroke-width: 1.5px; }
 
-/* Die Trefferflaeche um das lose Ende, 44px. Unsichtbar, und ohne
-   Skript gar nicht da: dort gaebe es nichts zu greifen. touch-action
-   none nur hier, der Rest des Bands laesst den Finger scrollen. */
 .riss-griff{
   fill: transparent;
   display: none;
@@ -329,8 +264,6 @@
   .riss-ziel:hover{ color: var(--olive); }
 }
 
-/* Auf schmalen Schirmen steht die Beschriftung unter dem Ring, sonst
-   bliebe fuer den Faden davor kaum Platz. */
 @media (max-width: 599px){
   .riss-ziel{
     flex-direction: column;
@@ -350,22 +283,6 @@
 .js .riss-hinweis{ display: block; }
 html:not(.js) .riss{ margin-bottom: var(--s7); }
 
-/* --- Mitlaufende Uebersicht (Datenschutz) --------------------
-   Seit 11.10.2026, nur auf den drei Datenschutz-Seiten: dort steht
-   .lauf-raster um Vorspann, Uebersicht und Text. Das Impressum hat
-   kein solches Raster und ist von allem hier unberuehrt.
-
-   Unter 1000px bleibt die Reihenfolge wie vorher: Vorspann,
-   Uebersicht, Text. Weil die Uebersicht nicht mehr in .lauf steht,
-   ist die erste Ueberschrift dort jetzt :first-child und verloere
-   Linie und Abstand; die Zeile darunter gibt ihr beides zurueck,
-   sodass der Abschnitt aussieht wie zuvor.
-
-   Ab 1000px eine zweite Spalte: die Uebersicht klebt unter dem
-   mitlaufenden Kopf (86px wie scroll-padding-top in basis.css) und
-   ist fuer niedrige Fenster selbst scrollbar, statt unten
-   abgeschnitten zu werden.
-   ------------------------------------------------------------ */
 .lauf-raster .lauf h2:first-child{
   padding-top: var(--s5);
   border-top: 1px solid var(--linie);
@@ -402,11 +319,6 @@ html:not(.js) .riss{ margin-bottom: var(--s7); }
     border-radius: 4px;
   }
 
-  /* Der Textmarker: ein Balken im Markenton hinter dem aktuellen
-     Abschnitt, Schrift darauf hell (8.9:1). Er faehrt von links ein,
-     mit genau einer bewegten Eigenschaft (transform); die Schrift
-     wechselt nur die Farbe. Bei reduzierter Bewegung steht er sofort
-     da, die Dauer setzt basis.css auf null. */
   .lauf-raster .uebersicht a::after{
     content: "";
     position: absolute;
@@ -421,14 +333,9 @@ html:not(.js) .riss{ margin-bottom: var(--s7); }
   .lauf-raster .uebersicht a[aria-current]{ color: var(--auf-flaeche); }
   .lauf-raster .uebersicht a[aria-current]::before{ color: var(--auf-flaeche); }
   .lauf-raster .uebersicht a[aria-current]::after{ transform: scaleX(1); }
-  /* Die Zeigerregel weiter oben faerbt Links oliv -- auf dem
-     olivfarbenen Balken waere die Schrift dann weg. */
   .lauf-raster .uebersicht a[aria-current]:hover{ color: var(--auf-flaeche); }
 }
 
-/* Im Kontrastmodus und bei erzwungenen Farben traegt die Schrift den
-   Zustand allein: fett statt nur heller auf dem Balken, den das
-   System womoeglich gar nicht zeichnet. */
 @media (forced-colors: active){
   .lauf-raster .uebersicht a[aria-current]{ font-weight: 700; text-decoration: underline; }
 }

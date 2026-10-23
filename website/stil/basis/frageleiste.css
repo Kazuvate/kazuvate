@@ -1,28 +1,7 @@
-/* --- Frageleiste ------------------------------------------------
-   Seit 11.10.2026, nur auf der Startseite. Unten rechts steht eine
-   schmale Leiste: "Was moechten Sie wissen?" und daneben die Frage, die
-   zum Abschnitt im Bild passt. Ein Klick oeffnet die Antwort in einem
-   kleinen Blatt, darin auch die vier anderen Fragen.
-
-   Die Leiste klebt mit position: sticky am unteren Rand, und zwar
-   innerhalb von <main>. Damit haelt sie vor dem Fuss an und liegt nie
-   auf ihm; am Seitenende steht sie an ihrem eigenen Platz unter dem
-   letzten Abschnitt. Die Huelle laesst Klicks durch (pointer-events),
-   nur die Leiste selbst nimmt sie an.
-
-   Das Blatt ist ein Popover: Esc und ein Klick daneben schliessen es,
-   ohne Skript. Es blendet nur die Deckkraft ein, beim Schliessen ist es
-   sofort weg.
-
-   Unter 760px klappt die Leiste auf einen Knopf "?" im Kopf zusammen
-   (siehe unten). Das Blatt kommt dort als Bogen von unten ueber die
-   volle Breite. */
 .frageleiste{
   position: sticky;
   bottom: var(--s4);
   z-index: 15;
-  /* Unten derselbe Abstand wie zum Fensterrand, sonst stuende die
-     Leiste am Seitenende Kante an Kante auf dem Fuss. */
   margin-block: var(--s5) var(--s4);
   pointer-events: none;
 }
@@ -66,16 +45,6 @@
   .frageleiste-knopf:hover{ background-color: rgb(247 247 241 / .12); }
 }
 
-/* Unter 760px steht statt der Leiste ein Knopf "?" im Kopf, gebaut wie
-   die Sprachauswahl daneben. Eine schwebende Schaltflaeche unten rechts
-   war der erste Versuch: sie lag beim Scrollen auf dem Fliesstext.
-   Im Kopf verdeckt sie nichts.
-
-   Platz: Fragezeichen, Sprachen und Menueknopf ruecken dafuer auf der
-   Startseite mit 12 statt 24px Abstand zusammen. Gemessen passt das bei
-   375px mit 22px Reserve. Bei weniger als 360px reicht es neben dem
-   Schriftzug "kazuvate" nicht; dort erscheint der Knopf erst, wenn der
-   Schriftzug beim Scrollen wegfaehrt (.gescrollt aus skript/haupt.js). */
 .kopf-frage{
   display: none;
   place-items: center;
@@ -92,17 +61,11 @@
   border-radius: 8px;
   cursor: pointer;
 }
-/* Eingeklappt auf dem Handy, hochkant wie quer. Quer ist das Fenster
-   zwar breit genug fuer die Leiste, aber unter 500px hoch: dort lag sie
-   (gemessen bei 812x375) auf rund 15 Prozent des Bildschirms ueber dem
-   Inhalt. */
 @media (max-width: 759px), (max-height: 500px){
   .frageleiste .wrap{ display: none; }
   .frageleiste{ margin-block: 0; }
   .kopf-frage{ display: grid; }
 }
-/* Im Kopf des Handys: vor die Sprachen, mit dem Abstand, den die drei
-   Knoepfe dort zusammen brauchen. */
 @media (max-width: 759px), (max-width: 859px) and (max-height: 500px){
   .kopf-innen:has(.kopf-frage){ column-gap: var(--s3); }
   .kopf-innen:has(.kopf-frage) .sprachen{ margin-left: 0; }
@@ -111,9 +74,6 @@
     margin-left: auto;
   }
 }
-/* Breiter als 859px und niedrig (Handy quer mit grosser Breite): dort ist
-   der Kopf schon die Rechner-Fassung, der Knopf steht zwischen
-   Navigation und Sprachen. */
 @media (min-width: 860px) and (max-height: 500px){
   .kopf-frage{ margin-left: var(--s4); }
 }
@@ -122,8 +82,6 @@
   .kopf:not(.gescrollt) .kopf-innen:has(.kopf-frage) .sprachen{ margin-left: auto; }
 }
 
-/* Das Blatt. Rechts buendig mit dem Inhalt (die Formel ist der rechte
-   Rand von .wrap), direkt ueber der Leiste. */
 .fragen-blatt{
   --fokus: var(--olive);
   position: fixed;
@@ -194,7 +152,6 @@
   cursor: pointer;
 }
 .frage summary::-webkit-details-marker{ display: none; }
-/* Dasselbe Kreuz wie bei den Textmarker-Zeilen und im Fuss. */
 .frage summary::after{
   content: "";
   position: absolute;

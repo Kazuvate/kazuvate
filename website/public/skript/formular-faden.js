@@ -1,23 +1,4 @@
-/* ============================================================
-   kazuvate | Faden im Formular
-   Seit 11.10.2026, nur auf den drei Kontaktseiten geladen.
-
-   Links neben den Feldern laeuft eine blasse Linie vom ersten Feld
-   bis zum Absenden-Knopf. Mit jedem Pflichtfeld, das ausgefuellt und
-   gueltig ist, zieht sie sich ein Viertel weiter, beim letzten
-   erreicht sie den Knopf. Dieselbe Bildsprache wie der Faden auf der
-   Startseite und der Strang auf ablauf.html: eine Linie, die
-   entsteht -- hier nicht beim Scrollen, sondern beim Ausfuellen.
-
-   Reiner Zustand, reine Zierde: das Element ist aria-hidden, der
-   Knopf bleibt immer aktiv, die Pruefung beim Absenden macht weiter
-   der Browser (required, type=email). Ohne Skript gibt es die Linie
-   nicht, das Formular ist unveraendert.
-
-   Gleiche Schritte statt Schritte bis zum jeweiligen Feld: Vorname
-   und Name stehen ab 1120px nebeneinander, die Linie stuende dort
-   nach dem zweiten Feld still. So bewegt sie sich bei jedem Feld.
-   ============================================================ */
+// Faden im Kontaktformular: zieht sich mit jedem gueltigen Pflichtfeld weiter. Reine Zierde (aria-hidden), der Knopf bleibt aktiv.
 (function () {
   'use strict';
 
@@ -49,10 +30,6 @@
     faden.classList.toggle('ist-fertig', anzahl === felder.length);
   }
 
-  // Von der Oberkante des ersten Felds bis zur Mitte des Knopfs. Neu
-  // gemessen, sobald sich die Karte veraendert: Umbruch bei anderer
-  // Breite, die Fehlermeldung nach einem gescheiterten Versand oder
-  // ein von Hand groesser gezogenes Nachrichtenfeld.
   function messen() {
     var oben = karte.getBoundingClientRect().top;
     var erstes = felder[0].closest('.feld') || felder[0];
@@ -64,7 +41,6 @@
   }
 
   formular.addEventListener('input', zeichnen);
-  // Zuruecksetzen leert die Felder ohne input-Ereignis.
   formular.addEventListener('reset', function () { window.setTimeout(zeichnen, 0); });
 
   if ('ResizeObserver' in window) new ResizeObserver(messen).observe(karte);
@@ -72,6 +48,5 @@
 
   messen();
   zeichnen();
-  // Beim Zurueckblaettern fuellt der Browser die Felder wieder aus.
   window.addEventListener('pageshow', zeichnen);
 })();

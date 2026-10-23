@@ -1,34 +1,6 @@
 "use client";
 
-/**
- * ablauf-strang.tsx
- *
- * Der Fortschrittsstrang auf ablauf.html: eine Linie, die sich beim
- * Runterscrollen von Schritt 01 bis Schritt 04 fuellt, mit einem Punkt
- * an ihrer Spitze und einem Ring, der an jedem erreichten Knoten
- * aufleuchtet.
- *
- * Vorbild ist notemage.app, von Kasum als Referenz geschickt. Dort
- * heisst der Bereich `.pl-track` und besteht aus zwei deckungsgleichen
- * SVG-Pfaden: `.pl-base` blass im Hintergrund, `.pl-fill` in der
- * Markenfarbe darueber, dessen `stroke-dashoffset` am Scrollfortschritt
- * haengt; die erreichten Knoten bekommen eine Klasse `.pl-lit`.
- *
- * Uebernommen ist das Prinzip, nicht die Technik. Bei notemage ist der
- * Pfad geschwungen, deshalb braucht es dort ein SVG und die Rechnung
- * ueber die Pfadlaenge. Der Strang hier ist kerzengerade -- eine Linie
- * mit `scaleY` erledigt dasselbe, laeuft auf der Grafikkarte und
- * braucht kein Vermessen von Pfaden.
- *
- * **Das ist kein Scroll-Reveal.** Kasum hat am 20.08.2026 alle Bloecke
- * abgelehnt, die beim Runterscrollen einblenden; dieser Strang blendet
- * nichts ein. Jeder Schritt steht von Anfang an vollstaendig da, mit
- * Kreis, Nummer, Text und Fakten. Bewegt wird nur die Anzeige, wie weit
- * man selbst gekommen ist.
- *
- * Ohne JavaScript passiert nichts: dann bleibt die blasse Grundspur aus
- * stil/ablauf.css stehen, genau wie vor dem 21.08.2026.
- */
+// Fortschrittsstrang auf ablauf.html: fuellt sich beim Scrollen, ein Ring leuchtet an jedem erreichten Knoten auf.
 
 import {
   motion,
@@ -41,22 +13,14 @@ import {
 import { useLayoutEffect, useRef, useState } from "react";
 
 interface StrangProps {
-  /** Die <ol> mit den Schritten. Liefert Position und Groesse der Knoten. */
   liste: HTMLElement;
 }
 
-/** Was gemessen werden muss, bevor gezeichnet werden kann. Alles in
- *  Pixeln, relativ zur Oberkante der Liste. */
 interface Mass {
-  /** Mitte des ersten Knotens. Dort beginnt die Spur. */
   start: number;
-  /** Von der Mitte des ersten bis zur Mitte des letzten Knotens. */
   laenge: number;
-  /** Waagrechte Mitte der Knotenspalte. */
   mitteX: number;
-  /** Durchmesser eines Knotens, fuer die Ringe. */
   knotenGroesse: number;
-  /** Anteil an der Spurlaenge, an dem jeder Knoten sitzt (0 bis 1). */
   knoten: number[];
 }
 
@@ -69,10 +33,6 @@ export function AblaufStrang({ liste }: StrangProps) {
         liste.querySelectorAll<HTMLElement>(".ablauf-zahl"),
       );
 
-      // Unter 760px steht die Nummer ueber dem Text statt in einer
-      // eigenen Spalte, dort gibt es gar keinen Strang -- siehe
-      // stil/ablauf.css. Zwei Knoten braucht es mindestens, sonst
-      // hat eine Verbindungslinie nichts zu verbinden.
       if (kreise.length < 2 || !window.matchMedia("(min-width: 760px)").matches) {
         setMass(null);
         return;
@@ -102,20 +62,11 @@ export function AblaufStrang({ liste }: StrangProps) {
 
     messen();
 
-    // Die Schritte sind unterschiedlich hoch, sobald ein Text anders
-    // umbricht -- bei jeder Breitenaenderung stimmen die gemessenen
-    // Abstaende also nicht mehr. ResizeObserver statt eines
-    // resize-Listeners am Fenster, weil sich die Liste auch ohne
-    // Fensteraenderung verschieben kann, etwa wenn eine Schrift
-    // nachlaedt.
     const beobachter = new ResizeObserver(messen);
     beobachter.observe(liste);
     return () => beobachter.disconnect();
   }, [liste]);
 
-  // Erst zeichnen, wenn gemessen ist. Die Spur muss beim ersten Rendern
-  // schon an ihrem Platz stehen, sonst misst useScroll darunter eine
-  // Geometrie, die es so nie gab.
   if (!mass) return null;
 
   return <Spur mass={mass} liste={liste} />;
@@ -125,36 +76,13 @@ function Spur({ mass, liste }: { mass: Mass; liste: HTMLElement }) {
   const spurRef = useRef<HTMLDivElement>(null);
   const wenigerBewegung = useReducedMotion();
 
-  // Ziel ist die Spur selbst, nicht die Liste: die Spur reicht genau
-  // von der Mitte des ersten bis zur Mitte des letzten Knotens. Mit
-  // ["start center", "end center"] steht die Spitze damit immer auf
-  // Fenstermitte -- man scrollt, und der Punkt bleibt dort, wo man
-  // gerade liest. Waere das Ziel die ganze Liste, liefe die Spitze der
-  // Leserichtung voraus oder hinterher.
   const { scrollYProgress } = useScroll({
     target: spurRef,
     offset: ["start center", "end center"],
   });
 
-  // Die Nummern selbst haben bis zum 22.08.2026 nicht mitreagiert: der
-  // Strang lief, die Ringe gingen an, aber 01 bis 04 sahen am Ende
-  // genauso aus wie am Anfang. Auf Kasums Wunsch fuellt sich jetzt der
-  // Kreis, sobald die Spitze ihn erreicht -- aus leer wird ausgefuellt,
-  // die uebliche Lesart fuer "das liegt hinter Ihnen".
-  //
-  // Die Klasse wird direkt im DOM gesetzt statt ueber React-State: die
-  // <li> mit den Nummern stehen im handgeschriebenen HTML und gehoeren
-  // nicht zu dieser Komponente. Ein State-Update pro Scrollschritt
-  // waere ausserdem ein Rendering pro Frame, ein classList.toggle ist
-  // eine Zeigeroperation. Dasselbe Muster wie beim Faden auf der
-  // Startseite, wo <motion.path> aus dem gleichen Grund durch
-  // useMotionValueEvent ersetzt wurde.
   const zahlen = useRef<HTMLElement[]>([]);
 
-  // Aus einem Fortschrittswert den Zustand aller vier Kreise setzen.
-  // Dieselbe Schwelle von vier Prozent wie beim Ring weiter unten,
-  // damit Ring und Fuellung im selben Moment umschalten und nicht
-  // kurz hintereinander.
   const anwenden = (wert: number) => {
     zahlen.current.forEach((z, i) => {
       const anteil = mass.knoten[i];
@@ -169,23 +97,13 @@ function Spur({ mass, liste }: { mass: Mass; liste: HTMLElement }) {
     );
 
     if (wenigerBewegung) {
-      // Wer Bewegung reduziert haben will, bekommt keinen wandernden
-      // Zustand, sondern den Endzustand: alle Schritte ausgefuellt.
       zahlen.current.forEach((z) => z.classList.add("ist-erreicht"));
     } else {
-      // Der Startzustand muss hier gesetzt werden, nicht erst beim
-      // ersten Scrollen: useMotionValueEvent feuert ausschliesslich bei
-      // einer Aenderung. Ohne diese Zeile stuende Kreis 01 beim Laden
-      // leer da, waehrend sein Ring daneben schon leuchtet -- der Ring
-      // haengt an useTransform und hat von Anfang an einen Wert.
       anwenden(scrollYProgress.get());
     }
 
     const beimVerlassen = zahlen.current;
     return () => beimVerlassen.forEach((z) => z.classList.remove("ist-erreicht"));
-    // anwenden haengt nur an mass.knoten, das mit der Komponente neu
-    // entsteht -- kein Grund, es in die Abhaengigkeiten zu nehmen.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [liste, wenigerBewegung, scrollYProgress]);
 
   useMotionValueEvent(scrollYProgress, "change", (wert) => {
@@ -203,25 +121,15 @@ function Spur({ mass, liste }: { mass: Mass; liste: HTMLElement }) {
         left: mass.mitteX,
       }}
     >
-      {/* Die Fuellung. transform-origin: top steht im CSS, damit sie
-          von oben nach unten waechst statt aus der Mitte.
-          scaleY statt height: height laesst den Browser bei jedem
-          Scrollschritt neu umbrechen, scaleY nicht. */}
       <motion.div
         className="strang-fuellung"
         style={{ scaleY: wenigerBewegung ? 1 : scrollYProgress }}
       />
 
-      {/* Die Spitze. Liegt bewusst hinter den Knoten (z-index im CSS):
-          so verschwindet sie in einem Kreis und kommt darunter wieder
-          heraus, statt ueber der Nummer zu kleben. */}
       {!wenigerBewegung && (
         <Spitze scrollYProgress={scrollYProgress} laenge={mass.laenge} />
       )}
 
-      {/* Ein Ring je Knoten, der aufleuchtet sobald die Spitze ihn
-          erreicht. Nur Kontur, keine Fuellung -- ein gefuellter Kreis
-          wuerde die Nummer darunter verdecken. */}
       {mass.knoten.map((anteil, i) => (
         <Ring
           key={i}
@@ -260,10 +168,6 @@ function Ring({
   scrollYProgress: MotionValue<number>;
   immerAn: boolean;
 }) {
-  // Der Ring geht auf, kurz bevor die Spitze den Knoten erreicht, und
-  // bleibt danach an. Die 0.04 sind rund vier Prozent der Spurlaenge:
-  // genug, dass der Wechsel weich wirkt, zu wenig, dass zwei Knoten
-  // gleichzeitig angingen -- vier Knoten liegen 0.33 auseinander.
   const opacity = useTransform(
     scrollYProgress,
     [Math.max(0, anteil - 0.04), anteil],

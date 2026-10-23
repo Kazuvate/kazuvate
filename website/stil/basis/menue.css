@@ -1,21 +1,9 @@
-/* --- Menueknopf und Schublade -------------------------------
-   Ab fuenf Punkten passt die Navigation auf dem Handy nicht mehr
-   in eine Zeile. Statt sie wegzuwischen, liegt sie unter dem Kopf
-   in einer Schublade. Der Knopf erscheint nur, wenn JavaScript
-   laeuft: ohne ihn koennte man die Schublade nicht oeffnen, und
-   ohne Schublade steht die Navigation wie frueher als Zeile da.
-   ------------------------------------------------------------ */
 .menue-knopf{ display: none; }
 
 @media (max-width: 859px){
   .js .menue-knopf{
     display: block;
     position: relative;
-    /* order 2 haelt ihn hinter der Marke. Seit der Anfrage-Knopf auf
-       dem Handy nicht mehr mitlaeuft, traegt der Menueknopf selbst das
-       margin-left:auto, das ihn nach rechts schiebt -- vorher kam das
-       vom Knopf davor. Ohne beides saesse er links neben der Marke,
-       weil er im Quelltext vor der Navigation steht. */
     order: 2;
     width: 44px;
     height: 44px;
@@ -39,16 +27,10 @@
   }
   .menue-knopf .balken:first-child{ transform: translateY(-6px); }
   .menue-knopf .balken:last-child{ transform: translateY(6px); }
-  /* Alle Balken liegen auf derselben Mitte. So entsteht beim Oeffnen
-     ein symmetrisches Kreuz statt des frueheren schiefen Pfeils. */
   .menue-offen .menue-knopf .balken:first-child{ transform: rotate(45deg); }
   .menue-offen .menue-knopf .balken:nth-child(2){ opacity: 0; transform: scaleX(.2); }
   .menue-offen .menue-knopf .balken:last-child{ transform: rotate(-45deg); }
 
-  /* Die Schublade selbst. grid-template-rows von 0fr auf 1fr ist
-     der einzige Weg, eine unbekannte Hoehe zu animieren, ohne sie
-     vorher zu kennen. max-height mit Fantasiewert waere die
-     Alternative und ruckelt. */
   .js .navigation{
     order: 3;
     flex-basis: 100%;
@@ -56,10 +38,6 @@
     grid-template-rows: 0fr;
     overflow: hidden;
     opacity: 0;
-    /* visibility zusaetzlich, sonst bleiben die Punkte in der
-       geschlossenen Schublade mit der Tabulatortaste erreichbar
-       und der Fokus wandert in etwas Unsichtbares. Der Wechsel
-       kommt am Ende, damit das Zufahren noch zu sehen ist. */
     visibility: hidden;
     transition: grid-template-rows var(--kurz) var(--kurve),
                 opacity var(--kurz) var(--kurve),
@@ -71,8 +49,6 @@
     visibility: visible;
     transition-delay: 0s;
   }
-  /* Der Innencontainer traegt die Abstaende. Auf dem aeusseren
-     wuerden sie auch bei 0fr Hoehe uebrig bleiben. */
   .js .navigation-innen{
     display: grid;
     gap: 0;
@@ -82,10 +58,6 @@
   .js .menue-offen .navigation-innen{
     padding-block: var(--s1) var(--s2);
   }
-  /* In der Schublade steht mehr Platz zur Verfuegung als in der alten
-     Zeile, also darf jeder Punkt die vollen 44px Trefferflaeche haben
-     statt der bisherigen 35px. Der gap darunter bleibt, die Punkte
-     kleben also nicht aneinander. */
   .js .navigation a{
     font-size: 1rem;
     display: flex;
@@ -93,9 +65,6 @@
     min-height: 44px;
     padding-block: 0;
   }
-  /* Kontakt ist im mobilen Menue zugleich der direkte naechste Schritt.
-     Der Knopf erscheint nur in der geoeffneten Schublade und vergroessert
-     den geschlossenen Kopf daher nicht. */
   .js .navigation-innen a:last-child{
     justify-content: center;
     min-height: 48px;

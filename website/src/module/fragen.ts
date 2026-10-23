@@ -1,19 +1,4 @@
-/**
- * fragen.ts, seit 11.10.2026
- *
- * Die Frageleiste auf der Startseite (Markup am Ende von <main>, Stil in
- * stil/basis.css). Ohne dieses Skript funktioniert sie schon: der Knopf
- * oeffnet das Blatt als Popover, Esc und ein Klick daneben schliessen es,
- * offen ist die erste Frage. Das Skript fuegt zwei Dinge hinzu:
- *
- * 1. Die Frage in der Leiste wechselt mit dem Abschnitt im Bild. Jeder
- *    Abschnitt traegt dafuer data-frage. Gewechselt wird still: nur der
- *    Text wird ausgetauscht, ohne Animation und ohne Ansage fuer den
- *    Screenreader -- es ist ein Angebot, keine Meldung.
- * 2. Beim Oeffnen ist genau die Frage aufgeklappt, die in der Leiste
- *    stand, und der Fokus steht auf ihr. Beim Schliessen gibt der Browser
- *    ihn an den Knopf zurueck, von dem aus geoeffnet wurde.
- */
+// Frageleiste der Startseite: die Frage wechselt still mit dem Abschnitt. Ohne dieses Skript oeffnet der Knopf das Blatt trotzdem.
 export function starte(blatt: HTMLElement) {
   const knopf = document.querySelector<HTMLButtonElement>(".frageleiste-knopf");
   const frage = (id: string) => blatt.querySelector<HTMLDetailsElement>(`#frage-${id}`);
@@ -26,7 +11,6 @@ export function starte(blatt: HTMLElement) {
     if (knopf) knopf.textContent = d.querySelector("summary")?.textContent ?? "";
   }
 
-  // Ein Abschnitt gilt, sobald er die Mitte des Fensters kreuzt.
   const beobachter = new IntersectionObserver(
     (eintraege) => {
       for (const e of eintraege) if (e.isIntersecting) setze((e.target as HTMLElement).dataset.frage ?? "");

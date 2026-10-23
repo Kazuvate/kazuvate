@@ -1,20 +1,4 @@
-/* ============================================================
-   kazuvate | Isometrische Zeichen (Muster C4)
-   Seit 11.10.2026, geladen nur von muster/iso-zeichen.html. Begruendung
-   dort im Kopf der Datei.
-
-   Dieselben drei Zeichen wie auf der Startseite, aber als Gegenstand
-   statt als Symbol: ein Fenster, das auf dem Tisch liegt, zwei
-   gestapelte, eine flach liegende Uhr. Strich im Markenton wie der
-   Faden, Flaechen in Papier und Weiss, damit hintere Kanten von
-   vorderen verdeckt werden statt durchzuscheinen.
-
-   Darunter eine helle Platte. Beim Zeigen laeuft sie dem Zeiger ein
-   Stueck nach (iso-zeichen.js daneben setzt --px und --py), eine
-   einzige bewegte Eigenschaft, transform. Mit der Tastatur bewegt sich
-   nichts, dort wechselt der Strich die Farbe. Bei reduzierter Bewegung
-   bleibt die Platte, wo sie ist.
-   ============================================================ */
+/* Muster: isometrische Leistungs-Zeichen, nur von muster/iso-zeichen.html geladen. */
 
 .iso-titel{
   font-size: var(--gross);
@@ -59,17 +43,11 @@
   transition: fill var(--kurz) var(--kurve);
 }
 
-/* Tastatur: der Titel ist der Link, das Zeichen antwortet mit dem
-   Tintenton statt mit Bewegung. Der Fokusring selbst bleibt der aus
-   basis.css. */
 .iso-leistungen li:focus-within .iso-seite,
 .iso-leistungen li:focus-within .iso-flaeche,
 .iso-leistungen li:focus-within .iso-strich{ stroke: var(--tinte); }
 .iso-leistungen li:focus-within .iso-punkt{ fill: var(--tinte); }
 
-/* Auf der Musterseite ist die Seitenueberschrift die h1, die drei
-   Titel sind deshalb h2 statt h3 wie auf der Startseite. Gleiche
-   Groesse wie .leistungen h3 in basis.css. */
 .iso-leistungen h2{
   font-size: var(--satz-5);
   line-height: 1.25;

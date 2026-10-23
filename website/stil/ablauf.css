@@ -1,40 +1,7 @@
-/* ============================================================
-   kazuvate | Ablauf
-   Die vier Schritte, die auf der Startseite als knappe Zeile in
-   vier Spalten stehen, hier als senkrechter Strang: Nummer im
-   Kreis links, Text rechts, dazwischen eine Haarlinie im
-   Markenton, die von Schritt zu Schritt durchlaeuft.
-
-   Warum ein Strang und nicht das Nummern-Layout von
-   stil/leistungen.css: dort sind die drei Punkte gleichrangig und
-   koennen in beliebiger Reihenfolge gelesen werden. Hier ist die
-   Reihenfolge die Aussage. Eine Linie, die die Schritte verbindet,
-   sagt das ohne ein Wort -- und unterscheidet die Seite sichtbar
-   von der Leistungen-Seite, statt sie zu wiederholen.
-
-   Seit dem 21.08.2026 fuellt sich der Strang beim Runterscrollen,
-   mit einer wandernden Spitze und einem Ring, der an jedem
-   erreichten Knoten aufgeht -- auf Kasums Wunsch, Vorbild
-   notemage.app. Gezeichnet wird das von React, siehe
-   src/components/ui/ablauf-strang.tsx und den Block ganz unten in
-   dieser Datei.
-
-   Das widerspricht der Absage an Scroll-Reveals vom 20.08.2026
-   nicht: abgelehnt hat Kasum Bloecke, die beim Vorbeiscrollen
-   *einblenden*. Hier blendet nichts ein. Jeder Schritt steht von
-   der ersten Sekunde an vollstaendig da, mit Kreis, Nummer, Text
-   und Fakten -- bewegt wird nur die Anzeige, wie weit man selbst
-   gekommen ist. Ohne JavaScript bleibt die blasse Grundspur unten
-   stehen und die Seite ist unveraendert lesbar.
-
-   Eigene Datei, damit andere Seiten dieses CSS nicht mitladen.
-   Farben ausschliesslich aus tokens.css.
-   ============================================================ */
+/* Ablauf: vier Schritte als senkrechter Strang, Nummer im Kreis links, Text rechts. */
 
 main#inhalt{ padding: var(--s8) 0 0; }
 
-/* Ein Satz vor der Liste, der sagt, warum die Seite ueberhaupt
-   existiert. 62ch wie .nachsatz auf der Startseite. */
 .ablauf-vorspann{
   max-width: 62ch;
   margin-bottom: var(--s8);
@@ -48,10 +15,6 @@ main#inhalt{ padding: var(--s8) 0 0; }
   padding: 0;
 }
 
-/* Auf schmalen Schirmen steht die Nummer ueber dem Text und ein
-   Strang waere Unsinn: die Linie muesste quer durch den Absatz
-   laufen. Dort trennt stattdessen eine Haarlinie oben, wie in der
-   Ablauf-Sektion der Startseite. */
 .ablauf-schritt{
   position: relative;
   display: grid;
@@ -62,10 +25,7 @@ main#inhalt{ padding: var(--s8) 0 0; }
 .ablauf-schritt:last-child{ padding-bottom: var(--s7); }
 
 @media (min-width: 760px){
-  /* Die erste Spalte ist exakt so breit wie der Kreis. Alles
-     andere waere eine Falle: der Kreis hat eine feste Breite und
-     saesse in einer breiteren Spalte links statt in ihrer Mitte,
-     die Linie unten liefe dann sichtbar neben ihm vorbei. */
+  /* Erste Spalte exakt so breit wie der Kreis, sonst laeuft die Linie neben dem Kreis vorbei. */
   .ablauf-schritt{
     grid-template-columns: 3.5rem minmax(0, 1fr);
     column-gap: var(--s7);
@@ -74,15 +34,6 @@ main#inhalt{ padding: var(--s8) 0 0; }
     border-top: 0;
   }
 
-  /* Die Grundspur: blass, steht immer da, auch ohne JavaScript.
-     Sie ist das Gegenstueck zu `.pl-base` bei notemage.app -- die
-     gefuellte Linie legt React darueber.
-
-     Beginnt unter dem Kreis und laeuft bis zur Unterkante des
-     Schritts; weil die Schritte direkt aneinandergrenzen, trifft
-     sie dort genau auf den naechsten Kreis. Beim letzten Schritt
-     faellt sie weg, sonst zeigte die Linie ins Leere. left ist die
-     Mitte der Spalte und damit die Mitte des Kreises. */
   .ablauf-schritt::before{
     content: "";
     position: absolute;
@@ -95,27 +46,9 @@ main#inhalt{ padding: var(--s8) 0 0; }
   .ablauf-schritt:last-child::before{ content: none; }
 }
 
-/* Ab 1140px kam hier bis zum 31.08.2026 eine dritte Spalte in
-   jedem Schritt dazu, gefuellt war sie nur bei Schritt 01: ein
-   umgefaerbtes Lottie-Motiv, hoechstens 320px breit, bei
-   abbestellter Bewegung ganz ausgeblendet. Entfernt zusammen mit
-   den drei Motiven auf leistungen.html, Begruendung im Markup
-   dort. Das Raster steht wieder auf den zwei Spalten von 760px
-   aufwaerts; der Strang links ist davon unberuehrt, er haengt an
-   der ersten Spalte und deren Breite aendert sich nicht. */
-
-/* Die Nummer traegt hier mehr Gewicht als auf der Startseite: sie
-   ist der Knoten im Strang. Deshalb der Kreis mit Papierfarbe --
-   ohne ihn liefe die Linie sichtbar hinter der Ziffer durch.
-   aria-hidden im HTML, weil die Nummer direkt darunter als
-   "Schritt 01" im Text steht und sonst doppelt vorgelesen wuerde. */
 .ablauf-zahl{
   display: grid;
   place-items: center;
-  /* Ueber der Fuellung und ueber der wandernden Spitze: beide laufen
-     durch die Knotenmitte, und der Papierton des Kreises schneidet
-     sie sauber ab. Ohne das liefe die Linie sichtbar durch die Zahl,
-     und die Spitze klebte darauf. */
   position: relative;
   z-index: 1;
   width: 3.5rem;
@@ -132,27 +65,9 @@ main#inhalt{ padding: var(--s8) 0 0; }
               background-color var(--kurz) var(--kurve);
 }
 
-/* Erreichter Schritt, gesetzt von src/components/ui/ablauf-strang.tsx,
-   sobald die Spitze des Strangs den Knoten passiert.
-
-   Aus leer wird ausgefuellt. Das ist die uebliche Lesart fuer "erledigt"
-   und braucht keine Beschriftung: die Kreise oberhalb der Leseposition
-   sind voll, die darunter leer.
-
-   Die drei Eigenschaften standen als transition schon seit dem Bau des
-   Strangs in der Regel darueber, ohne dass sie je etwas zu tun hatten --
-   es gab keine Regel, die border-color oder color geaendert haette.
-   Jetzt gibt es sie.
-
-   Kein Scroll-Reveal: die Nummer steht von Anfang an da, lesbar und
-   vollstaendig. Was sich aendert, ist allein die Anzeige, wie weit man
-   selbst gekommen ist -- dieselbe Begruendung wie beim Strang. */
 .ablauf-zahl.ist-erreicht{
   background: var(--olive);
   border-color: var(--olive);
-  /* --auf-flaeche, nicht --karte: derselbe helle Ton, den jede oliv
-     hinterlegte Flaeche im Projekt fuer ihre Schrift benutzt. Auf
-     --olive traegt er 8.9:1. */
   color: var(--auf-flaeche);
 }
 
@@ -166,16 +81,8 @@ main#inhalt{ padding: var(--s8) 0 0; }
   color: var(--tinte-2);
   max-width: 58ch;
 }
-/* Der erste Absatz traegt die Aussage, der zweite begruendet sie --
-   dieselbe Abstufung wie im Ueber-uns-Block der Startseite. */
 .ablauf-inhalt > p:not(.augenbraue):first-of-type{ color: var(--tinte); }
 
-/* --- Fakten je Schritt --------------------------------------
-   Dauer und was vom Kunden kommt. Genau die zwei Fragen, die im
-   Gespraech als naechstes kommen, deshalb stehen sie abgesetzt
-   statt im Fliesstext vergraben. Als <dl>, weil es Paare aus
-   Bezeichnung und Wert sind und kein Fliesstext.
-   ------------------------------------------------------------ */
 .schritt-fakten{
   margin: var(--s5) 0 0;
   padding-top: var(--s4);
@@ -190,9 +97,6 @@ main#inhalt{ padding: var(--s8) 0 0; }
     gap: var(--s5);
   }
 }
-/* Gleicher Wert wie .augenbraue in basis.css, seit dem 03.10.2026 auf
-   allen Geraeten: .72rem waren 11.5px und zu klein. Acht Stellen auf
-   dieser Seite -- die Beschriftungen "Dauer", "Ergebnis" und so weiter. */
 .schritt-fakten dt{
   font-size: .8rem;
   letter-spacing: .18em;
@@ -207,25 +111,10 @@ main#inhalt{ padding: var(--s8) 0 0; }
   line-height: 1.55;
 }
 
-/* --- Danach --------------------------------------------------
-   Ohne Nummer und ohne Strang, damit die Zaehlung 01 bis 04
-   deckungsgleich zur Startseite bleibt. Der abgesetzte Grundton
-   markiert, dass hier etwas anderes anfaengt: nicht mehr das
-   Projekt, sondern das, was danach laeuft.
-   ------------------------------------------------------------ */
-/* Seit dem 21.08.2026 zentriert und deutlich kompakter, auf Kasums
-   Wunsch. Vorher lief der Kasten ueber die vollen 1060px des Rasters,
-   trug darin aber nur 532px Text -- die Haelfte davon war Leere. Jetzt
-   ist er auf 760px begrenzt und mittig gesetzt, der Inhalt steht
-   zentriert darin und fuellt ihn. Innenabstand var(--s6) statt
-   var(--s7): der Kasten soll ein abgesetzter Absatz sein, kein Saal. */
 .ablauf-danach{
   margin-top: var(--s7);
   max-width: 760px;
   margin-inline: auto;
-  /* Auf dem Handy bleiben von 390px Fensterbreite nach den
-     Seitenraendern 346px. Mit var(--s6) seitlich blieben davon 282px
-     Textbreite uebrig -- deshalb dort der kleinere Innenabstand. */
   padding: var(--s6) var(--s5);
   background: var(--karte-2);
   border-radius: var(--radius);
@@ -234,18 +123,11 @@ main#inhalt{ padding: var(--s8) 0 0; }
 @media (min-width: 760px){
   .ablauf-danach{ padding: var(--s6); }
 }
-/* max-width raus: "Der Livegang ist kein Schlussstrich." hat 35
-   Zeichen und brach an den 22ch immer in zwei Zeilen. Der Satz soll
-   auf einer stehen. text-wrap: balance teilt erst dann auf, wenn das
-   Fenster wirklich zu schmal ist, und dann auf gleich lange Zeilen. */
 .ablauf-danach h2{
   font-size: clamp(1.4rem, 2.8vw, 1.8rem);
   margin-inline: auto;
   text-wrap: balance;
 }
-/* 54ch statt 58: zentrierter Fliesstext braucht eine kuerzere Zeile
-   als linksbuendiger. Beide Kanten flattern, und je laenger die
-   Zeile, desto mehr faellt das auf. */
 .ablauf-danach p{
   margin: var(--s4) auto 0;
   color: var(--tinte-2);
@@ -253,24 +135,8 @@ main#inhalt{ padding: var(--s8) 0 0; }
 }
 .ablauf-danach > p:not(.augenbraue):first-of-type{ color: var(--tinte); }
 
-/* Luft zum Kasten darueber, aber nicht mehr die vollen var(--s9):
-   der Kasten ist jetzt kompakt, ein 96px-Graben danach wuerde ihn
-   wieder allein im Raum stehen lassen. */
 main#inhalt .abschluss{ margin-top: var(--s8); }
 
-/* --- Bewegung beim Zeigen ------------------------------------
-   Beim Zeigen nimmt der Knoten die Markenfarbe an. Keine
-   Verschiebung -- der Kreis sitzt auf einer Linie, jede Bewegung
-   wuerde den Strang sichtbar aufreissen. Die zweite Bewegung der
-   Seite ist der Fortschritt am Scroll, siehe unten.
-
-   Nur fuer echte Zeiger: der Block enthaelt keinen Link und kein
-   Formularfeld, es gibt also nichts, das per Tastatur fokussiert
-   werden koennte. Ein tabindex nur fuer diesen Zierrat wuerde
-   Tastaturnutzern einen leeren Stopp bescheren -- schlechter als
-   die Bewegung wegzulassen. Gleiche Ueberlegung wie in
-   stil/leistungen.css.
-   ------------------------------------------------------------ */
 @media (hover: hover) and (pointer: fine){
   .ablauf-schritt:hover .ablauf-zahl{
     border-color: var(--olive);
@@ -278,23 +144,6 @@ main#inhalt .abschluss{ margin-top: var(--s8); }
   }
 }
 
-
-/* --- Fortschrittsstrang ---------------------------------------
-   Gezeichnet von src/components/ui/ablauf-strang.tsx, siehe dort
-   fuer den Mechanismus und die Herkunft (notemage.app). Hier steht
-   nur, wie die drei Teile aussehen: gefuellte Linie, wandernde
-   Spitze, aufleuchtender Ring.
-
-   Wichtig fuer die Stapelung: weder .ablauf-strang-bereich noch
-   #strang-root noch .strang duerfen einen eigenen z-index tragen.
-   Sonst waeren die Kinder in einem eigenen Stapel gefangen und der
-   Ring kaeme nie ueber die Knoten. So liegen alle im selben Stapel
-   wie .ablauf-zahl und ordnen sich frei ein:
-
-     0  Fuellung und Spitze  -- hinter den Knoten
-     1  .ablauf-zahl         -- der Kreis mit der Nummer
-     2  Ring                 -- ueber dem Kreis, aber nur Kontur
-   -------------------------------------------------------------- */
 .ablauf-strang-bereich{ position: relative; }
 
 #strang-root{ pointer-events: none; }
@@ -311,15 +160,9 @@ main#inhalt .abschluss{ margin-top: var(--s8); }
   width: 2px;
   height: 100%;
   background: var(--olive);
-  /* Von oben nach unten wachsen, nicht aus der Mitte. */
   transform-origin: top;
   z-index: 0;
 }
-
-/* Zwei Pixel statt der einen Haarlinie der Grundspur: die Fuellung
-   soll den zurueckgelegten Teil deutlich vom noch offenen abheben,
-   sonst sieht man beim Scrollen nicht, dass ueberhaupt etwas
-   passiert. Sie deckt die Grundspur damit vollstaendig ab. */
 
 .strang-spitze{
   position: absolute;
@@ -338,28 +181,10 @@ main#inhalt .abschluss{ margin-top: var(--s8); }
   left: 50%;
   border: 1.5px solid var(--olive);
   border-radius: 50%;
-  /* Groesse und top setzt die Komponente, beides ist gemessen. Der
-     Ring sitzt deckungsgleich auf dem Knoten, deshalb die halbe
-     Verschiebung in beide Richtungen. */
   transform: translate(-50%, -50%);
   z-index: 2;
 }
 
-/* --- Skizze-zu-Seite-Regler (Schritt 03) ---------------------
-   Seit 11.10.2026 gebaut, wartet auf Material: im HTML mit hidden,
-   Begruendung dort. Kein display auf .regler selbst, sonst gewinnt
-   die Klasse gegen das hidden-Attribut und ein leerer Kasten stuende
-   auf der Seite.
-
-   Die Skizze liegt ueber der gebauten Seite und wird von rechts her
-   abgeschnitten, die Grenze ist --teilung. Der Griff ist ein Faden
-   im Markenton mit einem Knoten in der Mitte, dieselbe Form wie die
-   Knoten des Strangs links. Keine Transition auf --teilung: der Griff
-   folgt der Hand direkt, alles andere fuehlt sich nach Gummi an.
-
-   touch-action: pan-y laesst den Finger senkrecht weiter die Seite
-   scrollen, nur waagrechtes Ziehen bewegt den Griff.
-   ------------------------------------------------------------ */
 .regler{
   margin: var(--s6) 0 0;
 }
@@ -388,7 +213,6 @@ main#inhalt .abschluss{ margin-top: var(--s8); }
   inset: 0;
   clip-path: inset(0 calc(100% - var(--teilung)) 0 0);
 }
-/* 44px breit fuer Finger, sichtbar ist davon nur der Faden. */
 .regler-griff{
   position: absolute;
   top: 0;
@@ -425,24 +249,6 @@ main#inhalt .abschluss{ margin-top: var(--s8); }
   max-width: 58ch;
 }
 
-/* --- Ende des Strangs ----------------------------------------
-   Seit 11.10.2026. Bis dahin hoerte die Linie am Knoten 04 auf
-   (.ablauf-schritt:last-child::before war leer), und die Seite
-   endete mit demselben zentrierten Abschluss wie jede andere. Jetzt
-   laeuft die blasse Grundspur weiter: an der Danach-Box vorbei,
-   ueber die Trennlinie des Abschlusses, und endet im KV-Zeichen. Dort
-   steht, wohin der ganze Ablauf fuehrt: das Gespraech.
-
-   Nur Grundspur, keine Fuellung. Die Fuellung von
-   src/components/ui/ablauf-strang.tsx haengt am Lesen und endet am
-   letzten Schritt; was danach kommt, ist der Weg, den der Besucher
-   noch gehen kann. Statisch, nur CSS und das Zeichen als SVG -- es
-   bewegt sich nichts, auch nicht bei reduzierter Bewegung.
-
-   Erst ab 1000px. Darunter ist die zentrierte Danach-Box breiter als
-   der Platz neben dem Strang, die Linie liefe mitten durch sie
-   hindurch. Dort bleibt alles, wie es war.
-   ------------------------------------------------------------ */
 .abschluss-zeichen{ display: none; }
 
 @media (min-width: 1000px){
@@ -463,10 +269,6 @@ main#inhalt .abschluss{ margin-top: var(--s8); }
   }
   .ablauf-danach-bereich .ablauf-danach{ margin-top: 0; }
 
-  /* Der Abschluss dieser Seite steht im Raster des Strangs: Zeichen
-     in der Knotenspalte, Satz und Knopf in der Textspalte. Die Masse
-     sind dieselben wie bei .ablauf-schritt, damit Linie, Knoten und
-     Zeichen auf einer Senkrechten liegen. */
   main#inhalt .abschluss{
     margin-top: 0;
     text-align: left;
@@ -478,10 +280,6 @@ main#inhalt .abschluss{ margin-top: var(--s8); }
     column-gap: var(--s7);
     align-items: start;
   }
-  /* Von der Oberkante der Sektion bis an das Zeichen. Die 6px sind der
-     Abstand, um den das Zeichen unter der Oberkante der Zeile sitzt
-     (margin-top unten), damit es mit den Grossbuchstaben abschliesst
-     statt mit der Zeilenbox. */
   main#inhalt .abschluss .wrap::before{
     content: "";
     position: absolute;

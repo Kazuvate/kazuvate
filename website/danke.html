@@ -7,113 +7,33 @@
 <title>Danke | kazuvate</title>
 <meta name="description" content="Ihre Anfrage bei kazuvate ist angekommen. Wir melden uns innert 24 Stunden.">
 <meta name="theme-color" content="#2C3616">
-<!-- Bestaetigungsseite, kein eigener Inhalt: soll nicht in Suchergebnissen
-     auftauchen, dafuer gibt es kontakt.html. -->
 <meta name="robots" content="noindex">
 
-<!-- ====================== Suchmaschinen ======================
-     Die kanonische Adresse dieser Seite. Sie ist noetig, weil Vercel
-     dieselbe Datei unter mehreren Adressen ausliefert: die Startseite
-     liegt sowohl unter / als auch unter /index.html, die Referenzen
-     unter /referenzen/ und /referenzen/index.html. Ohne diese Zeile
-     sind das fuer eine Suchmaschine zwei Seiten mit identischem
-     Inhalt, und sie entscheidet selbst, welche sie nimmt.
-
-     Die Adresse muss zeichengleich mit der in public/sitemap.xml
-     stehen. Zwei Angaben, die sich widersprechen, sind schlechter als
-     eine. Gepruefte Regel fuer diese Domain: /leistungen ohne .html
-     ist 404, die Endung gehoert also dazu; /referenzen/ dagegen
-     funktioniert und ist die kuerzere der beiden Formen.
-
-     Seit dem 25.09.2026 leiten /index.html, /referenzen/index.html,
-     /referenzen ohne Schraegstrich und die Adressen ohne .html per
-     vercel.json auf diese Formen weiter (Begruendung in dokumente/aufbau.md,
-     Abschnitt "Adressen und Weiterleitungen"). Das Canonical bleibt trotzdem noetig: jede
-     Adresse mit angehaengtem Parameter, etwa ?utm_source=linkedin, ist
-     fuer eine Suchmaschine sonst eine eigene Seite. -->
 <link rel="canonical" href="https://kazuvate.ch/danke.html">
 
-<!-- Kein Open Graph: die Seite traegt noindex und wird nie
-     geteilt, sie ist nur die Landung nach dem Absenden des
-     Formulars. Das Canonical bleibt trotzdem, es faengt
-     Adressen mit angehaengten Parametern ab. -->
-<!-- =========================================================== -->
-
-<!-- Symbole. Alle Pfade ab "/" und nicht relativ, seit 03.09.2026.
-     Relativ aufgeloest zeigten sie von referenzen/ aus in ein
-     Verzeichnis, das es dort nicht gibt -- die Seite half sich mit
-     "../", aber ein Pfad, der je nach Seite anders geschrieben werden
-     muss, ist einer zu viel. Die Schrift steht seit dem 02.09.2026
-     ohnehin schon absolut daneben.
-
-     /favicon.ico und /favicon.svg liegen ZUSAETZLICH im Wurzel-
-     verzeichnis, obwohl markenlogo/ das Zuhause aller abgeleiteten
-     Symbole ist. Grund: Suchmaschinen und Browser fragen die
-     Wurzeladresse direkt ab, ohne ins HTML zu schauen. Bis zum
-     03.09.2026 antwortete kazuvate.ch/favicon.ico mit 404 -- und zwar
-     mit der 11 kB grossen HTML-Fehlerseite. Genau das ist der
-     wahrscheinlichste Grund, warum Google in der Trefferliste eine
-     Weltkugel statt des Zeichens gezeigt hat.
-
-     Die beiden Wurzeldateien sind Kopien aus markenlogo/. Wer dort
-     etwas aendert, muss sie mitnehmen.
-
-     sizes traegt jetzt alle drei Groessen, die wirklich in der .ico
-     stecken (16, 32 und 48). Vorher stand dort nur "32x32" und hat
-     damit die 48x48 verschwiegen -- ausgerechnet die Groesse, die
-     Google fuer die Trefferliste empfiehlt. -->
 <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/markenlogo/apple-touch-icon.png">
 <link rel="manifest" href="/markenlogo/site.webmanifest">
 
-<!-- Die Schrift vorziehen. Sie liegt in public/schriften/ und wird
-     erst entdeckt, wenn der Browser das CSS geparst und die
-     @font-face-Regel erreicht hat -- also spaet. font-display:
-     optional in stil/basis.css gibt ihr nur ein sehr kurzes Fenster:
-     trifft sie nicht rechtzeitig ein, wird sie fuer diesen
-     Seitenaufruf ganz uebersprungen und die Seite steht im
-     Systemfont. Genau dafuer ist preload das Gegenstueck -- es holt
-     die Datei sofort, damit optional sie auch benutzen kann, statt
-     sie zu verwerfen. Das CLS-Budget bleibt unberuehrt, weil sich an
-     optional nichts aendert.
-
-     crossorigin ist Pflicht und keine Zierde: Schriften werden immer
-     im anonymen CORS-Modus geholt. Ohne das Attribut laedt der
-     Browser die Datei zweimal, einmal fuer den preload und einmal
-     fuer @font-face. Ergaenzt 02.09.2026. -->
 <link rel="preload" href="/schriften/GeneralSans-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="stil/tokens.css">
 <link rel="stylesheet" href="stil/basis.css">
 <link rel="stylesheet" href="stil/danke.css">
 
-<!-- Sagt dem CSS, dass JavaScript laeuft. Muss hier oben stehen und darf
-     nicht in haupt.js: das laedt mit defer und kaeme zu spaet. Traegt heute
-     nur noch das Menue auf dem Handy und die Symbolzeichnung, beide brauchen
-     die Klasse um ueberhaupt etwas zu tun. -->
+<!-- js-Klasse vor dem ersten Bild setzen, nicht in haupt.js: defer kaeme zu spaet. -->
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
 
-<!-- Marke einmal definiert, unten zweimal verwendet. Spart eine zweite Kopie
-     des Pfads und einen HTTP-Aufruf. -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <symbol id="marke" viewBox="0 0 585.51 442.90">
     <path fill="currentColor" fill-rule="evenodd" d="M0.00 0.19L79.97 0.39L80.19 169.50L153.51 170.08L283.43 0.19L380.99 0.15L222.91 208.75L314.29 442.90L226.95 442.73L153.34 250.65L79.93 250.95L79.93 442.90L0.03 442.90ZM256.87 212.24L328.91 117.34L382.37 254.94L487.38 0.26L585.51 0.00L417.18 442.90L346.61 442.90Z"/>
   </symbol>
 </svg>
 
-<!-- Hier lag bis zum 31.08.2026 ein 3px hoher Fortschrittsbalken am
-     oberen Bildrand, der sich beim Scrollen fuellte. Entfernt, weil
-     er nichts anzeigte, was der Besucher nicht schon wusste: eine
-     Marketingseite mit fuenf Abschnitten liest niemand so lange,
-     dass er wissen muss, wie weit er ist. Ein Lesefortschritt gehoert
-     an einen langen Text, nicht an eine Seite, die man in einer
-     Minute durchscrollt. Markup, CSS und der GSAP-Block dazu sind
-     ersatzlos raus. -->
 <a class="sprung" href="#inhalt">Zum Inhalt springen</a>
 
-<!-- ====================== Kopf ====================== -->
 <header class="kopf">
   <div class="wrap kopf-innen">
 
@@ -122,8 +42,6 @@
       <span>kazuvate</span>
     </a>
 
-    <!-- Nur mit JavaScript sichtbar, siehe basis.css: ohne Skript
-         liesse sich die Schublade nicht oeffnen. -->
     <button class="menue-knopf" type="button" aria-expanded="false"
             aria-controls="hauptmenue" aria-label="Menü öffnen">
       <span class="balken" aria-hidden="true"></span>
@@ -141,13 +59,6 @@
       </div>
     </nav>
 
-    <!-- Sprachen, seit 25.09.2026, als Auswahl seit 27.09.2026. Jeder
-         Link fuehrt auf dieselbe Seite in der anderen Sprache, nicht auf
-         deren Startseite. Kuerzel statt ausgeschriebener Namen, den vollen
-         Namen liest ein Screenreader aus aria-label, in der jeweiligen
-         Sprache ausgesprochen (lang). <details> klappt ohne Skript auf,
-         haupt.js schliesst es beim Klick daneben und mit Escape. Stil in
-         stil/basis.css unter "Sprachen". -->
     <nav class="sprachen" aria-label="Sprache">
       <details>
         <summary aria-label="Sprache wählen, aktuell Deutsch">DE<svg class="sprachen-pfeil" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 4.5 6 7.5 9 4.5"/></svg></summary>
@@ -164,28 +75,14 @@
   </div>
 </header>
 
-<!-- ====================== Inhalt ======================
-     Eine einzige zentrierte Aussage, kein Raster: es gibt nur diese
-     eine Botschaft und einen Weg zurueck. Der Telefonlink ist bewusst
-     da -- wer nach dem Absenden noch unsicher ist, ob es angekommen
-     ist, soll die Nummer nicht erst im Fuss suchen muessen.
-     ==================================================== -->
 <main id="inhalt">
   <div class="wrap danke-inhalt">
 
-    <!-- Der Danke-Faden, seit 11.10.2026. Eine Linie zeichnet sich
-         einmal vom linken Seitenrand her und landet im KV-Zeichen --
-         die Antwort der Seite auf das Absenden. Danach steht sie still.
-         Reine Zierde, deshalb aria-hidden; bei reduzierter Bewegung
-         steht sie von Anfang an fertig da (stil/danke.css). -->
     <div class="danke-faden" aria-hidden="true">
       <svg class="danke-linie" viewBox="0 0 300 40" preserveAspectRatio="none" focusable="false"><path d="M0 30 C 50 34 80 8 140 16 S 240 30 300 20"/></svg>
       <svg class="danke-zeichen" viewBox="0 0 585.51 442.90" focusable="false"><use href="#marke"></use></svg>
     </div>
 
-    <!-- Augenbraue "DANKE" ueber "Ihre Anfrage ist angekommen."
-         entfernt am 31.08.2026: dasselbe Wort wie im Seitentitel,
-         und die Ueberschrift darunter sagt es ohnehin. -->
     <h1>Ihre Anfrage ist angekommen.</h1>
     <p>Wir lesen sie in Ruhe und melden uns innert 24 Stunden bei Ihnen, meist per Mail.</p>
     <p>Es pressiert? Rufen Sie direkt an: <a href="tel:+41786707973">+41 78 670 79 73</a>.</p>
@@ -195,7 +92,6 @@
   </div>
 </main>
 
-<!-- ====================== Fuss ====================== -->
 <footer class="fuss">
   <div class="wrap">
 
@@ -205,11 +101,6 @@
         <svg class="fuss-zeichen" viewBox="0 0 585.51 442.90" role="img" aria-label="kazuvate"><use href="#marke"></use></svg>
         <p>Handgebaute Frontend-Websites für KMU in der Schweiz.</p>
 
-        <!-- Kasum persoenlich: eigene Seite und LinkedIn. Beide oeffnen in
-             einem neuen Tab, damit kazuvate.ch offen bleibt. Das Monogramm
-             ist dasselbe Zeichen wie auf kasumbajrami.dev, hier als Schrift
-             statt als Bild: spart eine Datei und bleibt in jeder Groesse
-             scharf. -->
         <div class="fuss-draehte">
 
           <a class="draht-knopf" href="https://kasumbajrami.dev/"
@@ -221,8 +112,6 @@
           <a class="draht-knopf" href="https://www.linkedin.com/in/kasum-bajrami-885a653a6/"
              target="_blank" rel="noopener"
              aria-label="Kasum Bajrami auf LinkedIn, öffnet in einem neuen Tab">
-            <!-- viewBox auf 448 statt 512 gekuerzt: der Pfad ist 448 hoch, mit 512
-                   saesse das Zeichen im Kreis zwei Pixel zu hoch. -->
               <svg viewBox="0 0 448 448" aria-hidden="true" focusable="false">
               <path fill="currentColor" d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"/>
             </svg>
@@ -279,8 +168,6 @@
   </div>
 </footer>
 
-<!-- Eigenes Skript, kein fremder Server. Am Ende des Body und mit
-     defer, damit die Seite nicht darauf warten muss. -->
 <script src="skript/haupt.js" defer></script>
 <script type="module" src="/src/bewegung.ts"></script>
 

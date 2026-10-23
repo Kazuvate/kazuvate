@@ -1,40 +1,5 @@
-/**
- * sitemap-bauen.mjs
- *
- * Schreibt website/public/sitemap.xml. Laeuft automatisch als `prebuild`, also
- * bei jedem `npm run build` -- eine Sitemap, die man von Hand pflegen
- * muss, ist nach der dritten Aenderung falsch.
- *
- * `lastmod` kommt aus dem Datum des letzten Commits, der die jeweilige
- * HTML-Datei angefasst hat, nicht aus der Dateizeit im Dateisystem.
- * Grund: nach jedem `git clone` oder `git checkout` stehen alle
- * Dateizeiten auf "jetzt". Eine Sitemap, die behauptet, alle acht
- * Seiten seien heute geaendert worden, ist nicht nur falsch, sie ist
- * schaedlich -- Google ignoriert `lastmod` einer Domain dauerhaft,
- * sobald es ihm einmal unglaubwuerdig vorkam. Fuer noch nicht
- * eingecheckte Dateien gibt es kein Commit-Datum, dort steht das
- * heutige.
- *
- * `--follow --diff-filter=AM`: eine Datei, die nur verschoben wurde (am
- * 23.10.2026 mit dem Umzug nach website/), hat unter ihrem neuen Pfad sonst
- * nur den Umzug als Geschichte, und alle Seiten stuenden mit dem Datum des
- * Umzugs in der Sitemap. So zaehlt ein reiner Umzug nicht als Aenderung.
- *
- * Welche Seiten es gibt, steht in werkzeug/seiten.mjs, derselben Liste,
- * aus der auch vite.config.ts seine Eingangsliste baut. Seiten ohne
- * `rang` (die Danke-Seiten, sie tragen noindex) lassen wir hier aus.
- *
- * Jede Seite steht in drei Sprachen, als eine Zeile mit drei Fassungen.
- * Jede Fassung bekommt einen eigenen <url>-Eintrag, und jeder davon
- * nennt per xhtml:link alle drei plus x-default. Das ist dieselbe
- * Zuordnung wie die hreflang-Zeilen im Kopf jeder Seite -- Google nimmt
- * beide Wege, und zwei Angaben, die sich widersprechen, sind schlechter
- * als eine. Die Liste in seiten.mjs ist damit auch die Stelle, an der
- * man nachsieht, welche englische und franzoesische Datei zu welcher
- * deutschen gehoert.
- *
- *   node werkzeug/sitemap-bauen.mjs
- */
+// Schreibt website/public/sitemap.xml, laeuft als prebuild.
+// lastmod kommt aus git log --follow, nicht aus der Dateizeit. --follow, damit ein reiner Umzug nicht als Aenderung zaehlt.
 
 import { writeFileSync, existsSync } from "node:fs";
 import { execFileSync } from "node:child_process";
@@ -56,7 +21,6 @@ function letzteAenderung(datei) {
     }).trim();
     return /^\d{4}-\d{2}-\d{2}$/.test(aus) ? aus : heute;
   } catch {
-    // Kein Git im Pfad oder kein Repo -- dann eben heute.
     return heute;
   }
 }

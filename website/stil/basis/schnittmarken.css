@@ -1,30 +1,8 @@
-/* --- Schnittmarken ----------------------------------------------
-   Seit 11.10.2026. Beim Zeigen oder Fokussieren zeichnen sich um die
-   Kachel vier Eckwinkel, die Schnittmarken eines Druckbogens -- dasselbe
-   Zeichen wie der Tastaturfokus der ganzen Seite. Sie kommen zur
-   Unschaerfe und zum Namen dazu, sie ersetzen sie nicht.
-
-   Die Kachel selbst kann sie nicht tragen: ihre beiden Pseudoelemente
-   sind Ebenen der Unschaerfe, und overflow: hidden schnitte alles ab,
-   was ueber ihren Rand ragt. Deshalb zeichnet die Figur drumherum. Sie
-   ist ein Raster, und ihr ::before liegt in derselben Zelle wie die
-   Kachel, mit 7px Uebermass nach aussen: so hat es immer genau die
-   Groesse der Kachel, ohne dass etwas gemessen werden muss.
-
-   Gezeichnet wird mit einer einzigen animierten Eigenschaft, der
-   Schenkellaenge --schnitt (0 bis 16px), in derselben clip-path-Form
-   wie beim Fokus. Fuer die Tastatur ersetzen die Winkel den Fokusring
-   der Kachel; im Kontrastmodus von Windows bleibt der Ring. */
 @property --schnitt{
   syntax: "<length>";
   inherits: false;
   initial-value: 0px;
 }
-/* min-width und align-self beim freien Feld: es hat ein festes
-   Seitenverhaeltnis, und gestreckt auf die Hoehe einer Rasterzeile mit
-   zweizeiliger Bildunterschrift rechnete der Browser daraus eine
-   Mindestbreite von 393 statt 302px -- die Seite lief waagrecht ueber
-   (gemessen auf fr/references/ bei 1440px). */
 .filmbild{
   display: grid;
   min-width: 0;
@@ -74,11 +52,6 @@
   border: 1px solid var(--linie);
   border-radius: var(--radius);
   background: var(--karte-2);
-  /* Kein Antipp-Highlight. Die Regel fuer alle Links oben faerbt jeden
-     Tipp zwoelf Prozent oliv. Auf einer Kachel blitzt das beim Tippen
-     als gruener Schleier ueber dem Bild auf und ist weg, sobald die
-     Kundenseite im neuen Tab aufgeht. Die Kachel ist selbst ein Bild,
-     das Antippen braucht hier keine zweite Rueckmeldung. 02.10.2026 */
   -webkit-tap-highlight-color: transparent;
 }
 .referenz-kachel img{
@@ -86,10 +59,6 @@
   width: 100%;
   height: auto;
 }
-/* Ohne echten Zeiger gibt es kein Hover, sonst bliebe der Name auf
-   dem Handy fuer immer unsichtbar. Dort steht er immer da, auf einem
-   schmalen Schleier und ohne Unschaerfe: wer das Bild nur antippen
-   kann, soll es auch sehen koennen. */
 .referenz-kachel .name{
   position: absolute;
   inset: auto 0 0 0;
@@ -108,8 +77,6 @@
   .referenz-kachel:hover,
   .referenz-kachel:focus-visible{ --zeige: 1; }
 
-  /* Der Name ist jetzt die ganze untere Zone: drei Viertel der
-     Kachel, die Schrift unten links darin. */
   .referenz-kachel .name{
     height: 75%;
     padding: 0 var(--s4) var(--s4);
@@ -131,16 +98,11 @@
     mask-image: linear-gradient(to bottom, transparent var(--ab), black var(--bis));
   }
 
-  /* Die zwei Ebenen der Kachel liegen ueber dem Bild und unter dem
-     Namen (z-index 1), die zwei des Namens in dessen eigener Ebene. */
   .referenz-kachel::before,
   .referenz-kachel::after{ inset: 25% 0 0 0; z-index: 0; }
   .referenz-kachel .name::before,
   .referenz-kachel .name::after{ inset: 0; z-index: -1; }
 
-  /* Vier Stufen, jede setzt spaeter ein und blurt staerker. --ab und
-     --bis sind Anteile der Zone von oben nach unten. Unten addiert sich
-     alles zu rund 6px. */
   .referenz-kachel::before{       --unschaerfe: 1.5px; --ab:  0%; --bis: 45%; }
   .referenz-kachel::after{        --unschaerfe: 2.5px; --ab: 15%; --bis: 60%; }
   .referenz-kachel .name::before{ --unschaerfe: 3.5px; --ab: 35%; --bis: 80%; }

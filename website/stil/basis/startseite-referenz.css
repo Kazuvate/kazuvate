@@ -1,11 +1,3 @@
-/* --- Referenz auf der Startseite --------------------------- */
-/* Zwei Kacheln nebeneinander statt Kachel plus Textspalte, seit der
-   zweiten Referenz am 22.08.2026. Vorher: `380px 1fr`, also eine feste
-   Bildspalte und daneben Name und Link.
-
-   minmax(0, 1fr) statt 1fr, weil ein Grid-Element sonst nie schmaler
-   wird als sein Inhalt -- bei Bildern in einer Kachel sprengt das die
-   Spalte, statt sie mitwachsen zu lassen. */
 .referenz-zeile{
   display: grid;
   gap: var(--s6);
@@ -18,31 +10,6 @@
     align-items: start;
   }
 }
-/* Die alte Begrenzung auf 380px galt der einen festen Bildspalte.
-   Jetzt teilen sich zwei Kacheln die Breite und duerfen mitwachsen. */
-/* Weiterfuehrender Link mit Pfeil. Stand bis zum 20.08.2026 nur
-   als `.referenz-zeile .weiter` da und war damit an eine einzige
-   Stelle gebunden. Jetzt allgemein, weil die Ablauf-Sektion
-   denselben Link auf ablauf.html braucht -- ein zweites, gleich
-   aussehendes Muster daneben waere Doppelarbeit. */
-/* Der Pfeil davor: bis zum 22.08.2026 stand hinter jedem dieser Links
-   ein Unicode-Pfeil, der beim Zeigen vier Pixel nach rechts rutschte.
-   Kasums Urteil: "der Pfeil ist wirklich nicht schoen". Alle zwoelf
-   sind ersatzlos aus dem Markup verschwunden.
-
-   An seine Stelle tritt kein zweites Zeichen, sondern eine Linie vor
-   dem Text. Begruendung: die ganze Seite trennt mit Haarlinien statt
-   mit Kaesten -- zwischen den Ueber-uns-Bloecken, zwischen den
-   Leistungsspalten, unter jedem Ablaufschritt. Ein Strich ist hier
-   also kein neues Motiv, sondern das vorhandene an einer weiteren
-   Stelle. Ein Pfeil dagegen war das einzige Piktogramm im ganzen
-   Auftritt und stand allein.
-
-   Die Linie liegt bei zwei Dritteln und faehrt beim Zeigen auf die
-   volle Laenge aus. Diese Bewegung nach rechts traegt die Bedeutung,
-   die vorher der Pfeil tragen musste. scaleX statt width, damit nichts
-   neu umbricht -- dieselbe Begruendung wie beim Unterstrich der
-   Navigation. */
 .weiter{
   display: inline-flex;
   align-items: center;
@@ -65,23 +32,12 @@
 @media (hover: hover) and (pointer: fine){
   .weiter:hover::before{ transform: scaleX(1); }
 }
-/* Die Tastatur bekommt dieselbe Rueckmeldung wie die Maus. Ohne das
-   waere der Link beim Durchtabben das einzige Element der Seite ohne
-   eigene Reaktion. */
 .weiter:focus-visible::before{ transform: scaleX(1); }
 
-/* Der Link war 26px hoch, das ist reine Zeilenhoehe ohne Polster.
-   Mit dem Finger getroffen werden soll er trotzdem: 9px oben und
-   unten ergeben 44px, die Groesse, die Apple als Mindestmass nennt.
-   Das margin-top faellt um dieselben 9px, damit der sichtbare Abstand
-   zum Text darueber genau gleich bleibt wie vorher. */
 @media (max-width: 859px){
   .weiter{
     padding-block: 9px;
     margin-top: 3px;
   }
-  /* Ohne Zeigegeraet gibt es kein Hover, die Linie bliebe also ewig
-     bei zwei Dritteln stehen und saehe aus wie ein Fehler. Auf dem
-     Handy steht sie deshalb von vornherein voll ausgefahren da. */
   .weiter::before{ transform: scaleX(1); }
 }

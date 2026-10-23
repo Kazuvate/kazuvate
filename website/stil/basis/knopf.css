@@ -1,14 +1,3 @@
-/* --- Knopf ------------------------------------------------- */
-/* Am 21.08.2026 einladender gemacht: der wichtigste Knopf der Seite
-   sass vorher da wie eine Beschriftung. Groesser (16/32 statt 14/26),
-   eine Spur groessere Schrift, ein Pfeil, der beim Zeigen nachrueckt,
-   und ein Schatten im Tintenton statt in Neutralgrau -- neutrales
-   Grau wirkt auf dem warmen Papierton wie aufgeklebt.
-
-   Beim Zeigen hebt er zwei Pixel an und der Schatten waechst mit;
-   ohne das mitwachsende Weichzeichnen sieht ein Anheben aus, als
-   waere das Element verrutscht statt naeher gekommen. Gedrueckt geht
-   er sofort wieder auf die Grundflaeche zurueck. */
 .knopf{
   display: inline-block;
   background: var(--flaeche);
@@ -34,18 +23,3 @@
   transform: scale(.97);
   box-shadow: 0 4px 12px -10px rgb(27 33 16 / .5);
 }
-
-/* Hier stand bis zum 22.08.2026 der Pfeil im Knopf, mit einer eigenen
-   Hover-Regel, die ihn vier Pixel nach rechts schob. Beides ist weg.
-
-   Ersatzlos, und zwar bewusst: der Knopf hat drei Zeilen weiter oben
-   bereits eine vollstaendige Reaktion auf das Zeigen -- er hebt sich
-   um zwei Pixel, der Schatten waechst, die Flaeche wird eine Stufe
-   dunkler. Der wandernde Pfeil war eine vierte Bewegung obendrauf.
-   Eine gefuellte Flaeche mit Beschriftung ist ohnehin als
-   Schaltflaeche zu erkennen; das Zeichen hat ihr nichts hinzugefuegt.
-
-   Ein erster Anlauf hat hier eine eigene Hover-Regel hinterlassen.
-   Die stand nach der Regel oben, hatte dieselbe Spezifitaet und hat
-   deren zwei Pixel auf einen heruntergesetzt -- der Knopf reagierte
-   danach schwaecher als vorher. Wieder entfernt. */

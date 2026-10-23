@@ -1,23 +1,4 @@
-/**
- * regler.ts
- *
- * Der Skizze-zu-Seite-Regler in Schritt 03 auf ablauf.html: links die
- * Skizze aus dem Entwurf, rechts dieselbe Seite gebaut, dazwischen ein
- * Griff. Seit 11.10.2026 gebaut, aber noch nicht zu sehen -- es gibt
- * bisher keine echte Skizze eines echten Projekts, siehe den Kommentar
- * am Regler in ablauf.html.
- *
- * Geladen wird diese Datei von src/ablauf.tsx, und zwar nur, wenn der
- * Regler auf der Seite sichtbar ist. Solange er `hidden` traegt, holt
- * der Browser sie gar nicht erst.
- *
- * Bedienung wie bei einem nativen Schieberegler (ARIA-Muster "slider"):
- * Pfeiltasten um fuenf, Bild auf und ab um ein Viertel, Pos1 und Ende an
- * die Raender. Die Tasten gelten nur, solange der Griff den Fokus hat;
- * an keiner anderen Stelle der Seite wird eine Taste umbelegt, das
- * Scrollen mit der Tastatur bleibt unberuehrt. Mit Maus oder Finger
- * genuegt ein Druck irgendwo auf das Bild, gezogen wird von dort aus.
- */
+// Skizze-zu-Seite-Regler (Ablauf, Schritt 03) als ARIA-Slider. Noch versteckt, es fehlt eine echte Skizze.
 
 const TASTEN: Record<string, number> = {
   ArrowLeft: -5,
@@ -33,8 +14,6 @@ export function reglerStarten(regler: HTMLElement) {
   const griff = regler.querySelector<HTMLElement>(".regler-griff");
   if (!buehne || !griff) return;
 
-  // Der vorgelesene Wert steht in der Sprache der Seite im HTML,
-  // {wert} wird ersetzt. Hier steht nur der Rueckfall.
   const vorlage = griff.dataset.wertText ?? "{wert} %";
   let wert = Number(griff.getAttribute("aria-valuenow")) || 50;
 

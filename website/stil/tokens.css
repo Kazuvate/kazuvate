@@ -1,8 +1,4 @@
-/* ============================================================
-   kazuvate | Tokens
-   Einzige Farbquelle des Projekts. Kein Hex-Wert sonst irgendwo.
-   Farben aus markenlogo/logo.svg gemessen.
-   ============================================================ */
+/* Tokens: einzige Farbquelle. Kein Hex-Wert sonst irgendwo. */
 
 :root{
   /* --- Marke ---------------------------------------------- */
@@ -11,47 +7,18 @@
   --flaeche-tief: #222A10;   /* Hover auf Flaechen */
   --auf-flaeche:  #F7F7F1;   /* Schrift auf oliven Flaechen */
   --auf-flaeche-still: #C3CFA8;
-  /* Hier stand --olive-hell: #93AA5E, der helle Oliv-Ton aus der
-     Markenrichtung. Er kam am 21.08.2026 fuer den Globus auf
-     leistungen.html dazu, der am 22.08.2026 wieder verschwand;
-     danach hielt ihn nur noch die Farbleiter in
-     werkzeug/motive-aufbereiten.mjs am Leben. Mit den Seitenmotiven
-     ist am 31.08.2026 auch das Skript weg, und damit der letzte
-     Benutzer. Ein Token, den nichts benutzt, liest sich beim
-     naechsten Mal wie eine Vorgabe, die man einhalten muesste --
-     deshalb raus statt stehenlassen. Der Wert steht weiterhin in
-     Kazuvate Marke, falls je ein Dunkelmodus kommt. */
 
   /* --- Neutrale ------------------------------------------- */
   --grund:      #F5F4EF;     /* Seitenhintergrund, Papierton */
   --karte:      #FFFFFF;     /* Karten, Formularfelder */
   --karte-2:    #EBEAE1;     /* abgesetzte Baender */
-  /* Kein reines Schwarz. #000 auf dem Papierton --grund traegt 19:1
-     Kontrast und wirkt daneben kuehl und hart -- der Grund ist warm,
-     die Schrift war es nicht. #16190F ist derselbe Ton wie die
-     Markenflaeche, nur bis fast auf Schwarz abgedunkelt: 17.4:1, also
-     immer noch weit ueber allem, was WCAG verlangt, aber es gehoert
-     sichtbar zur Palette statt daneben zu stehen. Geaendert 21.08.2026. */
   --tinte:      #16190F;     /* Ueberschriften, betonter Text */
   --tinte-2:    #454C36;     /* zweite Textebene */
   --still:      #5E6650;     /* Labels, Legenden */
   --linie:      #DCDBD0;
   --linie-kraeftig: #BFBFAF;
-  /* Haarlinie im Markenton, fuer Trenner innerhalb einer Sektion.
-     Der volle Oliv-Ton waere als Linie zu laut, deshalb mit
-     Deckkraft statt als eigener Hexwert. */
   --linie-marke: rgb(63 80 25 / .28);
 
-  /* --- Fokus ----------------------------------------------
-     Die Farbe des Tastaturrings. Als eigener Token, weil sie sich
-     nach dem Untergrund richten muss: --olive auf --flaeche traegt
-     nur 1.44:1 und war auf Kopf, Titelband und Fuss praktisch
-     unsichtbar -- genau dort, wo der Ring als erstes gebraucht wird.
-     stil/basis.css setzt --fokus auf diesen Flaechen auf den hellen
-     Ton um; weil Custom Properties vererben, gilt das automatisch
-     fuer jeden Link darin und der :focus-visible-Block bleibt einer.
-     WCAG 2.2 verlangt 3:1 fuer Fokusindikatoren, hell auf --flaeche
-     sind es 11.4:1. Eingefuehrt 21.08.2026. */
   --fokus:      var(--olive);
 
   /* --- Abstaende ------------------------------------------ */
@@ -59,27 +26,6 @@
   --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px;
   --s9: 96px; --s10: 128px;
 
-  /* --- Schriftgrade ---------------------------------------
-     Zwei Welten statt einer Leiter, seit 02.09.2026.
-
-     Bis dahin lief die Skala gleichmaessig mit Faktor 1.25 durch,
-     von 11.5px Label bis 62px H1. Groesster Kontrast auf der Seite
-     also Faktor 5.4. Das ist die Spanne, die jede Website hat, und
-     genau daran lag es: eine Seite, deren groesster und kleinster
-     Grad so nah beieinanderliegen, hat keine Stimme, nur Ordnung.
-
-     Jetzt zwei getrennte Bereiche. Unten eine enge, sachliche
-     Leiter fuer alles, was gelesen wird -- die Schritte sind klein,
-     weil Fliesstext, Label und Bildunterschrift nicht miteinander
-     konkurrieren sollen. Oben zwei Grade, die nicht Teil dieser
-     Leiter sind, sondern eine eigene Groessenordnung: die
-     Seitenueberschrift und die Sektionsueberschrift. Zwischen
-     --satz-1 und --riesig liegt Faktor 11.
-
-     Das ist die Bauart des Schweizer Plakats: ein Wort gross, alles
-     andere klein und exakt, nichts dazwischen. Ein Zwischengrad
-     waere die Versuchung, die Spanne zu fuellen, und genau das
-     nimmt ihr die Wirkung. */
   --satz-1:  .8rem;     /* Label, Versalien */
   --satz-2:  .82rem;    /* Legende, Fussnote */
   --satz-3:  .94rem;    /* Navigation, Nebentext */
@@ -88,76 +34,26 @@
   --gross:   clamp(1.9rem, 4.4vw, 3.3rem);   /* H2 */
   --riesig:  clamp(2.9rem, 10vw, 7.6rem);    /* H1 der Startseite */
 
-  /* --- Form -----------------------------------------------
-     1280 statt 1140 seit 02.09.2026. Der Wert stand seit dem
-     19.08.2026 und war der Grund fuer eine Einschraenkung, die in
-     basis.css bei .leistungen ausdruecklich notiert ist: dreispaltig
-     trug eine Spalte nur 39 Zeichen, "wer echte 45 bis 75 Zeichen
-     will, muss die Sektion aus dem 1140er-Raster nehmen". Mit 1280
-     sind es 44, und der grosse Grad oben braucht die Flaeche ohnehin:
-     eine 120px-Ueberschrift in einem 1140er-Kasten sieht aus, als
-     waere sie zu gross geraten, nicht als waere sie gross gesetzt. */
   --breite:   1280px;
   --rand:     22px;
   --rand-gross: 40px;
   --radius:   12px;
   --radius-knopf: 10px;
 
-  /* Das Raster, auf dem die Seite steht. Zwoelf Spalten, weil die
-     Seite drei- und vierteilige Reihen hat und zwoelf beides ohne
-     Rest teilt. Sichtbar wird es nicht als Linienbild, sondern
-     dadurch, dass Ueberschrift, Text und Zeile an verschiedenen
-     Spalten ansetzen statt alle an derselben linken Kante. */
   --spalten: 12;
   --spalt: var(--s5);
 
-  /* --- Bewegung -------------------------------------------
-     Ein starkes ease-out, nie das eingebaute ease. Eingebaute
-     Kurven sind zu schwach, dadurch wirkt Bewegung unentschlossen.
-     Gedrueckt wird schneller quittiert als gehovert, weil der
-     Finger schon unterwegs ist und auf Antwort wartet. */
   --kurve:    cubic-bezier(.22, 1, .36, 1);
   --sofort:   160ms;   /* Knopfdruck, direkte Rueckmeldung */
   --kurz:     200ms;   /* Hover und kleine Zustandswechsel */
   --zeichen-dauer:  900ms;   /* Strichzeichnung der Symbole beim Laden */
-  /* --lang: 650ms stand hier bis zum 21.08.2026 fuer "Einblenden beim
-     Scrollen". Die Scroll-Reveals sind am 20.08.2026 ersatzlos aus
-     haupt.js geflogen, der Token war seitdem in keiner einzigen Regel
-     mehr referenziert. Ein Token, den nichts benutzt, liest sich beim
-     naechsten Mal wie eine Vorgabe, die man einhalten muesste. */
 }
 
-/* Erhoehter Kontrast, seit 31.08.2026.
-
-   Wer im Betriebssystem "mehr Kontrast" eingestellt hat, hat einen
-   Grund dazu: schlechtes Licht, ein billiger Bildschirm, oder Augen,
-   denen 8:1 nicht reicht. Die drei Textebenen und die beiden
-   Haarlinien fallen dann auf die jeweils kraeftigere Stufe zusammen.
-
-   Der Block steht hier und nicht in basis.css, weil er ausschliesslich
-   Farbtokens umsetzt -- tokens.css ist die einzige Farbquelle des
-   Projekts, und eine zweite Palette in einer Layoutdatei waere genau
-   der Bruch, den diese Regel verhindern soll. Deshalb auch keine neuen
-   Hex-Werte: jede Zeile zeigt auf ein Token, das es schon gibt.
-
-   Was das kostet: die Abstufung zwischen Fliesstext, zweiter Ebene und
-   Label verschwindet, alle drei stehen dann im Tintenton. Die
-   Hierarchie traegt in diesem Modus allein Groesse und Gewicht. Das
-   ist die richtige Reihenfolge -- eine Hierarchie, die nur aus drei
-   Grautoenen besteht, ist ohnehin keine. */
 @media (prefers-contrast: more){
   :root{
     --tinte-2: var(--tinte);
     --still:   var(--tinte);
     --linie:   var(--linie-kraeftig);
-    /* Oliv mit 28 Prozent war die leiseste Linie der Seite und ist das
-       erste, was bei schlechten Sichtverhaeltnissen verschwindet. */
     --linie-marke: var(--olive);
   }
 }
-
-/* Bewusst kein Dunkelmodus.
-   Das Portfolio wurde am 08.08.2026 auf reines Hell umgestellt, hier gilt
-   dasselbe. Die dunklen Werte stehen in der Markenrichtung bereit, falls es
-   spaeter doch einer werden soll, dann kommen sie als Block hierher, nicht
-   verstreut in die Komponenten. */

@@ -1,38 +1,16 @@
-/* ============================================================
-   kazuvate | Basis
-   Grundlagen plus alles, was auf mehr als einer Seite vorkommt:
-   Kopf, Titelband, Brotkrumen, Sektionen der Startseite, Fuss.
+/* Inhaltsverzeichnis des Basis-CSS, die Teile liegen in basis/. Die Reihenfolge der @import-Zeilen ist die der Kaskade. */
 
-   Diese Datei ist nur noch das Inhaltsverzeichnis. Der Code liegt
-   in stil/basis/, ein Abschnitt je Datei. Die Reihenfolge hier ist
-   die Reihenfolge im fertigen Stylesheet, und sie zaehlt: bei
-   gleicher Spezifitaet gewinnt die spaetere Regel. Ein neuer
-   Abschnitt gehoert deshalb dorthin, wo er in der Kaskade stehen
-   muss, nicht automatisch ans Ende.
-
-   Die Seiten laden weiterhin nur stil/basis.css. Vite setzt die
-   Teile beim Bauen zu einer einzigen Datei zusammen, der Browser
-   braucht dafuer keine zusaetzliche Anfrage.
-
-   Seiteneigenes CSS liegt daneben (kontakt.css, leistungen.css,
-   ablauf.css, seiten.css, danke.css, titelmotive.css).
-   Farben ausschliesslich ueber die Tokens aus tokens.css.
-   ============================================================ */
-
-/* Grundlagen, Tastaturfokus, Seitenwechsel */
 @import "./basis/grundlagen.css";
 @import "./basis/mikrodetails.css";
 @import "./basis/druck.css";
 @import "./basis/fokus.css";
 @import "./basis/seitenwechsel.css";
 
-/* Rahmen jeder Seite: Kopf, Menue, Titelband, Fuss */
 @import "./basis/kopf.css";
 @import "./basis/menue.css";
 @import "./basis/titelband.css";
 @import "./basis/fuss.css";
 
-/* Startseite */
 @import "./basis/startseite-sektionen.css";
 @import "./basis/startseite-kopfbereich.css";
 @import "./basis/knopf.css";
@@ -41,13 +19,10 @@
 @import "./basis/startseite-referenz.css";
 @import "./basis/startseite-ablauf-kontakt.css";
 
-/* Referenz-Kachel (Startseite und Referenzen) */
 @import "./basis/referenz-kachel.css";
 
-/* Frageleiste (nur Startseite) */
 @import "./basis/frageleiste.css";
 
-/* Referenzen als Kontaktbogen, mit Schnittmarken und laufender Kundenseite */
 @import "./basis/kontaktbogen.css";
 @import "./basis/schnittmarken.css";
 @import "./basis/seite-laeuft.css";

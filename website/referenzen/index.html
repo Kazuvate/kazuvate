@@ -8,56 +8,15 @@
 <meta name="description" content="Gebaute und live laufende Websites von kazuvate. Handgebautes Frontend für Schweizer KMU, jede Referenz direkt zum Anschauen verlinkt.">
 <meta name="theme-color" content="#2C3616">
 
-<!-- ====================== Suchmaschinen ======================
-     Die kanonische Adresse dieser Seite. Sie ist noetig, weil Vercel
-     dieselbe Datei unter mehreren Adressen ausliefert: die Startseite
-     liegt sowohl unter / als auch unter /index.html, die Referenzen
-     unter /referenzen/ und /referenzen/index.html. Ohne diese Zeile
-     sind das fuer eine Suchmaschine zwei Seiten mit identischem
-     Inhalt, und sie entscheidet selbst, welche sie nimmt.
-
-     Die Adresse muss zeichengleich mit der in public/sitemap.xml
-     stehen. Zwei Angaben, die sich widersprechen, sind schlechter als
-     eine. Gepruefte Regel fuer diese Domain: /leistungen ohne .html
-     ist 404, die Endung gehoert also dazu; /referenzen/ dagegen
-     funktioniert und ist die kuerzere der beiden Formen.
-
-     Seit dem 25.09.2026 leiten /index.html, /referenzen/index.html,
-     /referenzen ohne Schraegstrich und die Adressen ohne .html per
-     vercel.json auf diese Formen weiter (Begruendung in dokumente/aufbau.md,
-     Abschnitt "Adressen und Weiterleitungen"). Das Canonical bleibt trotzdem noetig: jede
-     Adresse mit angehaengtem Parameter, etwa ?utm_source=linkedin, ist
-     fuer eine Suchmaschine sonst eine eigene Seite. -->
 <link rel="canonical" href="https://kazuvate.ch/referenzen/">
 
-<!-- Grosse Vorschaubilder, etwa in Google Discover oder neben einer
-     KI-Antwort, zeigt Google nur mit dieser ausdruecklichen Erlaubnis.
-     Sie sagt nichts ueber das Indexieren selbst, das bleibt erlaubt. -->
 <meta name="robots" content="max-image-preview:large">
 
-<!-- Dieselbe Seite in den anderen Sprachen, seit 25.09.2026. Jede
-     Fassung nennt alle drei plus x-default, sich selbst eingeschlossen:
-     einen Verweis, den die Gegenseite nicht erwidert, ignoriert Google.
-     x-default zeigt auf Deutsch, die Fassung, die zuerst da war.
-     Dieselbe Zuordnung steht als xhtml:link in der Sitemap. -->
 <link rel="alternate" hreflang="de" href="https://kazuvate.ch/referenzen/">
 <link rel="alternate" hreflang="en" href="https://kazuvate.ch/en/portfolio/">
 <link rel="alternate" hreflang="fr" href="https://kazuvate.ch/fr/references/">
 <link rel="alternate" hreflang="x-default" href="https://kazuvate.ch/referenzen/">
 
-<!-- Link-Vorschau in WhatsApp, LinkedIn, Slack, Signal und iMessage.
-     Ohne diese Zeilen zeigt jeder geteilte Link auf kazuvate.ch nur
-     die nackte Adresse -- markenlogo/og.png liegt seit dem 19.08.2026
-     im Repo und war bis heute nirgends verlinkt.
-
-     og:image braucht eine vollstaendige Adresse mit Protokoll, ein
-     relativer Pfad wird von keinem der Dienste aufgeloest. Deshalb
-     liegt markenlogo/ seit dem 25.08.2026 unter public/: nur von dort
-     reicht Vite Dateien unveraendert und ohne Inhalts-Hash im Namen
-     durch, und nur dann bleibt die Adresse ueber Deploys hinweg
-     gleich. Vorher war /markenlogo/og.png im gebauten dist/ gar nicht
-     vorhanden -- ebenso wenig wie die drei Icons, die
-     site.webmanifest verlangt. -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="kazuvate">
 <meta property="og:locale" content="de_CH">
@@ -72,21 +31,6 @@
 <meta property="og:image:alt" content="Das KV-Monogramm von kazuvate, hell auf olivgruenem Grund">
 <meta name="twitter:card" content="summary_large_image">
 
-<!-- Brotkrumenpfad. Deckt sich seit dem 31.08.2026 Wort fuer Wort
-     mit der sichtbaren Krumenleiste im Koerper dieser Seite. Bis
-     dahin stand hier "es gibt keine sichtbare Krumenleiste" -- das
-     war erlaubt, aber strukturierte Daten, denen auf der Seite
-     selbst nichts entspricht, sind der Fall, den Googles Richtlinie
-     als Grund zum Ignorieren nennt. Im Suchtreffer steht damit der
-     Pfad statt der nackten URL.
-
-     Seit dem 25.09.2026 steht der Pfad zusammen mit einem Knoten fuer
-     die Seite selbst in einem @graph. Der Knoten sagt, zu welcher
-     Website die Seite gehoert (#website) und von wem sie handelt
-     (#firma), beides ist auf der Startseite vollstaendig beschrieben.
-     Fuer eine Maschine ist die Unterseite damit kein loses Dokument
-     mehr, sondern ein Teil derselben Firma. Name und Beschreibung des
-     Knotens sind zeichengleich mit og:title und description oben. -->
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -170,83 +114,30 @@
     ]
   }
 </script>
-<!-- =========================================================== -->
 
-<!-- Symbole. Alle Pfade ab "/" und nicht relativ, seit 03.09.2026.
-     Relativ aufgeloest zeigten sie von referenzen/ aus in ein
-     Verzeichnis, das es dort nicht gibt -- die Seite half sich mit
-     "../", aber ein Pfad, der je nach Seite anders geschrieben werden
-     muss, ist einer zu viel. Die Schrift steht seit dem 02.09.2026
-     ohnehin schon absolut daneben.
-
-     /favicon.ico und /favicon.svg liegen ZUSAETZLICH im Wurzel-
-     verzeichnis, obwohl markenlogo/ das Zuhause aller abgeleiteten
-     Symbole ist. Grund: Suchmaschinen und Browser fragen die
-     Wurzeladresse direkt ab, ohne ins HTML zu schauen. Bis zum
-     03.09.2026 antwortete kazuvate.ch/favicon.ico mit 404 -- und zwar
-     mit der 11 kB grossen HTML-Fehlerseite. Genau das ist der
-     wahrscheinlichste Grund, warum Google in der Trefferliste eine
-     Weltkugel statt des Zeichens gezeigt hat.
-
-     Die beiden Wurzeldateien sind Kopien aus markenlogo/. Wer dort
-     etwas aendert, muss sie mitnehmen.
-
-     sizes traegt jetzt alle drei Groessen, die wirklich in der .ico
-     stecken (16, 32 und 48). Vorher stand dort nur "32x32" und hat
-     damit die 48x48 verschwiegen -- ausgerechnet die Groesse, die
-     Google fuer die Trefferliste empfiehlt. -->
 <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/markenlogo/apple-touch-icon.png">
 <link rel="manifest" href="/markenlogo/site.webmanifest">
 
-<!-- Die Schrift vorziehen. Sie liegt in public/schriften/ und wird
-     erst entdeckt, wenn der Browser das CSS geparst und die
-     @font-face-Regel erreicht hat -- also spaet. font-display:
-     optional in stil/basis.css gibt ihr nur ein sehr kurzes Fenster:
-     trifft sie nicht rechtzeitig ein, wird sie fuer diesen
-     Seitenaufruf ganz uebersprungen und die Seite steht im
-     Systemfont. Genau dafuer ist preload das Gegenstueck -- es holt
-     die Datei sofort, damit optional sie auch benutzen kann, statt
-     sie zu verwerfen. Das CLS-Budget bleibt unberuehrt, weil sich an
-     optional nichts aendert.
-
-     crossorigin ist Pflicht und keine Zierde: Schriften werden immer
-     im anonymen CORS-Modus geholt. Ohne das Attribut laedt der
-     Browser die Datei zweimal, einmal fuer den preload und einmal
-     fuer @font-face. Ergaenzt 02.09.2026. -->
 <link rel="preload" href="/schriften/GeneralSans-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../stil/tokens.css">
 <link rel="stylesheet" href="../stil/basis.css">
 <link rel="stylesheet" href="../stil/titelmotive.css">
 
-<!-- Sagt dem CSS, dass JavaScript laeuft. Muss hier oben stehen und darf
-     nicht in haupt.js: das laedt mit defer und kaeme zu spaet. Traegt heute
-     nur noch das Menue auf dem Handy und die Symbolzeichnung, beide brauchen
-     die Klasse um ueberhaupt etwas zu tun. -->
+<!-- js-Klasse vor dem ersten Bild setzen, nicht in haupt.js: defer kaeme zu spaet. -->
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
 
-<!-- Marke einmal definiert, unten zweimal verwendet. Spart eine zweite Kopie
-     des Pfads und einen HTTP-Aufruf. -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <symbol id="marke" viewBox="0 0 585.51 442.90">
     <path fill="currentColor" fill-rule="evenodd" d="M0.00 0.19L79.97 0.39L80.19 169.50L153.51 170.08L283.43 0.19L380.99 0.15L222.91 208.75L314.29 442.90L226.95 442.73L153.34 250.65L79.93 250.95L79.93 442.90L0.03 442.90ZM256.87 212.24L328.91 117.34L382.37 254.94L487.38 0.26L585.51 0.00L417.18 442.90L346.61 442.90Z"/>
   </symbol>
 </svg>
 
-<!-- Hier lag bis zum 31.08.2026 ein 3px hoher Fortschrittsbalken am
-     oberen Bildrand, der sich beim Scrollen fuellte. Entfernt, weil
-     er nichts anzeigte, was der Besucher nicht schon wusste: eine
-     Marketingseite mit fuenf Abschnitten liest niemand so lange,
-     dass er wissen muss, wie weit er ist. Ein Lesefortschritt gehoert
-     an einen langen Text, nicht an eine Seite, die man in einer
-     Minute durchscrollt. Markup, CSS und der GSAP-Block dazu sind
-     ersatzlos raus. -->
 <a class="sprung" href="#inhalt">Zum Inhalt springen</a>
 
-<!-- ====================== Kopf ====================== -->
 <header class="kopf">
   <div class="wrap kopf-innen">
 
@@ -255,8 +146,6 @@
       <span>kazuvate</span>
     </a>
 
-    <!-- Nur mit JavaScript sichtbar, siehe basis.css: ohne Skript
-         liesse sich die Schublade nicht oeffnen. -->
     <button class="menue-knopf" type="button" aria-expanded="false"
             aria-controls="hauptmenue" aria-label="Menü öffnen">
       <span class="balken" aria-hidden="true"></span>
@@ -274,13 +163,6 @@
       </div>
     </nav>
 
-    <!-- Sprachen, seit 25.09.2026, als Auswahl seit 27.09.2026. Jeder
-         Link fuehrt auf dieselbe Seite in der anderen Sprache, nicht auf
-         deren Startseite. Kuerzel statt ausgeschriebener Namen, den vollen
-         Namen liest ein Screenreader aus aria-label, in der jeweiligen
-         Sprache ausgesprochen (lang). <details> klappt ohne Skript auf,
-         haupt.js schliesst es beim Klick daneben und mit Escape. Stil in
-         stil/basis.css unter "Sprachen". -->
     <nav class="sprachen" aria-label="Sprache">
       <details>
         <summary aria-label="Sprache wählen, aktuell Deutsch">DE<svg class="sprachen-pfeil" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 4.5 6 7.5 9 4.5"/></svg></summary>
@@ -297,21 +179,8 @@
   </div>
 </header>
 
-<!-- ====================== Grosser Seiteneinstieg ======================
-     Bis zum 22.08.2026 trugen zwei abstrahierte Browserfenster das
-     seiteneigene Motiv, ebenfalls entfernt -- zu schwer auf der
-     dunklen Flaeche. Kasum mag die Grafik selbst ausdruecklich
-     ("diese sehen ja gut aus"), nur nicht hier: sein Vorschlag ist ein
-     heller Hintergrund mit gruenen Akzenten, Platz noch nicht
-     festgelegt. Das Markup steht bewusst nicht mehr hier, sondern in
-     stil/titelmotive.css als Git-Historie -- neu bauen statt eine
-     Leiche im DOM lassen, sobald der Platz feststeht. -->
 <div class="titel titel--gross titel--referenzen">
   <div class="wrap titel-inhalt">
-    <!-- Vorspann-Zeile weg seit 23.08.2026, siehe leistungen.html fuer
-         die Begruendung. Dieselbe sich selbst zeichnende Linie, hier
-         ebenfalls als direktes Kind von .titel-inhalt statt in
-         .titel-kopf -- "bis ganz nach hinten", siehe leistungen.html. -->
     <div class="titel-kopf">
       <div class="titel-wort"><h1>Referenzen</h1></div>
     </div>
@@ -321,11 +190,6 @@
   </div>
 </div>
 
-<!-- ====================== Brotkrumen ======================
-     Wort fuer Wort dasselbe wie der BreadcrumbList im Kopf dieser
-     Seite. Steht unter dem Titelband statt darin: das Titelband
-     traegt seit dem 23.08.2026 nur noch die Ueberschrift.
-     ==================================================== -->
 <nav class="krumen" aria-label="Brotkrumen">
   <div class="wrap">
     <ol role="list">
@@ -335,20 +199,11 @@
   </div>
 </nav>
 
-<!-- ====================== Inhalt ====================== -->
 <main id="inhalt">
   <div class="wrap referenz-bereich">
 
     <div class="referenz-galerie">
 
-      <!-- Das erste Bild laedt sofort und mit Vorrang, die anderen
-           beiden bleiben lazy. Seit dem 25.09.2026, vorher waren alle
-           drei lazy. Die erste Reihe steht beim Laden schon im Bild
-           (oberer Rand bei rund 464px in einem 900px hohen Fenster,
-           siehe src/bewegung.ts), und auf dem Handy ist dieses Bild
-           das groesste Element im ersten Bildschirm, also das, woran
-           Google den LCP misst. loading="lazy" haette es erst nach dem
-           Layout angefordert, statt gleich beim Lesen des HTML. -->
       <figure class="filmbild">
         <a class="referenz-kachel" href="https://www.prometizekiri.com/" target="_blank" rel="noopener">
           <img src="../medien/referenzen/prometi-startseite.webp"
@@ -362,16 +217,6 @@
         <figcaption><span class="filmbild-nr" aria-hidden="true">1</span><span>Facility Services</span><span>6 Seiten</span><span>2026</span></figcaption>
       </figure>
 
-      <!-- Zweite Kachel seit 22.08.2026. PromptPrinter ist kein
-           Kundenauftrag, sondern Kasums eigenes Produkt, und es ist
-           auch keine Website im Sinne der anderen Kachel, sondern eine
-           Anwendung mit Konto, Datenbank und Chat. Aufgenommen auf
-           seine ausdrueckliche Ansage: gezeigt wird das Frontend, und
-           das ist von Hand gebaut wie alles andere hier.
-
-           Deshalb steht im Titelband der Seite jetzt "Websites und
-           Anwendungen" statt nur "Websites" -- sonst haette die Zeile
-           darueber der Kachel darunter widersprochen. -->
       <figure class="filmbild">
         <a class="referenz-kachel" href="https://promptprinter.app/" target="_blank" rel="noopener">
           <img src="../medien/referenzen/promptprinter-startseite.webp"
@@ -406,8 +251,6 @@
 
   </div>
 
-  <!-- Abschluss. Ohne ihn endet die Seite nach der letzten Kachel
-       im Nichts und der Besucher hat keinen naechsten Schritt. -->
   <section class="abschluss">
     <div class="wrap">
       <p class="abschluss-zeile">Bauen wir etwas, das funktioniert.</p>
@@ -417,7 +260,6 @@
 
 </main>
 
-<!-- ====================== Fuss ====================== -->
 <footer class="fuss">
   <div class="wrap">
 
@@ -427,11 +269,6 @@
         <svg class="fuss-zeichen" viewBox="0 0 585.51 442.90" role="img" aria-label="kazuvate"><use href="#marke"></use></svg>
         <p>Handgebaute Frontend-Websites für KMU in der Schweiz.</p>
 
-        <!-- Kasum persoenlich: eigene Seite und LinkedIn. Beide oeffnen in
-             einem neuen Tab, damit kazuvate.ch offen bleibt. Das Monogramm
-             ist dasselbe Zeichen wie auf kasumbajrami.dev, hier als Schrift
-             statt als Bild: spart eine Datei und bleibt in jeder Groesse
-             scharf. -->
         <div class="fuss-draehte">
 
           <a class="draht-knopf" href="https://kasumbajrami.dev/"
@@ -443,8 +280,6 @@
           <a class="draht-knopf" href="https://www.linkedin.com/in/kasum-bajrami-885a653a6/"
              target="_blank" rel="noopener"
              aria-label="Kasum Bajrami auf LinkedIn, öffnet in einem neuen Tab">
-            <!-- viewBox auf 448 statt 512 gekuerzt: der Pfad ist 448 hoch, mit 512
-                   saesse das Zeichen im Kreis zwei Pixel zu hoch. -->
               <svg viewBox="0 0 448 448" aria-hidden="true" focusable="false">
               <path fill="currentColor" d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"/>
             </svg>
@@ -501,8 +336,6 @@
   </div>
 </footer>
 
-<!-- Eigenes Skript, kein fremder Server. Am Ende des Body und mit
-     defer, damit die Seite nicht darauf warten muss. -->
 <script src="../skript/haupt.js" defer></script>
 <script type="module" src="/src/bewegung.ts"></script>
 

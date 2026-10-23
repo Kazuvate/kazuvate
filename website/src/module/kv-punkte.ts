@@ -1,23 +1,4 @@
-/**
- * kv-punkte.ts, seit 11.10.2026
- *
- * Das KV-Zeichen im Fuss besteht beim Zeigen aus Punkten auf einem
- * festen Raster. Der Mauszeiger stoesst die Punkte in seiner Naehe weg,
- * sobald er weiterzieht, schnappen sie an ihren Platz zurueck.
- *
- * Geladen wird die Datei von src/bewegung.ts, und zwar erst, wenn der
- * Zeiger den Fuss betritt, nur mit Maus (hover: hover) und nur ohne
- * reduzierte Bewegung. Das SVG bleibt die ganze Zeit im Dokument und
- * wird beim Zeigen nur ausgeblendet: der Screenreader liest weiter
- * "kazuvate", ohne Skript und auf dem Handy sieht man nichts anderes.
- *
- * Die Form kommt aus dem Pfad in <symbol id="marke">, nicht aus einer
- * Kopie: das Raster liegt ueber der Zeichnung, und jeder Rasterpunkt,
- * der in die Flaeche faellt, wird ein Punkt.
- *
- * Nichts bewegt sich von allein. Die Zeichenschleife laeuft nur,
- * solange der Zeiger da ist oder ein Punkt noch nicht zurueck ist.
- */
+// KV-Zeichen im Fuss aus Punkten, die der Mauszeiger wegstoesst. Nur mit Maus und ohne reduzierte Bewegung.
 
 const RASTER = 3; // Abstand der Punkte in CSS-Pixeln
 const RADIUS = 14; // Reichweite des Zeigers
@@ -32,9 +13,6 @@ export function starte(fuss: HTMLElement, svg: SVGSVGElement, pfad: string) {
   svg.after(leinwand);
   const c = leinwand.getContext("2d")!;
 
-  // Die Rueckkehr dauert so lange wie jeder kleine Zustandswechsel der
-  // Seite: --kurz aus stil/tokens.css, ein Drittel davon als
-  // Zeitkonstante, dann ist ein Punkt nach --kurz praktisch zu Hause.
   const tau = (parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--kurz")) || 200) / 3;
 
   let punkte: { x: number; y: number; ox: number; oy: number }[] = [];
@@ -57,7 +35,6 @@ export function starte(fuss: HTMLElement, svg: SVGSVGElement, pfad: string) {
     leinwand.height = hoehe * dpr;
     c.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    // Form abtasten: Pfad auf eine Hilfsflaeche, Deckkraft je Rasterpunkt.
     const hilf = document.createElement("canvas");
     hilf.width = Math.ceil(b.width);
     hilf.height = Math.ceil(b.height);
@@ -99,9 +76,6 @@ export function starte(fuss: HTMLElement, svg: SVGSVGElement, pfad: string) {
       c.arc(p.x + p.ox, p.y + p.oy, 1, 0, 7);
     }
     c.fill();
-    // Alles an seinem Ziel: Schleife aus. Steht der Zeiger still im Feld,
-    // geht es mit der naechsten Bewegung weiter; ist er weg, kehrt das
-    // SVG zurueck.
     if (ruhe) {
       laeuft = 0;
       zuletzt = 0;

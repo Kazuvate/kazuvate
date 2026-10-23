@@ -1,33 +1,9 @@
-/* --- Mikrodetails ----------------------------------------------
-   Eingefuehrt am 31.08.2026. Nichts davon sieht man auf einem
-   Bildschirmfoto -- man sieht es erst, wenn jemand die Seite
-   tatsaechlich benutzt: Text markiert, in ein Feld tippt, das
-   Impressum ausdruckt, mit erhoehtem Kontrast surft. Genau dort
-   trennt sich eine gebaute Seite von einer generierten.
-   ---------------------------------------------------------------- */
-
-/* Die Seite gibt es nur hell, das steht so in tokens.css. Ohne diese
-   Zeile weiss der Browser das nicht: auf einem Rechner im
-   Dunkelmodus zeichnet er seine eigenen Bedienelemente dunkel, allen
-   voran die Bildlaufleiste -- ein dunkler Rahmen um eine
-   papierfarbene Seite. Nachgemessen: mit `prefers-color-scheme: dark`
-   meldete `getComputedStyle(html).colorScheme` bisher "normal". */
 html{ color-scheme: light; }
 
-/* Markierter Text. Ohne Regel nimmt der Browser sein eigenes Blau --
-   die einzige Farbe der ganzen Seite, die nicht aus dem Logo kommt,
-   und sie taucht ausgerechnet dann auf, wenn jemand etwas
-   herauskopiert: eine Telefonnummer, eine Adresse, einen Satz fuers
-   Angebot. Deckkraft statt Volltonfarbe, damit ein markiertes Wort
-   im Fliesstext nicht schwerer wiegt als eine Ueberschrift. */
 ::selection{
   background: rgb(63 80 25 / .22);
   color: var(--tinte);
 }
-/* Auf den oliven Flaechen traegt dieselbe Markierung nichts, sie
-   waere Oliv auf Oliv. Dort dreht sie um: helle Flaeche, dunkle
-   Schrift. Gleiche Ueberlegung wie beim Fokusring, der auf diesen
-   Flaechen ebenfalls auf den hellen Ton umschaltet. */
 .kopf ::selection,
 .titel ::selection,
 .fuss ::selection{
@@ -35,23 +11,10 @@ html{ color-scheme: light; }
   color: var(--auf-flaeche);
 }
 
-/* Der Schreibcursor im Formular. Stand auf dem Standard-Schwarz des
-   Browsers; oliv ist derselbe Ton, den auch der Fokusring und das
-   Pflichtfeld-Sternchen tragen. */
 input,
 textarea{ caret-color: var(--olive); }
 
-/* Die Aufleuchtfarbe beim Antippen. Dieselbe Ueberlegung wie bei
-   ::selection weiter oben, nur fuer den Finger statt fuer die Maus:
-   ohne Regel malt iOS und Android einen grauschwarzen Kasten ueber
-   das getippte Element -- wieder eine Farbe, die nicht aus dem Logo
-   kommt, und wieder genau in dem Moment sichtbar, in dem jemand die
-   Seite tatsaechlich benutzt. Zwoelf Prozent Oliv statt der 22 bei
-   der Markierung: eine Beruehrung ist kuerzer als eine Auswahl und
-   braucht weniger, um quittiert zu werden.
-
-   Das betrifft ueberwiegend Kunden: die Zielgruppe sind Betriebe,
-   deren Inhaber die Seite auf dem Handy oeffnen. Ergaenzt 02.09.2026. */
+/* Antippfarbe: ohne Regel malt iOS und Android einen grauen Kasten ueber das Element. */
 a,
 button,
 summary,
@@ -59,12 +22,6 @@ input,
 textarea,
 label{ -webkit-tap-highlight-color: rgb(63 80 25 / .12); }
 
-/* Nimmt die rund 300 Millisekunden Wartezeit, die mobile Browser vor
-   einem Klick einlegen, um noch auf einen zweiten Tipp fuer den
-   Doppeltipp-Zoom zu warten. Der Zoom mit zwei Fingern bleibt davon
-   unberuehrt, es faellt nur die Verzoegerung weg -- und mit ihr der
-   Eindruck, die Seite reagiere traege. Das ist auf einer Seite, deren
-   Verkaufsargument die Ladezeit ist, mehr als eine Kleinigkeit. */
 a,
 button,
 summary,
@@ -72,12 +29,6 @@ label,
 .knopf,
 .kopf-knopf{ touch-action: manipulation; }
 
-/* Ausgleich fuer die Aussparung am oberen Bildrand. Betrifft das
-   Querformat auf einem iPhone: dort liegt die Kamera an der linken
-   oder rechten Kante, und der Kopf laeuft als vollbreiter Balken
-   darunter durch. Ohne diese Zeile beginnt "kazuvate" hinter der
-   Aussparung. max() statt einer festen Addition, damit der Rand auf
-   jedem Geraet ohne Aussparung genau der bisherige bleibt. */
 .kopf .wrap,
 .fuss .wrap{
   padding-left: max(var(--rand), env(safe-area-inset-left));
@@ -91,14 +42,6 @@ label,
   }
 }
 
-/* Notausgang fuer lange Zeichenketten ohne Leerzeichen: Mailadressen,
-   Domains, Dateinamen. Gemessen bei 320px Fensterbreite passt
-   "kasumbajrami7@gmail.com" heute mit 22 Pixeln Reserve -- das ist
-   kein Sicherheitsabstand, sondern Glueck. Eine Adresse mit drei
-   Zeichen mehr, ein Kundenname im Fliesstext, und die Seite scrollt
-   waagrecht. `anywhere` statt `break-word`, weil nur `anywhere` auch
-   die Mindestbreite des Elements schrumpfen laesst und damit
-   verhindert, dass das Raster selbst zu breit wird. */
 a,
 p,
 h1, h2, h3,

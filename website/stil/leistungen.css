@@ -1,18 +1,4 @@
-/* ============================================================
-   kazuvate | Leistungen
-   Dieselben drei Punkte wie die Bento-Kacheln auf der Startseite
-   ("Warum kazuvate"), hier grosser und einzeln durchgezogen: eine
-   Liste statt drei Kacheln, damit jeder Punkt Platz zum Atmen hat.
-
-   Bewusst ohne Scroll-Animation. Bis zum 20.08.2026 blendeten
-   Bloecke beim Vorbeiscrollen ein, Kasum hat das an diesem Tag
-   abgelehnt: genau dieses Muster liest er als Vibe-Coding-Zeichen.
-   Die einzige Bewegung hier ist eine kleine Reaktion auf Zeiger
-   oder Tastaturfokus, keine auf Scrollposition.
-
-   Eigene Datei, damit andere Seiten dieses CSS nicht mitladen.
-   Farben ausschliesslich aus tokens.css.
-   ============================================================ */
+/* Leistungen: die drei Punkte gross und einzeln, mit Nummer. */
 
 .leistungen-gross{
   list-style: none;
@@ -34,16 +20,7 @@
     align-items: start;
   }
 }
-/* Ab 1140px kam hier bis zum 31.08.2026 eine dritte Spalte fuer
-   das Seitenmotiv dazu, die zweite schrumpfte dafuer von 62ch auf
-   58ch. Mit dem Motiv ist beides weg: das Raster bleibt ab 1100px
-   bei zwei Spalten, und die 62ch stehen dem Text wieder ganz zur
-   Verfuegung -- gefuellt hat er sie ohnehin nie, der Fliesstext
-   ist auf 58ch begrenzt und die Ueberschrift auf 18ch. */
 
-/* Grosse, ruhige Nummer statt eines Symbols: die Zeichen sind auf
-   der Startseite schon vergeben (Leistungen-Sektion), hier soll
-   die Zahl selbst der Blickfang sein. */
 .leistung-nr{
   font-size: clamp(2.6rem, 6vw, 4.2rem);
   font-weight: 700;
@@ -66,18 +43,6 @@
   max-width: 58ch;
 }
 
-/* Plakat-Massstab, seit 11.10.2026. Ab 1100px wechselt die Nummer
-   von links nach rechts und wird zur eigentlichen Flaeche der Zeile:
-   ein Grad, der nicht zur Textleiter gehoert, daneben der Text klein
-   und exakt -- dieselbe Bauart wie die zwei Welten in tokens.css.
-   Die Ziffer steht auf der Haarlinie und wird an ihr abgeschnitten,
-   rechts dort, wo die Linie endet. Beides ist der Rand des Blatts,
-   nicht der des Fensters: so sitzt der Anschnitt bei 1100px an
-   derselben Stelle wie bei 2560px.
-
-   overflow: clip schneidet, ohne einen Scrollbereich anzulegen. Die
-   Zeile enthaelt nichts Fokussierbares, es kann also kein Fokusring
-   mit abgeschnitten werden. */
 @media (min-width: 1100px){
   .leistung-gross{
     grid-template-columns: minmax(0, 62ch) minmax(0, 1fr);
@@ -88,35 +53,17 @@
   .leistung-nr{
     grid-column: 2;
     grid-row: 1;
-    /* safe: wird die Spalte bei reinem Textzoom schmaler als die
-       Ziffer, laeuft sie nach rechts ins Abgeschnittene statt nach
-       links ueber den Text. */
     justify-self: end;
     justify-self: safe end;
     align-self: end;
-    /* 20vw sind bei 1100px 220px, gedeckelt bei 19rem (304px) ab
-       rund 1520px. Groesser wuerde die Ziffer in der rechten Spalte
-       nicht mehr Flaeche fuellen, sondern sie sprengen. */
     font-size: min(20vw, 19rem);
     line-height: .8;
     letter-spacing: -.05em;
-    /* Unten durch das Polster der Zeile bis unter die Haarlinie,
-       rechts ueber das Ende der Linie hinaus. Die Werte in em
-       schneiden bei jeder Groesse denselben Anteil ab. */
     margin-bottom: calc(-1 * var(--s8) - .1em);
     margin-right: -.07em;
   }
 }
 
-/* Die einzige Bewegung auf der Seite: beim Zeigen wird die Nummer
-   zur Markenfarbe und ruckt eine Spur nach rechts, dieselbe
-   Distanz wie der Pfeil bei "Alle Referenzen". Kein Scroll-Bezug.
-
-   Nur fuer echte Zeiger: der Block enthaelt keinen Link und kein
-   Formularfeld, es gibt also nichts, das per Tastatur fokussiert
-   werden koennte. Ein tabindex nur fuer diesen Zierrat wuerde
-   Tastaturnutzern einen leeren Stopp bescheren, der nichts
-   Zusaetzliches sagt — schlechter als die Bewegung wegzulassen. */
 @media (hover: hover) and (pointer: fine){
   .leistung-gross:hover .leistung-nr{
     color: var(--olive);
@@ -124,33 +71,6 @@
   }
 }
 
-/* Hier stand der Motiv-Abschnitt: das umgefaerbte Lottie-Bild in
-   der dritten Spalte, ab 1140px, hoechstens 260px breit, bei
-   abbestellter Bewegung ganz ausgeblendet, weil SMIL sich von
-   aussen weder anhalten noch auf ein Standbild stellen laesst.
-   Entfernt am 31.08.2026, Begruendung im Markup von
-   leistungen.html. Damit stehen rechts neben den drei Zeilen
-   wieder rund 240 leere Pixel -- dieselbe Flaeche wie vor dem
-   25.08.2026. Wer sie fuellen will, soll etwas hineinbauen, das
-   es nur bei kazuvate gibt. */
-
-/* Bis zum 22.08.2026 stand hier der Abschnitt "Globus bei Leistung 02"
-   -- ein sich drehender 3D-Globus (three-globe) ab 1100px neben dem
-   Text der Zeile "Sichtbarkeit". Auf Kasums Wunsch ersatzlos entfernt,
-   siehe leistungen.html. Mit ihm sind drei Quelldateien und drei
-   npm-Pakete (three, three-globe, @react-three/fiber) aus dem Projekt
-   verschwunden, zusammen der schwerste einzelne Baustein der Seite. */
-
-/* --- Passt es zu Ihnen? -------------------------------------
-   Seit 11.10.2026. Drei Fragen nebeneinander, getrennt durch
-   senkrechte Haarlinien wie die Leistungen-Spalten der Startseite,
-   darunter das Ergebnis. Auswertung in public/skript/passt.js.
-
-   Die Radioknoepfe bleiben die des Browsers, nur in der Markenfarbe
-   (accent-color). Ein nachgebauter Knopf muesste Fokus, Pfeiltasten
-   und den Zustand fuer Screenreader selbst liefern; der echte kann
-   das alles schon.
-   ------------------------------------------------------------ */
 .passt-fragen{
   margin-top: var(--s7);
   display: grid;
@@ -161,8 +81,6 @@
   .passt-fragen{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
-/* fieldset bringt Rahmen, Innenabstand und eine Mindestbreite mit,
-   die ein Raster sprengt (min-inline-size: min-content). */
 .passt-frage{
   margin: 0;
   padding: var(--s6) 0;
@@ -181,9 +99,6 @@
   .passt-frage + .passt-frage{ border-top: 1px solid var(--linie-marke); }
 }
 
-/* legend laesst sich nicht in ein Raster stellen und ignoriert
-   Breitenangaben je nach Browser. float holt sie in den normalen
-   Fluss des fieldset, die Wahl darunter raeumt mit clear auf. */
 .passt-frage legend{
   float: left;
   width: 100%;
@@ -203,7 +118,6 @@
   gap: var(--s2) var(--s6);
   padding-top: var(--s4);
 }
-/* Das ganze Wort ist Trefferflaeche, mindestens 44px hoch. */
 .passt-wahl label{
   display: inline-flex;
   align-items: center;
@@ -225,7 +139,6 @@
   font-weight: 650;
 }
 
-/* --- Ergebnis ------------------------------------------------ */
 .passt-ergebnis{
   margin-top: var(--s6);
   max-width: 62ch;
@@ -242,8 +155,6 @@
 }
 .passt-ergebnis .knopf{ margin-top: var(--s5); }
 
-/* Ohne Skript gibt es keine Auswertung, also auch kein Feld, das
-   auf eine wartet. Dafuer steht die Regel als Satz da. */
 .passt-regel{
   margin-top: var(--s6);
   max-width: 62ch;
@@ -252,16 +163,6 @@
 html:not(.js) .passt-ergebnis{ display: none; }
 .js .passt-regel{ display: none; }
 
-/* --- Wege zur Website ---------------------------------------
-   Seit 11.10.2026. Begruendung der Inhalte im Markup. Hier nur die
-   Form: Haarlinien zwischen den Zeilen wie ueberall auf der Seite,
-   unsere Spalte als weisses Band mit vier Eckwinkeln -- den
-   Schnittmarken, an denen ein Druckbogen beschnitten wird.
-
-   Die Spaltenkoepfe stehen bewusst nicht in Versalien wie bei .tab
-   in stil/seiten.css: "kazuvate" wird im Auftritt immer klein
-   geschrieben, auch in einer Tabelle.
-   ------------------------------------------------------------ */
 .wege-tab{
   margin-top: var(--s7);
   overflow-x: auto;
@@ -269,8 +170,6 @@ html:not(.js) .passt-ergebnis{ display: none; }
 .wege-tab table{
   width: 100%;
   min-width: 720px;
-  /* separate statt collapse: nur so bleiben die Raender an der
-     klebenden ersten Spalte (siehe unten) beim Verschieben stehen. */
   border-collapse: separate;
   border-spacing: 0;
   table-layout: fixed;
@@ -309,8 +208,6 @@ html:not(.js) .passt-ergebnis{ display: none; }
   color: var(--tinte);
 }
 
-/* Unsere Spalte. Das Band ist Information, nicht Zierde: es sagt,
-   welche der drei Spalten die Firma ist, deren Seite man liest. */
 .wege-tab .wege-wir{
   position: relative;
   background: var(--karte);
@@ -334,10 +231,6 @@ html:not(.js) .passt-ergebnis{ display: none; }
 .wege-tab tr:last-child th,
 .wege-tab tr:last-child td{ border-bottom: 0; }
 
-/* Der Hinweis steht nur dort, wo die Tabelle wirklich breiter ist
-   als der Platz: unter 764px Fensterbreite (720px Tabelle plus die
-   beiden Seitenraender). Darueber waere er eine Anleitung fuer
-   etwas, das nicht passiert. */
 .wege-hinweis{
   display: none;
   margin-top: var(--s5);
@@ -348,9 +241,6 @@ html:not(.js) .passt-ergebnis{ display: none; }
   .wege-hinweis{ display: block; }
   .wege-tab{ margin-top: var(--s3); }
 
-  /* Beim Verschieben bleibt die Frage links stehen, sonst liest man
-     nach dem ersten Wischen Antworten ohne die Zeile, zu der sie
-     gehoeren. Der Papierton deckt, was darunter durchlaeuft. */
   .wege-tab th:first-child{
     position: sticky;
     left: 0;
@@ -361,8 +251,6 @@ html:not(.js) .passt-ergebnis{ display: none; }
   }
   .wege-tab th:first-child + *{ padding-left: var(--s4); }
 
-  /* Die stehende Spalte schmal halten: bei 375px blieben mit den
-     22 Prozent vom Desktop nur 173px fuer alles, was sich verschiebt. */
   .wege-tab table{ min-width: 640px; }
   .wege-tab thead th:first-child{ width: 7.5rem; }
   .wege-tab tbody th{ font-size: var(--satz-3); }

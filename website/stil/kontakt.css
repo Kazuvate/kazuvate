@@ -1,20 +1,5 @@
-/* ============================================================
-   kazuvate | Kontaktseite
-   Zwei Spalten: links Ansprache, Telefon, Mail und der Ablauf
-   nach der Anfrage, rechts das Formular als Karte. Vorbild ist
-   portdigitalco.com/contact.
+/* Kontaktseite: links Ansprache und Ablauf, rechts das Formular als Karte. */
 
-   Eigene Datei, damit Startseite und Rechtsseiten kein CSS laden,
-   das sie nie brauchen. Farben ausschliesslich aus tokens.css.
-   ============================================================ */
-
-/* --- Raster -------------------------------------------------
-   Eine Spalte bis 940px. Erst darueber ist Platz fuer Text und
-   Formular nebeneinander.
-   ------------------------------------------------------------ */
-/* padding-block, nicht die Kurzform padding: die wuerde den
-   seitlichen Rand von .wrap ueberschreiben und die Seite klebte
-   auf dem Handy am Bildschirmrand. */
 .kontakt-raster{
   padding-block: var(--s8) var(--s9);
   display: grid;
@@ -35,7 +20,6 @@
   }
 }
 
-/* --- Linke Spalte ------------------------------------------- */
 .gross{
   font-size: clamp(3.2rem, 9vw, 5.4rem);
   line-height: .95;
@@ -49,18 +33,10 @@
   max-width: 42ch;
 }
 
-/* .draht und .draht-ort kommen aus basis.css. Auf dieser Seite
-   stehen Telefon und Mail eine Stufe kleiner, sonst nehmen sie
-   der H1 den Rang weg. */
 .kontakt-links .draht a{
   font-size: clamp(1.2rem, 2.6vw, 1.6rem);
 }
 
-/* --- Wie es weitergeht --------------------------------------
-   Drei nummerierte Zeilen, getrennt durch Haarlinien. Kein
-   Kasten: die Karte rechts ist der einzige Kasten auf der Seite,
-   sonst kaempfen zwei Kaesten um dieselbe Aufmerksamkeit.
-   ------------------------------------------------------------ */
 .schritte{
   margin-top: var(--s8);
   padding-top: var(--s6);
@@ -73,11 +49,6 @@
   display: grid;
   gap: var(--s5);
 }
-/* Statt der Nummer ein Strich im Markenton, siehe Begruendung im
-   HTML. align-self: start plus margin-top setzt ihn auf die Mitte der
-   ersten Textzeile -- baseline hilft hier nicht, eine leere Box hat
-   keine. Der Wert ist nachgemessen und nicht gerechnet: das ::before
-   erbt die 17px des <li>, der Absatz daneben laeuft auf .96rem. */
 .schritte li{
   display: grid;
   grid-template-columns: 1.5rem 1fr;
@@ -98,7 +69,6 @@
 }
 .schritte .weiter{ margin-top: var(--s5); }
 
-/* --- Lieber telefonieren ------------------------------------ */
 .lieber-reden{
   margin-top: var(--s8);
   padding-top: var(--s6);
@@ -110,11 +80,6 @@
 }
 .lieber-reden .knopf{ margin-top: var(--s5); }
 
-/* --- Anfragekarte -------------------------------------------
-   Der einzige Kasten auf der Seite. Bewusst nicht klebend: die
-   Karte ist mit fuenf Feldern hoeher als die meisten Schirme,
-   ein sticky-Element wuerde unten samt Knopf abgeschnitten.
-   ------------------------------------------------------------ */
 .anfrage-karte{
   background: var(--karte);
   border: 1px solid var(--linie);
@@ -130,24 +95,10 @@
   margin-bottom: var(--s5);
 }
 
-/* --- Formular -----------------------------------------------
-   Stand bis zum 19.08.2026 in basis.css, weil die Startseite
-   dasselbe Formular trug. Seit die Kontaktsektion dort raus ist,
-   gibt es das Formular nur noch hier, also gehoert das CSS auch
-   hierher: alle anderen Seiten laden es nicht mehr mit.
-
-   Vorname, Name, E-Mail und Nachricht sind Pflicht, Organisation
-   ist freiwillig. Der Empfaenger unter /api/kontakt existiert
-   weiterhin nicht.
-   ------------------------------------------------------------ */
 .formular{
   display: grid;
   gap: var(--s4);
 }
-/* Vorname und Name nebeneinander nur, wenn die Karte auch breit
-   genug dafuer ist. Zwischen 940 und 1120px ist sie die schmale
-   Spalte im Zweispalter, dort bleiben die Felder untereinander,
-   sonst werden sie zu Schlitzen. */
 @media (min-width: 640px) and (max-width: 939px){
   .formular{ grid-template-columns: 1fr 1fr; column-gap: var(--s4); }
 }
@@ -162,14 +113,6 @@
   font-size: .88rem;
 }
 
-/* Ehrenpot gegen Formular-Spam, siehe der Kommentar im HTML und
-   api/kontakt.js fuer die Pruefung. display:none reicht eigentlich
-   schon -- die meisten Spam-Bots werten kein CSS aus, sie lesen nur
-   das rohe HTML und schicken jedes <input> mit, das sie finden --,
-   aber ein absolut positioniertes Feld ausserhalb des Bildschirms
-   faengt auch die selteneren Bots, die tatsaechlich rendern. Kein
-   grid-column noetig: ein absolut positioniertes Grid-Kind nimmt
-   ohnehin keine eigene Zelle ein und stoert die Nachbarn nicht. */
 .fangfeld{
   position: absolute;
   left: -9999px;
@@ -211,9 +154,6 @@
   font: inherit;
   font-size: 1rem;
   padding: 11px 14px;
-  /* --still statt --linie-kraeftig: der Rand ist das Einzige, was ein
-     leeres Feld auf der weissen Karte sichtbar macht, und WCAG 1.4.11
-     verlangt dafuer 3:1. --linie-kraeftig trug 1.86:1, --still 6.0:1. */
   border: 1px solid var(--still);
   border-radius: var(--radius-knopf);
   background: var(--karte);
@@ -246,28 +186,10 @@
 }
 .formular-fuss a{ color: var(--olive); }
 
-/* Der Pfeil in Knoepfen stand bis zum 21.08.2026 hier, weil es ihn
-   nur auf der Kontaktseite gab. Seit die Abschluss-Knoepfe aller
-   Seiten einen tragen, steht die Regel in stil/basis.css. */
-
-/* --- Faden im Formular ---------------------------------------
-   Seit 11.10.2026. Das Element legt public/skript/formular-faden.js
-   an, Hoehe und Lage misst es dort. Hier steht nur die Form: eine
-   blasse Grundspur im Innenabstand der Karte, darauf die Fuellung
-   im Markenton, unten ein Knoten auf Hoehe des Knopfs. Dieselben
-   Masse wie der Strang auf ablauf.html: Grundspur 1px, Fuellung 2px,
-   Knoten 10px.
-
-   Bewegt wird genau eine Eigenschaft, transform, mit der Kurve und
-   der kurzen Zeit aus tokens.css. Bei reduzierter Bewegung setzt
-   basis.css die Dauer auf null, die Linie springt dann auf ihren
-   Stand. Der Knoten wechselt nur die Farbe.
-   ------------------------------------------------------------ */
 .anfrage-karte{ position: relative; }
 
 .formular-faden{
   position: absolute;
-  /* Mitte des seitlichen Innenabstands der Karte. */
   left: calc(var(--s5) / 2 - 1px);
   width: 2px;
   pointer-events: none;

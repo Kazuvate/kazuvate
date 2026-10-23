@@ -1,40 +1,12 @@
 # kazuvate.ch
-# Liegt in public/ und wird von Vite unveraendert nach dist/ gereicht --
-# eine Datei, die unter einer festen Adresse erreichbar sein muss, darf
-# keinen Inhalts-Hash im Namen tragen.
+# danke.html ist nicht gesperrt: sie traegt noindex, und das sieht ein Crawler nur, wenn er sie abrufen darf.
+# /api/ steht in jeder Gruppe, weil ein Crawler nur seine eigene Gruppe liest, sobald es eine gibt.
 
 User-agent: *
 Allow: /
-
-# Der Endpunkt des Kontaktformulars. Nimmt nur POST entgegen, es gibt
-# dort nichts zu lesen und nichts zu indexieren.
 Disallow: /api/
 
-# danke.html steht bewusst NICHT hier, obwohl die Seite nicht in den
-# Index gehoert. Sie traegt <meta name="robots" content="noindex">, und
-# damit eine Suchmaschine dieses noindex ueberhaupt sehen kann, muss sie
-# die Seite abrufen duerfen. Ein Disallow hier wuerde das verhindern --
-# die Seite koennte dann trotzdem als blosse URL im Index landen.
-
-
-# --- KI-Suche: ausdruecklich erlaubt, seit 03.09.2026 ---------------
-#
-# Diese vier holen Seiten, um sie in einer Antwort zu ZITIEREN. Sie
-# bringen Sichtbarkeit, und in der KI-Suche zaehlt Domainalter deutlich
-# weniger als bei Google -- fuer eine junge Firma ist das der Kanal mit
-# dem besten Verhaeltnis von Aufwand zu Wirkung.
-#
-# Warum die Gruppen dastehen, obwohl "User-agent: *" oben ohnehin alles
-# erlaubt: eine benannte Gruppe ist die Stelle, an der spaeter jemand
-# nachsieht. Ohne sie sieht "erlaubt" genauso aus wie "nie darueber
-# nachgedacht".
-#
-# Aufpassen beim Aendern: ein Crawler liest NUR seine eigene Gruppe,
-# sobald es eine gibt -- die Regeln aus "*" gelten fuer ihn dann nicht
-# mehr. Deshalb steht das Disallow auf /api/ in jeder Gruppe noch einmal.
-# Wer das vergisst, oeffnet den Formular-Endpunkt fuer genau die
-# Crawler, die er gerade einladen wollte.
-
+# KI-Suche: zitiert Seiten in Antworten. Ausdruecklich erlaubt.
 User-agent: OAI-SearchBot
 Allow: /
 Disallow: /api/
@@ -51,14 +23,7 @@ User-agent: Google-Extended
 Allow: /
 Disallow: /api/
 
-# --- KI-Abruf im Auftrag eines Menschen, seit 25.09.2026 -------------
-#
-# Diese drei kommen nicht von selbst vorbei, sondern wenn jemand in
-# ChatGPT, Perplexity oder Claude nach kazuvate fragt oder die Adresse
-# hineinkopiert. Unter "*" waren sie schon erlaubt; hier stehen sie aus
-# demselben Grund wie die vier oben: damit "erlaubt" als Entscheidung
-# lesbar ist. Gleiche Falle, gleiche Loesung: /api/ in jeder Gruppe.
-
+# KI-Abruf im Auftrag eines Menschen
 User-agent: ChatGPT-User
 Allow: /
 Disallow: /api/
@@ -71,11 +36,6 @@ User-agent: Claude-User
 Allow: /
 Disallow: /api/
 
-# Nicht benannt und damit unter "*" laufend: die Trainings-Crawler
-# GPTBot, ClaudeBot und CCBot. Die sammeln Text zum Trainieren von
-# Modellen und bringen keine Sichtbarkeit -- ob man sie zulaesst, ist
-# eine Haltungsfrage und keine SEO-Frage. Sie sperren kostet nichts an
-# Reichweite. Offen, bis Kasum entscheidet.
-
+# Trainings-Crawler (GPTBot, ClaudeBot, CCBot) sind nicht genannt und laufen unter "*". Entscheid offen.
 
 Sitemap: https://kazuvate.ch/sitemap.xml

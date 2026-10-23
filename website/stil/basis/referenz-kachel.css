@@ -1,65 +1,15 @@
-/* --- Referenz-Kachel ---------------------------------------
-   Screenshot plus Name. Ein Bild, ein Link, mehr nicht. Die ganze
-   Kachel fuehrt direkt auf die echte Kundenseite, keine
-   Zwischenseite mit Text.
-   Gebraucht auf der Startseite und auf referenzen/index.html,
-   deshalb hier statt in seiten.css: die Startseite laedt
-   seiten.css nicht.
-
-   Beim Zeigen oder Fokussieren wird die untere Bildhaelfte nach
-   unten hin immer unschaerfer, ein gruener Schleier legt sich
-   darueber, und der Name erscheint. Seit 02.10.2026.
-
-   Die Unschaerfe ist ein Verlauf aus vier Ebenen. Jede Ebene ist ein
-   backdrop-filter mit eigener Maske: die erste setzt frueh und
-   schwach ein, die letzte spaet und stark. Weil jede Ebene schon das
-   Ergebnis der darunterliegenden sieht, addiert sich die Unschaerfe
-   nach unten, und die Uebergaenge zwischen den Ebenen bleiben
-   unsichtbar. Ein einziger backdrop-filter mit Maske wuerde nur
-   zwischen scharf und unscharf ueberblenden, das sieht aus wie ein
-   Geisterbild. Vier Ebenen ohne zusaetzliches Markup: die zwei
-   Pseudoelemente der Kachel und die zwei des Namens.
-
-   --zeige (0 bis 1) schaltet alles auf einmal: Ebenen, Schleier und
-   Schrift. Als @property angemeldet, sonst liesse sich ein
-   Wert nicht ueberblenden, der in Farben und Deckkraft steckt.
-   Einmal ueberblenden statt vier Einzelregeln.
-
-   Die Ebenen duerfen nicht in ein Element mit opacity, filter oder
-   mask: das macht es zur Wurzel des Hintergrunds, und der
-   backdrop-filter darin saehe das Bild nicht mehr, sondern nichts.
-   Deshalb hat .name selbst keine Deckkraft, sondern blendet nur
-   seine Schriftfarbe und seinen Schleier ein.
-   ---------------------------------------------------------- */
 @property --zeige{
   syntax: "<number>";
   inherits: true;
   initial-value: 0;
 }
-/* padding-block statt padding: die Kurzform setzte bis zum 11.10.2026 auch
-   den seitlichen Rand von .wrap auf 0. Die Galerie lief dadurch auf dem
-   Handy randlos bis an den Bildschirmrand und stand am Rechner 40px links
-   neben dem Seitentitel. */
 .referenz-bereich{ padding-block: var(--s8); }
 
-/* Schlussblock der Referenzen-Seite. Die Haarlinie sitzt auf der
-   Sektion, nicht im wrap, damit sie wie auf der Startseite ueber
-   die volle Breite laeuft. */
-/* Seit dem 21.08.2026 zentriert, auf Kasums Wunsch: die Zeile steht
-   in der Mitte und der Knopf darunter ebenfalls. Der Knopf ist ein
-   inline-block, text-align: center auf der Sektion zentriert ihn
-   also mit, ohne dass er eine eigene Regel braucht. */
 .abschluss{
   border-top: 1px solid var(--linie);
   padding: var(--s8) 0 var(--s9);
   text-align: center;
 }
-/* Die 20ch, die hier bis zum 21.08.2026 standen, waren der Grund fuer
-   den Umbruch: "Reden wir ueber Ihr Projekt." hat 27 Zeichen und
-   brach damit immer in zwei Zeilen. Der Satz soll auf einer stehen.
-   text-wrap: balance greift erst, wenn das Fenster wirklich zu schmal
-   wird, und teilt dann auf zwei gleich lange Zeilen auf statt ein
-   einzelnes Wort in die zweite zu haengen. */
 .abschluss-zeile{
   font-size: clamp(1.6rem, 4vw, 2.4rem);
   font-weight: 700;

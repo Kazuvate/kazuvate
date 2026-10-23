@@ -1,24 +1,12 @@
-# Abhaengigkeiten und Build-Ergebnis: beides wird aus package.json bzw.
-# den Quelldateien wiederhergestellt, gehoert also nicht ins Repo.
 node_modules/
 dist/
-
-# Vites Zwischenspeicher
 .vite/
 
-# Lokale Umgebungsvariablen, z.B. RESEND_API_KEY fuer api/kontakt.js.
-# .env.example bleibt ausgenommen: die traegt keinen echten Wert, nur
-# den Namen der Variable, und dient als Vorlage im Repo.
+# Lokale Umgebungsvariablen. .env.example bleibt im Repo, sie traegt keinen Wert.
 .env
 .env.local
 .env.*.local
 
-# Arbeitsunterlagen, keine Projektdateien. Das SEO-Handbuch liegt in
-# dokumente/, weil daran gearbeitet wird -- es gehoert aber nicht ins Repo:
-# es enthaelt Preisspannen, Nischenstrategie und das Kapitel "SEO als
-# Leistung verkaufen", also Geschaeftsinterna, und dieses Repo ist
-# oeffentlich. Auf der ausgelieferten Website landen die Dateien
-# ohnehin nie, Vite kopiert nur website/public/ und was aus dem Markup
-# referenziert wird. Die Muster ohne Schraegstrich gelten in jedem Ordner.
+# Geschaeftsinterna (Preisspannen, Nischenstrategie), das Repo ist oeffentlich. Gilt in jedem Ordner.
 SEO-Handbuch-kazuvate.docx
 SEO-Handbuch-kazuvate.pdf

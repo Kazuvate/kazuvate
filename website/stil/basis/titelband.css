@@ -1,15 +1,3 @@
-/* --- Titelband -------------------------------------------
-   Kopfbereich der Unterseiten, sitzt direkt unter dem Kopf.
-   Bis zum 21.08.2026 trug es dieselbe Flaeche wie der Kopf, ohne
-   Naht dazwischen -- am Bildschirm verschmolzen Navigation und
-   Seitentitel dadurch zu einem einzigen, zu grossen Block, kein
-   Kopf und kein Titelband mehr zu erkennen. Jetzt eine Stufe
-   dunkler (--flaeche-tief, derselbe Ton, den Knopf und Draht-Icon
-   schon fuers Hover benutzen, kein neuer Hex-Wert) plus eine
-   helle Haarlinie an der Naht, dieselbe Bauart wie die Trennlinie
-   in .fuss-unten. Der Kopf bleibt in --flaeche, das Titelband
-   rutscht eine Stufe tiefer -- zwei Flaechen derselben Familie
-   statt einer verschmolzenen. */
 .titel{
   background: var(--flaeche-tief);
   color: var(--auf-flaeche);
@@ -24,17 +12,6 @@
   color: var(--auf-flaeche-still);
   margin: 0 0 var(--s4);
 }
-/* Der dritte Grad zwischen --gross und --riesig, seit 02.09.2026.
-   Er braucht einen eigenen Wert und keinen der beiden Tokens: gegen
-   --riesig waere der Seitentitel so gross wie die Startseite und
-   naehme ihr das eine Bild, das sie hat; auf --gross waere er so
-   gross wie eine Sektionsueberschrift auf derselben Seite und
-   ordnete sich ihr damit gleich. 74px liegen sichtbar ueber der
-   H2 und sichtbar unter der Startseite.
-
-   18ch bleiben: "Handgebaute Websites für kleine und mittlere
-   Unternehmen" ist der laengste Titel und soll umbrechen wie ein
-   Satzblock, nicht wie eine Zeile, die nicht mehr passt. */
 .titel h1{
   font-size: clamp(2.3rem, 6.4vw, 4.6rem);
   line-height: 1;
@@ -57,26 +34,6 @@
   font-weight: 600;
 }
 
-/* --- Brotkrumen --------------------------------------------
-   Seit 31.08.2026 auf allen sechs Unterseiten. Den BreadcrumbList
-   als JSON-LD gibt es seit dem 25.08.2026 im Kopf jeder Unterseite;
-   dort stand als Kommentar ausdruecklich "Es gibt keine sichtbare
-   Krumenleiste auf der Seite". Jetzt gibt es sie, und beide sagen
-   dasselbe -- strukturierte Daten, die etwas behaupten, das auf der
-   Seite nicht steht, sind laut Googles eigener Richtlinie ein
-   Grund, sie ganz zu ignorieren.
-
-   Die Leiste sitzt zwischen Titelband und <main>, nicht im
-   Titelband. Das ist Absicht: Kasum hat am 23.08.2026 die
-   Vorspann-Zeile aus dem Titelband nehmen lassen, "die drei
-   Titelseiten sollen nur noch die Ueberschrift tragen". Eine
-   Krumenzeile ueber der H1 waere genau diese Zeile zurueck. Auf dem
-   hellen Papierton darunter ist sie eine eigene, ruhige Zeile und
-   ruehrt den dunklen Block nicht an.
-
-   Nicht auf index.html (die Startseite ist die Wurzel, eine Krume
-   auf sich selbst ist keine) und nicht auf danke.html (noindex,
-   Sackgasse nach dem Absenden). */
 .krumen{
   padding-block: var(--s5) 0;
   font-size: .88rem;
@@ -91,11 +48,6 @@
   margin: 0;
   padding: 0;
 }
-/* Der Trenner steht als CSS-Zeichen da und nicht im Markup: ein
-   Schraegstrich im HTML wuerde von Screenreadern mitgelesen
-   ("Startseite Schraegstrich Leistungen"), aus generiertem Inhalt
-   liest ihn keiner vor. aria-hidden waere die zweite Moeglichkeit
-   und ein Element mehr pro Krume. */
 .krumen li + li::before{
   content: "/";
   margin-right: var(--s2);
@@ -114,22 +66,10 @@
     border-bottom-color: var(--linie-marke);
   }
 }
-/* Die aktuelle Seite ist bewusst kein Link. Ein Link, der auf die
-   Seite fuehrt, auf der man schon steht, ist eine Sackgasse mit
-   Tastaturstopp. */
 .krumen [aria-current="page"]{
   color: var(--tinte-2);
   font-weight: 600;
 }
-/* Auf dem Handy ist "Startseite" bei .88rem eine rund 24px hohe Zeile
-   und damit ein zu kleines Tippziel. Zehn Pixel oben und unten machen
-   44px daraus, das Mass, das Apple als Minimum nennt -- dieselbe
-   Rechnung wie beim Link .weiter weiter unten. Der Abstand nach oben
-   faellt um dieselben zehn Pixel, damit der sichtbare Abstand zum
-   Titelband gleich bleibt. display:inline-block ist noetig, weil
-   senkrechtes Polster an einem reinen Inline-Element die Zeilenbox
-   nicht wachsen laesst und der Trefferbereich damit gleich klein
-   bliebe, wie er war. */
 @media (max-width: 859px){
   .krumen{ padding-top: 14px; }
   .krumen a{

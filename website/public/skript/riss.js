@@ -1,20 +1,4 @@
-/* ============================================================
-   kazuvate | Der gerissene Faden
-   Seit 11.10.2026, nur auf 404.html geladen.
-
-   Die Linie endet lose. Wer das Ende greift (Maus, Stift oder
-   Finger), zieht es mit; laesst er es am Ring "Zur Startseite" los,
-   knuepft es dort an und die Startseite oeffnet sich. Anderswo
-   losgelassen, faellt es zurueck an seinen Platz.
-
-   Mit der Tastatur gibt es nichts zu ziehen. Dafuer knuepft sich der
-   Faden an, sobald der Link den Fokus hat, und loest sich wieder,
-   wenn er ihn verliert -- dieselbe Antwort, ohne die Seite zu
-   wechseln. Gefolgt wird dem Link dann ganz gewoehnlich mit Enter.
-
-   Ohne dieses Skript steht der Faden fertig gezeichnet da und der
-   Link funktioniert wie jeder andere.
-   ============================================================ */
+// Der gerissene Faden auf 404.html: das lose Ende laesst sich zum Link "Zur Startseite" ziehen. Mit Tastatur knuepft der Fokus ihn an.
 (function () {
   'use strict';
 
@@ -38,9 +22,6 @@
 
   function gerundet(n) { return Math.round(n * 10) / 10; }
 
-  // Alles in echten Pixeln: die viewBox bekommt die Masse des
-  // Elements, eine Einheit ist damit ein Pixel und das Ende sitzt
-  // genau unter dem Zeiger, egal wie breit die Seite ist.
   function messen() {
     var r = svg.getBoundingClientRect();
     if (!r.width || !r.height) return;
@@ -53,8 +34,6 @@
     mitte = { x: k.left - r.left + radius, y: k.top - r.top + radius };
     anschluss = { x: mitte.x - radius, y: mitte.y };
     start = { x: 0, y: hoehe * 0.5 };
-    // Das Ende liegt gut vor dem Ring, auf schmalen Schirmen naeher
-    // am Anfang, damit zwischen beiden sichtbar Luft bleibt.
     ruhe = { x: Math.min(breite * 0.42, anschluss.x - 64), y: hoehe * 0.62 };
     if (!zieht && !unterwegs) ende = verbunden ? anschluss : ruhe;
     zeichnen();
@@ -70,8 +49,6 @@
       gerundet(c2.x) + ' ' + gerundet(c2.y) + ' ' +
       gerundet(ende.x) + ' ' + gerundet(ende.y));
 
-    // Drei kurze Fasern in Laufrichtung: das ausgefranste Ende. Wer
-    // angeknuepft hat, hat kein loses Ende mehr.
     if (verbunden) {
       fasern.setAttribute('d', '');
     } else {
@@ -99,9 +76,6 @@
     ziel.classList.toggle('ist-nah', an);
   }
 
-  // Zurueck an den Ruheplatz. Die Kurve ist ein starkes Ausrollen wie
-  // --kurve in tokens.css, die Dauer --kurz. Bei reduzierter Bewegung
-  // ohne Weg dazwischen.
   function zurueck() {
     var von = { x: ende.x, y: ende.y };
     if (weniger.matches) { ende = ruhe; zeichnen(); return; }
@@ -154,7 +128,6 @@
       setzeVerbunden(true);
       ende = anschluss;
       zeichnen();
-      // Einen Augenblick angeknuepft stehen lassen, dann dem Link folgen.
       window.setTimeout(function () { window.location.href = ziel.href; }, 260);
     } else {
       setzeNah(false);
@@ -181,7 +154,6 @@
 
   if ('ResizeObserver' in window) new ResizeObserver(messen).observe(riss);
   window.addEventListener('resize', messen);
-  // Zurueckblaettern aus dem Cache: wieder als loses Ende beginnen.
   window.addEventListener('pageshow', function () {
     setzeVerbunden(false);
     ende = null;

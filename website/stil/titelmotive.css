@@ -1,36 +1,4 @@
-/* ============================================================
-   kazuvate | Titelbaender
-   Leistungen, Referenzen, Ablauf, Impressum und Datenschutz laden
-   diese Datei. Die beiden Rechtsseiten sind seit dem 02.09.2026
-   dabei -- vorher trugen sie die dunkle Flaeche aus .titel in
-   basis.css, die einzige Unterseite ohne dieses helle Titelmotiv.
-   Auf Kasums Wunsch tragen jetzt alle Unterseiten denselben Titel.
-   Einzige verbliebene Ausnahme ist die Fehlerseite 404.html: die
-   behaelt die dunkle Flaeche, weil dort niemand hinkommt, der die
-   uebrige Website schon gesehen hat -- der Bruch faellt nicht auf.
-
-   Geschichte in drei Schritten, alle am 22./23.08.2026:
-   1. Jede Seite trug ein eigenes gezeichnetes Motiv (Linie mit drei
-      Kreisen, Vierer-Strang, zwei Browserfenster). Zu viel, ein Kreis
-      schnitt sogar durch den Buchstaben "n" bei "Leistungen" -- alle
-      drei entfernt.
-   2. Ersatz: weisse Schrift mit gruener Kontur auf dunkler Flaeche.
-      Die dunkle Flaeche stellte sich als das eigentliche Problem
-      heraus (geerbt von .titel in basis.css, nicht mal absichtlich
-      gesetzt) -- Flaeche raus, Schrift auf --tinte gedreht, Kontur
-      auf das Gruen von Kopf und Fuss (--flaeche).
-   3. Auch das noch nicht: "innen schwarz, Rand gruen" gefiel nicht.
-      Jetzt der einfachste Weg von allen -- Schrift direkt in Gruen,
-      keine Kontur mehr, dafuer eine Linie darunter, die sich beim
-      Laden einmal einblendet (clip-path, siehe dort -- ein erster
-      Versuch mit stroke-dashoffset wie beim Faden auf der Startseite
-      ist an einem echten Rendering-Fehler gescheitert, ebenfalls
-      dokumentiert an Ort und Stelle). Der Vorspanntext unter jedem
-      Titel ist ersatzlos gestrichen.
-
-   Farben ausschliesslich aus tokens.css. Die schlichte .titel bleibt
-   in basis.css stehen, sie traegt weiterhin die Fehlerseite.
-   ============================================================ */
+/* Titelband der Unterseiten: helles Motiv, die Linie zeichnet sich einmal. */
 
 .titel--gross{
   background: none;
@@ -39,19 +7,6 @@
   padding: var(--s7) 0 var(--s6);
 }
 
-/* Wrapper nur ums Titelwort, shrink-to-fit (width: max-content, wie
-   das h1 selbst). Auf ablauf.html liegt die Linie weiterhin direkt
-   darin, ihr width:100% trifft dort also die Textbreite -- Kasums
-   Ansage vom 23.08.2026 war ausdruecklich "aendere nichts an Ablauf".
-
-   Auf leistungen.html und referenzen/index.html liegt die Linie seit
-   demselben Tag nicht mehr hier drin, sondern eine Ebene hoeher als
-   direktes Kind von .titel-inhalt (siehe dort): "die Linie soll bis
-   ganz nach hinten gehen" -- bis an den rechten Rand des Wrap-Inhalts,
-   nicht nur bis ans Ende des Wortes. Dieselbe Klasse .titel-linie,
-   derselbe width:100%-Wert, nur eine Stufe weiter oben im Baum
-   eingehaengt, deshalb bezieht sich die Prozentzahl dort auf die volle
-   Wrap-Breite statt auf die schmale Textbreite. */
 .titel-kopf{
   position: relative;
   width: max-content;
@@ -60,20 +15,6 @@
 .titel-wort{
   overflow: hidden;
   width: 100%;
-  /* Der erste Versuch (.26em unten) hat den eigentlichen Fehler nicht
-     behoben, nur die Zahl im Quelltext veraendert: em bezieht sich auf
-     die SCHRIFTGROESSE VON .titel-wort SELBST, und die ist nie gesetzt
-     -- geerbt vom Flieszettext, um die 17px. Bei einer h1 mit 55px
-     Schriftgroesse (kleinste Stufe) wurde aus ".26em" beim Nachmessen
-     4.4px Puffer, nicht die gewollten 14px. Auf der groessten Stufe
-     (h1 bis 112px) waere derselbe Fehler noch krasser gewesen. Der
-     Deszender des "g" in "Leistungen" reicht weiter runter als diese
-     4.4px, wurde also weiterhin abgeschnitten -- das war der Fehler,
-     den Kasum am 23.08.2026 zurecht gemeldet hat.
-
-     Jetzt feste Pixelwerte statt em, an denselben drei Bruchstellen
-     wie die h1-Schriftgroesse gestaffelt, grosszuegig bemessen statt
-     auf den Punkt genau. */
   padding: 6px .03em 20px;
   margin-left: -.03em;
 }
@@ -81,112 +22,43 @@
 .titel--gross h1{
   max-width: none;
   width: max-content;
-  /* Kleiner und duenner als zuvor -- Kasums Wort war "die Titel sind
-     immer ein bisschen zu dick". 700 auf 600 im Gewicht, die
-     Schriftgroessen selbst rund ein Fuenftel kleiner in jeder der
-     drei Stufen unten. */
   font-size: clamp(2.4rem, 11vw, 3.8rem);
   font-weight: 600;
   line-height: .86;
   letter-spacing: -.06em;
   white-space: nowrap;
   text-wrap: nowrap;
-  /* Direkt gruen gefuellt, keine Kontur mehr. Der Umweg ueber
-     -webkit-text-stroke ist zweimal gescheitert: erst unsichtbar
-     (falscher Farbkontrast gegen dunklen Grund), dann unerwuenscht
-     ("innen schwarz, Rand gruen" -- genau das wollte Kasum nicht).
-     Diese Fassung ist die einfachste und robusteste der drei:
-     dieselbe Flaeche wie Kopf und Fuss (--flaeche), einmal gesetzt,
-     kein Zusammenspiel aus Fuellung und Kontur, das schiefgehen kann. */
   color: var(--flaeche);
 }
 
-/* Bezugsrahmen fuer die volle Linienbreite auf leistungen.html und
-   referenzen/index.html (siehe .titel-kopf weiter oben): dort haengt
-   .titel-linie direkt hier drin statt in .titel-kopf, ihr width:100%
-   braucht deshalb hier den position:relative-Anker. Auf ablauf.html
-   traegt .titel-kopf diesen Anker schon selbst, dort aendert die
-   Zeile hier nichts, weil die Linie dort gar nicht direktes Kind
-   von .titel-inhalt ist. */
 .titel-inhalt{
   position: relative;
 }
 
-/* --- Stand-Zeile (Impressum, Datenschutz) --------------------
-   Die beiden Rechtsseiten sind die einzigen mit einem Erstelldatum
-   unter dem Titel. Bis zum 02.09.2026 stand es in --auf-flaeche-still
-   auf der dunklen Flaeche von .titel -- ihr Markup traegt weiterhin
-   auch die Klasse .titel, deshalb hier .titel--gross .stand statt
-   nur .stand: gleiche Selektor-Spezifitaet wie .titel .stand in
-   basis.css, gewinnt aber durch die spaetere Ladereihenfolge dieser
-   Datei. Ein helleres Gruen statt des dunklen Auf-Flaeche-Tons,
-   --still passt zur selben Rolle (Labels, Legenden) wie sonst auf
-   diesen Seiten. margin-top raeumt die sich einzeichnende Linie frei:
-   die reicht je nach Breite 22 bis 38px unter das Titelband hinaus
-   (siehe die Deszender-Ausnahme oben), var(--s7) ist an jeder Stufe
-   mehr, als sie braucht. */
 .titel--gross .stand{
   margin-top: var(--s7);
   color: var(--still);
   font-size: .82rem;
   letter-spacing: .02em;
   font-weight: 600;
-  /* .titel .stand in basis.css setzt text-transform:uppercase; ohne
-     diese Zeile wuerde das hier durchschlagen -- dieselbe Spezifitaet
-     deckt nur die Eigenschaften ab, die diese Regel selbst setzt. */
   text-transform: none;
 }
 
-/* Dieselbe Regel wie .titel .stand in basis.css fuer den Druck, nur
-   fuer diesen helleren Gruenton statt --auf-flaeche-still nochmal
-   ausdruecklich gesetzt -- die Datei hier laedt spaeter und wuerde
-   sonst auch beim Drucken das Bildschirm-Gruen gewinnen lassen. */
 @media print{
   .titel--gross .stand{ color: #000; }
 }
 
-/* Der laengste Titel bekommt auf sehr schmalen Bildschirmen eine
-   eigene Untergrenze. So bleibt er auch mit der System-Ersatzschrift
-   innerhalb der 320px-Breite, bevor General Sans geladen ist. */
 .titel--referenzen h1{
   font-size: clamp(2.1rem, 10.5vw, 3.7rem);
 }
 
-/* "Datenschutzerklärung" ist mit 20 Zeichen mehr als doppelt so lang
-   wie "Referenzen" -- passt in keiner Bildschirmbreite einzeilig in
-   dieselbe Groessenstufe wie die anderen Titel, ohne winzig zu
-   wirken. Bricht deshalb bewusst zweizeilig um, statt weiter zu
-   schrumpfen. max-width erzwingt den Umbruch an der Sollbruchstelle,
-   die das &shy; im Markup schon setzt: "Datenschutz-" / "erklärung".
-   line-height etwas offener als die .86 der einzeiligen Titel, sonst
-   sitzen die Umlautpunkte von "ä" zu nah an den Grossbuchstaben
-   darueber -- derselbe Wert wie bei der zweizeiligen H1 auf
-   kontakt.html. */
 .titel--datenschutz h1{
   white-space: normal;
   text-wrap: wrap;
-  /* min() seit 25.09.2026: 13ch sind bei 320px Breite 307px, der
-     Platz zwischen den Raendern nur 276px -- die Seite liess sich
-     dort 24px seitwaerts schieben. Aufgefallen beim Pruefen von
-     "Protection des données", betraf aber schon die deutsche Seite.
-     100vw statt 100%: .titel-wort richtet seine Breite nach dem Titel
-     selbst, 100% davon waere ein Zirkelschluss, und der Browser loest
-     ihn, indem er die Grenze ganz fallen laesst (gemessen: dann eine
-     einzige Zeile, 386px breit). */
   max-width: min(13ch, calc(100vw - 2 * var(--rand)));
   line-height: .95;
 }
 
-/* --- Linie unter dem Titel ----------------------------------
-   Ersetzt die drei fruehen Seitenmotive nicht als Grafik, sondern als
-   Geste: eine einzelne handgezeichnete Kurve, die sich beim Laden
-   einmal einzeichnet -- nach demselben Prinzip wie der Faden auf der
-   Startseite, aber mit einer anderen Technik dahinter, siehe unten.
-
-   preserveAspectRatio="none" plus ein fester 300x20-viewBox: dieselbe
-   Technik wie beim fruehen Leistungen-Motiv, dieselbe Kurve dehnt sich
-   auf jede Textbreite von 375px-Handy bis 900px-Desktop, ohne dass elf
-   verschiedene Pfade noetig waeren. */
 .titel-linie{
   position: absolute;
   left: 0;
@@ -195,22 +67,6 @@
   height: 14px;
 }
 
-/* "Ablauf" hat keinen Buchstaben mit Unterlaenge, die Grundwerte oben
-   passen fuer diese Seite unveraendert -- Kasums Ansage war
-   ausdruecklich, an Ablauf nichts zu aendern.
-
-   "Leistungen" und "Referenzen" haben je ein "g", das seit dem
-   Deszender-Fix in .titel-wort genug Puffer bekommt, um nicht
-   abgeschnitten zu werden. Bei -8px sass die Linie aber genau in
-   diesem Pufferbereich: sie lief mitten durchs "g", und weil Linie
-   und Buchstabe dieselbe Farbe --flaeche tragen, sah das aus wie eine
-   unterbrochene Linie, nicht wie eine Kreuzung. Hier deshalb klar
-   unter den ganzen Deszender-Puffer geschoben.
-
-   "Impressum" hat aus demselben Grund ein "p", und bei "Datenschutz-
-   erklärung" traegt die zweite Zeile ("erklärung") ein "g" -- beide
-   seit dem 02.09.2026 mit demselben Puffer wie Leistungen und
-   Referenzen. */
 .titel--leistungen .titel-linie,
 .titel--referenzen .titel-linie,
 .titel--impressum .titel-linie,
@@ -223,57 +79,9 @@
   stroke: var(--flaeche);
   stroke-width: 2px;
   stroke-linecap: round;
-  /* Ohne das wuerde preserveAspectRatio="none" die Strichbreite mit
-     verzerren -- bei einer 900px breiten Ueberschrift und 20 Einheiten
-     Hoehe im viewBox waere die Linie waagerecht papierduenn, senkrecht
-     dick. non-scaling-stroke haelt sie in jeder Breite gleich fein. */
   vector-effect: non-scaling-stroke;
 }
 
-/* --- Einmalige Choreografie -------------------------------
-   Der Grundzustand oben ist immer fertig sichtbar. Alte Browser und
-   Reduced Motion bekommen deshalb ohne Sonderbehandlung eine voll
-   nutzbare, stabile Seite -- der Pfad steht dort direkt fertig
-   gezeichnet da, ohne Clip.
-
-   Erster Anlauf war stroke-dasharray plus pathLength="1", dieselbe
-   Technik wie beim Faden auf der Startseite. Nachgemessen (Scratchpad,
-   23.08.2026) zeigte sich ein echter Rendering-Fehler, kein
-   Wahrnehmungsproblem: bei "Leistungen" und "Referenzen" reicht die
-   Linie inzwischen ueber die volle Wrap-Breite (siehe .titel-inhalt
-   weiter oben), also ueber 900px aus einem nur 300 Einheiten breiten
-   viewBox gestreckt -- mehr als das Dreifache. In Kombination mit
-   vector-effect:non-scaling-stroke hat der Browser die gestrichelte
-   Linie (dasharray:1, ein einziger Strich ueber die ganze Pfadlaenge)
-   dabei mittig unterbrochen gezeichnet: mit rotem Diagnose-Strich
-   sichtbar zwei getrennte Stuecke statt eines durchgehenden. Bei
-   deaktiviertem dasharray verschwand die Luecke sofort wieder --
-   die Ursache liegt in genau diesem Zusammenspiel unter extremer
-   Streckung, nicht am Pfad selbst.
-
-   Ersetzt durch clip-path: der Pfad steht die ganze Zeit vollstaendig
-   und fertig gezeichnet da, eine reine Ausblendmaske deckt ihn zu
-   Beginn komplett zu und faehrt beim Laden von links nach rechts weg.
-   Sieht identisch aus wie das Zeichnen vorher, ohne SVG-Innenleben,
-   das bei extremer Streckung falsch rendern kann.
-
-   Bis zum 11.10.2026 stand hier `.titel-linie{ clip-path: inset(0 100%
-   0 0) }` ausserhalb jeder Medienabfrage, und nur die Animation in
-   no-preference hat die Linie freigelegt. Bei reduzierter Bewegung
-   lief keine Animation, die Linie blieb also ganz verdeckt -- das
-   Gegenteil dessen, was der Absatz oben verspricht. Jetzt verdeckt nur
-   noch die Animation selbst (fill-mode both, also auch waehrend der
-   550ms Wartezeit), der Grundzustand ist die fertige Linie.
-
-   Seitenwechsel (basis.css): die Linie traegt einen Namen und wandert
-   damit von ihrem Platz auf der alten Seite an ihren Platz auf der
-   neuen. Danach soll sie sich dort nicht ein zweites Mal zeichnen.
-   Das verhindert html.linie-da, gesetzt von src/bewegung.ts, sobald
-   die Seite ueber einen solchen Wechsel kommt. Erster Versuch war ein
-   Uebergang mit @starting-style, der sich ohne Skript fuer die Dauer
-   des Wechsels haette abschalten lassen. Nachgemessen in Chromium 153:
-   @starting-style greift beim ersten Aufbau einer Seite nicht, die
-   Linie haette sich beim Direktaufruf gar nicht mehr eingezeichnet. */
 .titel-linie{ view-transition-name: titel-linie; }
 
 @media (prefers-reduced-motion: no-preference){
@@ -282,14 +90,9 @@
   }
 
   .titel-linie{
-    /* Start bei 550ms: die h1-Animation braucht bis 740ms (680+60),
-       die Linie faengt schon an, bevor der Titel ganz zur Ruhe kommt
-       -- liest sich als eine zusammenhaengende Bewegung statt zweier
-       Schritte hintereinander. 900ms sind --zeichen-dauer. */
     animation: titel-linie-ein var(--zeichen-dauer) var(--kurve) 550ms both;
   }
 
-  /* Die Linie ist gerade von der alten Seite herueber gewandert. */
   html.linie-da .titel-linie{ animation: none; }
 }
 
@@ -303,7 +106,6 @@
   to{ transform: translateY(0); }
 }
 
-/* --- Breitere Ansichten ---------------------------------- */
 @media (min-width: 560px){
   .titel--gross{
     padding: var(--s8) 0 var(--s7);
@@ -326,8 +128,6 @@
     height: 18px;
   }
 
-  /* .titel-wort hat hier 28px Deszender-Puffer, dieselbe Ausnahme wie
-     bei der Grundregel oben. */
   .titel--leistungen .titel-linie,
   .titel--referenzen .titel-linie,
   .titel--impressum .titel-linie,
@@ -362,7 +162,6 @@
     height: 22px;
   }
 
-  /* .titel-wort hat hier 36px Deszender-Puffer. */
   .titel--leistungen .titel-linie,
   .titel--referenzen .titel-linie,
   .titel--impressum .titel-linie,

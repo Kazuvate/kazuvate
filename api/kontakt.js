@@ -1,50 +1,12 @@
-/**
- * Vercel Serverless Function fuer das Kontaktformular auf kontakt.html.
- *
- * Nimmt die POST-Daten des Formulars entgegen -- der Browser schickt sie bei
- * <form method="post"> ohne eigenes enctype als
- * application/x-www-form-urlencoded, Vercels Node-Laufzeit parst das
- * normalerweise von selbst in req.body -- und schickt sie per Resend als
- * E-Mail an kasumbajrami7@gmail.com. reply_to ist die Adresse der
- * anfragenden Person, damit eine Antwort im Mailprogramm direkt bei ihr
- * landet statt bei Resend.
- *
- * ABSENDER: "onboarding@resend.dev" ist Resends Test-Absender. Er
- * funktioniert ohne eigene Domain, verschickt aber nur an die E-Mail, mit
- * der das Resend-Konto erstellt wurde. Das reicht hier: das Konto laeuft auf
- * kasumbajrami7@gmail.com, genau der Adresse, an die das Formular ohnehin
- * gehen soll. Sobald kazuvate.ch gekauft und bei Resend als Domain
- * verifiziert ist (SPF/DKIM-Eintraege), kann ABSENDER auf
- * "Kazuvate <kontakt@kazuvate.ch>" wechseln -- erst dann kommt Mail auch bei
- * anderen Empfaengern als dieser einen Testadresse an.
- *
- * RESEND_API_KEY muss in Vercel unter Project Settings -> Environment
- * Variables gesetzt sein (Resend-Konto -> API Keys). Ohne den Schluessel
- * schlaegt jeder Versand fehl.
- *
- * Spamschutz ohne Captcha, wie im Datenschutz-Abschnitt "Kontaktformular"
- * angekuendigt: ein fuer Menschen unsichtbares Feld (siehe .fangfeld in
- * stil/kontakt.css) und eine Zeitpruefung -- schneller als zwei Sekunden
- * zwischen Laden und Absenden schafft kein Mensch, der vier Felder ausfuellt
- * und eine Nachricht schreibt (siehe skript/haupt.js fuer den Zeitstempel).
- * Beide Treffer bekommen dieselbe Antwort wie ein echter Erfolg: eine
- * Weiterleitung auf die Danke-Seite der jeweiligen Sprache, ohne
- * Fehlermeldung. Das kostet nichts (es
- * wird ja nichts verschickt) und verraet einem Bot nicht, dass er
- * aufgeflogen ist -- ein Bot, der eine Fehlermeldung sieht, passt seinen
- * naechsten Versuch an, einer, der eine Erfolgsseite sieht, nicht.
- */
+// Vercel Function des Kontaktformulars: schickt die Anfrage per Resend an Kasum, reply_to ist die anfragende Person.
+// RESEND_API_KEY kommt aus den Environment Variables, nie aus dem Code.
+// onboarding@resend.dev sendet nur an die Adresse des Resend-Kontos, bis kazuvate.ch dort verifiziert ist.
+// Fangfeld und Zeitpruefung (unter 2 s) bekommen dieselbe Erfolgsantwort wie ein echter Versand, damit ein Bot nichts merkt.
 
 const EMPFAENGER = "kasumbajrami7@gmail.com";
 const ABSENDER = "Kazuvate Website <onboarding@resend.dev>";
 const PFLICHTFELDER = ["vorname", "name", "email", "nachricht"];
 
-/** Seit 25.09.2026 gibt es das Formular auf Deutsch, Englisch und
- *  Franzoesisch. Jede Fassung schickt ihre Sprache im versteckten Feld
- *  "sprache" mit, damit Erfolg und Fehler auf der Seite in derselben
- *  Sprache landen. Fehlt das Feld oder steht etwas Unbekanntes drin,
- *  gilt Deutsch -- so bleibt eine alte, noch zwischengespeicherte
- *  Kontaktseite ohne das Feld weiterhin funktionsfaehig. */
 const ZIELE = {
   de: { danke: "/danke.html", kontakt: "/kontakt.html", name: "Deutsch" },
   en: { danke: "/en/thank-you.html", kontakt: "/en/contact.html", name: "Englisch" },
@@ -80,10 +42,6 @@ export default async function handler(req, res) {
   }
 }
 
-/** req.body ist auf Vercel normalerweise schon geparst. Der Rueckfallpfad
- *  liest den rohen Stream selbst, falls eine Laufzeit das mal nicht tut --
- *  ohne das wuerde jede Anfrage still verpuffen, statt eine Mail zu
- *  verschicken, und das waere ohne Deploy schwer zu bemerken. */
 async function formularDaten(req) {
   if (req.body && typeof req.body === "object") return req.body;
 
@@ -102,9 +60,6 @@ function istSpam(daten) {
   return false;
 }
 
-/** Nicht-deutsche Anfragen tragen die Sprache schon im Betreff, damit
- *  in der Mailbox sofort sichtbar ist, in welcher Sprache zu antworten
- *  ist. */
 async function mailSenden(daten, ziel) {
   const betreff =
     (ziel === ZIELE.de ? "" : `[${ziel.name}] `) +
